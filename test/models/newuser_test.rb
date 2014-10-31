@@ -1,12 +1,12 @@
 require 'test_helper'
 
-class NewuserTest < ActiveSupport::TestCase
+class UserTest < ActiveSupport::TestCase
 
   def setup #This 'Newuser' class create a mock user with these attributes for this test.
   	#the test works by running '.new' on the Newuser model, which is a default command.
   	#the password and password_confirmation are not actual columns. This password is confirmed to be the same,
   	#and then inserted into the column 'password_digest' in the users table by the bcrypt gem.
-    @user = Newuser.new(username: "Example User", email: "something@gmail.com",
+    @user = User.new(username: "Example User", email: "something@gmail.com",
     										password: "foobar", password_confirmation: "foobar")
   end
 

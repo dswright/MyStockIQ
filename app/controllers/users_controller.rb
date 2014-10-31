@@ -1,4 +1,4 @@
-class NewusersController < ApplicationController
+class UsersController < ApplicationController
   
   #this method automatically loads the index view newuser/new.html.erb. 
   #And all variables with @ are available in the view.
@@ -6,13 +6,13 @@ class NewusersController < ApplicationController
 
 
   def new
-  	@user = Newuser.new
+  	@user = User.new
   	#why create a new empty user here? To be passed into the user creation form for setting the params.
   end
 
   def create
     #this uses the result from the user_params function to create a new user.
-  	@user = Newuser.new(user_params)
+  	@user = User.new(user_params)
     #this saves the new user to the database.
   	if @user.save 
       log_in(@user)
@@ -20,7 +20,7 @@ class NewusersController < ApplicationController
       #redirect to the newusers_path => defined in the routes file. 
   		redirect_to login_path  
   	else
-  		redirect_to newusers_path
+  		redirect_to users_path
   	end
 
 	end
@@ -33,7 +33,7 @@ class NewusersController < ApplicationController
 	  	#params[:user] is what returns the values from the form in hash.
 	  	#One way of creating a new user from the params hash would be @user = User.new(params[:user])
 	  	#instead we use this very fancy line below that also permits only specific form fields.
-	  	#newuser is the object created by passing the @user variable into the Ruby form.
+	  	#user is the object created by passing the @user variable into the Ruby form.
 	    params.require(:user).permit(:username, :email, :password,
 	                                 :password_confirmation)
 	  end

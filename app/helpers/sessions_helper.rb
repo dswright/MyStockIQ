@@ -5,9 +5,36 @@ module SessionsHelper
     session[:user_id] = user.id
   end
 
+  def remember(user)
+    #get the remember token returned from the database input method.
+    remember_token = User.remember(user)
+    #save an encryted user.id to the user cookies.
+    cookies.permanent.signed[:user_id] = user.id
+    #save an unencrypted remember_token to the user cookies.
+    cookies.permanent[:remember_token] = remember_token
+  end
+
+  def forget(user)
+    User.forget(user)
+    cookies.delete(:user_id)
+    cookies.delete(:remember_token)
+  end
+
   # Returns the current logged-in user (if any).
   def current_user
-    @current_user ||= Newuser.find_by(id: session[:user_id])
+    #if the session[user_id] is present, set it = to user_id
+    if (user_id = session[:user_id])
+      #set the current user = to the user with this user id.
+      @current_user ||= User.find_by(id: user_id)
+    #if the cookies.signed[user_id] is present, set it equal to user_id.
+    elsif (user_id = cookies.signed[:user_id])
+      user = User.find_by(id: user_id)
+      #if the user id is valid, and aligns with the authentication cookie in the database, then login the user.
+      if user && user.authenticated?(cookies[:remember_token])
+        log_in user
+        @current_user = user
+      end
+    end
   end
   
   def logged_in?
@@ -15,6 +42,8 @@ module SessionsHelper
   end
 
   def log_out
+    #forget the current user by deleting their cookies and setting the remember_digest to nil.
+    forget(current_user)
     session.delete(:user_id)
     @current_user = nil
   end

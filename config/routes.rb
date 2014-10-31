@@ -7,11 +7,11 @@ Rails.application.routes.draw do
   
   #this sends /newuser to the newuser index function in the controller this has to be plural,
   #to fit with Ruby conventions.
-  get     'newusers'           =>    'newusers#new' 
+  get     'users'               =>   'users#new' 
       
   #this specifies that when a post is coming into the new users page, refer to the create method
   #in the controller.                                                
-  post    'newusers'            =>   'newusers#create'
+  post    'users'               =>   'users#create'
 
   get     'login'               =>   'sessions#new'
   post    'login'               =>   'sessions#create'
