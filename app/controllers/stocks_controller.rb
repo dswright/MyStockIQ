@@ -10,4 +10,7 @@ class StocksController < ApplicationController
 		@stock_array = Stock.fetch_new_stocks
 		StockMailer.new_stocks(@stock_array).deliver
 	end
+
+	def show
+	end
 end
