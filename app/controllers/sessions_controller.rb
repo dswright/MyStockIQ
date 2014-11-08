@@ -3,8 +3,16 @@ class SessionsController < ApplicationController
   end
 
    def create
-   	#use find_by fucntion to get the user data from the table. Verify that the password is correct.
-    @user = User.find_by(email: params[:session][:email].downcase)
+
+    #if the email field contains an '@' symbol its a an email address, otherwise it's a username.
+    if params[:session][:email].downcase.include? "@"
+      #use find_by fucntion to get the user data from the table. Verify that the password is correct.
+      @user = User.find_by(email: params[:session][:email].downcase)
+    else
+      @user = User.find_by(username: params[:session][:email])
+    end
+
+    #authenticate is a built in ruby method that returns the user if authenticated correctly.
     if @user && @user.authenticate(params[:session][:password])
       log_in(@user)
       #calls the remember function to remember the user.

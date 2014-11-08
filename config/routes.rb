@@ -13,9 +13,13 @@ Rails.application.routes.draw do
   #in the controller.                                                
   post    'users'               =>   'users#create'
 
+  get     'users/:username'     =>   'users#show'
+
   get     'login'               =>   'sessions#new'
   post    'login'               =>   'sessions#create'
-  delete  'logout'              =>   'sessions#destroy' 
+  delete  'logout'              =>   'sessions#destroy'
+
+  get     'stocks/create'       =>   'stocks#create' 
 
 
   # The priority is based upon order of creation: first created -> highest priority.

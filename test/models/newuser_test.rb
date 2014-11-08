@@ -2,11 +2,11 @@ require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
 
-  def setup #This 'Newuser' class create a mock user with these attributes for this test.
+  def setup #This 'User' class create a mock user with these attributes for this test.
   	#the test works by running '.new' on the Newuser model, which is a default command.
   	#the password and password_confirmation are not actual columns. This password is confirmed to be the same,
   	#and then inserted into the column 'password_digest' in the users table by the bcrypt gem.
-    @user = User.new(username: "Example User", email: "something@gmail.com",
+    @user = User.new(username: "ExampleUser", email: "something@gmail.com",
     										password: "foobar", password_confirmation: "foobar")
   end
 
@@ -35,6 +35,27 @@ class UserTest < ActiveSupport::TestCase
   test "email should not be too long" do
     @user.email = "a" * 256
     assert_not @user.valid?
+  end
+
+  test "username should accept valid names only" do
+    valid_addresses = ["dylanwright", "WithCapitals"]
+    #loop through the addresses above using the .each method.
+    valid_addresses.each do |valid_username|
+      #this makes the user's emaill = to one of the emails above.
+      @user.username = valid_username
+      #use this inspect method to report on a specific element in the loop
+      assert @user.valid?, "#{valid_username.inspect} should be valid"
+                                                                    
+    end
+  end
+
+  test "username validation should reject invalid usernames" do
+    invalid_addresses = ["like#this}", "orlike$this", "or!!this",
+                           ">>>>>>this", "<<<<<<nogood", "()&*%^!@<><>\"mixed", "backslash\n"]
+    invalid_addresses.each do |invalid_username| #loop through the addresses above using the .each method.
+      @user.username = invalid_username #this makes the user's emaill = to one of the emails above.
+      assert_not @user.valid?, "#{invalid_username.inspect} should be invalid"
+    end
   end
 
   test "email validation should accept valid addresses" do

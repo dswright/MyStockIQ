@@ -2,7 +2,9 @@
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
-    <%= form_for(:user, url: users_path) do |f| %> <!-- this tells the form to return the form values via the variable :user to the users path. -->
+    <!-- this tells the form to return the form values via the variable :user to the users path. -->
+    <%= form_for(:user, url: users_path) do |f| %> 
+
       <%= f.label :username %>
       <%= f.text_field :username %>
 

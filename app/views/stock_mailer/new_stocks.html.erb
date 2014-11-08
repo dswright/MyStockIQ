@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1><%= @stock_array.count %> New Stocks Added</h1>
+    <table>
+    	<% @stock_array.each do |stock| %>
+	    	<tr><td><%= stock[:ticker_symbol] %></td>
+	    	<td><%= stock[:stock] %></td>
+	    	<td><%= stock[:exchange] %></td></tr>
+			<% end %>
+    </table>
+  </body>
+</html>

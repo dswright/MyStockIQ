@@ -3,7 +3,11 @@ class UsersController < ApplicationController
   #this method automatically loads the index view newuser/new.html.erb. 
   #And all variables with @ are available in the view.
   #the Newuser.new creates a new user from the model.
-
+  
+  def show
+    @current_user = current_user
+    @allusers = User.all
+  end
 
   def new
   	@user = User.new

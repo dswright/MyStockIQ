@@ -26,6 +26,11 @@ gem 'jbuilder',             '2.1.3'
 gem 'sdoc',                 '0.4.0', group: :doc
 gem 'rails-html-sanitizer', '1.0.1'
 
+#for speeding up csv functions.
+gem 'fastercsv', '~> 1.5.5'
+
+#for cron jobs.
+gem 'whenever', '0.9.4'
 
 group :development, :test do
 

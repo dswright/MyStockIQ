@@ -11,7 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141031195129) do
+ActiveRecord::Schema.define(version: 20141108000557) do
+
+  create_table "stocks", force: true do |t|
+    t.string   "stock"
+    t.string   "exchange"
+    t.boolean  "active"
+    t.string   "ticker_symbol"
+    t.datetime "date"
+    t.float    "daily_percent_change"
+    t.integer  "daily_volume"
+    t.float    "price_to_earnings"
+    t.float    "ytd_percent_change"
+    t.float    "daily_stock_price"
+    t.string   "stock_industry"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "stock_sector"
+  end
 
   create_table "users", force: true do |t|
     t.string   "username"

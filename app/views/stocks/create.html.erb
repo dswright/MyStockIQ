@@ -1,0 +1,9 @@
+<h1>Stock Page</h1>
+<br />
+<br />
+<h3> Here is where to put all stocks </h3>
+<table>
+<% @stock_array.each do |stock| %>
+<tr><td> <%= stock[:ticker_symbol] %></td><td> <%= stock[:stock] %></td><td> <%= stock[:exchange] %></td></tr>
+<% end %>
+</table>

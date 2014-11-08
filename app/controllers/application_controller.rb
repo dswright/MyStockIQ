@@ -2,5 +2,8 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
+  
+  #these have to be included in this file to have access to the helper files in the controller.
   include SessionsHelper
+  include StocksHelper
 end

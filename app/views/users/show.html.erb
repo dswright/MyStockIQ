@@ -1,0 +1,11 @@
+<h1>User Page for <%= @current_user.username %></h1>
+
+This is the user page for <%= @current_user.username %>
+<br />
+<br />
+<h3> Here is where to put other users </h3>
+<table>
+<% @allusers.each do |user| %>
+<tr><td> <%= user.username %></td></tr>
+<% end %>
+</table>
