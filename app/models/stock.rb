@@ -12,18 +12,17 @@ class Stock < ActiveRecord::Base
 
 	#this function is not perfectly tested. It could break without test failure.
 	def Stock.fetch_new_stocks
-		url = "http://finviz.com/export.ashx?v=111&&o=ticker"
-		Stock.delete_all
+		url = "https://s3.amazonaws.com/quandl-static-content/Ticker+CSV%27s/Stock+Exchanges/stockinfo.csv"
 		stock_array = []
 		open(url) do |f|
 			f.each_line do |line|
 				CSV.parse(line) do |row|
 					#unless the stock is already in the database.
 					unless Stock.find_by ticker_symbol: row[1]
-						unless row[1] == "CRESY" || row[1] == "HYHG"
+						unless row[4] == "Stock no longer trades"
 							#use the new_stock method to create the new stock row out of each csv file row.
 							stock_array << Stock.new_stock(row)
-						end
+						end	
 					end
 				end
 			end
@@ -34,26 +33,23 @@ class Stock < ActiveRecord::Base
 	def Stock.new_stock(row)
 		stock_hash = { 
 			stock: row[2],
-			exchange: nil,
+			exchange: row[4],
 			active: true,
-			ticker_symbol: row[1],
+			ticker_symbol: row[0],
 			date: nil,
 			daily_percent_change: nil,
-			daily_volume: row[10],
-			price_to_earnings: row[7],
+			daily_volume: nil,
+			price_to_earnings: nil,
 			ytd_percent_change: nil,
 			daily_stock_price: nil,
-			stock_industry: row[4],
-			stock_sector: row[3]
+			stock_industry: row[3],
+			stock_sector: nil
 		}
 
 		#if the new stock data is valid, make the new_stock row a new Stock model object to save to the db.
 		if new_stock = Stock.new(stock_hash)
 			#save to the stocks table.
 			new_stock.save
-			return stock_hash
-		else
-			return stock_hash = {failed: true}
 		end
 
 		#return the stockhash for creation of the stock_array.
