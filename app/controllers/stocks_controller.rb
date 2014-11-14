@@ -10,4 +10,8 @@ class StocksController < ApplicationController
 		@stock_array = Stock.fetch_new_stocks
 		StockMailer.new_stocks(@stock_array).deliver
 	end
+
+	def show
+		@stock = Stock.find_by(ticker_symbol: params[:ticker_symbol])
+	end
 end

@@ -3,23 +3,25 @@ Rails.application.routes.draw do
 
 
 #sessions new is the login page. 
-  root                               'sessions#new' 
+  root  'sessions#new' 
   
   #this sends /newuser to the newuser index function in the controller this has to be plural,
   #to fit with Ruby conventions.
-  get     'users'               =>   'users#new' 
+  get     'users'                        =>   'users#new' 
       
   #this specifies that when a post is coming into the new users page, refer to the create method
   #in the controller.                                                
-  post    'users'               =>   'users#create'
+  post    'users'                        =>   'users#create'
 
-  get     'users/:username'     =>   'users#show'
+  get     'users/:username'              =>   'users#show'
 
-  get     'login'               =>   'sessions#new'
-  post    'login'               =>   'sessions#create'
-  delete  'logout'              =>   'sessions#destroy'
+  get     'login'                        =>   'sessions#new'
+  post    'login'                        =>   'sessions#create'
+  delete  'logout'                       =>   'sessions#destroy'
 
-  get     'stocks/create'       =>   'stocks#create' 
+  get     'stocks/create'                =>   'stocks#create' 
+  get     'stocks/:ticker_symbol'         =>   'stocks#show'
+
 
 
   # The priority is based upon order of creation: first created -> highest priority.

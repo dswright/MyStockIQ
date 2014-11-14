@@ -24,7 +24,6 @@ class Stock < ActiveRecord::Base
 				end
 			end
 		end
-		
 		return stock_array
 	end
 

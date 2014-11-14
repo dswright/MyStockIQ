@@ -6,4 +6,10 @@ class StocksControllerTest < ActionController::TestCase
     #get :create
     #assert_response :success
   end
+
+  test "should get stock page" do
+  	get :show
+  	assert_response :success
+  end
+
 end

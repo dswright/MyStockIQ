@@ -1,6 +1,9 @@
 class User < ActiveRecord::Base
 	#this class has many built in methods like .new which would create a new user without any methods in here.
 	
+  #sets an association that the User will have many stream posts associated to it
+  has_many :streams
+
 	#we need to add a new 
 
 	#form validation for the username
