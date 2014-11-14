@@ -3,8 +3,10 @@ require 'test_helper'
 class StockTest < ActiveSupport::TestCase
   
   def setup
-  	#calls the stocks fixture.
-    @stock = stocks(:AAPL)
+  	@stock = {
+	  	"code" => "blah",
+	    "name" => "blah inc"
+  	}
   end
 
 #the test then checks to see if this is valid.

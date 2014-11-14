@@ -4,18 +4,7 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-AAPL: 
-  stock: "Apple Inc"
-  exchange: "NASDAQ"
-  active: true
-  ticker_symbol: AAPL
-  date: nil
-  daily_percent_change: nil
-  daily_volume: nil
-  price_to_earnings: nil
-  ytd_percent_change: nil
-  daily_stock_price: nil
-  stock_industry: "Computer Hardware"
+
 
 #
 #  column: value

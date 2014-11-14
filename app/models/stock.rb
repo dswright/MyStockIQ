@@ -1,9 +1,10 @@
 class Stock < ActiveRecord::Base
 	require 'csv'
 	require 'open-uri'
+	require 'uri'
+	require 'json'
 
 	validates :stock, 				presence: true,
-                    				format: { with: /\A([a-zA-Z0-9 _\'\"().&\/,-]+)\z/ },
 														uniqueness: {case_sensitive: false}
 
 	validates	:ticker_symbol, presence: true,
@@ -12,51 +13,65 @@ class Stock < ActiveRecord::Base
 
 	#this function is not perfectly tested. It could break without test failure.
 	def Stock.fetch_new_stocks
-		url = "http://finviz.com/export.ashx?v=111&&o=ticker"
-		Stock.delete_all
 		stock_array = []
-		open(url) do |f|
-			f.each_line do |line|
-				CSV.parse(line) do |row|
-					#unless the stock is already in the database.
-					unless Stock.find_by ticker_symbol: row[1]
-						unless row[1] == "CRESY" || row[1] == "HYHG"
-							#use the new_stock method to create the new stock row out of each csv file row.
-							stock_array << Stock.new_stock(row)
-						end
-					end
+		x = 29
+		x.times do |i|
+			puts "page #{i}"
+			if datastring = Stock.get_quandl_data(i, 0)
+				dataset = JSON.parse(datastring)
+				dataset["docs"].each do |row|
+					stock_array << Stock.new_stock(row)
 				end
 			end
 		end
+		
 		return stock_array
 	end
 
+	def Stock.get_quandl_data(i, count)
+		url = "http://www.quandl.com/api/v2/datasets.json?source_code=EOD&per_page=300&page=#{i}&auth_token=sVaP2d6ACjxmP-jM_6V-"
+		
+		if datastring = open(url).read
+			return datastring
+		else
+			count = count + 1
+			if count >= 10
+				StockMailer.stocks_failed.deliver
+				return false
+			end
+			Stock.get_quandl_data(i, count)
+		end
+	end
+
+
 	def Stock.new_stock(row)
+		code = row["code"]
+		realname = row["name"].gsub(/ \(#{code}\) Stock Prices, Dividends and Splits/,"")
+
 		stock_hash = { 
-			stock: row[2],
+			stock: realname,
 			exchange: nil,
 			active: true,
-			ticker_symbol: row[1],
+			ticker_symbol: code,
 			date: nil,
 			daily_percent_change: nil,
-			daily_volume: row[10],
-			price_to_earnings: row[7],
+			daily_volume: nil,
+			price_to_earnings: nil,
 			ytd_percent_change: nil,
 			daily_stock_price: nil,
-			stock_industry: row[4],
-			stock_sector: row[3]
+			stock_industry: nil,
+			stock_sector: nil
 		}
 
 		#if the new stock data is valid, make the new_stock row a new Stock model object to save to the db.
-		if new_stock = Stock.new(stock_hash)
+		new_stock = Stock.new(stock_hash)
 			#save to the stocks table.
-			new_stock.save
+		if new_stock.save
+			stock_hash[:failed] = false
 			return stock_hash
 		else
-			return stock_hash = {failed: true}
+			stock_hash[:failed] = true
+			return stock_hash
 		end
-
-		#return the stockhash for creation of the stock_array.
-		return stock_hash
 	end
 end
