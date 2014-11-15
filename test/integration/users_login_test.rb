@@ -25,7 +25,7 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
     #post login variables to the login form
     post login_path, session: { email: @user.email, password: "password" }
     #confirm that the user is now on the login page after logging in.
-    assert_redirected_to users_path
+    assert_redirected_to login_path
     follow_redirect!
     assert_template 'sessions/new'
     #check to confirm that on this page, there is no login link, and that there is a logout link.
@@ -39,7 +39,7 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
     #post login variables to the login form. The hash of login parameters is named 'session'.
     post login_path, session: { email: @user.username, password: "password" }
     #confirm that the user is now on the login page after logging in.
-    assert_redirected_to users_path
+    assert_redirected_to login_path
     follow_redirect!
     assert_template 'sessions/new'
     #check to confirm that on this page, there is no login link, and that there is a logout link.
@@ -51,7 +51,7 @@ class UsersLoginTest < ActionDispatch::IntegrationTest
     get login_path
     post login_path, session: { email: @user.email, password: 'password' }
     assert is_logged_in?
-    assert_redirected_to users_path
+    assert_redirected_to login_path
     follow_redirect!
     assert_template 'sessions/new'
     assert_select "a[href=?]", login_path, count: 0

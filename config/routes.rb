@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   delete  'logout'                       =>   'sessions#destroy'
 
   get     'stocks/create'                =>   'stocks#create' 
-  get     'stocks/:ticker_symbol'         =>   'stocks#show'
+  get     'stocks/:ticker_symbol'        =>   'stocks#show'
 
 
 

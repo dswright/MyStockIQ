@@ -19,7 +19,7 @@ class SessionsController < ApplicationController
       remember @user #this should update the string in the database and
       # place a cookie on the users computer that remembers them.
       flash[:success] = "Welcome to the Sample App!" 
-      redirect_to users_path
+      redirect_to login_path
     else
       flash.now[:danger] = 'Invalid email/password combination' # Not quite right!
       render 'sessions/new'

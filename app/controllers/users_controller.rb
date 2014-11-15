@@ -22,9 +22,9 @@ class UsersController < ApplicationController
       log_in(@user)
       flash[:success] = "Welcome to the Sample App!"
       #redirect to the newusers_path => defined in the routes file. 
-  		redirect_to login_path  
+  		redirect_to login_path
   	else
-  		redirect_to users_path
+  		render template: 'sessions/new'
   	end
 
 	end

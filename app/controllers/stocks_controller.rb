@@ -8,7 +8,7 @@ class StocksController < ApplicationController
 		#found in the csv file.
 		#to be run daily to get new stocks.
 		@stock_array = Stock.fetch_new_stocks
-		StockMailer.new_stocks(@stock_array).deliver
+		StockMailer.new_stocks(@stock_array).deliver_now
 	end
 
 	def show

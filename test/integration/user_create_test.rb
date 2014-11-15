@@ -17,8 +17,8 @@ class UserCreateTest < ActionDispatch::IntegrationTest
                              		password:              "valid10151",
                              		password_confirmation: "valid10151" }
     end
-    #make sure that the user ends on the newusers index page.
-    assert_template 'users/new'
+    #make sure that the user ends on the login page.
+    assert_template 'sessions/new'
   end
 
   test "valid signup information" do
@@ -38,7 +38,7 @@ class UserCreateTest < ActionDispatch::IntegrationTest
                              		password_confirmation: "valid10151" }
     end
     #make sure that the user ends on the newusers index page.
-    assert_template 'users/new'
+    assert_template 'sessions/new'
     assert is_logged_in?
   end
 

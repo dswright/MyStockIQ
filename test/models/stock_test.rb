@@ -15,4 +15,6 @@ class StockTest < ActiveSupport::TestCase
     	Stock.new_stock(@stock)
   	end
   end
+
+
 end

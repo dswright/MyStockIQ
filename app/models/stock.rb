@@ -35,7 +35,7 @@ class Stock < ActiveRecord::Base
 		else
 			count = count + 1
 			if count >= 10
-				StockMailer.stocks_failed.deliver
+				StockMailer.stocks_failed.deliver_now
 				return false
 			end
 			Stock.get_quandl_data(i, count)

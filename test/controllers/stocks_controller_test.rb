@@ -8,7 +8,8 @@ class StocksControllerTest < ActionController::TestCase
   end
 
   test "should get stock page" do
-  	get :show
+  	#passing the AAPL tickersymbol requires and 'AAPL' fixture.
+  	get :show, {ticker_symbol: "AAPL"}
   	assert_response :success
   end
 

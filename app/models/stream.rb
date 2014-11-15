@@ -11,8 +11,8 @@ class Stream < ActiveRecord::Base
   #Stream.valid? returns TRUE when:
 
   	#user_id exists
-  	#validates :user_id, presence: true
+  	validates :user_id, presence: true
 
   	#content exists and has a max length of 140 characters
-  	#validates :content, presence: true, length: {maximum: 140}
+  	validates :content, presence: true, length: {maximum: 140}
 end
