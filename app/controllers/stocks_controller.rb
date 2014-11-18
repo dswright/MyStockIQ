@@ -1,13 +1,17 @@
 class StocksController < ApplicationController
 
-	#function to pull the whole stock file and then update all records
+	#Function to pull the whole stock file and then update all records.
+	#Run daily
 	def create
 
-		#Retrive the stock array to use in the view.
-		#The fetch stocks function also pulls all the stocks from a csv file updates database with any new records 
-		#found in the csv file.
-		#to be run daily to get new stocks.
+		#Stock.fetch_new_stocks pulls the 28 pages of stock tickers from Quandl and checks for any new ticker symbols.
+		#Saves new tickers to the db.
+		#Returns list of inserted and failed inserts to the stock_array.
 		@stock_array = Stock.fetch_new_stocks
+		#Takes the array of inserted stock objects and updates them with the correct stock industry.
+		#Returns list of updated stock objects to the stock_array.
+		@stock_array[:inserted] = Stock.return_industry_array(@stock_array[:inserted])
+		#Sends an email with the array of failed and inserted stocks.
 		StockMailer.new_stocks(@stock_array).deliver_now
 	end
 

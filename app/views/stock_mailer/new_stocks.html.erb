@@ -4,22 +4,18 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h3> Completed Stock Inputs </h3>
+    <h3><%= @stock_array[:inserted].count %> Completed Stock Inputs </h3>
     <table>
-      <% @stock_array.each_with_index do |stock, index| %>
-        <% if stock[:failed] == false %>
+      <% @stock_array[:inserted].each_with_index do |stock, index| %>
           <tr><td><%= index %></td><td> <%= stock[:ticker_symbol] %></td><td><%= stock[:stock] %></td></tr>
-        <% end
-      end %>
+        <% end %>
     </table>
 
-    <h3> Failed Stock Inputs </h3>
+    <h3><%= @stock_array[:inserted].count %> Failed Stock Inputs </h3>
     <table>
-      <% @stock_array.each_with_index do |stock, index| %>
-        <% if stock[:failed] == true %>
-          <tr><td><%= index %></td><td> <%= stock[:ticker_symbol] %></td><td><%= stock[:stock] %></td></tr>
-        <% end
-      end %>
+      <% @stock_array[:failed].each_with_index do |stock, index| %>
+        <tr><td><%= index %></td><td> <%= stock[:ticker_symbol] %></td><td><%= stock[:stock] %></td></tr>
+      <% end %>
     </table>
   </body>
 </html>

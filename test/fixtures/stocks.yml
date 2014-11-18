@@ -9,5 +9,10 @@ AAPL:
   ticker_symbol: "AAPL"
   exchange: "NASDAQ"
 
+BNNY:
+  stock: "Annies Inc"
+  ticker_symbol: "BNNY"
+  stock_industry: nil
+
 #
 #  column: value

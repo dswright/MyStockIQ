@@ -1,22 +1,25 @@
 <h1>All Stocks Page</h1>
 <br />
-<br />
 
-<h3> Completed Stock Inputs </h3>
+<h3><%= @stock_array[:inserted].count %> Completed Stock Inputs </h3>
 <table>
-	<% @stock_array.each_with_index do |stock, index| %>
-		<% if stock[:failed] == false %>
-			<tr><td><%= index %></td><td> <%= stock[:ticker_symbol] %></td><td><%= stock[:stock] %></td></tr>
-		<% end
-	end %>
+	<% @stock_array[:inserted].each_with_index do |stock, index| %>
+			<tr>
+				<td><%= index %></td>
+				<td> <%= stock[:ticker_symbol] %></td>
+				<td><%= stock[:stock] %></td>
+				<td><%= stock[:stock_industry] %></td>
+			</tr>
+	<% end %>
 </table>
 
-<h3> Failed Stock Inputs </h3>
+<h3><%= @stock_array[:failed].count %> Failed Stock Inputs </h3>
 <table>
-	<% @stock_array.each_with_index do |stock, index| %>
-		<% if stock[:failed] == true %>
-			<tr><td><%= index %></td><td> <%= stock[:ticker_symbol] %></td><td><%= stock[:stock] %></td></tr>
-		<% end
-	end %>
+	<% @stock_array[:failed].each_with_index do |stock, index| %>
+		<tr>
+			<td><%= index %></td>
+			<td><%= stock[:ticker_symbol] %></td>
+			<td><%= stock[:stock] %></td>
+		</tr>
+	<% end %>
 </table>
-
