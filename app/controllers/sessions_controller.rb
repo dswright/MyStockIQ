@@ -18,8 +18,9 @@ class SessionsController < ApplicationController
       #calls the remember function to remember the user.
       remember @user #this should update the string in the database and
       # place a cookie on the users computer that remembers them.
-      flash[:success] = "Welcome to the Sample App!" 
+      flash[:success] = "Welcome to Stock Hero" 
       redirect_to login_path
+
     else
       flash.now[:danger] = 'Invalid email/password combination' # Not quite right!
       render 'sessions/new'

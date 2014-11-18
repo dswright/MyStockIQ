@@ -7,6 +7,11 @@ class UsersController < ApplicationController
   def show
     @current_user = current_user
     @allusers = User.all
+
+    @user = User.find_by(username: params[:username])
+
+    #all user posts are assigned to @posts, with the posts split by page to prevent displaying too many posts.
+    @posts = @user.streams
   end
 
   def new
@@ -20,13 +25,12 @@ class UsersController < ApplicationController
     #this saves the new user to the database.
   	if @user.save 
       log_in(@user)
-      flash[:success] = "Welcome to the Sample App!"
+      flash[:success] = "Welcome to the Stock Hero"
       #redirect to the newusers_path => defined in the routes file. 
   		redirect_to login_path
   	else
   		render template: 'sessions/new'
   	end
-
 	end
 
   private

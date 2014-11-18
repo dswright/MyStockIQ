@@ -6,4 +6,15 @@ class ApplicationController < ActionController::Base
   #these have to be included in this file to have access to the helper files in the controller.
   include SessionsHelper
   include StocksHelper
+
+  private
+
+
+  	#Confirms logged in user. Used in both 'Users' and 'Streams controllers'
+  	def logged_in_user
+  		unless logged_in?
+  			flash[:danger] = "Please log in."
+  			redirect_to login_url
+  		end
+  	end
 end

@@ -14,20 +14,20 @@
 ActiveRecord::Schema.define(version: 20141109191321) do
 
   create_table "stocks", force: true do |t|
-    t.string   "stock",                limit: 255
-    t.string   "exchange",             limit: 255
+    t.string   "stock"
+    t.string   "exchange"
     t.boolean  "active"
-    t.string   "ticker_symbol",        limit: 255
+    t.string   "ticker_symbol"
     t.datetime "date"
     t.float    "daily_percent_change"
     t.integer  "daily_volume"
     t.float    "price_to_earnings"
     t.float    "ytd_percent_change"
     t.float    "daily_stock_price"
-    t.string   "stock_industry",       limit: 255
+    t.string   "stock_industry"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "stock_sector",         limit: 255
+    t.string   "stock_sector"
   end
 
   create_table "streams", force: true do |t|
@@ -41,12 +41,12 @@ ActiveRecord::Schema.define(version: 20141109191321) do
   add_index "streams", ["user_id"], name: "index_streams_on_user_id"
 
   create_table "users", force: true do |t|
-    t.string   "username",        limit: 255
-    t.string   "email",           limit: 255
+    t.string   "username"
+    t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "password_digest", limit: 255
-    t.string   "remember_digest", limit: 255
+    t.string   "password_digest"
+    t.string   "remember_digest"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

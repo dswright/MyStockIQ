@@ -3,6 +3,24 @@
 This is the user page for <%= @current_user.username %>
 <br />
 <br />
+
+<!-- DISPLAY USER POSTS -->
+<div class = "col-md-8">
+	<% ##Does not display if user streams don't exist %>
+	<% if @user.streams.any? %>
+
+		<% ## Diplay Post Count %>
+		<h3> Posts (<%= @user.streams.count %>)</h3>
+		<ol class = "microposts">
+			<%= render @posts %>
+		</ol>
+
+		<% ## Splits the posts in pages to prevent displaying too many posts %>
+		
+	<% end %>
+</div>
+
+
 <h3> Here is where to put other users </h3>
 <table>
 <% @allusers.each do |user| %>
