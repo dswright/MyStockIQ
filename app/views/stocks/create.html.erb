@@ -3,14 +3,17 @@
 
 <h3><%= @stock_array[:inserted].count %> Completed Stock Inputs </h3>
 <table>
-	<% @stock_array[:inserted].each_with_index do |stock, index| %>
+	<% @stock_array[:inserted].each_with_index do |stock, index| 
+		if stock != nil %>
 			<tr>
 				<td><%= index %></td>
 				<td> <%= stock[:ticker_symbol] %></td>
 				<td><%= stock[:stock] %></td>
 				<td><%= stock[:stock_industry] %></td>
+				<td><%= stock[:price_to_earnings] %></td>
 			</tr>
-	<% end %>
+		<% end
+		end %>
 </table>
 
 <h3><%= @stock_array[:failed].count %> Failed Stock Inputs </h3>

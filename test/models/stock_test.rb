@@ -9,11 +9,7 @@ class StockTest < ActiveSupport::TestCase
   	}
     #this should sucessfully update because BNNY exists in both the industries list and is in the db.
     @successful_inserted_stock_array = [
-      {ticker_symbol:"BNNY", stock:"Annies inc", stock_industry: nil}
-    ]
-    #this ticker will not be in the stock database, so it will not match 
-    @failed_inserted_stock_array = [
-      {ticker_symbol:"BLAH", stock:"Annies inc", stock_industry: nil}
+      {ticker_symbol:"BNNY", stock:"Annies inc", stock_industry: nil, price_to_earnings: nil}
     ]
   end
 
@@ -41,6 +37,11 @@ class StockTest < ActiveSupport::TestCase
     industry_update_array = Stock.return_industry_array(@successful_inserted_stock_array)
     assert_not industry_update_array.empty?
     assert industry_update_array[0][:stock_industry] == "Retail Store"
+  end
+
+  test "should return array with pe ratio" do
+    pe_update_array = Stock.fetch_pe(@successful_inserted_stock_array)
+    assert_not pe_update_array[0][:price_to_earnings].empty?
 
   end
 
