@@ -12,6 +12,9 @@ class UsersController < ApplicationController
 
     #all user posts are assigned to @posts, with the posts split by page to prevent displaying too many posts.
     @posts = @user.streams
+
+    #creates post variable to be used to set up the post creation form (see app/views/shared folder)
+    @post = current_user.streams.build if logged_in?
   end
 
   def new
@@ -24,11 +27,12 @@ class UsersController < ApplicationController
   	@user = User.new(user_params)
     #this saves the new user to the database.
   	if @user.save 
-      log_in(@user)
+      log_in @user
       flash[:success] = "Welcome to the Stock Hero"
       #redirect to the newusers_path => defined in the routes file. 
-  		redirect_to login_path
+  		redirect_to username_path(@user)
   	else
+      flash.now[:danger] = 'Invalid email/password combination'
   		render template: 'sessions/new'
   	end
 	end

@@ -4,7 +4,19 @@ This is the user page for <%= @current_user.username %>
 <br />
 <br />
 
-<!-- DISPLAY USER POSTS -->
+<!-- DISPLAY USER INFO & POST FORM -->
+	<div class="row">
+		<aside class="col-md-4">
+			<section class="user_info">
+				<%= render 'shared/user_info' %>
+			</section>
+			<section class="post_form">
+				<%= render 'shared/stream_form' %>
+			</section>
+		</aside>
+	</div>
+
+<!-- DISPLAY ALL USER POSTS -->
 <div class = "col-md-8">
 	<% ##Does not display if user streams don't exist %>
 	<% if @user.streams.any? %>
