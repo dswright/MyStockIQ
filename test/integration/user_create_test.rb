@@ -32,13 +32,12 @@ class UserCreateTest < ActionDispatch::IntegrationTest
     assert_difference 'User.count', 1 do
     
     	#this posts to the newusers path, with the form data in user:. 					
-    	post_via_redirect users_path, user: { username:  "isnowvalid",  
+    	post users_path, user: { username:  "isnowvalid",  
                              		email: "andnowinvalid@gmail.com",
                              		password:              "valid10151",
                              		password_confirmation: "valid10151" }
     end
-    #make sure that the user ends on the newusers index page.
-    assert_template 'sessions/new'
+
     assert is_logged_in?
   end
 

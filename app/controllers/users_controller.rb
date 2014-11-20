@@ -30,7 +30,7 @@ class UsersController < ApplicationController
       log_in @user
       flash[:success] = "Welcome to the Stock Hero"
       #redirect to the newusers_path => defined in the routes file. 
-  		redirect_to username_path(@user)
+  		redirect_to "users/#{@user.username}/"
   	else
       flash.now[:danger] = 'Invalid email/password combination'
   		render template: 'sessions/new'
