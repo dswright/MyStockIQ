@@ -37,6 +37,10 @@ gem 'fastercsv', '~> 1.5.5'
 #for cron jobs.
 gem 'whenever', '0.9.4'
 
+gem 'sidekiq'
+gem 'sinatra', require: false
+gem 'slim'
+
 group :development, :test do
 
 	# Use sqlite3 as the database for Active Record

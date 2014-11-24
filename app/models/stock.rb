@@ -12,6 +12,7 @@ class Stock < ActiveRecord::Base
 
   #this function is not perfectly tested. It could break without test failure.
   def Stock.fetch_new_stocks
+    Stock.delete_all
     stock_array = {}
     stock_array[:failed] = []
     stock_array[:inserted] = []
