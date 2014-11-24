@@ -29,11 +29,13 @@ class UsersController < ApplicationController
   	if @user.save 
       log_in @user
       flash[:success] = "Welcome to the Stock Hero"
-      #redirect to the newusers_path => defined in the routes file. 
-  		redirect_to "users/#{@user.username}/"
+
+      #redirect to user profile page
+  		redirect_to user_profile
+
   	else
-      flash.now[:danger] = 'Invalid email/password combination'
-  		render template: 'sessions/new'
+      flash.now[:danger] = 'Invalid Form'
+  		render 'sessions/new'
   	end
 	end
 

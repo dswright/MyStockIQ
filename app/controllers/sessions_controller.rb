@@ -24,7 +24,7 @@ class SessionsController < ApplicationController
 
 
       flash[:success] = "Welcome to Stock Hero" 
-      redirect_to "/users/#{@user.username}/"
+      redirect_to user_profile
 
     else
       flash.now[:danger] = 'Invalid email/password combination' # Not quite right!
