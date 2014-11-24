@@ -18,12 +18,14 @@ This is the user page for <%= @current_user.username %>
 
 <!-- DISPLAY ALL USER POSTS -->
 <div class = "col-md-8">
+
 	<% ##Does not display if user streams don't exist %>
 	<% if @user.streams.any? %>
 
 		<% ## Diplay Post Count %>
 		<h3> Posts (<%= @user.streams.count %>)</h3>
 		<ol class = "microposts">
+		<% # Renders each post in @posts variable with streams view partial %>
 			<%= render @posts %>
 		</ol>
 
@@ -32,10 +34,3 @@ This is the user page for <%= @current_user.username %>
 	<% end %>
 </div>
 
-
-<h3> Here is where to put other users </h3>
-<table>
-<% @allusers.each do |user| %>
-<tr><td> <%= user.username %></td></tr>
-<% end %>
-</table>
