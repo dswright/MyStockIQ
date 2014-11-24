@@ -11,7 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141109191321) do
+ActiveRecord::Schema.define(version: 20141124033324) do
+
+  create_table "stockprices", force: true do |t|
+    t.string   "ticker_symbol"
+    t.datetime "date"
+    t.float    "open_price"
+    t.float    "close_price"
+    t.integer  "volume"
+    t.integer  "split"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "stockprices", ["date"], name: "index_stockprices_on_date"
+  add_index "stockprices", ["ticker_symbol"], name: "index_stockprices_on_ticker_symbol"
 
   create_table "stocks", force: true do |t|
     t.string   "stock",                limit: 255
@@ -29,6 +43,9 @@ ActiveRecord::Schema.define(version: 20141109191321) do
     t.datetime "updated_at"
     t.string   "stock_sector",         limit: 255
   end
+
+  add_index "stocks", ["active"], name: "index_stocks_on_active"
+  add_index "stocks", ["ticker_symbol"], name: "index_stocks_on_ticker_symbol"
 
   create_table "streams", force: true do |t|
     t.text     "content"
