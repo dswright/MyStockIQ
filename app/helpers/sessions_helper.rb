@@ -14,6 +14,7 @@ module SessionsHelper
     cookies.permanent[:remember_token] = remember_token
   end
 
+
   def forget(user)
     User.forget(user)
     cookies.delete(:user_id)
@@ -36,6 +37,10 @@ module SessionsHelper
       end
     end
   end
+
+  def current_user?(user)
+    user == current_user
+  end
   
   def logged_in?
     !current_user.nil?
@@ -46,6 +51,11 @@ module SessionsHelper
     forget(current_user)
     session.delete(:user_id)
     @current_user = nil
+  end
+
+  #Path to user profile page
+  def user_profile
+    "/users/#{current_user.username}/"
   end
 
 end

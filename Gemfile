@@ -2,19 +2,24 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails',                '4.1.6'
+gem 'rails',                '4.2.0.beta4'
 
 #add bcrypt for the password encryption
 gem 'bcrypt',               '3.1.7'
 
+gem 'faker',				'1.4.2'
+
 # Use SCSS for stylesheets
 gem 'sass-rails',           '5.0.0.beta1'
+gem 'bootstrap-sass',		'3.2.0.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier',             '2.5.3'
 # Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails',         '4.0.1'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer',  platforms: :ruby
+
+gem 'json', '~> 1.8.1'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails',         '3.1.2'
@@ -31,6 +36,10 @@ gem 'fastercsv', '~> 1.5.5'
 
 #for cron jobs.
 gem 'whenever', '0.9.4'
+
+gem 'sidekiq'
+gem 'sinatra', require: false
+gem 'slim'
 
 group :development, :test do
 

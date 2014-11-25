@@ -11,32 +11,59 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141108000557) do
+ActiveRecord::Schema.define(version: 20141124033324) do
+
+  create_table "stockprices", force: true do |t|
+    t.string   "ticker_symbol"
+    t.datetime "date"
+    t.float    "open_price"
+    t.float    "close_price"
+    t.integer  "volume"
+    t.integer  "split"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "stockprices", ["date"], name: "index_stockprices_on_date"
+  add_index "stockprices", ["ticker_symbol"], name: "index_stockprices_on_ticker_symbol"
 
   create_table "stocks", force: true do |t|
-    t.string   "stock"
-    t.string   "exchange"
+    t.string   "stock",                limit: 255
+    t.string   "exchange",             limit: 255
     t.boolean  "active"
-    t.string   "ticker_symbol"
+    t.string   "ticker_symbol",        limit: 255
     t.datetime "date"
     t.float    "daily_percent_change"
     t.integer  "daily_volume"
     t.float    "price_to_earnings"
     t.float    "ytd_percent_change"
     t.float    "daily_stock_price"
-    t.string   "stock_industry"
+    t.string   "stock_industry",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "stock_sector"
+    t.string   "stock_sector",         limit: 255
   end
 
+  add_index "stocks", ["active"], name: "index_stocks_on_active"
+  add_index "stocks", ["ticker_symbol"], name: "index_stocks_on_ticker_symbol"
+
+  create_table "streams", force: true do |t|
+    t.text     "content"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "streams", ["user_id", "created_at"], name: "index_streams_on_user_id_and_created_at"
+  add_index "streams", ["user_id"], name: "index_streams_on_user_id"
+
   create_table "users", force: true do |t|
-    t.string   "username"
-    t.string   "email"
+    t.string   "username",        limit: 255
+    t.string   "email",           limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "password_digest"
-    t.string   "remember_digest"
+    t.string   "password_digest", limit: 255
+    t.string   "remember_digest", limit: 255
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

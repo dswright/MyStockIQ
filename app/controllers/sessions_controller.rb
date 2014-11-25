@@ -14,12 +14,18 @@ class SessionsController < ApplicationController
 
     #authenticate is a built in ruby method that returns the user if authenticated correctly.
     if @user && @user.authenticate(params[:session][:password])
-      log_in(@user)
+
+      #uses log_in() method from 'Session Helper'
+      log_in @user
+
       #calls the remember function to remember the user.
       remember @user #this should update the string in the database and
       # place a cookie on the users computer that remembers them.
-      flash[:success] = "Welcome to the Sample App!" 
-      redirect_to users_path
+
+
+      flash[:success] = "Welcome to Stock Hero" 
+      redirect_to user_profile
+
     else
       flash.now[:danger] = 'Invalid email/password combination' # Not quite right!
       render 'sessions/new'

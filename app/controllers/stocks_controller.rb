@@ -1,16 +1,13 @@
 class StocksController < ApplicationController
 
-	#function to pull the whole stock file and then update all records
+	#Function to pull the whole stock file and then update all records.
+	#Run daily
 	def create
-
-		#Retrive the stock array to use in the view.
-		#The fetch stocks function also pulls all the stocks from a csv file updates database with any new records 
-		#found in the csv file.
-		#to be run daily to get new stocks.
-		@stock_array = Stock.fetch_new_stocks
-		StockMailer.new_stocks(@stock_array).deliver
+		StocksWorker.perform_async
 	end
 
 	def show
+		@stock = Stock.find_by(ticker_symbol: params[:ticker_symbol])
 	end
 end
+ 

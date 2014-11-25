@@ -1,0 +1,2 @@
+module StockpricesHelper
+end

@@ -3,6 +3,7 @@
 This is the user page for <%= @current_user.username %>
 <br />
 <br />
+<<<<<<< HEAD
 <h3> Here is where to put other users </h3>
 <table>
 <% @allusers.each do |user| %>
@@ -114,3 +115,36 @@ This is the user page for <%= @current_user.username %>
     </div>
   </div>
 <div class = "stock-page-aside col-sm-8">
+=======
+
+<!-- DISPLAY USER INFO & POST FORM -->
+	<div class="row">
+		<aside class="col-md-4">
+			<section class="user_info">
+				<%= render 'shared/user_info' %>
+			</section>
+			<section class="post_form">
+				<%= render 'shared/stream_form' %>
+			</section>
+		</aside>
+	</div>
+
+<!-- DISPLAY ALL USER POSTS -->
+<div class = "col-md-8">
+
+	<% ##Does not display if user streams don't exist %>
+	<% if @user.streams.any? %>
+
+		<% ## Diplay Post Count %>
+		<h3> Posts (<%= @user.streams.count %>)</h3>
+		<ol class = "microposts">
+		<% # Renders each post in @posts variable with streams view partial %>
+			<%= render @posts %>
+		</ol>
+
+		<% ## Splits the posts in pages to prevent displaying too many posts %>
+		
+	<% end %>
+</div>
+
+>>>>>>> a8f10fb6bbaca5c8e4ee09139fe9217990d71a42
