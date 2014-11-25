@@ -1,3 +1,820 @@
 // Place all the styles related to the stocks controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+
+
+/* Stock details ------------------------------------*/
+
+.constrainer {
+  width: 360px;
+  margin: auto;
+}
+
+.stock-container {
+  display: block;
+  height: 190px;
+  background-color: #fff;
+  box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.2);
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 15px;
+  padding-left: 18px;
+  padding-right: 5px;
+}
+
+.stock-ticker {
+  font-size: 39px;
+  text-transform: uppercase;
+}
+
+.stock-ticker-price {
+  margin-top: 2px;
+}
+
+.stock-ticker-price p {
+  margin-top: 3px;
+  margin-left: 15px;
+  font-size: 14px;
+}
+
+.stock-ticker-detail-header {
+  margin-top: 15px;
+  font-size: 11px;
+}
+
+.stock-ticker-detail-number {
+  margin-top: 5px;
+  font-size: 14px;
+}
+
+
+/* Stock Page Prediction Form ------------------------------------*/
+
+
+.stock-page-prediction-box {
+  display: block;
+  height: 339px;
+  background-color: #fff;
+  box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.2);
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 15px;
+  padding-left: 18px;
+  padding-right: 5px;
+}
+
+.stock-page-prediction-header {
+  text-transform: uppercase;
+  font-size: 11px;
+  font-weight: bold;
+  margin-bottom: 0px;
+}
+
+.stock-page-prediction-field {
+  margin-bottom: 15px;
+  padding: 3px 12px;
+  background: #edf1f5;
+  font-size: 14px;
+  border: 0px solid #dbdbdb;
+  width: 270px;
+  height: 39px;
+  border-radius: 3px 3px 3px 3px;
+}
+
+.stock-page-comment-field {
+  padding: 3px 12px 60px;
+  background: #edf1f5;
+  border: 0px solid #dbdbdb;
+  width: 270px;
+  height: 90px;
+  border-radius: 3px 3px 3px 3px;
+}
+
+.stock-page-comment-field {
+  display: block;
+  font-weight: normal;
+  font-size: 14px;
+  padding-top: 10px;
+  color: #c2c2c2;
+  box-shadow: none;
+}
+
+.stock-page-comment-field:focus {
+  outline: none;
+}
+
+.stock-page-prediction-submit-btn {
+  margin-top: 20px;
+  text-align: center;
+  width: 130px;
+  height: 39px;
+  padding: 4px 14px;
+  color: #FFF;
+  background-color: #3a4c5e;
+  font-family: helvetica neue;
+  font-size: 10px;
+  text-decoration: none;
+  text-transform: uppercase;
+  border-radius: 3px;
+
+  -webkit-transition: background-color 200ms;
+  -moz-transition: background-color 200ms;
+  -o-transition: background-color 200ms;
+  transition: background-color 200ms;
+}
+
+.stock-page-prediction-submit-btn:hover {
+  color: #FFF;
+  background-color: #2a3744;
+  text-decoration: none;
+}
+
+.stock-page-comment-submit-btn {
+  display: none;
+}
+
+.stock-page-comment-box {
+  display: block;
+  height: 160px;
+  background-color: #fff;
+  box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.2);
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 15px;
+  padding-left: 18px;
+  padding-right: 5px;
+}
+
+.stock-page-comment-header {
+  text-transform: uppercase;
+  font-size: 11px;
+  font-weight: bold;
+  margin-bottom: 0px;
+}
+
+
+/* Stock Page Prediction Not Logged In Box ------------------------*/
+
+.stock-page-prediction-loggedout-box {
+  display: block;
+  height: 115px;
+  background-color: #fff;
+  box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.2);
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 15px;
+  padding-left: 18px;
+  padding-right: 5px;
+}
+
+
+.stock-page-prediction-login-btn {
+  margin-top: 21px;
+  text-align: center;
+  width: 130px;
+  height: 39px;
+  padding: 4px 14px;
+  padding-top: 10px;
+  color: #FFF;
+  background-color: #3a4c5e;
+  font-family: helvetica neue;
+  font-size: 10px;
+  text-decoration: none;
+  text-transform: uppercase;
+  border-radius: 3px;
+
+  -webkit-transition: background-color 200ms;
+  -moz-transition: background-color 200ms;
+  -o-transition: background-color 200ms;
+  transition: background-color 200ms;
+}
+
+.stock-page-prediction-login-btn:hover {
+  color: #FFF;
+  background-color: #2a3744;
+  text-decoration: none;
+}
+
+/* Stock Page Open Prediction Box ------------------------------------*/
+
+
+.stock-page-open-prediction-box {
+  display: block;
+  height: 160px;
+  background-color: #fff;
+  box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.2);
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 15px;
+  padding-left: 18px;
+  padding-right: 5px;
+}
+
+.stock-page-comment-box form {
+  margin-top: 15px;
+}
+
+.stock-page-cancel-prediction-btn {
+  margin-top: 20px;
+  text-align: center;
+  width: 190px;
+  height: 39px;
+  padding: 4px 14px;
+  padding-top: 10px;
+  color: #FFF;
+  background-color: #3a4c5e;
+  font-family: helvetica neue;
+  font-size: 10px;
+  text-decoration: none;
+  text-transform: uppercase;
+  border-radius: 3px;
+
+  -webkit-transition: background-color 200ms;
+  -moz-transition: background-color 200ms;
+  -o-transition: background-color 200ms;
+  transition: background-color 200ms;
+}
+
+.stock-page-cancel-prediction-btn:hover {
+  color: #FFF;
+  background-color: #2a3744;
+  text-decoration: none;
+}
+
+
+/* Cancel Prediction Modal ------------------------------------*/
+
+
+.cancel-modal-content {
+  max-width: 460px;
+  margin: auto;
+}
+
+.cancel-modal-body {
+  padding-top: 3px;
+}
+
+.cancel-modal-header {
+  height: 60px;
+}
+
+.cancel-modal-header h2 {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.cancel-modal-close-btn {
+  display: none;
+}
+
+.cancel-modal-comment-field {
+  margin-top: 5px;
+  margin-left: 15px;
+  padding: 3px 12px;
+  background: #edf1f5;
+  border: 0px solid #dbdbdb;
+  width: 290px;
+  height: 90px;
+  border-radius: 3px 3px 3px 3px;
+}
+
+.cancel-modal-comment-field {
+  display: block;
+  font-weight: normal;
+  font-size: 12px;
+  padding-top: 10px;
+  color: #c2c2c2;
+  box-shadow: none;
+}
+
+.cancel-modal-comment-field:focus {
+  outline: none;
+}
+
+.cancel-modal-submit-btn {
+  margin-top: 20px;
+  margin-left: 15px;
+  text-align: center;
+  width: 130px;
+  height: 39px;
+  padding: 4px 14px;
+  color: #FFF;
+  background-color: #3a4c5e;
+  font-family: helvetica neue;
+  font-size: 10px;
+  text-decoration: none;
+  text-transform: uppercase;
+  border-radius: 3px;
+
+  -webkit-transition: background-color 200ms;
+  -moz-transition: background-color 200ms;
+  -o-transition: background-color 200ms;
+  transition: background-color 200ms;
+}
+
+.cancel-modal-submit-btn:hover {
+  color: #FFF;
+  background-color: #2a3744;
+  text-decoration: none;
+}
+
+
+
+
+/* Graph ------------------------------------*/
+
+.graph-container {
+  display: block;
+  height: 220px;
+  background-color: #fff;
+  box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.2);
+
+  margin-top: 1px;
+  padding-top: 15px;
+}
+
+.graph-container #container {
+  width: 100%;
+}
+
+.graph-txt {
+  text-align: center;
+  vertical-align: center;
+}
+
+.graph-buttons {
+  width: 309px;
+  margin-top: 5px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.graph-buttons button {
+  margin-left: 5px;
+  margin-bottom: 10px;
+  width: 50px;
+  height: 30px;
+  text-align: center;
+  padding: 4px 14px;
+  color: #FFF;
+  background-color: #3a4c5e;
+  box-shadow: none;
+  font-family: helvetica neue;
+  font-size: 10px;
+  text-decoration: none;
+  text-transform: uppercase;
+  border-radius: 3px;
+  border: 0px;
+
+  -webkit-transition: background-color 200ms;
+  -moz-transition: background-color 200ms;
+  -o-transition: background-color 200ms;
+  transition: background-color 200ms;
+}
+
+.graph-buttons button:hover {
+  color: #FFF;
+  background-color: #2a3744;
+  text-decoration: none;
+}
+
+
+/* Prediction Buttons - Mobile ------------------------------------*/
+
+.prediction-buttons-container {
+  display: block;
+  height: 99px;
+  background-color: #fff;
+  box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.2);
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1px;
+  margin-bottom: 1px;
+  padding-top: 0px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.prediction-btn-stock-page {
+  margin-top: 30px;
+  margin-left: 5px;
+  text-align: center;
+  width: 140px;
+  height: 39px;
+  padding: 4px 14px;
+  color: #FFF;
+  background-color: #3a4c5e;
+  font-family: helvetica neue;
+  font-size: 10px;
+  text-decoration: none;
+  text-transform: uppercase;
+  border-radius: 3px;
+
+  -webkit-transition: background-color 200ms;
+  -moz-transition: background-color 200ms;
+  -o-transition: background-color 200ms;
+  transition: background-color 200ms;
+}
+
+.prediction-btn-stock-page:hover {
+  color: #FFF;
+  background-color: #2a3744;
+  text-decoration: none;
+}
+
+/* Prediction Post ------------------------------------*/
+
+.prediction-post {
+  display: block;
+  height: 139px;
+  background-color: #fff;
+  box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.2);
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 20px;
+  padding-left: 5px;
+  padding-right: 15px;
+  font-size: 12px;
+}
+
+.prediction-post-mug-container img {
+  width: 100%;
+  border-radius: 3px;
+  padding-left: 12px;
+}
+
+.prediction-post-txt-container {
+  padding-left: 0px;
+}
+
+.prediction-txt, .comment-txt {
+  margin-top: 7px;
+}
+
+.prediction-txt span {
+  color: red;
+}
+
+.prediction-post-txt-icons {
+  margin-top: 15px;
+  color: #c0ccdb;
+}
+
+.prediction-post-txt-icons i {
+  margin-right: 39px;
+}
+
+
+
+/* Prediction Post Reply ------------------------------------*/
+
+.prediction-post-reply {
+  display: block;
+  height: 139px;
+  background-color: #fff;
+  box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.2);
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 20px;
+  padding-left: 5px;
+  padding-right: 15px;
+  font-size: 12px;
+}
+
+
+/* Prediction Post Agree ------------------------------------*/
+
+.prediction-post-agree {
+  display: block;
+  height: 139px;
+  background-color: #fff;
+  box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.2);
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 20px;
+  padding-left: 5px;
+  padding-right: 15px;
+  font-size: 12px;
+}
+
+.agree-thumb-box {
+  border: 1px solid green;
+  border-radius: 3px;
+  width: 23px;
+  height: 21px;
+  padding-top: 3px;
+  padding-left: 4px;
+  margin-bottom: 6px;
+  margin-left: 32px;
+}
+
+.agree-thumb-box i {
+  color: green;
+}
+
+.agree-txt {
+  margin-top: 5px;
+  margin-bottom: 8px;
+}
+
+
+
+/* Prediction Post Agree ------------------------------------*/
+
+.prediction-post-disagree {
+  display: block;
+  height: 139px;
+  background-color: #fff;
+  box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.2);
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 20px;
+  padding-left: 5px;
+  padding-right: 15px;
+  font-size: 12px;
+}
+
+.disagree-thumb-box {
+  border: 1px solid red;
+  border-radius: 3px;
+  width: 23px;
+  height: 21px;
+  padding-top: 3px;
+  padding-left: 4px;
+  margin-bottom: 6px;
+  margin-left: 32px;
+}
+
+.disagree-thumb-box i {
+  color: red;
+}
+
+.disagree-txt {
+  margin-top: 5px;
+  margin-bottom: 8px;
+}
+
+
+/* Prediction Post Comment ------------------------------------*/
+
+.prediction-post-comment {
+  display: block;
+  height: 139px;
+  background-color: #fff;
+  box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.2);
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 20px;
+  padding-left: 5px;
+  padding-right: 15px;
+  font-size: 12px;
+}
+
+/* Hide Stock Page Top Analysts ------------------------------------*/
+
+.stock-page-top-analysts {
+  display: none;
+}
+
+
+@media only screen and (min-width: 768px) {
+
+.constrainer {
+  width: 768px;
+  margin: auto;
+}
+
+.main-aside {
+  padding-right: 5px;
+}
+
+/* Stock details ------------------------------------*/
+
+.stock-container {
+  display: block;
+  height: 190px;
+  background-color: #fff;
+  box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.2);
+  padding-top: 15px;
+  padding-left: 15px;
+  padding-right: 10px;
+}
+
+.stock-ticker {
+  font-size: 33px;
+}
+
+.stock-ticker-price {
+  margin-left: 30px;
+  margin-top: 3px;
+  font-size: 12px;
+}
+
+
+/* Graph ------------------------------------*/
+
+
+.graph-container {
+  display: block;
+  height: 253px;
+  background-color: #fff;
+  box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.2);
+  margin-top: 1px;
+  padding-top: 15px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.graph-buttons {
+  width: 309px;
+  margin-top: 5px;
+  margin-left: 5px;
+}
+
+.graph-txt {
+  text-align: center;
+  vertical-align: center;
+}
+
+/* Stock Page Prediction Form ---------------------*/
+
+
+.stock-page-prediction-field {
+  width: 190px;
+}
+
+.stock-page-comment-field {
+  width: 190px;
+}
+
+
+/* Hide Mobile Prediction Buttons ------------*/
+
+.prediction-buttons-container {
+  display: none;
+}
+
+
+/* Prediction Post  ----------*/
+
+
+.prediction-post-mug-container img {
+  width: 90%;
+  margin-left: 0px;
+  border-radius: 3px;
+  padding-left: 12px;
+}
+
+.agree-thumb-box, .disagree-thumb-box {
+  margin-left: 29px;
+}
+
+
+/* Stock Page Top Analysts  ----------*/
+
+.stock-page-top-analysts {
+  display: block;
+  background-color: #fff;
+  box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.2);
+  padding-top: 15px;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.stock-page-top-analysts-header {
+  text-transform: uppercase;
+  font-size: 11px;
+  font-weight: bold;
+  padding-left: 15px;
+  margin-bottom: 12px;
+}
+
+.stock-page-top-analysts a {
+  display: block;
+  padding-left: 15px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.stock-page-top-analysts a:hover {
+  background-color: #f2f5f7;
+}
+
+.top-analysts-mug-container img {
+  width: 80%;
+}
+
+.top-analysts-txt-container p {
+  font-size: 12px;
+  padding-left: 0px;
+}
+
+}
+
+
+@media only screen and (min-width: 991px) {
+
+.constrainer {
+  width: 970px;
+  margin: auto;
+}
+
+.main-aside {
+  padding-right: 7px;
+}
+
+.stock-ticker-price {
+  margin-left: 15px;
+}
+
+/* Stock Page Prediction Form ---------------------*/
+
+
+.stock-page-prediction-field {
+  width: 260px;
+}
+
+.stock-page-comment-field {
+  width: 260px;
+}
+
+
+/* Stock Page Top Analysts  -------------------------*/
+
+
+.top-analysts-mug-container img {
+  width: 70%;
+}
+
+
+
+/* Prediction Post ---------------------------*/
+
+.prediction-post-mug-container img {
+  width: 80%;
+  margin-left: 0px;
+  border-radius: 3px;
+  padding-left: 12px;
+}
+
+.agree-thumb-box, .disagree-thumb-box {
+  margin-left: 59px;
+}
+
+
+/* Graph ------------------------------------*/
+
+.graph-container {
+  display: block;
+  height: 309px;
+  background-color: #fff;
+  box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.2);
+  margin-top: 1px;
+  padding-top: 15px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+
+}
+
+
+
+@media only screen and (min-width: 1200px) {
+
+
+
+/* Stock Page Prediction Form ---------------------*/
+
+
+.stock-page-prediction-field {
+  width: 285px;
+}
+
+.stock-page-comment-field {
+  width: 285px;
+}
+
+
+
+.constrainer {
+  width: 1050px;
+  margin: auto;
+}
+
+.prediction-post-mug-container img {
+  width: 60%;
+  margin-left: 18px;
+  border-radius: 3px;
+  padding-left: 0px;
+}
+
+
+}
+
+
+
+
+
