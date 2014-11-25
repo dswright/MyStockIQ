@@ -1,25 +1,61 @@
-<h1>Sign up</h1>
 
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
-    <!-- this tells the form to return the form values via the variable :user to the users path. -->
-    <%= form_for(:user, url: users_path) do |f| %> 
 
+<<<<<<< HEAD
+<div class="login-main">
+=======
 
 
       <%= f.label :username %>
       <%= f.text_field :username %>
+>>>>>>> a8f10fb6bbaca5c8e4ee09139fe9217990d71a42
 
-      <%= f.label :email %>
-      <%= f.text_field :email %>
+    <div class="logo-and-tabs">
+        <div class="login-logo">
+            <img name="stockhero" role="title" src="">
+        </div>
+        <div id="login">
+            <p><%= link_to "Login", login_path %></p>
+        </div>
+        <div id="create-account">
+            <p><%= link_to "Create Account", users_path %></p>
+        </div>
+    </div>
 
-      <%= f.label :password %>
-      <%= f.password_field :password %>
+    <div class="formbox">
 
-      <%= f.label :password_confirmation, "Confirmation" %>
-      <%= f.password_field :password_confirmation %>
+        <h1>Sign Up for StockHero</h1>
 
-      <%= f.submit "Create my account", class: "btn btn-primary" %>
-    <% end %>
-  </div>
+        <div id='signup_form'>
+
+            <%= form_for(:user, url: users_path) do |f| %>
+
+                <h2>Username</h2>
+                <%= f.text_field :username, :class => "field", :id => "username" %><br>
+
+                <h2>Email address</h2>
+                <%= f.text_field :email, :class => "field", :id => "email" %><br>
+
+                <h2>Password</h2>
+                <%= f.password_field :password, :class => "field", :id => "password" %>
+
+                <h2>Confirm Password</h2>
+                <%= f.password_field :password_confirmation, :class => "field", :id => "password" %>
+
+                <%= f.submit "Sign Up", :class => "btn login-btn" %>
+
+            <% end %>
+
+        </div>
+
+        <div id="formbox-signup-tips">
+            <h2>Already have an account?</h2>
+            <%= link_to "Login", login_path %>
+        </div>
+
+    </div><br>
+
+    <footer>
+        <p>© 2013 StockHero, All Rights Reserved.</p>
+    </footer>
+
 </div>

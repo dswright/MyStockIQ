@@ -1,19 +1,50 @@
-<h1>Log in</h1>
 
 
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
-    <%= form_for(:session, url: login_path) do |f| %>
+<div class="login-main">
 
-      <%= f.label "Email Address or Username" %>
-      <%= f.text_field :email %>
+    <div class="logo-and-tabs">
+        <div class="login-logo">
+            <img name="stockhero" role="title" src="" >
+        </div>
+        <div id="login">
+            <p><%= link_to "Login", login_path %></p>
+        </div>
+        <div id="create-account">
+            <p><%= link_to "Create Account", users_path %></p>
+        </div>
+    </div>
 
-      <%= f.label :password %>
-      <%= f.password_field :password %>
+    <div class="formbox">
 
-      <%= f.submit "Log in", class: "btn btn-primary" %>
-    <% end %>
+        <h1>Log in to StockHero</h1>
 
-    <p>New user? <%= link_to "Sign up now!", users_path %></p>
-  </div>
+    <div id='login_form'>
+
+      <%= form_for(:session, url: login_path) do |f| %>
+
+        <h2>Username</h2>
+        <%= f.text_field :email, :placeholder => "Enter username or email", :class => "field", :id => "username" %> <br>
+
+        <h2>Password</h2>
+        <%= f.password_field :password, :placeholder => "Enter password", :class => "field", :id => "password" %> <br>
+
+        <%= f.submit "Login", :class => "btn login-btn" %>
+
+      <% end %>
+
+    </form>
+
+        <div id="formbox-login-tips">
+            <h2>Don't have an account?</h2>
+            <%= link_to "Sign up now!", users_path %>
+            <h2 class="pwd">Forget your password?</h2>
+            <a href="#">Recover it here.</a>
+        </div>
+
+    </div><br>
+
+    <footer>
+        <p>© 2013 StockHero, All Rights Reserved.</p>
+    </footer>
+
 </div>
