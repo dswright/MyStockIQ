@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20141124033324) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "stockprices", force: true do |t|
     t.string   "ticker_symbol"
     t.datetime "date"
@@ -24,8 +27,8 @@ ActiveRecord::Schema.define(version: 20141124033324) do
     t.datetime "updated_at",    null: false
   end
 
-  add_index "stockprices", ["date"], name: "index_stockprices_on_date"
-  add_index "stockprices", ["ticker_symbol"], name: "index_stockprices_on_ticker_symbol"
+  add_index "stockprices", ["date"], name: "index_stockprices_on_date", using: :btree
+  add_index "stockprices", ["ticker_symbol"], name: "index_stockprices_on_ticker_symbol", using: :btree
 
   create_table "stocks", force: true do |t|
     t.string   "stock",                limit: 255
@@ -44,8 +47,8 @@ ActiveRecord::Schema.define(version: 20141124033324) do
     t.string   "stock_sector",         limit: 255
   end
 
-  add_index "stocks", ["active"], name: "index_stocks_on_active"
-  add_index "stocks", ["ticker_symbol"], name: "index_stocks_on_ticker_symbol"
+  add_index "stocks", ["active"], name: "index_stocks_on_active", using: :btree
+  add_index "stocks", ["ticker_symbol"], name: "index_stocks_on_ticker_symbol", using: :btree
 
   create_table "streams", force: true do |t|
     t.text     "content"
@@ -54,8 +57,8 @@ ActiveRecord::Schema.define(version: 20141124033324) do
     t.datetime "updated_at", null: false
   end
 
-  add_index "streams", ["user_id", "created_at"], name: "index_streams_on_user_id_and_created_at"
-  add_index "streams", ["user_id"], name: "index_streams_on_user_id"
+  add_index "streams", ["user_id", "created_at"], name: "index_streams_on_user_id_and_created_at", using: :btree
+  add_index "streams", ["user_id"], name: "index_streams_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "username",        limit: 255
@@ -66,7 +69,7 @@ ActiveRecord::Schema.define(version: 20141124033324) do
     t.string   "remember_digest", limit: 255
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["username"], name: "index_users_on_username", unique: true
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
 end
