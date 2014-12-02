@@ -11,6 +11,9 @@ class StockTest < ActiveSupport::TestCase
     @successful_inserted_stock_array = [
       {ticker_symbol:"BNNY", stock:"Annies inc", stock_industry: nil, price_to_earnings: nil}
     ]
+    @no_pe_stock_array = [
+      {ticker_symbol:"blah", stock:"blah blah", stock_industry: nil, price_to_earnings: nil}
+    ]
   end
 
 #the test then checks to see if this is valid.
@@ -42,7 +45,21 @@ class StockTest < ActiveSupport::TestCase
   test "should return array with pe ratio" do
     pe_update_array = Stock.fetch_pe(@successful_inserted_stock_array)
     assert_not pe_update_array[0][:price_to_earnings].empty?
+  end
 
+  test "worker - should return array with PE ratio" do
+    PEWorker.new.perform(@successful_inserted_stock_array)
+    assert_not Stock.find_by(ticker_symbol:"BNNY").price_to_earnings.nil?
+  end
+
+  test "worker - should return array with industry" do
+    IndustryWorker.new.perform(@successful_inserted_stock_array)
+    assert_not Stock.find_by(ticker_symbol:"BNNY").stock_industry.nil?
+  end
+
+  test "worker - should work when pe ratio cant be found" do
+    PEWorker.new.perform(@no_pe_stock_array)
+    assert Stock.find_by(ticker_symbol:"blah").price_to_earnings.nil?
   end
 
 end

@@ -83,10 +83,9 @@ class Stock < ActiveRecord::Base
     }
     #if the new stock data is valid, make the new_stock row a new Stock model object to save to the db.
     new_stock = Stock.new(stock_hash)
-    saved = new_stock.save
-    #the 'saved' variable will contain true or false. To be used to split into 2 arrays later
-    stock_hash[:saved] = saved
-    return stock_hash
+    if new_stock.save    
+      return stock_hash
+    end
   end
 
 #this function recieves, the current stock array, and updates it with the stock industries too.
@@ -146,7 +145,7 @@ class Stock < ActiveRecord::Base
       ticker_string = ""
       stock_array.each_with_index do |stock, i|
         if i >= x*200 && i <= (x*200+199)
-          ticker_string = ticker_string + stock[:ticker_symbol] + "+"
+          ticker_string = ticker_string + stock["ticker_symbol"] + "+"
         end
       end
       url = URI.encode("http://finance.yahoo.com/d/quotes.csv?s=#{ticker_string}&f=|r")

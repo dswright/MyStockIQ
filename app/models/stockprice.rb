@@ -4,20 +4,15 @@ class Stockprice < ActiveRecord::Base
   require 'json'
 
 
-  def self.fetch_new_prices
-    Stockprice.delete_all
-    remove_appl = Stock.find_by(ticker_symbol:"AAPL")
-    remove_appl.date = nil
-    remove_appl.daily_stock_price = nil
-    remove_appl.daily_volume = nil
-    remove_appl.save
+  def self.fetch_new_prices(ticker_symbol)
 
     input_prices_array = []
     #pull all tickersymbols that are active.
-    Stock.where(active:true).each do |e|
-      # set data_set_data = to the "data" array of objects from the quandl json file
-      if price_hash_array = Stockprice.get_quandl_data(e[:ticker_symbol],0)
-        #for each row of the docs array from the json file
+    #Stock.where(active:true).each do |e|
+    # set data_set_data = to the "data" array of objects from the quandl json file
+    if price_hash_array = Stockprice.get_quandl_data(ticker_symbol,0)
+      #for each row of the docs array from the json file
+      if Stockprice.enough_volume?(price_hash_array)
         price_hash_array.each do |price_hash|
           price_hash = Stockprice.save_price(price_hash)
           #if the stock_hash 'saved' field is true, then put the stock hash in the saved array, ortherwise the failed array.
@@ -26,9 +21,12 @@ class Stockprice < ActiveRecord::Base
             input_prices_array << price_hash
           end
         end
+        Stockprice.split_stock(ticker_symbol, input_prices_array)
+      else
+        Stockprice.update_to_inactive(ticker_symbol)
       end
     end
-    Stockprice.split_stock("AAPL", input_prices_array)
+    #end
 
     #retun the saved and inserted stock_array arrays.
     return input_prices_array
@@ -38,7 +36,7 @@ class Stockprice < ActiveRecord::Base
     #set url = to the quandl json url.
     price_hash_array = []    
     #if the scrape is successful, set the data_string = to the json data if the scrape is successful
-    if data_string = self.get_url(ticker_symbol, 0)
+    if data_string = Stockprice.get_url(ticker_symbol, 0)
       #parse out json file into an object
       data_set = JSON.parse(data_string)
       #re-process the data here so that it's controlled to my format and the structure doesnt leak to other methods
@@ -81,14 +79,37 @@ class Stockprice < ActiveRecord::Base
     return price_hash
   end
 
+  def self.enough_volume?(price_hash_array)
+    low_volume_count = 0
+    price_hash_array.each do |price_hash|
+      if price_hash[:volume] <= Stockprice.volume_cutoff
+        low_volume_count +=1
+      end
+      if low_volume_count >= 30
+        return false
+      end
+    end
+    return true
+  end
+
+  def self.volume_cutoff
+    1000
+  end
+
   def self.save_price(price_hash)
-    if Stockprice.where(ticker_symbol:price_hash[:ticker_symbol], date:price_hash[:date]).empty?
-      new_price = Stockprice.new(price_hash)
-      if new_price.save
-        return price_hash
+    if price_hash[:date] >= Stockprice.insert_date_cutoff
+      if Stockprice.where(ticker_symbol:price_hash[:ticker_symbol], date:price_hash[:date]).empty?
+        new_price = Stockprice.new(price_hash)
+        if new_price.save
+          return price_hash
+        end
       end
     end
     return false
+  end
+
+  def self.insert_date_cutoff
+    "2009-01-01"
   end
 
   def self.update_stock(price_hash)
@@ -118,6 +139,12 @@ class Stockprice < ActiveRecord::Base
   #before a certain time were already applied to the stock price data
   def self.split_date_cutoff
     "2008/01/01"
+  end
+
+  def self.update_to_inactive(ticker_symbol)
+    stock_to_update = Stock.find_by(ticker_symbol:ticker_symbol)
+    stock_to_update.active = false
+    stock_to_update.save
   end
 end
 

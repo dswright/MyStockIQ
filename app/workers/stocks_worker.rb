@@ -1,5 +1,6 @@
 class StocksWorker
   include Sidekiq::Worker
+  sidekiq_options timeout: 60
 
   def perform
 
@@ -15,8 +16,9 @@ class StocksWorker
     #Sends an email with the array of failed and inserted stocks.
     #StockMailer.new_stocks(@stock_array).deliver_now
 
+    Stockprice.delete_all
     Stock.delete_all
-    x = 28
+    x = 30
     x.times do |i|
       # set data_set_docs = to the "docs" array of objects from the quandl json file
       QuandlWorker.perform_async(i)
