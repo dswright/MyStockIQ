@@ -19,7 +19,7 @@ class QuandlWorker
     data_set_docs.each do |row|
       stock_hash = Stock.new_stock(row)
       unless stock_hash.nil?
-        HistoricalWorker.perform_async(stock_hash[:ticker_symbol])
+        #HistoricalWorker.perform_async(stock_hash[:ticker_symbol])
         stock_hash_array << stock_hash
       end
     end
