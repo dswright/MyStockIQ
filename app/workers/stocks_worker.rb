@@ -18,11 +18,11 @@ class StocksWorker
 
     Stockprice.delete_all
     Stock.delete_all
-    x = 30
-    x.times do |i|
+    #x = 30
+    #x.times do |i|
       # set data_set_docs = to the "docs" array of objects from the quandl json file
-      QuandlWorker.perform_async(i)
-    end
+      QuandlWorker.perform_async(0)
+    #end
     #retun the saved and inserted stock_array arrays.
   end
 end
