@@ -4,7 +4,7 @@ class PricesupdateWorker
 
   def perform
     Stock.where(active:true).each do |stock|
-      Updateoneprice_worker.perform_async(stock.id)
+      Updateoneprice_worker.perform_async(stock.ticker_symbol)
     end
   end
 end
