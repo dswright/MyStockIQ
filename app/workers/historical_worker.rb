@@ -5,7 +5,7 @@ class HistoricalWorker
   require 'open-uri'
   require 'json'
 
-  def perform(stock_hash_array, count)
+  def perform(stock_hash_array, count, i)
     unless stock_hash_array[count].nil?
       ticker_symbol = stock_hash_array[count]["ticker_symbol"]
       unless ticker_symbol.nil?
@@ -14,6 +14,8 @@ class HistoricalWorker
 
       if count < stock_hash_array.count
         HistoricalWorker.perform_async(stock_hash_array, count+1)
+      else
+        QuandlWorker.perform_async(i+1)
       end
     end
   end
