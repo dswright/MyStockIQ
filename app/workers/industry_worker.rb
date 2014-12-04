@@ -18,6 +18,7 @@ class IndustryWorker
         #set the stock_industry attribute of stock to the industry from the industries list.
         unless stock_to_update.nil?
           stock_to_update.stock_industry = csv_stock_row[0][:stock_industry]
+          stock_to_update.exchange = csv_stock_row[0][:exchange]
           stock_to_update.save
         end
       end

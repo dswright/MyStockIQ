@@ -129,7 +129,12 @@ class Stock < ActiveRecord::Base
           #substitute out the . and /s with _ to align with what comes from the EOD data from Quandl.
           csv_ticker = row[0].gsub('.','_').gsub('/','_').gsub('-','_')
           #add this row of the csv file to the array to return
-          stock_industry_array << {ticker_symbol: csv_ticker, stock_industry: row[3]}
+          if (row[4] != "Stock no longer trades")
+            exchange = row[4]
+          else
+            exchange = nil
+          end
+          stock_industry_array << {ticker_symbol: csv_ticker, stock_industry: row[3], exchange: exchange}
         end
       end 
     end
