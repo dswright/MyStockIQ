@@ -1,10 +1,12 @@
 class PricesupdateWorker
   include Sidekiq::Worker
+  require 'date'
   sidekiq_options timeout: 60
 
   def perform
-    Stock.where(active:true).each do |stock|
-      Updateoneprice_worker.perform_async(stock.ticker_symbol)
+    stock = Stock.where("updated_at <= ?", DateTime.now.to_date+1).where(active:true).first
+    
+    PricesupdateWorker.perform_async(stock.ticker_symbol)
     end
   end
 end

@@ -11,10 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141124033324) do
+ActiveRecord::Schema.define(version: 20141204224851) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "adminpack"
 
   create_table "stockprices", force: true do |t|
     t.string   "ticker_symbol"
@@ -48,7 +49,12 @@ ActiveRecord::Schema.define(version: 20141124033324) do
   end
 
   add_index "stocks", ["active"], name: "index_stocks_on_active", using: :btree
+  add_index "stocks", ["date"], name: "index_stocks_on_date", using: :btree
+  add_index "stocks", ["exchange"], name: "index_stocks_on_exchange", using: :btree
+  add_index "stocks", ["id"], name: "index_stocks_on_id", using: :btree
+  add_index "stocks", ["stock_industry"], name: "index_stocks_on_stock_industry", using: :btree
   add_index "stocks", ["ticker_symbol"], name: "index_stocks_on_ticker_symbol", using: :btree
+  add_index "stocks", ["updated_at"], name: "index_stocks_on_updated_at", using: :btree
 
   create_table "streams", force: true do |t|
     t.text     "content"
