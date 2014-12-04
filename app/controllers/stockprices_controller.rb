@@ -10,7 +10,7 @@ class StockpricesController < ApplicationController
   end
 
   def update
-    Stock.where(active:true).each do |e|
+    #Stock.where(active:true).each do |e|
   end
 
 
