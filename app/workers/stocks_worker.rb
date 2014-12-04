@@ -20,7 +20,7 @@ class StocksWorker
     #x = 30
     #x.times do |i|
       # set data_set_docs = to the "docs" array of objects from the quandl json file
-      QuandlWorker.perform_async(1)
+      QuandlWorker.perform_async(2)
     #end
     #retun the saved and inserted stock_array arrays.
   end
