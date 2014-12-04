@@ -12,7 +12,7 @@ class Stockprice < ActiveRecord::Base
     # set data_set_data = to the "data" array of objects from the quandl json file
     if price_hash_array = Stockprice.get_quandl_data(ticker_symbol,0)
       #for each row of the docs array from the json file
-      if Stockprice.enough_volume?(price_hash_array)
+      if Stockprice.enough_volume?(price_hash_array, ticker_symbol)
         price_hash_array.each do |price_hash|
           price_hash = Stockprice.save_price(price_hash)
           #if the stock_hash 'saved' field is true, then put the stock hash in the saved array, ortherwise the failed array.
@@ -79,22 +79,46 @@ class Stockprice < ActiveRecord::Base
     return price_hash
   end
 
-  def self.enough_volume?(price_hash_array)
+  #stocks will be ignored for either too many days of low volume, or a volume average that is too low.
+  def self.enough_volume?(price_hash_array, ticker_symbol)
     low_volume_count = 0
+    volume_sum = 0
     price_hash_array.each do |price_hash|
-      if price_hash[:volume] <= Stockprice.volume_cutoff
-        low_volume_count +=1
+      if price_hash[:volume].nil?
+        Stockprice.update_to_inactive(ticker_symbol)
+        return false
+      else
+        volume_sum += price_hash[:volume]
+        if price_hash[:volume] <= Stockprice.low_volume_days_cutoff
+          low_volume_count +=1
+        end
       end
       if low_volume_count >= 30
+        Stockprice.update_to_inactive(ticker_symbol)
         return false
       end
     end
-    return true
+    if volume_sum/price_hash_array.count <= Stockprice.average_volume_cutoff
+      Stockprice.update_to_inactive(ticker_symbol)
+      return false
+    else
+      return true
+    end
   end
 
-  def self.volume_cutoff
+  def self.low_volume_days_cutoff
     1000
   end
+
+  def self.average_volume_cutoff
+    10000
+  end
+
+  def self.update_to_inactive(ticker_symbol)
+    stock_to_update = Stock.find_by(ticker_symbol: ticker_symbol)
+    stock_to_update.update(active:false)
+  end
+
 
   def self.save_price(price_hash)
     if price_hash[:date] >= Stockprice.insert_date_cutoff
@@ -104,6 +128,7 @@ class Stockprice < ActiveRecord::Base
           return price_hash
         end
       end
+      return false
     end
     return false
   end

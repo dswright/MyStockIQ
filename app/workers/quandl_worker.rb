@@ -23,15 +23,13 @@ class QuandlWorker
       end
     end
 
-    #return stock_hash_array
-
     if stock_hash_array.count >= 1
-      PEWorker.perform_async(stock_hash_array)
-      IndustryWorker.perform_async(stock_hash_array)  
-    end
-    if i<=1
-      QuandlWorker.perform_async(i+1)
-      HistoricalWorker.perform_async(stock_hash_array, 0)
+      if i<=5
+        PEWorker.perform_async(stock_hash_array)
+        IndustryWorker.perform_async(stock_hash_array)  
+        HistoricalWorker.perform_async(stock_hash_array, 0)
+        QuandlWorker.perform_async(i+1)
+      end
     end
   end
 
