@@ -1,5 +1,6 @@
 class QuandlWorker
   include Sidekiq::Worker
+
   require 'csv'
   require 'open-uri'
   require 'json'
