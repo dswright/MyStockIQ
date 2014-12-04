@@ -13,7 +13,7 @@ class HistoricalWorker
       end
 
       if count < stock_hash_array.count
-        HistoricalWorker.perform_async(stock_hash_array, count+1)
+        HistoricalWorker.perform_async(stock_hash_array, count+1, i)
       else
         QuandlWorker.perform_async(i+1)
       end
