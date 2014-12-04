@@ -24,7 +24,7 @@ class QuandlWorker
     end
 
     if stock_hash_array.count >= 1
-      if i<=5
+      if i<=1
         PEWorker.perform_async(stock_hash_array)
         IndustryWorker.perform_async(stock_hash_array)  
         HistoricalWorker.perform_async(stock_hash_array, 0)

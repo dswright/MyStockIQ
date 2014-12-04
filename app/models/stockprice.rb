@@ -87,6 +87,9 @@ class Stockprice < ActiveRecord::Base
       if price_hash[:volume].nil?
         Stockprice.update_to_inactive(ticker_symbol)
         return false
+      elsif price_hash[:volume] == 0
+        Stockprice.update_to_inactive(ticker_symbol)
+        return false
       else
         volume_sum += price_hash[:volume]
         if price_hash[:volume] <= Stockprice.low_volume_days_cutoff
