@@ -1,6 +1,5 @@
 class QuandlWorker
   include Sidekiq::Worker
-  sidekiq_options timeout: 60
   require 'csv'
   require 'open-uri'
   require 'json'
@@ -22,6 +21,8 @@ class QuandlWorker
         stock_hash_array << stock_hash
       end
     end
+
+    return stock_hash_array
 
     if stock_hash_array.count >= 1
       if i<=1

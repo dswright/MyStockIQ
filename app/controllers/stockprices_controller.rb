@@ -9,5 +9,9 @@ class StockpricesController < ApplicationController
     @prices_array = Stockprice.fetch_new_prices
   end
 
+  def update
+    Stock.where(active:true).each do |e|
+  end
+
 
 end

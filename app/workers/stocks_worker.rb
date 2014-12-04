@@ -1,6 +1,5 @@
 class StocksWorker
   include Sidekiq::Worker
-  sidekiq_options timeout: 60
 
   def perform
 

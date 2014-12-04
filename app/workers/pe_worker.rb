@@ -1,6 +1,5 @@
 class PEWorker
   include Sidekiq::Worker
-  sidekiq_options timeout: 60
 
   def perform(stock_array)
     pe_array = Stock.fetch_pe(stock_array)

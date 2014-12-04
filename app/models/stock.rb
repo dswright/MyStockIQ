@@ -3,11 +3,10 @@ class Stock < ActiveRecord::Base
   require 'open-uri'
   require 'json'
 
-  validates :stock,         presence: true,
-                            uniqueness: {case_sensitive: false}
+  validates :stock,         presence: true
 
   validates :ticker_symbol, presence: true,
-                            uniqueness: {case_sensitive: false}
+            uniqueness: {case_sensitive: false}
 
 
   #this function is not perfectly tested. It could break without test failure.
@@ -86,6 +85,7 @@ class Stock < ActiveRecord::Base
     if new_stock.save    
       return stock_hash
     end
+
   end
 
 #this function recieves, the current stock array, and updates it with the stock industries too.

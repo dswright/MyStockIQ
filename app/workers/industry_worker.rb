@@ -1,6 +1,5 @@
 class IndustryWorker
   include Sidekiq::Worker
-  sidekiq_options timeout: 60
 
 #this function recieves, the current stock array, and updates it with the stock industries too.
   def perform(stock_array)
