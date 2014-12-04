@@ -23,8 +23,6 @@ class QuandlWorker
       end
     end
 
-    return stock_hash_array
-
     if stock_hash_array.count >= 1
       if i<=1
         PEWorker.perform_async(stock_hash_array)
