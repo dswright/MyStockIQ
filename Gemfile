@@ -5,6 +5,7 @@ source 'https://rubygems.org'
 gem 'rails',                '4.2.0.beta4'
 gem 'unicorn'
 gem 'newrelic_rpm'
+gem 'oink'
 
 #add bcrypt for the password encryption
 gem 'bcrypt',               '3.1.7'
