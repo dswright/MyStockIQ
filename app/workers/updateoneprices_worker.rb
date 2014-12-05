@@ -1,4 +1,4 @@
-class PricesupdateWorker
+class UpdateOnePriceWorker
   include Sidekiq::Worker
 
   def perform(ticker_symbol)
