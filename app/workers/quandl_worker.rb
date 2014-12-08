@@ -27,6 +27,11 @@ class QuandlWorker
         PEWorker.perform_async(stock_hash_array)
         IndustryWorker.perform_async(stock_hash_array)
       end
+      url = nil
+      data_string = nil
+      data_set = nil
+      data_set_doce = nil
+      stock_hash_array = nil
     #end
   end
 end
