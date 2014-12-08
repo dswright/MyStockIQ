@@ -17,10 +17,10 @@ class Stockprice < ActiveRecord::Base
           price_hash = Stockprice.save_price(price_hash)
           #if the stock_hash 'saved' field is true, then put the stock hash in the saved array, ortherwise the failed array.
           if price_hash
-            Stockprice.update_stock(price_hash)
             input_prices_array << price_hash
           end
         end
+        Stockprice.update_stock(ticker_symbol)
         Stockprice.split_stock(ticker_symbol, input_prices_array)
       else
         Stockprice.update_to_inactive(ticker_symbol)
@@ -29,7 +29,7 @@ class Stockprice < ActiveRecord::Base
     #end
 
     #retun the saved and inserted stock_array arrays.
-    return input_prices_array
+    #return input_prices_array
   end
 
   def self.get_quandl_data(ticker_symbol, count)
@@ -125,7 +125,7 @@ class Stockprice < ActiveRecord::Base
 
   def self.save_price(price_hash)
     if price_hash[:date] >= Stockprice.insert_date_cutoff
-      if Stockprice.where(ticker_symbol:price_hash[:ticker_symbol], date:price_hash[:date]).empty?
+      unless Stockprice.exists?(:ticker_symbol => price_hash[:ticker_symbol], :date => price_hash[:date])
         new_price = Stockprice.new(price_hash)
         if new_price.save
           return price_hash
@@ -140,13 +140,26 @@ class Stockprice < ActiveRecord::Base
     "2009-01-01"
   end
 
-  def self.update_stock(price_hash)
-    stock = Stock.find_by(ticker_symbol:price_hash[:ticker_symbol])
-    if stock.date.nil? || stock.date <= Date.parse(price_hash[:date])
-      stock.date = price_hash[:date]
-      stock.daily_stock_price = price_hash[:close_price]
-      stock.daily_volume = price_hash[:volume]
-      stock.save
+  def self.update_stock(ticker_symbol)
+    pricelist = Stockprice.where(ticker_symbol:ticker_symbol)
+    latest_date = Date.parse('01-01-0000')
+    updated_complete = 0
+    latest_daily_stock_price = 0
+    latest_daily_volume = 0
+    pricelist.each do |price_hash|
+      if price_hash.date > latest_date
+        latest_date = price_hash.date
+        latest_daily_stock_price = price_hash.close_price
+        latest_daily_volume = price_hash.volume
+        updated_complete = 1
+      end
+    end
+    if updated_complete == 1
+      stock_to_update = Stock.find_by(ticker_symbol:ticker_symbol)
+      stock_to_update.date = latest_date
+      stock_to_update.daily_stock_price = latest_daily_stock_price
+      stock_to_update.daily_volume = latest_daily_volume
+      stock_to_update.save
     end
   end
 

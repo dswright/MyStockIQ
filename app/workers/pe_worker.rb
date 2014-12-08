@@ -4,9 +4,6 @@ class PEWorker
   def perform(stock_array)
     pe_array = Stock.fetch_pe(stock_array)
     pe_array.each do |pe_array|
-      #set the stock hash to be returned to the view based on the tickersymbol in this csv file row
-      #this returns an array of parameters
-      stock_hash = stock_array.select {|a| a["ticker_symbol"]==pe_array[:ticker_symbol]}
       unless pe_array[:price_to_earnings] == "N/A"         
         stock_to_update = Stock.find_by(ticker_symbol:pe_array[:ticker_symbol])
         unless stock_to_update.nil?
@@ -14,5 +11,9 @@ class PEWorker
         end
       end
     end
+    stock_array = nil
+    pe_array = nil
+    stock_hash = nil
+    stock_to_update = nil
   end
 end

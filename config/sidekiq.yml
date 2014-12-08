@@ -3,7 +3,7 @@
 #   sidekiq -C config.yml
 ---
 :verbose: false
-:concurrency: 25 #maximum #of threads for 1 dyno = 256 threads. There are currently 1 workers, so 1*25 = 25 possible threads.
+:concurrency: 5 #maximum #of threads for 1 dyno = 256 threads. There are currently 1 workers, so 1*25 = 25 possible threads.
 # Set timeout to 8 on Heroku, longer if you manage your own systems.
 :logfile: ./log/sidekiq.log
 :timeout: 8
