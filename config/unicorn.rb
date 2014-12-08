@@ -1,6 +1,9 @@
 worker_processes Integer(3)
-timeout 15
+timeout 30
 preload_app true
+stderr_path "log/unicorn.stderr.log"
+stdout_path "log/unicorn.stdout.log"
+pid "tmp/pids/unicorn.pid"
 
 before_fork do |server, worker|
   Signal.trap 'TERM' do
@@ -11,6 +14,16 @@ before_fork do |server, worker|
   if defined?(ActiveRecord::Base)
     ActiveRecord::Base.connection.disconnect!
   end
+
+  old_pid = "#{server.config[:pid]}.oldbin"
+  if old_pid != server.pid
+    begin
+      sig = (worker.nr + 1) >= server.worker_processes ? :QUIT : :TTOU
+      Process.kill(sig, File.read(old_pid).to_i)
+    rescue Errno::ENOENT, Errno::ESRCH
+    end
+  end
+  
 end
 
 after_fork do |server, worker|
@@ -21,6 +34,7 @@ after_fork do |server, worker|
   if defined?(ActiveRecord::Base)
     config = ActiveRecord::Base.configurations[Rails.env] ||
                 Rails.application.config.database_configuration[Rails.env]
+    config['reaping_frequency'] = 10 #seconds
     config['pool']            =   ENV['DB_POOL']
     ActiveRecord::Base.establish_connection(config)
   end

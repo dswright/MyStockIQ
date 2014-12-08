@@ -30,7 +30,7 @@ class QuandlWorker
       url = nil
       data_string = nil
       data_set = nil
-      data_set_doce = nil
+      data_set_docs = nil
       stock_hash_array = nil
     #end
   end
