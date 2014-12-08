@@ -3,7 +3,6 @@ timeout 30
 preload_app true
 stderr_path "log/unicorn.stderr.log"
 stdout_path "log/unicorn.stdout.log"
-pid "tmp/pids/unicorn.pid"
 
 before_fork do |server, worker|
   Signal.trap 'TERM' do
