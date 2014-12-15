@@ -3,6 +3,8 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  #enable garbagae collector stats
+  GC::Profiler.enable
 
 
   # In the development environment your application's code is reloaded on

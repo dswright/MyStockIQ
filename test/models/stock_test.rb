@@ -1,67 +1,92 @@
 require 'test_helper'
+require 'scraper'
 
 class StockTest < ActiveSupport::TestCase
   
   def setup
-  	@stock = {
-	  	"code" => "blah",
-	    "name" => "blah inc"
-  	}
-    #this should sucessfully update because BNNY exists in both the industries list and is in the db.
-    @successful_inserted_stock_array = [
-      {ticker_symbol:"BNNY", stock:"Annies inc", stock_industry: nil, price_to_earnings: nil}
+    @url = Scraper.new.url_latest("AAPL")
+    @price_hash_array = Scraper.process_csv_file(@url, PriceData.new, 0, "AAPL")
+
+    @url_stocks = Scraper.new.url_stock_list(1)
+    @stock_hash_array = Scraper.process_csv_file(@url_stocks, StockData.new, 0)
+
+    @price_hash_array_for_volume = [
+      {"volume" => 1000000},
+      {"volume" => 2000000}
     ]
-    @no_pe_stock_array = [
-      {ticker_symbol:"blah", stock:"blah blah", stock_industry: nil, price_to_earnings: nil}
-    ]
   end
 
-#the test then checks to see if this is valid.
-  test "should insert new stock" do
-    assert_difference 'Stock.count', 1 do
-    	Stock.new_stock(@stock)
-  	end
+  #Scraper Methods
+  test "url historic" do
+    historic_url = Scraper.new.url_historic("AAPL")
+    assert historic_url.is_a? String 
   end
 
-  #the first row of the quandl data is the DFVL stock
-  test "should return 1st page of quandl stocktickers" do
-    stock_array = Stock.get_quandl_data(1,0)
-    assert_not stock_array.empty?
-    assert stock_array[0]["code"] == "DFVL"
+  test "url latest" do
+    assert @url.is_a? String 
   end
 
-  test "should return array with tickers and related industries" do
-    stock_array = Stock.fetch_industry_array
-    assert_not stock_array.empty?
-    assert stock_array[0][:ticker_symbol] == "A"
+  test "url stock list" do
+    assert @url_stocks.is_a? String
   end
 
-  test "should return array with industry list" do
-    industry_update_array = Stock.return_industry_array(@successful_inserted_stock_array)
-    assert_not industry_update_array.empty?
-    assert industry_update_array[0][:stock_industry] == "Retail Store"
+  test "enough_volume" do
+    enough_volume = Scraper.new.enough_volume?(@price_hash_array_for_volume)
+    assert enough_volume
+
+    @price_hash_array_for_volume[0]["volume"] = 0
+    enough_volume = Scraper.new.enough_volume?(@price_hash_array_for_volume)
+    assert_not enough_volume
   end
 
-  test "should return array with pe ratio" do
-    pe_update_array = Stock.fetch_pe(@successful_inserted_stock_array)
-    assert_not pe_update_array[0][:price_to_earnings].empty?
+
+  #Price Data methods
+  test "PriceData - process_csv_file" do
+    assert @price_hash_array[0]["ticker_symbol"] == "AAPL"
+    assert @price_hash_array[0]["split"].to_i == 1
   end
 
-  test "worker - should return array with PE ratio" do
-    PEWorker.new.perform(@successful_inserted_stock_array)
-    assert_not Stock.find_by(ticker_symbol:"BNNY").price_to_earnings.nil?
+  test "PriceData - save_to_db" do
+    initial_count = Stockprice.all.count
+    Scraper.new.save_to_db(@price_hash_array, PriceData.new)
+    after_count = Stockprice.all.count
+    assert after_count>initial_count
   end
 
-  test "worker - should return array with industry" do
-    IndustryWorker.new.perform(@successful_inserted_stock_array)
-    assert_not Stock.find_by(ticker_symbol:"BNNY").stock_industry.nil?
+  #Stock Data methods
+  test "StockData - process_csv_file" do
+    assert @stock_hash_array[0]["ticker_symbol"] == "DFVL"
   end
 
-  test "worker - should work when pe ratio cant be found" do
-    PEWorker.new.perform(@no_pe_stock_array)
-    assert Stock.find_by(ticker_symbol:"blah").price_to_earnings.nil?
+  test "StockData - save_to_db" do
+    initial_count = Stock.all.count
+    Scraper.new.save_to_db(@stock_hash_array, StockData.new)
+    after_count = Stock.all.count
+    assert after_count>initial_count
   end
 
 end
+
+  #test "should return array with pe ratio" do
+  #  pe_update_array = Stock.fetch_pe(@successful_inserted_stock_array)
+  #  assert_not pe_update_array[0][:price_to_earnings].empty?
+  #end
+
+  #test "worker - should return array with PE ratio" do
+  #  PEWorker.new.perform(@successful_inserted_stock_array)
+  #  assert_not Stock.find_by(ticker_symbol:"BNNY").price_to_earnings.nil?
+  #end
+
+  #test "worker - should return array with industry" do
+  #  IndustryWorker.new.perform(@successful_inserted_stock_array)
+  #  assert_not Stock.find_by(ticker_symbol:"BNNY").stock_industry.nil?
+  #end
+
+  #test "worker - should work when pe ratio cant be found" do
+  #  PEWorker.new.perform(@no_pe_stock_array)
+  #  assert Stock.find_by(ticker_symbol:"blah").price_to_earnings.nil?
+  #end
+
+
 
 

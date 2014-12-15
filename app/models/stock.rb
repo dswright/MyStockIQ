@@ -1,7 +1,6 @@
 class Stock < ActiveRecord::Base
-  require 'csv'
-  require 'open-uri'
-  require 'json'
+
+  require 'scraper'
 
   validates :stock,         presence: true
 
@@ -9,6 +8,17 @@ class Stock < ActiveRecord::Base
             uniqueness: {case_sensitive: false}
 
 
+  def self.fetch_stocks(page)
+    stock_array = []
+    if encoded_url = Scraper.new.url_stock_list(page)
+      if stock_hash_array = Scraper.process_csv_file(encoded_url, StockData.new, 0)
+        Scraper.new.save_to_db(stock_hash_array, StockData.new)
+        #Stockprice.split_stock(ticker_symbol, input_prices_array)
+      end
+    end
+  end
+end
+=begin 
   #this function is not perfectly tested. It could break without test failure.
   def Stock.fetch_new_stocks
     Stock.delete_all
@@ -186,4 +196,5 @@ class Stock < ActiveRecord::Base
     #return array of stock tickers and industries.
     return stock_array_with_pe
   end
-end
+=end
+

@@ -7,7 +7,11 @@ class StockpricesController < ApplicationController
   end
 
   def update
-    HistoricalWorker.new.perform
+    stocks = Stock.where(date:nil, active:true)
+      
+    stocks.each do |stock|
+      HistoricalWorker.perform_async(stock.ticker_symbol)
+    end
+    stocks = nil
   end
-
 end

@@ -19,7 +19,7 @@ BNNY:
 BLAH:
   stock: "not here"
   ticker_symbol: "blah"
-  stick_industry: nil
+  stock_industry: nil
   price_to_earnings: nil
 
 #

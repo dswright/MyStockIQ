@@ -1,5 +1,6 @@
 class StocksWorker
   include Sidekiq::Worker
+  require 'scraper'
 
   def perform
 
@@ -18,7 +19,7 @@ class StocksWorker
     Stockprice.delete_all
     Stock.delete_all
     x = 30
-    30.times do |i|
+    1.upto(30) do |i|
       # set data_set_docs = to the "docs" array of objects from the quandl json file
       QuandlWorker.perform_async(i)
     end

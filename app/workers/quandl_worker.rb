@@ -1,11 +1,11 @@
 class QuandlWorker
   include Sidekiq::Worker
 
-  require 'csv'
-  require 'open-uri'
-  require 'json'
-
-  def perform(i)
+  def perform(page)
+    Stock.fetch_stocks(page)
+  end
+end
+=begin
     #30.times do |i|
       stock_hash_array = []
       #set url = to the quandl json url.
@@ -23,10 +23,10 @@ class QuandlWorker
         end
       end
 
-      if stock_hash_array.count >= 1
-        PEWorker.perform_async(stock_hash_array)
-        IndustryWorker.perform_async(stock_hash_array)
-      end
+      #if stock_hash_array.count >= 1
+      #  PEWorker.perform_async(stock_hash_array)
+      #  IndustryWorker.perform_async(stock_hash_array)
+      #end
       url = nil
       data_string = nil
       data_set = nil
@@ -34,4 +34,4 @@ class QuandlWorker
       stock_hash_array = nil
     #end
   end
-end
+=end
