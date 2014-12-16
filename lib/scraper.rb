@@ -188,7 +188,7 @@ class StockData
     #Hash To Insert Strings
   def single_row_insert(stock_hash)
     time = Time.now.to_s(:db)
-    price_string = "('#{stock_hash["stock"]}','#{stock_hash["ticker_symbol"]}',#{stock_hash["ticker_symbol"]},'#{time}','#{time}')"
+    price_string = "('#{stock_hash["stock"]}','#{stock_hash["ticker_symbol"]}',#{stock_hash["active"]},'#{time}','#{time}')"
   end
 
 end
