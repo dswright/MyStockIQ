@@ -1,7 +1,7 @@
 class Stockprice < ActiveRecord::Base
   #require 'scraper'
 
-  def self.fetch_historic_prices(ticker_symbol)
+  def self.fetch_historical_prices(ticker_symbol)
     price_hash_array = []
     if encoded_url = Scraper.new.url_historic(ticker_symbol)
       if price_hash_array = Scraper.process_csv_file(encoded_url, PriceData.new, 0, ticker_symbol)
