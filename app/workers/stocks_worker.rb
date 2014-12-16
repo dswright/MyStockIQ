@@ -1,6 +1,5 @@
 class StocksWorker
   include Sidekiq::Worker
-  require 'scraper'
 
   def perform
 
