@@ -95,7 +95,7 @@ class Scraper
   def update_stock(ticker_symbol)
     price_list = Stockprice.where(ticker_symbol:ticker_symbol)
     latest_date = Date.parse('01-01-0000')
-    updated_complete = false
+    update_complete = false
     latest_daily_stock_price = 0
     latest_daily_volume = 0
     price_list.each do |price_hash|
