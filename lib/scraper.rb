@@ -175,19 +175,20 @@ class StockData
     stock_hash = { 
       "stock" => real_name,
       "ticker_symbol" => code,
+      "active" => true
     }
   end
 
   def all_data_insert(stock_array)
     sql = "INSERT INTO stocks 
-      (stock,ticker_symbol,updated_at,created_at)
+      (stock,ticker_symbol,active,updated_at,created_at)
       VALUES #{stock_array.join(", ")}"
   end
 
     #Hash To Insert Strings
   def single_row_insert(stock_hash)
     time = Time.now.to_s(:db)
-    price_string = "('#{stock_hash["stock"]}','#{stock_hash["ticker_symbol"]}','#{time}','#{time}')"
+    price_string = "('#{stock_hash["stock"]}','#{stock_hash["ticker_symbol"]}',#{stock_hash["ticker_symbol"]},'#{time}','#{time}')"
   end
 
 end
