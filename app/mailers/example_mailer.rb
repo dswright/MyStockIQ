@@ -1,4 +1,4 @@
-class StockMailer < ActionMailer::Base
+class ExampleMailer < ActionMailer::Base
 	default from: "sender@example.com"
 	def new_stocks(stock_array)
 		@stock_array = stock_array
