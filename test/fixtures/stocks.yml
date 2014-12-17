@@ -7,20 +7,23 @@
 AAPL:
   stock: "Apple Inc"
   ticker_symbol: "AAPL"
-  exchange: "NASDAQ"
+  exchange: nil
   price_to_earnings: nil
+  stock_industry: nil
 
 BNNY:
   stock: "Annies Inc"
   ticker_symbol: "BNNY"
   stock_industry: nil
   price_to_earnings: nil
+  stock_industry: nil
 
 BLAH:
   stock: "not here"
   ticker_symbol: "blah"
   stock_industry: nil
   price_to_earnings: nil
+  stock_industry: nil
 
 #
 #  column: value

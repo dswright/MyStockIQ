@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141204224851) do
+ActiveRecord::Schema.define(version: 20141216194654) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,10 +22,10 @@ ActiveRecord::Schema.define(version: 20141204224851) do
     t.datetime "date"
     t.float    "open_price"
     t.float    "close_price"
-    t.integer  "volume"
+    t.integer  "volume",        limit: 8
     t.integer  "split"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   add_index "stockprices", ["date"], name: "index_stockprices_on_date", using: :btree
@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(version: 20141204224851) do
     t.string   "ticker_symbol",        limit: 255
     t.datetime "date"
     t.float    "daily_percent_change"
-    t.integer  "daily_volume"
+    t.integer  "daily_volume",         limit: 8
     t.float    "price_to_earnings"
     t.float    "ytd_percent_change"
     t.float    "daily_stock_price"

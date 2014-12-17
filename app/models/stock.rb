@@ -11,12 +11,30 @@ class Stock < ActiveRecord::Base
   def self.fetch_stocks(page)
     stock_array = []
     if encoded_url = Scraper.new.url_stock_list(page)
-      if stock_hash_array = Scraper.process_csv_file(encoded_url, StockData.new, 0)
-        Scraper.new.save_to_db(stock_hash_array, StockData.new)
+      if stock_hash_array = Scraper.process_csv_file(encoded_url, StockData.new, 0, nil, false)
+        unless stock_hash_array.empty?
+          Scraper.new.save_to_db(stock_hash_array, StockData.new)
         #Stockprice.split_stock(ticker_symbol, input_prices_array)
       end
     end
   end
+
+  def self.fetch_stocks_pe(stock_array)
+    if encoded_url = Scraper.new.url_pe_ratios(stock_array)
+      if pe_hash_array = Scraper.process_csv_file(encoded_url, PEData.new, 0, nil, true)
+        Scraper.update_db(pe_hash_array, PEData.new, 1)
+      end
+    end
+  end
+
+  def self.fetch_stocks_industry(stock_array)
+    encoded_url = Scraper.new.url_industry_list
+    if industry_hash_array = Scraper.process_csv_file(encoded_url, IndustryData.new, 0, nil, false)
+      Scraper.update_db(industry_hash_array, IndustryData.new, 2)
+    end
+  end
+
+
 end
 =begin 
   #this function is not perfectly tested. It could break without test failure.

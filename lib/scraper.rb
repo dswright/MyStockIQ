@@ -20,10 +20,24 @@ class Scraper
     return_encoded_url(url,0)
   end
 
+  def url_pe_ratios(stock_array)
+    ticker_string = ""
+    stock_array.each do |stock|
+      ticker_string = "#{ticker_string}#{stock["ticker_symbol"]}+"
+    end
+    url = "http://finance.yahoo.com/d/quotes.csv?s=#{ticker_string}&f=|r"
+    return_encoded_url(url,0)
+  end
+
+  def url_industry_list
+    url = "https://s3.amazonaws.com/quandl-static-content/Ticker+CSV%27s/Stock+Exchanges/stockinfo.csv?auth_token=sVaP2d6ACjxmP-jM_6V-"
+    return_encoded_url(url, 0)
+  end
+
   def return_encoded_url(url, count)
     if count<=10
       begin
-        return url_open = URI.encode(url)
+        return URI.encode(url)
       rescue
         return_encoded_url(url, count+1)
       end
@@ -31,15 +45,23 @@ class Scraper
     return false
   end
 
-  def self.process_csv_file(url, class_with_process, count, ticker_symbol=nil)
+  def self.process_csv_file(url, class_with_process, count, ticker_symbol=nil, dup = true)
     if count <= 10
       begin
         hash_array = []
-        open(url) do |f|
+        open(url, 'User-Agent' => 'ruby') do |f|
           f.each_line do |line|
             CSV.parse(line) do |row|
-            #row = line.split(",")
-              hash_array << class_with_process.data_hash(row, ticker_symbol)
+              hash_item = class_with_process.data_hash(row, ticker_symbol)
+              if hash_item
+                if dup == true
+                  hash_array << hash_item
+                else
+                  if class_with_process.check_for_dup(row, ticker_symbol)
+                    hash_array << hash_item
+                  end
+                end
+              end
             end
           end
         end
@@ -59,6 +81,40 @@ class Scraper
     unless structured_array.empty?
       sql = class_with_process.all_data_insert(structured_array)
       ActiveRecord::Base.connection.execute(sql)
+    end
+  end
+
+  def self.update_db(hash_array, class_with_process, case_lines)
+    case_array = []
+    case_array2 = []
+    where_array = []
+    hash_array.each do |hash|
+      new_line = class_with_process.create_case_line(hash)
+      if new_line
+        case_array << new_line
+      end
+      where_line = class_with_process.create_where_line(hash)
+      if where_line
+        where_array << where_line
+      end
+
+      if (case_lines == 2)
+        new_line = class_with_process.create_case_line2(hash)
+        if new_line
+          case_array2 << new_line
+        end
+      end
+      
+
+    end
+    unless case_array.empty?
+      if case_lines != 2
+        sql = class_with_process.all_data_update(case_array, where_array)
+        ActiveRecord::Base.connection.execute(sql)
+      else
+        sql = class_with_process.all_data_update(case_array, where_array, case_array2)
+        ActiveRecord::Base.connection.execute(sql)
+      end
     end
   end
 
@@ -136,8 +192,13 @@ end
 
 class PriceData
 
-  def so_simple
-    puts "workingggg"
+  def check_for_dup(row,ticker_symbol=nil)
+    date = row[0]
+    if Stockprice.where(ticker_symbol:ticker_symbol, date:date).exists?
+      false
+    else
+      true
+    end
   end
 
   def data_hash(row, ticker_symbol)
@@ -162,9 +223,20 @@ class PriceData
     time = Time.now.to_s(:db)
     price_string = "('#{price_hash["ticker_symbol"]}','#{price_hash["date"]}','#{price_hash["open_price"]}','#{price_hash["close_price"]}','#{price_hash["volume"]}','#{price_hash["split"]}','#{time}','#{time}')"
   end
+
 end
 
 class StockData
+
+  #the ticker_symbol is for the PriceData dup check, this dup check sets the ticker from the csv row.
+  def check_for_dup(row, ticker_symbol=nil)
+    ticker_symbol = row[0].gsub(/EOD\//,"")
+    if Stock.where(ticker_symbol:ticker_symbol).exists?
+      false
+    else
+      true
+    end
+  end
 
   def data_hash(row, ticker_symbol)
     code = row[0].gsub(/EOD\//,"")
@@ -188,7 +260,88 @@ class StockData
     #Hash To Insert Strings
   def single_row_insert(stock_hash)
     time = Time.now.to_s(:db)
-    price_string = "('#{stock_hash["stock"]}','#{stock_hash["ticker_symbol"]}',#{stock_hash["ticker_symbol"]},'#{time}','#{time}')"
+    price_string = "('#{stock_hash["stock"]}','#{stock_hash["ticker_symbol"]}',#{stock_hash["active"]},'#{time}','#{time}')"
+  end
+end
+
+class PEData
+  def data_hash(row, ticker_symbol)
+    if row[1] == "N/A"
+      return false
+    else
+      pe_hash = {
+        "ticker_symbol" => row[0],
+        "price_to_earnings" => row[1]
+      }
+    end
   end
 
+  def all_data_update(pe_case_array, pe_where_array)
+    sql = "update stocks 
+            SET price_to_earnings = CASE ticker_symbol
+              #{pe_case_array.join("\n")}
+            END
+          WHERE ticker_symbol IN (#{pe_where_array.join(", ")})"
+  end
+
+  def create_case_line(data_hash)
+    return "WHEN '#{data_hash["ticker_symbol"]}' THEN #{data_hash["price_to_earnings"]}"
+  end
+
+  def create_where_line(data_hash)
+    return "'#{data_hash["ticker_symbol"]}'"
+  end
+end
+
+class IndustryData
+
+  #the logic of this method is flipped. We want the ticker to exist in order to be added to the array.
+  def check_for_dup(row, ticker_symbol=nil)
+    csv_ticker = row[0].gsub('.','_').gsub('/','_').gsub('-','_')
+    if Stock.where(ticker_symbol:csv_ticker).exists?
+      true
+    else
+      false
+    end
+  end
+
+  def data_hash(row, ticker_symbol)
+    if (row[4] == "Stock no longer trades")
+      return false
+    else
+      csv_ticker = row[0].gsub('.','_').gsub('/','_').gsub('-','_')
+      industry_hash = {
+        "ticker_symbol" => csv_ticker, 
+        "stock_industry" => row[3], 
+        "exchange" => row[4]
+      }
+      return industry_hash
+    end
+  end
+
+  def all_data_update(industry_case_array, industry_where_array, exchange_case_array)
+    sql = "update stocks 
+            SET stock_industry = CASE ticker_symbol
+              #{industry_case_array.join("\n")}
+            END,
+             exchange = CASE ticker_symbol
+              #{industry_case_array.join("\n")}
+            END
+
+          WHERE ticker_symbol IN (#{industry_where_array.join(", ")})"
+  end
+
+  def create_case_line(data_hash)
+    return "WHEN '#{data_hash["ticker_symbol"]}' THEN #{data_hash["stock_industry"]}"
+  end
+
+  def create_case_line2(data_hash)
+    return "WHEN '#{data_hash["ticker_symbol"]}' THEN #{data_hash["exchange"]}"
+  end
+
+  def create_where_line(data_hash)
+    return "'#{data_hash["ticker_symbol"]}'"
+  end 
+    
+          #add this row of the csv file to the array to return
 end
