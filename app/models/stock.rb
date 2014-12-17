@@ -14,7 +14,7 @@ class Stock < ActiveRecord::Base
       if stock_hash_array = Scraper.process_csv_file(encoded_url, StockData.new, 0, nil, false)
         unless stock_hash_array.empty?
           Scraper.new.save_to_db(stock_hash_array, StockData.new)
-        #Stockprice.split_stock(ticker_symbol, input_prices_array)
+        end
       end
     end
   end
@@ -33,8 +33,6 @@ class Stock < ActiveRecord::Base
       Scraper.update_db(industry_hash_array, IndustryData.new, 2)
     end
   end
-
-
 end
 =begin 
   #this function is not perfectly tested. It could break without test failure.
