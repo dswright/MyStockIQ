@@ -1,3 +1,62 @@
+class ScraperPublic
+
+  #Stock Scrapers
+  def self.fetch_stocks(page)
+    stock_array = []
+    if encoded_url = Scraper.new.url_stock_list(page)
+      if stock_hash_array = Scraper.process_csv_file(encoded_url, StockData.new, 0, nil, false)
+        unless stock_hash_array.empty?
+          Scraper.new.save_to_db(stock_hash_array, StockData.new)
+        end
+      end
+    end
+  end
+
+  def self.fetch_stocks_pe(stock_array)
+    if encoded_url = Scraper.new.url_pe_ratios(stock_array)
+      if pe_hash_array = Scraper.process_csv_file(encoded_url, PEData.new, 0, nil, true)
+        Scraper.update_db(pe_hash_array, PEData.new, 1)
+      end
+    end
+  end
+
+  def self.fetch_stocks_industry(stock_array)
+    encoded_url = Scraper.new.url_industry_list
+    if industry_hash_array = Scraper.process_csv_file(encoded_url, IndustryData.new, 0, nil, false)
+      Scraper.update_db(industry_hash_array, IndustryData.new, 2)
+    end
+  end
+
+  #Stock Prices Scrapers
+  def self.fetch_historical_prices(ticker_symbol)
+    price_hash_array = []
+    if encoded_url = Scraper.new.url_historic(ticker_symbol)
+      if price_hash_array = Scraper.process_csv_file(encoded_url, PriceData.new, 0, ticker_symbol, true)
+        if Scraper.new.enough_volume?(price_hash_array)
+          Scraper.new.save_to_db(price_hash_array, PriceData.new)
+          Scraper.new.update_stock(ticker_symbol)
+          #Stockprice.split_stock(ticker_symbol, input_prices_array)
+        else
+          Scraper.new.update_to_inactive(ticker_symbol)
+        end
+      end
+    end
+  end
+
+  def self.fetch_recent_prices(ticker_symbol)
+    price_hash_array = []
+    if encoded_url = Scraper.new.url_latest(ticker_symbol)
+      if price_hash_array = Scraper.process_csv_file(encoded_url, PriceData.new, 0, ticker_symbol, false)
+        unless price_hash_array.empty?
+          Scraper.new.save_to_db(price_hash_array, PriceData.new)
+          Scraper.new.update_stock(ticker_symbol)
+        end
+      end
+    end
+  end
+
+end
+
 class Scraper
   require 'open-uri'
   require 'csv'

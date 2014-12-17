@@ -1,7 +1,8 @@
 class StocksWorker
   include Sidekiq::Worker
+  require 'scraper'
 
   def perform(page)
-    Stock.fetch_stocks(page)
+    ScraperPublic.fetch_stocks(page)
   end
 end

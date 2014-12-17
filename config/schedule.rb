@@ -2,9 +2,17 @@
 env :PATH, ENV['PATH']
 set :output, "log/cron_log.log"
 
- every 1.day, at: "2:30 pm" do
-   rake "fetch_new_stocks"
- end
+  every 1.day, at: "2:30 pm" do
+    rake "scraper:fetch_stocks"
+  end
+
+  every 1.day, at: "2:35 pm" do
+    rake "scraper:fetch_stocks_pe"
+  end
+
+  every 1.day, at: "2:40 pm" do
+    rake "scraper:fetch_recent_prices"
+  end
 
 #whenever --update-crontab --set environment='development'
 
