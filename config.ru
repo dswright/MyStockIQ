@@ -11,7 +11,7 @@
   # Max requests per worker
  # use Unicorn::WorkerKiller::MaxRequests, max_request_min, max_request_max
 
-  #oom_min (70) * (1024**2)
+  #oom_min (70) * (1024**2) in this branch lets add something nice here. another change.
 
  # use Unicorn::WorkerKiller::Oom, oom_min, oom_max, 1, true
   #use Unicorn::WorkerKiller::Oom(memory_limit_min=oom_min, memory_limit_max=oom_max, check_cycle = 5, verbose = true)
