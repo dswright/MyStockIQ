@@ -23,12 +23,8 @@ Rails.application.routes.draw do
   post    'login'                        =>   'sessions#create'
   delete  'logout'                       =>   'sessions#destroy'
 
-  get     'stocks/create'                =>   'stocks#create'
-  get     'stocks/pe_ratios'             =>   'stocks#pe_ratios'
+ 
   get     'stocks/:ticker_symbol'        =>   'stocks#show'
-
-  get     'stockprices/create'           =>   'stockprices#create'
-  get     'stockprices/update'           =>   'stockprices#update'
 
 
   post 'streams'                          =>   'streams#create'
