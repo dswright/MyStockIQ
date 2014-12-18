@@ -13,7 +13,6 @@
 
   #oom_min (70) * (1024**2)
 
-  # Max memory size (RSS) per worker
  # use Unicorn::WorkerKiller::Oom, oom_min, oom_max, 1, true
   #use Unicorn::WorkerKiller::Oom(memory_limit_min=oom_min, memory_limit_max=oom_max, check_cycle = 5, verbose = true)
 #end
