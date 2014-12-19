@@ -89,7 +89,7 @@ class Scraper
   end
 
   def url_industry_list
-    url = "https://s3.amazonaws.com/quandl-static-content/Ticker+CSV%27s/Stock+Exchanges/stockinfo.csv?auth_token=sVaP2d6ACjxmP-jM_6V-"
+    url = "https://s3.amazonaws.com/quandl-static-content/Ticker+CSV's/Stock+Exchanges/stockinfo.csv"
     return_encoded_url(url, 0)
   end
 
@@ -391,11 +391,11 @@ class IndustryData
   end
 
   def create_case_line(data_hash)
-    return "WHEN '#{data_hash["ticker_symbol"]}' THEN #{data_hash["stock_industry"]}"
+    return "WHEN '#{data_hash["ticker_symbol"]}' THEN '#{data_hash["stock_industry"]}'"
   end
 
   def create_case_line2(data_hash)
-    return "WHEN '#{data_hash["ticker_symbol"]}' THEN #{data_hash["exchange"]}"
+    return "WHEN '#{data_hash["ticker_symbol"]}' THEN '#{data_hash["exchange"]}'"
   end
 
   def create_where_line(data_hash)

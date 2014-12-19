@@ -63,7 +63,6 @@ class UserTest < ActiveSupport::TestCase
   end
 
   #Industry methods
-=begin
   test "IndustryData - process_csv_file && update_db" do
     url_industry_list = Scraper.new.url_industry_list
     assert url_industry_list.is_a? String
@@ -74,5 +73,4 @@ class UserTest < ActiveSupport::TestCase
     Scraper.update_db(industry_hash_array, IndustryData.new, 2)
     assert_not Stock.find_by(ticker_symbol:"AAPL").stock_industry.nil?
   end
-=end
 end
