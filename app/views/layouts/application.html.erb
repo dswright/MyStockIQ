@@ -4,15 +4,10 @@
   <head>
     <%= yield :title %>
 
-    <!-- what do these do? -->
+    <!-- these call the minified JS and CSS files created by rails -->
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
-
-    <!-- jquery files necessary for bootstrap and other things! -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js" type="text/javascript"></script>
-    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/themes/base/jquery-ui.css" type="text/css" media="all">
-    <script src="http://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
 
     <link href='/favicon.ico' rel='shortcut icon' />
 
