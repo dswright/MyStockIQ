@@ -8,16 +8,32 @@ class StreamsController < ApplicationController
 	def create
 		#Obtain user session information from Session Helper function 'current_user'.
 		@user = current_user
+		#Obtain stock page information based on form submission
+		@stock = Stock.find_by(ticker_symbol: stream_params[:ticker_symbol])
+
 		@posts = @user.streams
 
 		#Builds 'Streams' object related to current user. This syntax is only required when looking up the 'Streams' model by 'User'
-		@post = @user.streams.build(stream_params)
+		@post = @user.streams.build(stream_params, stream_type: "Comment")
 
+		#If Post Saves, redirect to stock page or user profile page
 		if @post.save
 			flash[:success] = "Post created!"
-			redirect_to user_profile
+
+			if @post.ticker_symbol != nil
+				redirect_to stock_page(@post)
+			else
+				redirect_to user_profile
+			end
+
 		else
-			render '/users/show'
+
+		#If Post doesn't save, render stock or user page directly such that the error messages are shown
+			if @post.ticker_symbol != nil
+				render '/stocks/show'
+			else
+				render '/users/show'
+			end
 
 		end
 	end
@@ -33,8 +49,8 @@ class StreamsController < ApplicationController
 
 		def stream_params
 			#Obtains parameters from 'stream form' in app/views/shared.
-			#Permits adjustment of only the 'content' column in the 'streams' model.
-			params.require(:stream).permit(:content)
+			#Permits adjustment of only the 'content' & 'ticker_symbol' columns in the 'streams' model.
+			params.require(:stream).permit(:content, :ticker_symbol)
 		end
 
 		def correct_user
