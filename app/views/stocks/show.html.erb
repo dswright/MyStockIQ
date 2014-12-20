@@ -111,11 +111,15 @@
 
     <div class = "graph-container">
       <div class = "graph-buttons">
-        <button id="button" data-the-alert="1206800000000">1m</button>
-        <button id="button" data-range-min=1206800000000 data-range-max=1806800000000>3m</button>
-        <button id="button2">6m</button>
-        <button id="button3">1yr</button>
-        <button id="button4">5yr</button>
+        <% @date_limits_array.each do |date_limits_hash| %>
+          
+          <button id="button" 
+              data-x-range-min=<%= date_limits_hash[:x_range_min] %> 
+              data-x-range-max=<%= date_limits_hash[:x_range_max] %>
+            >
+            <%= date_limits_hash[:name] %>
+          </button>
+        <% end %>
       </div>
       
 
