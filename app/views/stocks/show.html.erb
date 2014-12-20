@@ -111,26 +111,19 @@
 
     <div class = "graph-container">
       <div class = "graph-buttons">
-        <button id="button0">1m</button>
-        <button id="button1">3m</button>
-        <button id="button2">6m</button>
-        <button id="button3">1yr</button>
-        <button id="button4">5yr</button>
+        <% @date_limits_array.each do |date_limits_hash| %>
+          
+          <button id="button" 
+              data-x-range-min=<%= date_limits_hash[:x_range_min] %> 
+              data-x-range-max=<%= date_limits_hash[:x_range_max] %>
+            >
+            <%= date_limits_hash[:name] %>
+          </button>
+        <% end %>
       </div>
-      <script type = "text/javascript" charset="utf-8">
-        $(function() {
-          new Highcharts.StockChart({
-            chart: {
-              renderTo: 'container'
-            }
-            series: [{
-              data: [[1,1],[2,3],[5,6],[6,9],[7,10],[8,11],[9,12],[10,15]]
-            }]
-          });
-        });
-      </script>
+      
 
-      <div id="container" style="min-width: 50px;"></div>
+      <div id="stock-div" style="min-width:50px;"></div>
     </div>
 
     <div class = "prediction-buttons-container">
