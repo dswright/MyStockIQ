@@ -13,3 +13,75 @@
  *= require_tree .
  *= require_self
  */
+
+
+/* Global shit ------------------------------------------*/
+
+/*
+color palette
+
+#2a3744   STOCKHERO BLUE
+#edf1f5   CANVAS BLUE
+#3a4c5e   CANVAS BLUE 1
+#4a6178   CANVAE BLUE 2
+#5a7691   CANVAS BLUE 3
+#6a8aab   CANVAS BLUE 4
+#006EA4   LINK TXT
+#414141   BODY TXT
+#c2c2c2   35% GREY
+*/
+
+
+/*Fonts*/
+
+@font-face {
+font-family: 'Clarendon';
+src: url('../fonts/Clarendon.ttf'),
+     url('../fonts/Clarendon.eot'),
+     url('../fonts/Clarendon.woff')
+}
+
+@font-face {
+font-family: 'ClarendonLt';
+src: url('../fonts/ClarendonLt.ttf'),
+     url('../fonts/ClarendonLt.eot'),
+     url('../fonts/ClarendonLt.woff')
+}
+
+@font-face {
+font-family: 'EngraversGothic';
+src: url('../fonts/EngraversGothic.ttf'),
+     url('../fonts/EngraversGothic.eot'),
+     url('../fonts/EngraversGothic.woff')
+}
+
+
+/*limited reset*/
+html, body, div, section, article, aside, header, hgroup, footer, nav, h1, h2, h3, h4, h5, h6, p, blockquote, address, time, span, em, strong, img, ol, ul, li, figure, canvas, video, th, td, tr {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  vertical-align:baseline;
+  font: inherit;
+}
+
+
+h1, h2, p, li {
+  color: #2a3744;
+}
+
+a {
+  color: #006EA4;
+  text-decoration: none;
+}
+
+html {
+  background-color: #edf1f5;
+  background-repeat: no-repeat;
+}
+
+body {
+  background-color: #edf1f5;
+  font-family: helvetica neue;
+}
+

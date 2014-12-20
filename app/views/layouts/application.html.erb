@@ -1,9 +1,28 @@
 <!DOCTYPE html>
 <html>
-<%= render 'layouts/header' %> <!-- this loads the header view -->
 
-<%= yield %>
-<%= debug(params) if Rails.env.development? %>
+  <head>
+    <%= yield :title %>
 
-</body>
+    <!-- allows ruby vars to be passed directly to js -->
+    <%= include_gon %>
+    <!-- these call the minified JS and CSS files created by rails -->
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+
+    <link href='/favicon.ico' rel='shortcut icon' />
+
+
+    <!-- this is standard notation for implementing bootstrap -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  </head>
+  
+  <body>
+    <%= render "layouts/header" %>
+    <%= yield %>
+    <%= debug(params) if Rails.env.development? %>
+
+  </body>
 </html>

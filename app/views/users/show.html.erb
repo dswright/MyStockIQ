@@ -3,6 +3,117 @@
 This is the user page for <%= @current_user.username %>
 <br />
 <br />
+<h3> Here is where to put other users </h3>
+<table>
+<% @allusers.each do |user| %>
+<tr><td> <%= user.username %></td></tr>
+<% end %>
+</table>
+
+
+<div class = "constrainer">
+
+  <div class = "main-aside col-sm-4">
+
+    <!-- USER INFO -->
+
+    <div class = "user-page-info-container">
+      <div class = "row user-info-header">
+        <div class = "col-xs-6">
+          <h2>USERNAME</h2>
+        </div>
+        <div class = "col-xs-6">
+          <!-- <a href = "#" class = "btn user-follow-btn">Follow</a> -->
+        </div>
+      </div>
+      <div class = "row">
+        <div class = "col-xs-4 user-page-mug-column">
+          <img src="">
+        </div>
+        <div class = "col-xs-6">
+          <p class = "user-info-stats">Total Score: 9</p>
+          <p class = "user-info-stats">User Level: 2</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- OPEN PREDICTIONS -->
+
+    <div class = "user-page-current-predictions">
+      <div class = "user-page-current-predictions-header">
+        <h2>USERNAME's Open Predictions</h2>
+      </div>
+      <!-- foreach ($predictions as $row) { ?> -->
+        <a href = "">
+          <div class = "row">
+            <div class = "col-xs-6">
+              <div class = "user-page-current-predictions-info">
+                <p> 4 days remaining </p>
+                <p> 5 points </p>
+              </div>
+            </div>
+            <div class = "user-page-current-predictions-btn col-xs-6">
+              <p> 3 points </p>
+            </div>
+          </div>
+        </a>
+<!--       <?php }
+      ?> -->
+        <a href = "">
+          <div class = "row">
+            <div class = "col-xs-6">
+              <div class = "user-page-current-predictions-info">
+                <p> 4 days remaining </p>
+                <p> 5 points </p>
+              </div>
+            </div>
+            <div class = "user-page-current-predictions-btn col-xs-6">
+              <p> 3 points </p>
+            </div>
+          </div>
+        </a>
+        <a href = "">
+          <div class = "row">
+            <div class = "col-xs-6">
+              <div class = "user-page-current-predictions-info">
+                <p> 4 days remaining </p>
+                <p> 5 points </p>
+              </div>
+            </div>
+            <div class = "user-page-current-predictions-btn col-xs-6">
+              <p> 3 points </p>
+            </div>
+          </div>
+        </a>
+    </div>
+
+    <!-- TOP ANALYSTS -->
+
+    <div class = "stock-page-top-analysts">
+      <p class = "stock-page-top-analysts-header">
+        Top Analysts
+      </p>
+        <!--<?php
+        #if ($toptraders != FALSE) {
+        #foreach ($toptraders as $row) { ?> -->
+        <a href = "">
+          <div class = "row">
+            <div class = "col-sm-3">
+              <div class = "top-analysts-mug-container">
+                <img src= "">
+              </div>
+            </div>
+            <div class = "top-analysts-txt-container col-xs-9">
+              <p class = "top-analysts-handle">USERNAME</p>
+              <p class = "top-analysts-points">55 points</p>
+            </div>
+          </div>
+        </a>
+        <!--<?php }
+      }?> -->
+    </div>
+  </div>
+<div class = "stock-page-aside col-sm-8">
 
 <!-- DISPLAY USER INFO & POST FORM -->
 	<div class="row">
@@ -15,6 +126,7 @@ This is the user page for <%= @current_user.username %>
 			</section>
 		</aside>
 	</div>
+
 
 <!-- DISPLAY ALL USER POSTS -->
 <div class = "col-md-8">

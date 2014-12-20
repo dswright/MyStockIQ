@@ -1,0 +1,25 @@
+
+
+/* Graph styles -----------------------------------*/
+
+
+html,body {
+  height:100%; /*make the percentagae height of placeholder work*/
+}
+
+.stockgraph-container1 {
+  width: 100%;
+}
+
+ translate over the buttons on the graph
+.highcharts-button rect {
+  transform: translate(-40px,0px);
+}
+
+.highcharts-button text {
+  transform: translate(-40px,0px);
+}
+
+.stock-data-heading {
+  margin-top: 0px;
+}

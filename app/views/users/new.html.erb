@@ -1,25 +1,53 @@
-<h1>Sign up</h1>
-
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
-    <!-- this tells the form to return the form values via the variable :user to the users path. -->
-    <%= form_for(:user, url: users_path) do |f| %> 
 
 
+<div class="login-main">
+    <div class="logo-and-tabs">
+        <div class="login-logo">
+            <img name="stockhero" role="title" src="">
+        </div>
+        <div id="login">
+            <p><%= link_to "Login", login_path %></p>
+        </div>
+        <div id="create-account">
+            <p><%= link_to "Create Account", users_path %></p>
+        </div>
+    </div>
 
-      <%= f.label :username %>
-      <%= f.text_field :username %>
+    <div class="formbox">
 
-      <%= f.label :email %>
-      <%= f.text_field :email %>
+        <h1>Sign Up for StockHero</h1>
 
-      <%= f.label :password %>
-      <%= f.password_field :password %>
+        <div id='signup_form'>
 
-      <%= f.label :password_confirmation, "Confirmation" %>
-      <%= f.password_field :password_confirmation %>
+            <%= form_for(:user, url: users_path) do |f| %>
 
-      <%= f.submit "Create my account", class: "btn btn-primary" %>
-    <% end %>
-  </div>
+                <h2>Username</h2>
+                <%= f.text_field :username, :class => "field", :id => "username" %><br>
+
+                <h2>Email address</h2>
+                <%= f.text_field :email, :class => "field", :id => "email" %><br>
+
+                <h2>Password</h2>
+                <%= f.password_field :password, :class => "field", :id => "password" %>
+
+                <h2>Confirm Password</h2>
+                <%= f.password_field :password_confirmation, :class => "field", :id => "password" %>
+
+                <%= f.submit "Sign Up", :class => "btn login-btn" %>
+
+            <% end %>
+
+        </div>
+
+        <div id="formbox-signup-tips">
+            <h2>Already have an account?</h2>
+            <%= link_to "Login", login_path %>
+        </div>
+
+    </div><br>
+
+    <footer>
+        <p>© 2013 StockHero, All Rights Reserved.</p>
+    </footer>
+
 </div>

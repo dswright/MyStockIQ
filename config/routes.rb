@@ -1,6 +1,10 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
  
+  mount Sidekiq::Web, at: '/sidekiq'
 
+  get 'stockprices/update'
 
 #sessions new is the login page. 
   root  'sessions#new' 
@@ -19,10 +23,11 @@ Rails.application.routes.draw do
   post    'login'                        =>   'sessions#create'
   delete  'logout'                       =>   'sessions#destroy'
 
-  get     'stocks/create'                =>   'stocks#create' 
+ 
   get     'stocks/:ticker_symbol'        =>   'stocks#show'
 
   post    'streams'                      =>   'streams#create'
+
   delete  'streams/:id'                  =>    'streams#destroy'
 
   post     'comments'                     =>   'comments#create'
