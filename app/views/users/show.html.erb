@@ -26,7 +26,9 @@ This is the user page for <%= @current_user.username %>
 		<h3> Posts (<%= @user.streams.count %>)</h3>
 		<ol class = "microposts">
 		<% # Renders each post in @posts variable with streams view partial %>
-			<%= render @posts %>
+			<% @posts.each do |post| %>
+				<%= render post %>
+			<% end %>
 		</ol>
 
 		<% ## Splits the posts in pages to prevent displaying too many posts %>

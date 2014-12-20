@@ -18,7 +18,16 @@ class StocksController < ApplicationController
 	end
 
 	def show
-		@stock = Stock.find_by(ticker_symbol: params[:ticker_symbol])
+		#'current_stock' is defined in Stock Helper functions
+		@stock = current_stock
+
+		@posts = Stream.where(stock_id: @stock.id)
+		@comments = Comment.where(ticker_symbol: @stock.ticker_symbol)
+
+		#creates post variable to be used to set up the post creation form (see app/views/shared folder)
+    	#@post = current_user.streams.build() if logged_in?
+
+    	@comment = Comment.new(ticker_symbol: @stock.ticker_symbol)
 	end
 end
  

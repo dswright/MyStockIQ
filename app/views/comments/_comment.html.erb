@@ -1,0 +1,10 @@
+<li id="post-<% comment.id %>">
+	<span class="user"><%= link_to comment.stream.user.username %></span>
+	  <span class="content"><%= comment.content %></span>
+	<span class="timestamp">
+		Posted on <%= comment.created_at %>.
+		<% if current_user?(comment.stream.user) %>
+			<%= link_to "delete", "/streams/#{stream.id}/", method: :delete, data: {confirm: "Are you sure?"} %>
+		<% end %>
+	</span>
+</li>

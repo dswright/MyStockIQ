@@ -5,7 +5,33 @@
 	<%= link_to image_tag("apple_logo.jpeg", alt: "Apple Logo"),'http://www.apple.com/' %>
 </div>
 
-<div class="container">
+<!-- STREAM FORM -->
+<% if logged_in? %>
+		<div class="row">
+		<aside class="col-md-4">
+			<section class="post_form">
+				<%= render 'shared/stream_form' %>
+			</section>
+		</aside>
+	</div>
+<% end %>
 
+<!-- DISPLAY ALL STOCK POSTS -->
+<div class = "col-md-8">
 
+	<% ##Does not display if user streams don't exist %>
+	<% if @comments != nil %>
+
+		<% ## Diplay Post Count %>
+		<h3> Posts (<%= @posts.count %>)</h3>
+		<ol class = "microposts">
+		<% # Renders each post in @posts variable with streams view partial. Streams view partial  %>
+			<% @posts.each do |post| %>
+				<%= render post %>
+			<% end %>
+		</ol>
+
+		<% ## Splits the posts in pages to prevent displaying too many posts %>
+		
+	<% end %>
 </div>

@@ -1,14 +1,18 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-#Sets up example posts for testing 
+
 bonbon:
+  content: "My name is Bon Bon!"
   created_at:	<%= 10.minutes.ago %>
 
 prediction:
+  content: "$AAPL stock will go up by 20% in 5 years"
   created_at: <%= 3.years.ago %>
 
 music_link:
+  content: "Check out this track: https://www.youtube.com/watch?v=phXRX1p8woY"
   created_at: <%= 2.hours.ago %>
 
 most_recent:
+  content: "Writing a short test"
   created_at: <%= Time.zone.now %>

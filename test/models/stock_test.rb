@@ -45,6 +45,9 @@ class StockTest < ActiveSupport::TestCase
 
   end
 
+
+
+
 end
 
 
