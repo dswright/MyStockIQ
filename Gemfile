@@ -8,7 +8,7 @@ gem 'unicorn'
 #gem 'unicorn-worker-killer'
 gem 'newrelic_rpm'
 gem 'oink'
-gem 'yajl-ruby', require: 'yajl'
+gem 'gon'
 
 
 #add bcrypt for the password encryption

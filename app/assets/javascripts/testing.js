@@ -4,70 +4,193 @@
 
 //this gets the element by id demo and changes the text in that demo... incredible. Make sure to use the innerhtml method..
 function changeText() {
-    document.getElementById("demo").innerHTML = "Paragraph changed.";
+  document.getElementById("demo").innerHTML = "Paragraph changed.";
 }
 
-var chart1; // globally available
-$(function() {
-      chart1 = new Highcharts.StockChart({
-         chart: {
-            renderTo: 'container'
-         },
-         rangeSelector: {
-            selected: 1
-         },
-         series: [{
-            name: 'USD to EUR',
-            data: [5,6, 7, 8, 9, 9, 10] // predefined JavaScript array
-         }]
-      });
-   });
 
-$(function () {
-    $('#stock-div').highcharts({
-        title: {
-            text: 'Monthly Average Temperature',
-            x: -20 //center
-        },
-        subtitle: {
-            text: 'Source: WorldClimate.com',
-            x: -20
-        },
-        xAxis: {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-        },
-        yAxis: {
-            title: {
-                text: 'Temperature (°C)'
-            },
-            plotLines: [{
-                value: 0,
-                width: 1,
-                color: '#808080'
-            }]
-        },
-        tooltip: {
-            valueSuffix: '°C'
-        },
-        legend: {
-            layout: 'vertical',
-            align: 'right',
-            verticalAlign: 'middle',
-            borderWidth: 0
-        },
-        series: [{
-            name: 'Tokyo',
-            data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
-        }, {
-            name: 'New York',
-            data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5]
-        }, {
-            name: 'Berlin',
-            data: [-0.9, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 1.0]
-        }, {
-            name: 'London',
-            data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
-        }]
-    });
+
+function resizeChart() {
+  var height = $("#stock-div").width()/3+30;
+  $("#stock-div").css("height", height);
+  $(".stockgraph-container1").css("height", height+10);
+}
+
+
+var chart1; // globally available
+$(document).ready(function () {
+  var width = $("#stock-div").width();
+
+  //resize the container height based on the width.
+  var height = $("#stock-div").width()/3+30;
+  $("#stock-div").css("height", height);
+  $(".stockgraph-container1").css("height", height + 10);
+
+
+  var price_array = gon.price_array;
+  var ticker_symbol = gon.ticker_symbol;
+
+  var seriesVar = [{
+    name : ticker_symbol,
+    data : price_array
+  }];
+
+  chart1 = new Highcharts.StockChart({
+    chart: {
+      renderTo: 'stock-div'
+    },
+    rangeSelector : {
+      enabled: false
+    },
+    scrollbar: {
+      enabled: false
+    },
+    navigator: {
+      enabled: false
+    },
+    series: seriesVar
+  });
+  $(window).bind("orientationchange resize", resizeChart);
+
+  //remove branding logo that says 'highcarts'
+  $( "text" ).remove( ":contains('Highcharts.com')" );
+
 });
+
+
+$(document).ready(function () {
+  var width = $("#container").width();
+
+  //resize the container height based on the width.
+  var height = $("#container").width()/3+30;
+  $("#container").css("height", height);
+  $(".stockgraph-container1").css("height", height + 10);
+
+
+  var price_array = gon.price_array;
+  var ticker_symbol = gon.ticker_symbol;
+  //price_array.sort();
+
+  //var prediction_array = <?php echo json_encode($userpredictiongraphdata); ?>;
+
+  //var date_array = <?php echo json_encode($datearray); ?>;
+
+  //var min_array = <?php echo json_encode($stockattributes); ?>;
+
+  //var tickersymbol = <?php echo json_encode($tickersymbol); ?>
+
+  var seriesVar = [{
+    name : ticker_symbol,
+    data : price_array
+  }];
+
+  /*if (prediction_array != false)
+  {
+    prediction_array.sort();
+    seriesVar.push({
+    name : "Your " + tickersymbol + " prediction",
+    data : prediction_array
+    });
+  }
+  
+  if (date_array[5] != null){
+    var x_min = date_array[5][0];
+    var x_max = date_array[5][1];
+  }
+  else{
+    var x_min = date_array[0][0];
+    var x_max = date_array[0][1];
+  }
+
+  if (min_array[5] != null){
+    var y_min = min_array[5][0];
+  }
+  else{
+    var y_min = min_array[0][0];
+  }
+  */
+  // Create the chart
+  var chart = new Highcharts.StockChart({
+
+    chart: {
+      renderTo: 'container'
+    },
+
+    /*xAxis: {
+      min: x_min,
+      max: x_max
+    },
+    */
+
+    rangeSelector : {
+      enabled: false
+    },
+
+    scrollbar: {
+      enabled: false
+    },
+
+    /*
+    yAxis: {
+      min: y_min
+    },
+
+    exporting: {
+      enabled: false
+    },
+    */
+    navigator: {
+      enabled: false
+    },
+
+    series : seriesVar
+
+  });
+
+  /*
+  $('#button0').click(function () {
+    chart.yAxis[0].setExtremes(min_array[0],null);
+    chart.xAxis[0].setExtremes(date_array[0][0], date_array[0][1]);
+  });
+  
+  $('#button1').click(function() {
+    chart.yAxis[0].setExtremes(min_array[1],null);
+    chart.xAxis[0].setExtremes(date_array[1][0], date_array[1][1]);
+  });
+  
+  $('#button2').click(function() {
+    chart.yAxis[0].setExtremes(min_array[2],null);
+    chart.xAxis[0].setExtremes(date_array[2][0], date_array[2][1]);
+  });
+  
+  $('#button3').click(function() {
+    chart.yAxis[0].setExtremes(min_array[3],null);
+    chart.xAxis[0].setExtremes(date_array[3][0], date_array[3][1]);
+  });
+
+  $('#button4').click(function() {
+    chart.yAxis[0].setExtremes(min_array[4],null);
+    chart.xAxis[0].setExtremes(date_array[4][0], date_array[4][1]);
+  });
+
+  if (date_array[5] != null)
+  {
+    $('#button5').click(function() {
+      chart.yAxis[0].setExtremes(min_array[5],null);
+      chart.xAxis[0].setExtremes(date_array[5][0], date_array[5][1]); 
+    });
+  }
+
+  //$('#button0').click(function() {
+  //chart.series[0].setData(data_array0)
+  //});
+*/
+
+  // execute chart resize function to resize screen onload.
+  $(window).bind("orientationchange resize", resizeChart);
+
+  //remove branding logo that says 'highcarts'
+  $( "text" ).remove( ":contains('Highcharts.com')" );
+
+});
+
+
