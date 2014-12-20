@@ -15,7 +15,6 @@ function resizeChart() {
   $(".stockgraph-container1").css("height", height+10);
 }
 
-
 var chart1; // globally available
 $(document).ready(function () {
   var width = $("#stock-div").width();
@@ -38,6 +37,10 @@ $(document).ready(function () {
     chart: {
       renderTo: 'stock-div'
     },
+    xAxis: {
+      min: 1406800000000,
+      max: 1418342400000
+    },
     rangeSelector : {
       enabled: false
     },
@@ -49,6 +52,31 @@ $(document).ready(function () {
     },
     series: seriesVar
   });
+
+ get_ranges = function() {
+    range_min = $(this).data("range-min")
+    range_max = $(this).data("range-max")
+    chart1.yAxis[0].setExtremes(0,null);
+    chart1.xAxis[0].setExtremes(range_min, range_max);
+    //window.alert(range_min + range_max)
+  }
+
+  $("button[data-range-min]").click(get_ranges)
+   
+
+  get_alert = function() {
+    the_alert = $(this).data("the-alert")
+    window.alert(the_alert)
+  }
+
+  $("button[data-the-alert]").click(get_alert)
+   
+
+  $('#button0').click(function () {
+    chart1.yAxis[0].setExtremes(0,null);
+    chart1.xAxis[0].setExtremes(1206800000000, 1518342400000);
+  });
+
   $(window).bind("orientationchange resize", resizeChart);
 
   //remove branding logo that says 'highcarts'
@@ -68,7 +96,6 @@ $(document).ready(function () {
 
   var price_array = gon.price_array;
   var ticker_symbol = gon.ticker_symbol;
-  //price_array.sort();
 
   //var prediction_array = <?php echo json_encode($userpredictiongraphdata); ?>;
 
