@@ -4,9 +4,8 @@ Rails.application.configure do
   config.assets.compress = true
 
   config.assets.precompile += [
-      'testing.js',
-      'highchart.js',
-      'exporting.js'
+      '*.js',
+      '*.css'
     ]
 
   # Code is not reloaded between requests.
