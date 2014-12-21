@@ -43,20 +43,14 @@
       </div>
     </div>
 
-
+<!-- PREDICTION FORM -->
     <div class = "stock-page-prediction-box">
       <p class = "stock-page-prediction-header">
-        <%= @stock[:ticker_symbol] %>
+        <%= @stock.ticker_symbol %>
       </p>
-      <form method='post' name='process'>
-        <input type='number' required="true" name='target-price' placeholder='target price (eg. 100.00)' class="stock-page-prediction-field" id='target-price'/> <br>
-      <!-- <div id = "prediction-fields"> -->
-          <input type='number' required="true" name='target-date' placeholder='duration in days (eg. 100)' class="stock-page-prediction-field" id='target-price'/> <br>
-          <textarea name='comment' placeholder='comment (optional)' class="stock-page-comment-field" id='comment'/></textarea>
-        </form>
-        <input type="submit" class="btn stock-page-prediction-submit-btn" value="Submit">
-      <!-- </div> -->
+    	<%= render 'shared/prediction_form' %>
     </div>
+
 
     <script>
       $("#target-price").focus(function () {

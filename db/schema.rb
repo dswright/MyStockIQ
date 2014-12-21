@@ -11,10 +11,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141217062055) do
+ActiveRecord::Schema.define(version: 20141221080129) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "adminpack"
   enable_extension "plpgsql"
 
   create_table "comments", force: true do |t|
@@ -27,6 +26,20 @@ ActiveRecord::Schema.define(version: 20141217062055) do
 
   add_index "comments", ["stream_id", "created_at"], name: "index_comments_on_stream_id_and_created_at", using: :btree
   add_index "comments", ["stream_id"], name: "index_comments_on_stream_id", using: :btree
+
+  create_table "predictions", force: true do |t|
+    t.float    "prediction_price"
+    t.integer  "user_id"
+    t.integer  "stock_id"
+    t.float    "score"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "predictions", ["stock_id", "created_at"], name: "index_predictions_on_stock_id_and_created_at", using: :btree
+  add_index "predictions", ["stock_id"], name: "index_predictions_on_stock_id", using: :btree
+  add_index "predictions", ["user_id", "created_at"], name: "index_predictions_on_user_id_and_created_at", using: :btree
+  add_index "predictions", ["user_id"], name: "index_predictions_on_user_id", using: :btree
 
   create_table "stockprices", force: true do |t|
     t.string   "ticker_symbol"

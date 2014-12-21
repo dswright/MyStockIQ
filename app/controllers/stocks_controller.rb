@@ -10,16 +10,19 @@ class StocksController < ApplicationController
 		#'current_stock' is defined in Stock Helper functions
 		@stock = current_stock
 
+		#Stock's posts, comments, and predictions to be shown in the view
 		@posts = Stream.where(stock_id: @stock.id)
 		@comments = Comment.where(ticker_symbol: @stock.ticker_symbol)
+		@predictions = Prediction.where(stock_id: @stock.id)
 
-		#creates post variable to be used to set up the post creation form (see app/views/shared folder)
-    	#@post = current_user.streams.build() if logged_in?
-
+		#creates comment variable to be used to set up the comment creation form (see app/views/shared folder)
     	@comment = Comment.new(ticker_symbol: @stock.ticker_symbol)
 
-    	gon.ticker_symbol = params[:ticker_symbol]
+   		#creates comment variable to be used to set up the prediction creation form (see app/views/shared folder)
+    	@prediction = Prediction.new(stock_id: @stock.id, prediction_score: 0) 	
 
+
+    	gon.ticker_symbol = params[:ticker_symbol]
 
     	gon.price_array = Stock.get_historical_prices(params[:ticker_symbol])    
 
