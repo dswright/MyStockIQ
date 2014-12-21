@@ -18,7 +18,7 @@ class StocksController < ApplicationController
     	@comment = Comment.new(ticker_symbol: @stock.ticker_symbol)
 
    		#creates comment variable to be used to set up the prediction creation form (see app/views/shared folder)
-    	@prediction = Prediction.new(stock_id: @stock.id, prediction_score: 0) 	
+    	@prediction = Prediction.new(stock_id: @stock.id, score: 0) 	
 
 
     	gon.ticker_symbol = params[:ticker_symbol]

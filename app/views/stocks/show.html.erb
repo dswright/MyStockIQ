@@ -48,7 +48,7 @@
       <p class = "stock-page-prediction-header">
         <%= @stock.ticker_symbol %>
       </p>
-    	<%= render 'shared/prediction_form' %>
+        <%= render 'shared/prediction_form' %>
     </div>
 
 
@@ -65,15 +65,16 @@
       });
     </script>
 
-    <div class = "stock-page-comment-box">
-      <p class = "stock-page-prediction-header">
-        Comment on <%= @stock[:ticker_symbol] %>
-      </p>
-      <form method='post' name='process'>
-        <input type='text' name='comment' placeholder='type your comment and hit enter' class="stock-page-comment-field" id='comment'/>
-      </form>
-      <input type="submit" class="btn stock-page-comment-submit-btn" value="Submit">
-    </div>
+
+<!-- Comment Form -->
+	<% if logged_in? %>
+    	<div class = "stock-page-comment-box">
+     	 <p class = "stock-page-prediction-header">
+        	Comment on <%= @stock[:ticker_symbol] %>
+      	</p>
+      	<%= render 'shared/stream_form' %>
+    	</div>
+    <% end %>
 
 
     <div class = "stock-page-top-analysts">

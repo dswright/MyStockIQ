@@ -6,7 +6,8 @@ class ApplicationController < ActionController::Base
   #these have to be included in this file to have access to the helper files in the controller.
   include SessionsHelper
   include StocksHelper
-
+  include CommentsHelper
+  
   private
 
 

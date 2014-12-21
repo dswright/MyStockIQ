@@ -11,23 +11,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
-#ActiveRecord::Schema.define(version: 20141216194654) do
-
-ActiveRecord::Schema.define(version: 20141221080129) do
-
+ActiveRecord::Schema.define(version: 20141221232411) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-  enable_extension "adminpack"
+
+  create_table "comments", force: true do |t|
+    t.text     "content"
+    t.text     "ticker_symbol"
+    t.integer  "stream_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "comments", ["stream_id", "created_at"], name: "index_comments_on_stream_id_and_created_at", using: :btree
+  add_index "comments", ["stream_id"], name: "index_comments_on_stream_id", using: :btree
 
   create_table "predictions", force: true do |t|
     t.float    "prediction_price"
     t.integer  "user_id"
     t.integer  "stock_id"
     t.float    "score"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+    t.string   "prediction_comment"
   end
 
   add_index "predictions", ["stock_id", "created_at"], name: "index_predictions_on_stock_id_and_created_at", using: :btree
@@ -50,20 +57,20 @@ ActiveRecord::Schema.define(version: 20141221080129) do
   add_index "stockprices", ["ticker_symbol"], name: "index_stockprices_on_ticker_symbol", using: :btree
 
   create_table "stocks", force: true do |t|
-    t.string   "stock",                limit: 255
-    t.string   "exchange",             limit: 255
+    t.string   "stock"
+    t.string   "exchange"
     t.boolean  "active"
-    t.string   "ticker_symbol",        limit: 255
+    t.string   "ticker_symbol"
     t.datetime "date"
     t.float    "daily_percent_change"
     t.integer  "daily_volume",         limit: 8
     t.float    "price_to_earnings"
     t.float    "ytd_percent_change"
     t.float    "daily_stock_price"
-    t.string   "stock_industry",       limit: 255
+    t.string   "stock_industry"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "stock_sector",         limit: 255
+    t.string   "stock_sector"
   end
 
   add_index "stocks", ["active"], name: "index_stocks_on_active", using: :btree
@@ -75,22 +82,24 @@ ActiveRecord::Schema.define(version: 20141221080129) do
   add_index "stocks", ["updated_at"], name: "index_stocks_on_updated_at", using: :btree
 
   create_table "streams", force: true do |t|
-    t.text     "content"
     t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "stream_type"
+    t.integer  "stock_id"
   end
 
+  add_index "streams", ["stock_id"], name: "index_streams_on_stock_id", using: :btree
   add_index "streams", ["user_id", "created_at"], name: "index_streams_on_user_id_and_created_at", using: :btree
   add_index "streams", ["user_id"], name: "index_streams_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
-    t.string   "username",        limit: 255
-    t.string   "email",           limit: 255
+    t.string   "username"
+    t.string   "email"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "password_digest", limit: 255
-    t.string   "remember_digest", limit: 255
+    t.string   "password_digest"
+    t.string   "remember_digest"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
