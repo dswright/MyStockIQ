@@ -9,6 +9,7 @@ gem 'unicorn'
 gem 'newrelic_rpm'
 gem 'oink'
 gem 'gon'
+gem 'sass', '3.2.13'
 
 
 #add bcrypt for the password encryption
@@ -49,7 +50,7 @@ gem 'sinatra', require: false
 gem 'slim'
 
 gem 'pg',             '0.17.1'
-gem 'rails_12factor', group: :production
+gem 'rails_12factor', '0.0.2'
 gem 'rack-mini-profiler'
 
 group :development, :test do
