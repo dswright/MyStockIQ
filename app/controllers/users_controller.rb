@@ -15,6 +15,7 @@ class UsersController < ApplicationController
 
     #creates post variable to be used to set up the post creation form (see app/views/shared folder)
     @post = current_user.streams.build
+    @comment = Comment.new(stream_id: @post.id)
   end
 
   def new
