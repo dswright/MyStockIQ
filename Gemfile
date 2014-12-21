@@ -49,7 +49,7 @@ gem 'sinatra', require: false
 gem 'slim'
 
 gem 'pg',             '0.17.1'
-gem 'rails_12factor', '0.0.2'
+gem 'rails_12factor', group: :production
 gem 'rack-mini-profiler'
 
 group :development, :test do
