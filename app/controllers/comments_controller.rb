@@ -24,8 +24,10 @@ class CommentsController < ApplicationController
 			#Save stream index
 			@stream_index.save
 
+			@saved_stream = Stream.first
+			
 			#Add stream index to @post
-			@comment[:stream_id] = Stream.first
+			@comment[:stream_id] = @saved_stream.id
 
 			@comment.save
 			flash[:success] = "Post Created!"

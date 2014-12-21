@@ -71,15 +71,15 @@
       });
     </script>
 
-    <div class = "stock-page-comment-box">
-      <p class = "stock-page-prediction-header">
-        Comment on <%= @stock[:ticker_symbol] %>
-      </p>
-      <form method='post' name='process'>
-        <input type='text' name='comment' placeholder='type your comment and hit enter' class="stock-page-comment-field" id='comment'/>
-      </form>
-      <input type="submit" class="btn stock-page-comment-submit-btn" value="Submit">
-    </div>
+<!-- COMMENT FORM -->
+	<% if logged_in? %>
+    	<div class = "stock-page-comment-box">
+     	 <p class = "stock-page-prediction-header">
+        	Comment on <%= @stock[:ticker_symbol] %>
+      	</p>
+      	<%= render 'shared/stream_form' %>
+    	</div>
+    <% end %>
 
 
     <div class = "stock-page-top-analysts">
@@ -141,6 +141,24 @@
         </div>
       </div>
     </div>
+
+    <!-- DISPLAY ALL STOCK POSTS -->
+<div class = "col-md-8">
+
+	<% ##Does not display if user streams don't exist %>
+	<% if @comments != nil %>
+		<% ## Diplay Post Count %>
+		<h3> Posts (<%= @posts.count %>)</h3>
+		<ol class = "microposts">
+		<% # Renders each post in @posts variable with streams view partial. Streams view partial  %>
+			<% @posts.each do |post| %>
+				<%= render post %>
+			<% end %>
+		</ol>
+		<% ## Splits the posts in pages to prevent displaying too many posts %>
+		
+	<% end %>
+</div>
 
     <div class = "prediction-post">
       <div class = "row">
@@ -279,29 +297,13 @@
 		<div class="row">
 		<aside class="col-md-4">
 			<section class="post_form">
-				<%= render 'shared/stream_form' %>
+
 			</section>
 		</aside>
 	</div>
 <% end %>
 
-<!-- DISPLAY ALL STOCK POSTS -->
-<div class = "col-md-8">
 
-	<% ##Does not display if user streams don't exist %>
-	<% if @comments != nil %>
-		<% ## Diplay Post Count %>
-		<h3> Posts (<%= @posts.count %>)</h3>
-		<ol class = "microposts">
-		<% # Renders each post in @posts variable with streams view partial. Streams view partial  %>
-			<% @posts.each do |post| %>
-				<%= render post %>
-			<% end %>
-		</ol>
-		<% ## Splits the posts in pages to prevent displaying too many posts %>
-		
-	<% end %>
-</div>
 
 
 
