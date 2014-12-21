@@ -1,0 +1,108 @@
+
+
+/* User Page Info Box ------------------------------------*/
+
+
+
+.user-page-info-container {
+  display: block;
+  height: 170px;
+  background-color: #fff;
+  box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.2);
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 15px;
+  padding-left: 18px;
+  padding-right: 5px;
+}
+
+.user-info-header {
+  height: 60px;
+}
+
+.user-info-header h2 {
+  text-transform: uppercase;
+  font-size: 11px;
+  font-weight: bold;
+  margin-bottom: 0px;
+  margin-top: 10px;
+}
+
+.user-follow-btn {
+  margin-top: 3px;
+  margin-left: 10px;
+  text-align: center;
+  width: 99px;
+  height: 27px;
+  color: #FFF;
+  background-color: #15ad59;
+  font-family: helvetica neue;
+  font-size: 10px;
+  text-decoration: none;
+  text-transform: uppercase;
+  border-radius: 3px;
+
+  -webkit-transition: background-color 200ms;
+  -moz-transition: background-color 200ms;
+  -o-transition: background-color 200ms;
+  transition: background-color 200ms;
+}
+
+.user-follow-btn:hover {
+  color: #FFF;
+  background-color: #1d9a4f;
+  text-decoration: none;
+}
+
+.user-page-mug-column img {
+  width: 100%;
+}
+
+.user-info-stats {
+  margin-top: 3px;
+  margin-left: 0px;
+  font-size: 14px;
+}
+
+
+
+/* User Page Info Box ------------------------------------*/
+
+
+.user-page-current-predictions {
+  display: block;
+  background-color: #fff;
+  box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.2);
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.user-page-current-predictions-header h2 {
+  text-transform: uppercase;
+  font-size: 11px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  margin-left: 15px;
+  margin-top: 10px;
+}
+
+.user-page-current-predictions a {
+  display: block;
+  padding-left: 15px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.user-page-current-predictions a:hover {
+  background-color: #f2f5f7;
+}
+
+.user-page-current-predictions-info p {
+  font-size: 14px;
+  line-height: 1.2em;
+}
+
