@@ -69,6 +69,8 @@ $(document).ready(function () {
     window.alert(the_alert)
   }
 
+//small change.
+
   $("button[data-the-alert]").click(get_alert)
   /*
   $('#button0').click(function () {
