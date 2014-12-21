@@ -1,10 +1,12 @@
-<%= form_for(@post) do |f| %>
+<%= form_for(@prediction) do |f| %>
 
 <% #Renders post form error messages using error_messages helper in app/views/shared/ %>
 	<%= render 'shared/error_messages', object: f.object %>
 	<div class = "field">
+		<%= f.text_area :prediction_price, placeholder: "Make a post...", class: "stock-page-prediction-field" %>
 		<%= f.text_area :content, placeholder: "Make a post...", class: "stock-page-comment-field" %>
-		<%= f.hidden_field :ticker_symbol %>
+		<%= f.hidden_field :prediction_score %>
+		<%= f.hidden_field :stock_id %>
 	</div>
 	<%= f.submit "Post", class: "btn btn-primary" %>
 <% end %>

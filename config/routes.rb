@@ -30,6 +30,12 @@ Rails.application.routes.draw do
   post 'streams'                          =>   'streams#create'
   delete  'streams/:id'                  =>    'streams#destroy'
 
+
+  post     'comments'                     =>   'comments#create'
+  delete   'comments/:id'                 =>   'comments#destroy'
+
+  post     'predicions'                   =>    'predictions@create'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -11,8 +11,8 @@ development:
   encoding: unicode
   database: stockhero_development
   pool: 5
-  username: dylanwright
-  password: Rippy101
+  username: seanmerrifield
+  password: Vegitto1
   port: 5432
 
 test:
@@ -21,6 +21,6 @@ test:
   encoding: unicode
   database: stockhero_test
   pool: 5
-  username: dylanwright
-  password: Rippy101
+  username: seanmerrifield
+  password: Vegitto1
   port: 5432
