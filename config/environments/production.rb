@@ -3,6 +3,12 @@ Rails.application.configure do
 
   config.assets.compress = true
 
+  config.assets.precompile += [
+      'testing.js',
+      'highchart.js',
+      'exporting.js'
+    ]
+
   # Code is not reloaded between requests.
   config.cache_classes = true
 
