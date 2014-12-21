@@ -20,6 +20,7 @@ gem 'faker',				'1.4.2'
 gem "sass", "~> 3.2.5"
 
 gem 'sass-rails'
+
 gem 'bootstrap-sass',		'3.2.0.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier',             '2.5.3'
