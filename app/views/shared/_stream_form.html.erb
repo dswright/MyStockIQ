@@ -3,7 +3,8 @@
 <% #Renders post form error messages using error_messages helper in app/views/shared/ %>
 	<%= render 'shared/error_messages', object: f.object %>
 	<div class = "field">
-		<%= f.text_area :content, placeholder: "Compose new micropost..." %>
+		<%= f.text_area :content, placeholder: "Compose new micropost...", class: "stock-page-comment-field" %>
+		<%= f.hidden_field :ticker_symbol %>
 	</div>
 	<%= f.submit "Post", class: "btn btn-primary" %>
 <% end %>
