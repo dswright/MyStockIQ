@@ -17,7 +17,9 @@ gem 'bcrypt',               '3.1.7'
 gem 'faker',				'1.4.2'
 
 # Use SCSS for stylesheets
-gem 'sass-rails',           '5.0.0.beta1'
+gem "sass", "~> 3.2.5"
+
+gem 'sass-rails'
 gem 'bootstrap-sass',		'3.2.0.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier',             '2.5.3'
