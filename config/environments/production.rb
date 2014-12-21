@@ -3,11 +3,6 @@ Rails.application.configure do
 
   config.assets.compress = true
 
-  config.assets.precompile += [
-      '*.js',
-      '*.css'
-    ]
-
   # Code is not reloaded between requests.
   config.cache_classes = true
 
