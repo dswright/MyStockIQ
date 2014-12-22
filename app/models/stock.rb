@@ -1,7 +1,5 @@
 class Stock < ActiveRecord::Base
 
-  require 'scraper'
-
   validates :stock,         presence: true
 
   validates :ticker_symbol, presence: true,
@@ -36,7 +34,7 @@ class Stock < ActiveRecord::Base
       {name: "3m", x_range_min:Stock.return_date_based_on_days(-90, last_utc_date), x_range_max:Stock.return_date_based_on_days(45, last_utc_date)},
       {name: "6m", x_range_min:Stock.return_date_based_on_days(-180, last_utc_date), x_range_max:Stock.return_date_based_on_days(90, last_utc_date)},
       {name: "1yr", x_range_min:Stock.return_date_based_on_days(-360, last_utc_date), x_range_max:Stock.return_date_based_on_days(180, last_utc_date)},
-      {name: "5yr", x_range_min:Stock.return_date_based_on_days(-1825, last_utc_date), x_range_max:Stock.return_date_based_on_days(900, last_utc_date)},
+      {name: "5yr", x_range_min:Stock.return_date_based_on_days(-1825, last_utc_date), x_range_max:Stock.return_date_based_on_days(900, last_utc_date)}
     ]
   end
 

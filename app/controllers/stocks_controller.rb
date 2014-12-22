@@ -8,6 +8,8 @@ class StocksController < ApplicationController
 
 	def show
 
+		#'current_stock' is defined in Stock Helper functions
+
 		@stock = Stock.find_by(ticker_symbol: params[:ticker_symbol])
 		#Stock's posts, comments, and predictions to be shown in the view
 		@posts = Stream.where(stock_id: @stock.id)
