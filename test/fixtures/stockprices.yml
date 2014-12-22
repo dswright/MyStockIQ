@@ -4,8 +4,10 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
-# column: value
-#
-two: {}
-#  column: value
+AAPL:
+  ticker_symbol: "AAPL"
+  date: "10-10-2014"
+  open_price: 100
+  close_price: 150
+  volume: 100000
+  split: 1

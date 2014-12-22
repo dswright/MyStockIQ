@@ -12,24 +12,26 @@ Rails.application.routes.draw do
   #this sends /newuser to the newuser index function in the controller this has to be plural,
   #to fit with Ruby conventions.
   get     'users'                        =>   'users#new' 
-      
-  #this specifies that when a post is coming into the new users page, refer to the create method
-  #in the controller.                                                
   post    'users'                        =>   'users#create'
+  get     'users/:username'              =>   'users#show'                                              
 
-  get     'users/:username'              =>   'users#show'
 
   get     'login'                        =>   'sessions#new'
   post    'login'                        =>   'sessions#create'
   delete  'logout'                       =>   'sessions#destroy'
 
-  get     'stocks/create'                =>   'stocks#create'
+ 
   get     'stocks/:ticker_symbol'        =>   'stocks#show'
 
-  get     'stockprices/create'           =>   'stockprices#create'
 
   post 'streams'                          =>   'streams#create'
   delete  'streams/:id'                  =>    'streams#destroy'
+
+
+  post     'comments'                     =>   'comments#create'
+  delete   'comments/:id'                 =>   'comments#destroy'
+
+  post     'predictions'                   =>    'predictions#create'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

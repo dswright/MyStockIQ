@@ -1,9 +1,15 @@
 source 'https://rubygems.org'
 
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
+# Bundle edge Rails instead: gem 'rails', github: 'rails/rails
+ruby '2.0.0'
 gem 'rails',                '4.2.0.beta4'
 gem 'unicorn'
+#gem 'unicorn-worker-killer'
+gem 'newrelic_rpm'
+gem 'oink'
+gem 'gon'
+
 
 #add bcrypt for the password encryption
 gem 'bcrypt',               '3.1.7'
@@ -11,7 +17,10 @@ gem 'bcrypt',               '3.1.7'
 gem 'faker',				'1.4.2'
 
 # Use SCSS for stylesheets
-gem 'sass-rails',           '5.0.0.beta1'
+gem "sass", "~> 3.2.5"
+
+gem 'sass-rails'
+
 gem 'bootstrap-sass',		'3.2.0.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier',             '2.5.3'
@@ -44,6 +53,7 @@ gem 'slim'
 
 gem 'pg',             '0.17.1'
 gem 'rails_12factor', '0.0.2'
+gem 'rack-mini-profiler'
 
 group :development, :test do
 

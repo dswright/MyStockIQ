@@ -14,7 +14,7 @@ class UsersController < ApplicationController
     @posts = @user.streams
 
     #creates post variable to be used to set up the post creation form (see app/views/shared folder)
-    @post = current_user.streams.build if logged_in?
+    @post = current_user.streams.build
   end
 
   def new
@@ -31,7 +31,7 @@ class UsersController < ApplicationController
       flash[:success] = "Welcome to the Stock Hero"
 
       #redirect to user profile page
-  		redirect_to user_profile
+  		redirect_to "/users/#{@user.username}"
 
   	else
       flash.now[:danger] = 'Invalid Form'
