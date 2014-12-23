@@ -9,6 +9,12 @@ class StreamsController < ApplicationController
 		#Obtain user session information from Session Helper function 'current_user'.
 		@user = current_user
 		@posts = @user.streams
+    #right now the comment takes: id, content, ticker_symbol, stream_id, created_at, updated_at. Stream id should be implicit..
+
+		#comment[:ticker_symbol] = "AAPL"
+		#comment[:stream_id] = 4
+
+		#create comment input using the stream params.
 
 		#Builds 'Streams' object related to current user. This syntax is only required when looking up the 'Streams' model by 'User'
 		@post = @user.streams.build(stream_params)
@@ -34,7 +40,7 @@ class StreamsController < ApplicationController
 		def stream_params
 			#Obtains parameters from 'stream form' in app/views/shared.
 			#Permits adjustment of only the 'content' column in the 'streams' model.
-			params.require(:stream).permit(:content)
+			params.require(:stream).permit(:content, :ticker_symbol)
 		end
 
 		def correct_user

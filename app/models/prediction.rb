@@ -1,4 +1,3 @@
 class Prediction < ActiveRecord::Base
-  belongs_to :user
-  belongs_to :stock
+  has_many :streams, as: :streamable
 end

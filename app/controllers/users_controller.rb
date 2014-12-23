@@ -10,11 +10,19 @@ class UsersController < ApplicationController
 
     @user = User.find_by(username: params[:username])
 
+    @comment_stream_inputs = "user:#{params[:username]}"
+
     #all user posts are assigned to @posts, with the posts split by page to prevent displaying too many posts.
-    @posts = @user.streams
+    #@posts = @user.streams
 
     #creates post variable to be used to set up the post creation form (see app/views/shared folder)
-    @post = current_user.streams.build
+    #@post = current_user.streams.build
+
+    #creates empty comment object to plug into the form.
+    #right now the comment takes: id, content, ticker_symbol, stream_id, created_at, updated_at. Stream id should be implicit..
+    @comment = Comment.new 
+
+    #@comment = current_user.comments.build  #this assumes an association between comments and current user. Which does not exist.
   end
 
   def new
