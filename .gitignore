@@ -8,6 +8,7 @@
 /.bundle
 dump.rdb
 latest.dump
+config/database.yml
 
 # Ignore the default SQLite database.
 /db/*.sqlite3
