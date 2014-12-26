@@ -72,7 +72,7 @@
      	 <p class = "stock-page-prediction-header">
         	Comment on <%= @stock[:ticker_symbol] %>
       	</p>
-      	<%= render 'shared/stream_form' %>
+      	<%= render 'shared/comment_form' %>
     	</div>
     <% end %>
 
@@ -101,6 +101,9 @@
     </div>
 
   </div>
+
+
+<!-- STOCK GRAPH -->
 
   <div class = "stock-page-aside col-sm-8">
 
@@ -131,6 +134,37 @@
         </div>
       </div>
     </div>
+
+
+<!-- Stream Posts -->
+    <% @posts.each do |post| %>
+      <%= render post %>
+    <% end %>
+
+
+    <div class = "prediction-post-comment">
+      <div class = "row">
+        <div class = "col-xs-3 col-sm-2 col-md-2">
+          <div class = "prediction-post-mug-container">
+            <img src="images/dillshmill.png">
+          </div>
+        </div>
+        <div class = "prediction-post-txt-container col-xs-9">
+          <p class = "handle">@dillshmill&nbsp;&bull;&nbsp;2hr</p>
+          <p class = "comment-txt">Lorem $APPL ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          <div class = "prediction-post-txt-icons">
+            <i class="fa fa-reply fa-lg">&nbsp;&nbsp;1</i>
+            <i class="fa fa-thumbs-o-down fa-lg">&nbsp;&nbsp;2</i>
+            <i class="fa fa-thumbs-o-up fa-lg">&nbsp;&nbsp;3</i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
 
     <div class = "prediction-post">
       <div class = "row">

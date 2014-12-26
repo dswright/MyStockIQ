@@ -14,7 +14,6 @@
 ActiveRecord::Schema.define(version: 20141223182849) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "adminpack"
   enable_extension "plpgsql"
 
   create_table "comments", force: true do |t|
@@ -83,6 +82,8 @@ ActiveRecord::Schema.define(version: 20141223182849) do
   create_table "streams", force: true do |t|
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.integer  "post_id"
+    t.string   "target_name"
     t.integer  "streamable_id"
     t.string   "streamable_type"
     t.string   "target_type"

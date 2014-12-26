@@ -39,6 +39,5 @@ class Stock < ActiveRecord::Base
       {name: "5yr", x_range_min:Stock.return_date_based_on_days(-1825, last_utc_date), x_range_max:Stock.return_date_based_on_days(900, last_utc_date)},
     ]
   end
-
 end
 

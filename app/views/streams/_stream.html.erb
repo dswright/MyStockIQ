@@ -1,10 +1,22 @@
-<li id="post-<% stream.id %>">
-	<span class="user"><%= link_to stream.user.username %></span>
-	<span class="content"><%= stream.content %></span>
-	<span class="timestamp">
-		Posted <%= time_ago_in_words(stream.created_at) %> ago.
-		<% if current_user?(stream.user) %>
-			<%= link_to "delete", "/streams/#{stream.id}/", method: :delete, data: {confirm: "Are you sure?"} %>
-		<% end %>
-	</span>
-</li>
+
+    <div class = "prediction-post-comment">
+      <div class = "row">
+        <div class = "col-xs-3 col-sm-2 col-md-2">
+          <div class = "prediction-post-mug-container">
+            <img src="images/apple_logo.jpeg">
+          </div>
+        </div>
+        <div class = "prediction-post-txt-container col-xs-9">
+          <p class = "handle"><%= link_to stream.streamable.user_id%>&nbsp;&bull;&nbsp;<%= time_ago_in_words(stream.created_at) %> ago</p>
+          <p class = "comment-txt"><%= stream.streamable.content if stream.streamable_type = "Comment" %>s</p>
+          <% if current_user?(stream.streamable.user_id) %>
+				<%= link_to "delete", "/streams/#{stream.id}/", method: :delete, data: {confirm: "Are you sure?"} %>
+			<% end %>
+          <div class = "prediction-post-txt-icons">
+            <i class="fa fa-reply fa-lg">&nbsp;&nbsp;1</i>
+            <i class="fa fa-thumbs-o-down fa-lg">&nbsp;&nbsp;2</i>
+            <i class="fa fa-thumbs-o-up fa-lg">&nbsp;&nbsp;3</i>
+          </div>
+        </div>
+      </div>
+    </div>
