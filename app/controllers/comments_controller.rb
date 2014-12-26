@@ -43,23 +43,21 @@ class CommentsController < ApplicationController
 			#stream_input = comment.streams.build(stream_input)
 			#stream_input.save
 
-			unless params[:stream_array].empty?
-				stream_input_array = params[:stream_array].split(",")
-				stream_input_array.each do |stream_item|
-					#Must add validation of these parameters against existing stock/user ids to prevent hacking.
-					stream_elements = stream_item.split(":")
-					stream_input = {target_type: stream_elements[0], target_id: stream_elements[1]}
-					stream_input = comment.streams.build(stream_input)
-					stream_input.save
-				end
+			stream_input_array = params[:stream_array].split(",")
+			stream_input_array.each do |stream_item|
+				#Must add validation of these parameters against existing stock/user ids to prevent hacking.
+				stream_elements = stream_item.split(":")
+				stream_input = {target_type: stream_elements[0], target_id: stream_elements[1]}
+				stream_input = comment.streams.build(stream_input)
+				stream_input.save
 			end
 
 			stream = Stream.first
 			#Redirect back to stock or user page using 'stock_or_user_page' comments helper function 
-			redirect_to stock_or_user_page(stream)
+			redirect_to stock_or_user_page(params[:stream_array])
 
 		else
-			render stock_or_user_view(stream)
+			redirect_to stock_or_user_page(params[:stream_array])
 		end
 	end
 
