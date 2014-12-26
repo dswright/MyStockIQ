@@ -19,8 +19,8 @@ class StocksController < ApplicationController
    		#creates comment variable to be used to set up the prediction creation form (see app/views/shared folder)
     	@prediction = Prediction.new(score: 0) 	
 
-    	@comment_stream_inputs = "user:#{@current_user.id}"
-    	@prediction_stream_inputs = "user:#{@current_user.id}"
+    	@comment_stream_inputs = "stock:#{params[:ticker_symbol]}"
+    	@prediction_stream_inputs = "user:#{params[:ticker_symbol]}"
 
     	gon.ticker_symbol = params[:ticker_symbol]
 
