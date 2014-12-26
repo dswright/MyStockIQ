@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141223182849) do
+ActiveRecord::Schema.define(version: 20141226092036) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 20141223182849) do
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
     t.string   "prediction_comment"
+    t.datetime "end_date"
   end
 
   add_index "predictions", ["stock_id", "created_at"], name: "index_predictions_on_stock_id_and_created_at", using: :btree
@@ -82,8 +83,6 @@ ActiveRecord::Schema.define(version: 20141223182849) do
   create_table "streams", force: true do |t|
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
-    t.integer  "post_id"
-    t.string   "target_name"
     t.integer  "streamable_id"
     t.string   "streamable_type"
     t.string   "target_type"

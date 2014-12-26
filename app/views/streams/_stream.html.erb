@@ -7,9 +7,9 @@
           </div>
         </div>
         <div class = "prediction-post-txt-container col-xs-9">
-          <p class = "handle"><%= link_to stream.streamable.user_id%>&nbsp;&bull;&nbsp;<%= time_ago_in_words(stream.created_at) %> ago</p>
+          <p class = "handle"><%= link_to stream.streamable.user.username%>&nbsp;&bull;&nbsp;<%= time_ago_in_words(stream.created_at) %> ago</p>
           <p class = "comment-txt"><%= stream.streamable.content if stream.streamable_type = "Comment" %>s</p>
-          <% if current_user?(stream.streamable.user_id) %>
+          <% if current_user?(stream.streamable.user.username) %>
 				<%= link_to "delete", "/streams/#{stream.id}/", method: :delete, data: {confirm: "Are you sure?"} %>
 			<% end %>
           <div class = "prediction-post-txt-icons">

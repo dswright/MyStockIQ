@@ -1,6 +1,6 @@
 class Comment < ActiveRecord::Base
 
-	belongs_to :users
+	belongs_to :user
   	has_many :streams, as: :streamable
 
 	validates :content, presence: true, length: { maximum: 140}

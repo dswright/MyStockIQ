@@ -54,11 +54,12 @@ class CommentsController < ApplicationController
 				end
 			end
 
+			stream = Stream.first
 			#Redirect back to stock or user page using 'stock_or_user_page' comments helper function 
-			#redirect_to stock_or_user_page(comment)
-			redirect_to "/users/dw"
+			redirect_to stock_or_user_page(stream)
+
 		else
-			render stock_or_user_view(@comment)
+			render stock_or_user_view(stream)
 		end
 	end
 
@@ -68,10 +69,8 @@ class CommentsController < ApplicationController
 
 		#def comment_params
 		def comment_params
-			#Obtains parameters from 'stream form' in app/views/shared.
+			#Obtains parameters from 'comment form' in app/views/shared.
 			#Permits adjustment of only the 'content' & 'ticker_symbol' columns in the 'comments' model.
-		#	params.require(:comment).permit(:content, :ticker_symbol)
-		#end
 			params.require(:comment).permit(:content)
 		end
 

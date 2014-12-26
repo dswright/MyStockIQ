@@ -1,14 +1,15 @@
 module CommentsHelper
-	def stock_or_user_page(comment)
-		if comment.ticker_symbol != nil
-			"/stocks/#{comment.ticker_symbol}/"
+	def stock_or_user_page(stream)
+		if stream.target_type = "stock"
+			stock = Stock.find_by(id: stream.target_id)
+			"/stocks/#{stock.ticker_symbol}/"
 		else
 			login_path
 		end
 	end
 
-	def stock_or_user_view(comment)
-		if comment.ticker_symbol != nil
+	def stock_or_user_view(stream)
+		if stream.ticker_symbol = "stock"
 			"/stocks/show"
 		else
 			"/users/show/"
