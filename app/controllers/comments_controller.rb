@@ -13,7 +13,7 @@ class CommentsController < ApplicationController
 			comment.save
 			flash[:success] = "Post Created!"
 			stream_params_array.each do |stream_item|
-				stream_input = comment.streams.build(stream_input)
+				stream_input = comment.streams.build(stream_item)
 				stream_input.save
 			end
 		end

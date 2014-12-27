@@ -6,9 +6,9 @@ class UsersController < ApplicationController
   
   def show
     @current_user = current_user
-    @allusers = User.all
 
     @user = User.find_by(username: params[:username])
+    @streams = Stream.where(target_type: "user", target_id: @user.username)
 
     @comment_header = "Comment on #{params[:username]}"
     @comment_stream_string = "user:#{params[:username]}"
