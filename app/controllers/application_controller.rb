@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
   include StocksHelper
   include CommentsHelper
+  include StreamsHelper
   
   private
 

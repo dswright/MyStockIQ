@@ -10,7 +10,8 @@ class UsersController < ApplicationController
 
     @user = User.find_by(username: params[:username])
 
-    @comment_stream_inputs = "user:#{params[:username]}"
+    @comment_header = "Comment on #{params[:username]}"
+    @comment_stream_string = "user:#{params[:username]}"
 
     #all user posts are assigned to @posts, with the posts split by page to prevent displaying too many posts.
     #@posts = @user.streams

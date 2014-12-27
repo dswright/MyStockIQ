@@ -11,8 +11,7 @@ class StreamsController < ApplicationController
 		@posts = @user.streams
     #right now the comment takes: id, content, ticker_symbol, stream_id, created_at, updated_at. Stream id should be implicit..
 
-		#comment[:ticker_symbol] = "AAPL"
-		#comment[:stream_id] = 4
+
 
 		#create comment input using the stream params.
 
