@@ -7,6 +7,10 @@ function changeText() {
   document.getElementById("demo").innerHTML = "Paragraph changed.";
 }
 
+function simpleAlert() {
+  window.alert("simpleAlert")
+}
+
 
 
 function resizeChart() {
@@ -84,7 +88,7 @@ $(document).ready(function () {
 });
 
 
-$(document).ready(function () {
+/*$(document).ready(function () {
   var width = $("#container").width();
 
   //resize the container height based on the width.
@@ -133,7 +137,7 @@ $(document).ready(function () {
   else{
     var y_min = min_array[0][0];
   }
-  */
+
   // Create the chart
   var chart = new Highcharts.StockChart({
 
@@ -145,7 +149,6 @@ $(document).ready(function () {
       min: x_min,
       max: x_max
     },
-    */
 
     rangeSelector : {
       enabled: false
@@ -163,7 +166,7 @@ $(document).ready(function () {
     exporting: {
       enabled: false
     },
-    */
+
     navigator: {
       enabled: false
     },
@@ -172,7 +175,7 @@ $(document).ready(function () {
 
   });
 
-  /*
+
   $('#button0').click(function () {
     chart.yAxis[0].setExtremes(min_array[0],null);
     chart.xAxis[0].setExtremes(date_array[0][0], date_array[0][1]);
@@ -209,7 +212,7 @@ $(document).ready(function () {
   //$('#button0').click(function() {
   //chart.series[0].setData(data_array0)
   //});
-*/
+
 
   // execute chart resize function to resize screen onload.
   $(window).bind("orientationchange resize", resizeChart);
@@ -218,5 +221,5 @@ $(document).ready(function () {
   $( "text" ).remove( ":contains('Highcharts.com')" );
 
 });
-
+*/
 
