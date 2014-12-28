@@ -8,17 +8,20 @@ class CommentsController < ApplicationController
 		#build the comment for input to the db.
 		comment = @user.comments.build(comment)
 		#process the stream input array 
+		@streams = []
 		stream_params_array = stream_params_process(params[:stream_string])
+		stream_params_array.each do |stream_item|
+			@streams << comment.streams.build(stream_item)
+		end	
+
 		if comment.valid?
 			comment.save
+			@streams.each {|stream| stream.save}
 			flash[:success] = "Post Created!"
-			stream_params_array.each do |stream_item|
-				stream_input = comment.streams.build(stream_item)
-				stream_input.save
-			end
 		end
+
 		#redirect to the first target item defined by the comments form. First item should be the page the comment is coming from.
-		redirect_to stock_or_user_page(stream_params_array[0])
+		redirect_to stock_or_user_page(@streams[0])
 	end
 
 	private
