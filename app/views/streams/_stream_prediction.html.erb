@@ -7,11 +7,15 @@
     </div>
     <div class = "prediction-post-txt-container col-xs-9">
 
-      <p class = "handle"><a href="/user/blah/">Dw</a>&nbsp;&bull;&nbsp;50</p>
-      <p class = "prediction-txt"><a href="#">&#36; AAPL &#58;&nbsp;
-      $100 in 100 days</a>
-        <span>&ndash; 100 </span></p>
-      <p class = "comment-txt">the comment is herhererererere</p>
+      <p class = "handle">
+        <%= link_to prediction.user.username%>&nbsp;&bull;&nbsp;<%= time_ago_in_words(prediction.created_at) %> ago
+      </p>
+
+      <p class = "prediction-txt">
+        <%= "$#{@stock.ticker_symbol} will #{increase_or_decrease?(prediction)} to #{prediction.prediction_price} points (#{percent_change(prediction)}%) in #{prediction_duration(prediction)}" %>
+      </p>
+
+      <p class = "comment-txt"><%= prediction.prediction_comment %></p>
 
       <div class = "prediction-post-txt-icons">
         <i class="fa fa-reply fa-lg">&nbsp;&nbsp; 100 </i>
@@ -21,3 +25,4 @@
     </div>
   </div>
 </div>
+

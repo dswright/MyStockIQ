@@ -137,10 +137,7 @@
 
 
 <!-- STREAM POSTS -->
-    <% @posts.each do |post| %>
-    <!-- renders stream view -->
-      <%= render post %>
-    <% end %>
+  <%= render "streams/stream" %>
 
 
     <div class = "prediction-post-comment">

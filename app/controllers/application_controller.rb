@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   include StocksHelper
   include CommentsHelper
   include StreamsHelper
+  include PredictionsHelper
   
   private
 
