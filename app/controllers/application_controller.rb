@@ -7,11 +7,8 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
   include StocksHelper
   include CommentsHelper
-<<<<<<< Updated upstream
   include StreamsHelper
-=======
   include PredictionsHelper
->>>>>>> Stashed changes
   
   private
 
