@@ -2,8 +2,6 @@
 
 one:
   content: MyText
-  ticker_symbol: MyText
 
 two:
   content: MyText
-  ticker_symbol: MyText
