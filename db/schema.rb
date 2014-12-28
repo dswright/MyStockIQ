@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141221232411) do
+ActiveRecord::Schema.define(version: 20141228004722) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "adminpack"
@@ -19,14 +19,12 @@ ActiveRecord::Schema.define(version: 20141221232411) do
 
   create_table "comments", force: true do |t|
     t.text     "content"
-    t.text     "ticker_symbol"
-    t.integer  "stream_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "user_id"
   end
 
-  add_index "comments", ["stream_id", "created_at"], name: "index_comments_on_stream_id_and_created_at", using: :btree
-  add_index "comments", ["stream_id"], name: "index_comments_on_stream_id", using: :btree
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
   create_table "predictions", force: true do |t|
     t.float    "prediction_price"
@@ -36,6 +34,10 @@ ActiveRecord::Schema.define(version: 20141221232411) do
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
     t.string   "prediction_comment"
+    t.datetime "end_date"
+    t.integer  "active"
+    t.decimal  "days_remaining"
+    t.decimal  "start_price"
   end
 
   add_index "predictions", ["stock_id", "created_at"], name: "index_predictions_on_stock_id_and_created_at", using: :btree
@@ -83,16 +85,17 @@ ActiveRecord::Schema.define(version: 20141221232411) do
   add_index "stocks", ["updated_at"], name: "index_stocks_on_updated_at", using: :btree
 
   create_table "streams", force: true do |t|
-    t.integer  "user_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.string   "stream_type"
-    t.integer  "stock_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.integer  "streamable_id"
+    t.string   "streamable_type"
+    t.string   "target_type"
+    t.string   "target_id"
   end
 
-  add_index "streams", ["stock_id"], name: "index_streams_on_stock_id", using: :btree
-  add_index "streams", ["user_id", "created_at"], name: "index_streams_on_user_id_and_created_at", using: :btree
-  add_index "streams", ["user_id"], name: "index_streams_on_user_id", using: :btree
+  add_index "streams", ["streamable_type", "streamable_id"], name: "index_streams_on_streamable_type_and_streamable_id", using: :btree
+  add_index "streams", ["target_id"], name: "index_streams_on_target_id", using: :btree
+  add_index "streams", ["target_type"], name: "index_streams_on_target_type", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "username"

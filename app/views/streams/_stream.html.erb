@@ -1,10 +1,7 @@
-<li id="post-<% stream.id %>">
-	<span class="user"><%= link_to stream.user.username %></span>
-	<span class="content"><%= stream.content %></span>
-	<span class="timestamp">
-		Posted <%= time_ago_in_words(stream.created_at) %> ago.
-		<% if current_user?(stream.user) %>
-			<%= link_to "delete", "/streams/#{stream.id}/", method: :delete, data: {confirm: "Are you sure?"} %>
-		<% end %>
-	</span>
-</li>
+<% @streams.each do |stream_item| 
+  if stream_item.streamable_type == "Comment" %>
+    <%= render partial: "streams/stream_comment", locals: {comment: stream_item.streamable} %>
+  <% elsif stream_item.streamable_type == "Prediction" %>
+    <%= render partial: "streams/stream_prediction", locals: {prediction: stream_item.streamable} %>
+  <%end%>
+<%end%>

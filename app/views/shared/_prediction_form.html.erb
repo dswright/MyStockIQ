@@ -4,9 +4,12 @@
 	<%= render 'shared/error_messages', object: f.object %>
 	<div class = "field">
 		<%= f.text_area :prediction_price, placeholder: "Future stock price will be... (eg. 100)", class: "stock-page-prediction-field" %>
+		<%= f.date_select :end_date%>
 		<%= f.text_area :prediction_comment, placeholder: "Add a comment... (optional)", class: "stock-page-comment-field" %>
 		<%= f.hidden_field :score %>
-		<%= f.hidden_field :stock_id %>
+		<%= f.hidden_field :active %>
+		<%= f.hidden_field :start_price %>
+		<%= hidden_field_tag :stream_array, @prediction_stream_inputs %>
 	</div>
-	<%= f.submit "Post", class: "btn btn-primary" %>
+	<%= f.submit "Make Prediction", class: "btn btn-primary" %>
 <% end %>

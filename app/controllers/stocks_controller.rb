@@ -8,18 +8,19 @@ class StocksController < ApplicationController
 
 	def show
 
+		@current_user = current_user
 		@stock = Stock.find_by(ticker_symbol: params[:ticker_symbol])
 		#Stock's posts, comments, and predictions to be shown in the view
-		@posts = Stream.where(stock_id: @stock.id)
-		@comments = Comment.where(ticker_symbol: @stock.ticker_symbol)
-		@predictions = Prediction.where(stock_id: @stock.id)
+		@streams = Stream.where(target_type: "stock", target_id: @stock.id)
 
 		#creates comment variable to be used to set up the comment creation form (see app/views/shared folder)
-    	@comment = Comment.new(ticker_symbol: @stock.ticker_symbol)
+    	@comment = Comment.new
 
    		#creates comment variable to be used to set up the prediction creation form (see app/views/shared folder)
-    	@prediction = Prediction.new(stock_id: @stock.id, score: 0) 	
+    	@prediction = Prediction.new(score: 0, active: 1, start_price: @stock.daily_stock_price) 	
 
+    	@comment_stream_inputs = "stock:#{@stock.id}"
+    	@prediction_stream_inputs = "stock:#{@stock.id}"
 
     	gon.ticker_symbol = params[:ticker_symbol]
 

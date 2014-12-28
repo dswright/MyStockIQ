@@ -63,7 +63,7 @@ class Scraper
 
   #Available Scraper URLs
   def url_latest(ticker_symbol)
-    rows_of_data = 5
+    rows_of_data = 15
     url = "http://www.quandl.com/api/v1/datasets/EOD/#{ticker_symbol}.csv?exclude_headers=true&rows=#{rows_of_data}&auth_token=sVaP2d6ACjxmP-jM_6V-"
     return_encoded_url(url, 0)
   end

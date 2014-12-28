@@ -6,9 +6,13 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-users = User.order(:created_at).take(6)
+user = User.find_by(username: "merrifield")
+stock = Stock.find_by(ticker_symbol: "AAPL")
 
+#Creates 50 comment posts
 50.times do 
 	content = Faker::Lorem.sentence(5)
-	users.each { |user| user.streams.create!(content: content) }
+	comment = user.comments.create!(content: content)
+	comment.streams.create!(streamable_type: "comment", target_type: "stock", target_id: stock.id)
 end
+
