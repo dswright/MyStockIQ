@@ -1,4 +1,5 @@
 
+<<<<<<< Updated upstream
 <% @streams.each do |stream_item| 
   if stream_item.streamable_type == "Comment" %>
     <%= render partial: "streams/stream_comment", locals: {comment: stream_item.streamable} %>
@@ -7,3 +8,37 @@
   <%end
 end%>
 
+=======
+    <div class = "prediction-post-comment">
+      <div class = "row">
+        <div class = "col-xs-3 col-sm-2 col-md-2">
+          <div class = "prediction-post-mug-container">
+            <img src="images/apple_logo.jpeg">
+          </div>
+        </div>
+        <div class = "prediction-post-txt-container col-xs-9">
+          <p class = "handle"><%= link_to stream.streamable.user.username%>&nbsp;&bull;&nbsp;<%= time_ago_in_words(stream.created_at) %> ago</p>
+          <p class = "prediction-txt">
+              <% if stream.streamable_type == "Prediction"%>
+                  <%= "$#{@stock.ticker_symbol} will #{increase_or_decrease?(stream.streamable)} to #{stream.streamable.prediction_price} points (#{percent_change(stream.streamable)}%) in #{prediction_duration(stream.streamable)}" %>
+              <% end %>
+          </p>
+          <p class = "comment-txt">
+                                   <% if stream.streamable_type == "Comment" %>
+                                      <%= stream.streamable.content %>
+                                   <% else %>
+                                      "<%= stream.streamable.prediction_comment %>"
+                                   <% end %>
+          </p>
+          <% if current_user?(stream.streamable.user.username) %>
+				<%= link_to "delete", "/streams/#{stream.id}/", method: :delete, data: {confirm: "Are you sure?"} %>
+			<% end %>
+          <div class = "prediction-post-txt-icons">
+            <i class="fa fa-reply fa-lg">&nbsp;&nbsp;1</i>
+            <i class="fa fa-thumbs-o-down fa-lg">&nbsp;&nbsp;2</i>
+            <i class="fa fa-thumbs-o-up fa-lg">&nbsp;&nbsp;3</i>
+          </div>
+        </div>
+      </div>
+    </div>
+>>>>>>> Stashed changes

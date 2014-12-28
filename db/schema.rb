@@ -11,10 +11,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141226092036) do
+ActiveRecord::Schema.define(version: 20141228004722) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "adminpack"
   enable_extension "plpgsql"
 
   create_table "comments", force: true do |t|
@@ -35,6 +34,9 @@ ActiveRecord::Schema.define(version: 20141226092036) do
     t.datetime "updated_at",         null: false
     t.string   "prediction_comment"
     t.datetime "end_date"
+    t.integer  "active"
+    t.decimal  "days_remaining"
+    t.decimal  "start_price"
   end
 
   add_index "predictions", ["stock_id", "created_at"], name: "index_predictions_on_stock_id_and_created_at", using: :btree
