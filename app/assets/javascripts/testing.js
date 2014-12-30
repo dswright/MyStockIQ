@@ -11,8 +11,6 @@ function simpleAlert() {
   window.alert("simpleAlert")
 };
 
-
-
 function resizeChart() {
   var height = $("#stock-div").width()/3+30;
   $("#stock-div").css("height", height);
@@ -67,19 +65,6 @@ $(document).ready(function () {
 
   $("button[data-x-range-min]").click(get_ranges);
    
-/*
-  get_alert = function() {
-    the_alert = $(this).data("the-alert")
-    window.alert(the_alert)
-  }
-
-  $("button[data-the-alert]").click(get_alert)
-  
-  $('#button0').click(function () {
-    chart1.yAxis[0].setExtremes(0,null);
-    chart1.xAxis[0].setExtremes(1206800000000, 1518342400000);
-  });
-  */
   $(window).bind("orientationchange resize", resizeChart);
 
   //remove branding logo that says 'highcarts'
