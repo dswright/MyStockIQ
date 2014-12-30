@@ -17,7 +17,7 @@ function resizeChart() {
   var height = $("#stock-div").width()/3+30;
   $("#stock-div").css("height", height);
   $(".stockgraph-container1").css("height", height+10);
-}
+};
  
 var chart1; // globally available
 $(document).ready(function () {
