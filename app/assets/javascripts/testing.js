@@ -5,11 +5,11 @@
 //this gets the element by id demo and changes the text in that demo... incredible. Make sure to use the innerhtml method..
 function changeText() {
   document.getElementById("demo").innerHTML = "Paragraph changed.";
-}
+};
 
 function simpleAlert() {
   window.alert("simpleAlert")
-}
+};
 
 
 
@@ -18,7 +18,7 @@ function resizeChart() {
   $("#stock-div").css("height", height);
   $(".stockgraph-container1").css("height", height+10);
 }
-
+ 
 var chart1; // globally available
 $(document).ready(function () {
   var width = $("#stock-div").width();
@@ -58,14 +58,14 @@ $(document).ready(function () {
   });
 
   get_ranges = function() {
-    range_min = $(this).data("x-range-min")
-    range_max = $(this).data("x-range-max")
+    range_min = $(this).data("x-range-min");
+    range_max = $(this).data("x-range-max");
     chart1.yAxis[0].setExtremes(0,null);
     chart1.xAxis[0].setExtremes(range_min, range_max);
     //window.alert(range_min + range_max)
-  }
+  };
 
-  $("button[data-x-range-min]").click(get_ranges)
+  $("button[data-x-range-min]").click(get_ranges);
    
 /*
   get_alert = function() {
