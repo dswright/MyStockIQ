@@ -26,7 +26,7 @@ Rails.application.configure do
   config.serve_static_assets = true
 
   # precompile js files for hicharts.
-  config.assets.precompile += ['exporting.js', 'highstock.js']
+  #config.assets.precompile += ['exporting.js', 'highstock.js']
 
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
