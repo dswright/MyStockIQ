@@ -108,7 +108,7 @@ class Scraper
     if count <= 10
       begin
         hash_array = []
-        open(url, 'User-Agent' => 'ruby') do |f|
+        open(url) do |f|
           f.each_line do |line|
             CSV.parse(line) do |row|
               hash_item = class_with_process.data_hash(row, ticker_symbol)

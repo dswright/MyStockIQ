@@ -257,6 +257,7 @@ DEPENDENCIES
   newrelic_rpm
   oink
   pg (= 0.17.1)
+  pry
   rack-mini-profiler
   rails (= 4.2.0.beta4)
   rails-html-sanitizer (= 1.0.1)
