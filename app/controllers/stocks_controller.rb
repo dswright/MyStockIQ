@@ -20,7 +20,7 @@ class StocksController < ApplicationController
     	@prediction = Prediction.new(score: 0, active: 1, start_price: @stock.daily_stock_price) 	
 
     	@comment_stream_inputs = "stock:#{@stock.id}"
-    	@prediction_stream_inputs = "stock:#{@stock.id},user:2"
+    	@prediction_stream_inputs = "stock:#{@stock.id}"
 
     	gon.ticker_symbol = params[:ticker_symbol]
 

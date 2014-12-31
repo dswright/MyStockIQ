@@ -37,6 +37,16 @@ class PredictionsController < ApplicationController
 
 	end
 
+	def update
+
+		predictions = Prediction.where(active: 1)
+
+		predictions.each do |prediction|
+			score = percent_change(prediction)
+		end
+
+	end
+
 	private
 
 	#def comment_params
