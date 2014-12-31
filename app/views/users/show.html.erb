@@ -65,9 +65,8 @@
 
   <div class = "stock-page-aside col-sm-8">
 
-    <% @stream_hash_array.each do |stream_hash|%>
-      <%= render partial: "streams/stream", locals: {stream_hash: stream_hash} %>
-    <%end%>  
+    <%= render partial: "streams/stream", locals: {stream_hash_array: @stream_hash_array} %>
+      
     <div class = "prediction-post-comment">
       <div class = "row">
         <div class = "col-xs-3 col-sm-2 col-md-2">

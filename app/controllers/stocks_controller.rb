@@ -11,7 +11,8 @@ class StocksController < ApplicationController
 		@current_user = current_user
 		@stock = Stock.find_by(ticker_symbol: params[:ticker_symbol])
 		#Stock's posts, comments, and predictions to be shown in the view
-		@streams = Stream.where(target_type: "Stock", target_id: @stock.id)
+		streams = Stream.where(target_type: "Stock", target_id: @stock.id)
+    @stream_hash_array = Stream.stream_maker(streams, 0)
 
 		#creates comment variable to be used to set up the comment creation form (see app/views/shared folder)
     	@comment = Comment.new
@@ -22,8 +23,12 @@ class StocksController < ApplicationController
     	@comment_stream_inputs = "Stock:#{@stock.id}"
     	@prediction_stream_inputs = "Stock:#{@stock.id}"
 
-    	gon.ticker_symbol = params[:ticker_symbol]
+      @prediction_landing_page = "stocks:#{@stock.ticker_symbol}"
+      @comment_landing_page = "stocks:#{@stock.ticker_symbol}"
+      @stream_comment_landing_page = "stocks:#{@stock.ticker_symbol}"
+    
 
+    	gon.ticker_symbol = params[:ticker_symbol]
     	gon.price_array = Stock.get_historical_prices(params[:ticker_symbol])    
 
     	#this gets used by the view to generate the html buttons.
