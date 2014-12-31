@@ -11,7 +11,7 @@ class UsersController < ApplicationController
     @streams = Stream.where(target_type: "user", target_id: @user.username)
 
     @comment_header = "Comment on #{params[:username]}"
-    @comment_stream_string = "user:#{params[:username]}"
+    @comment_stream_inputs = "user:#{params[:username]}"
 
     #all user posts are assigned to @posts, with the posts split by page to prevent displaying too many posts.
     #@posts = @user.streams

@@ -4,7 +4,8 @@ class Prediction < ActiveRecord::Base
 
   validates :prediction_price, presence: true, numericality: true
   validates :active, presence: true, numericality: true
-  validates :score, presence: true
+  validates :score, presence: true, numericality: true
+  validates :end_date, presence: true
   validates :prediction_comment, length: {maximum: 140}
   default_scope -> { order(created_at: :desc) }
 end
