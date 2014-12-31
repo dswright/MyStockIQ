@@ -8,14 +8,14 @@ class UsersController < ApplicationController
     @current_user = current_user
 
     @user = User.find_by(username: params[:username])
-    @streams = Stream.where(target_type: "user", target_id: @user.username)
+    @streams = Stream.where(target_type: "user", target_id: @user.id)
 
     #still need to define the stream.. Run every new stream through the streammaker recursively..
     stream_array = Stream.stream_maker(@streams, 1)
 
 
     @comment_header = "Comment on #{params[:username]}"
-    @comment_stream_string = "user:#{params[:username]}"
+    @comment_stream_inputs = "user:#{@user.id}"
 
     #all user posts are assigned to @posts, with the posts split by page to prevent displaying too many posts.
     #@posts = @user.streams

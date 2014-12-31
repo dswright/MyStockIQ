@@ -9,6 +9,7 @@ class PredictionsController < ApplicationController
 
 		@prediction = @user.predictions.build(prediction)
 
+		@streams = []
 		#Determines target type and id for Streams Model insert
 		unless params[:stream_array].empty?
 			stream_input_array = params[:stream_array].split(",")
@@ -16,19 +17,32 @@ class PredictionsController < ApplicationController
 				#Must add validation of these parameters against existing stock/user ids to prevent hacking.
 				stream_elements = stream_item.split(":")
 				stream_input = {target_type: stream_elements[0], target_id: stream_elements[1]}
-				@stream = @prediction.streams.build(stream_input)
+				@streams << @prediction.streams.build(stream_input)
 			end
 		end
 
 		if @prediction.valid?
 			@prediction.save
-			@stream.save
-			flash[:success] = "Prediction Created!"
-			redirect_to stock_or_user_page(@stream)
 
+			@streams.each {|stream| stream.save}
+
+			flash[:success] = "Prediction Created!"
+
+			#The first element in the @stream array is the page that the user was on
+			redirect_to stock_or_user_page(@streams[0])
 		else
 			render '/stocks/show/'
 			#render stock_or_user_page(stream)
+		end
+
+	end
+
+	def update
+
+		predictions = Prediction.where(active: 1)
+
+		predictions.each do |prediction|
+			score = percent_change(prediction)
 		end
 
 	end
