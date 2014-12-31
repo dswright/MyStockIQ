@@ -7,7 +7,7 @@ class CommentsController < ApplicationController
 		comment = comment_params
 		#build the comment for input to the db.
 		comment = @user.comments.build(comment)
-		#process the stream input array 
+		#process the stream input array using the stream_params_process function from the streams helper.
 		stream_params_array = stream_params_process(params[:stream_string])
 		if comment.valid?
 			comment.save
