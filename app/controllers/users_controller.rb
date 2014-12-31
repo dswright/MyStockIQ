@@ -10,6 +10,10 @@ class UsersController < ApplicationController
     @user = User.find_by(username: params[:username])
     @streams = Stream.where(target_type: "user", target_id: @user.id)
 
+    #still need to define the stream.. Run every new stream through the streammaker recursively..
+    stream_array = Stream.stream_maker(@streams, 1)
+
+
     @comment_header = "Comment on #{params[:username]}"
     @comment_stream_inputs = "user:#{@user.id}"
 
