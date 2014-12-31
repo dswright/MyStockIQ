@@ -41,7 +41,7 @@ class Stream < ActiveRecord::Base
       popularity_score = 0 #for now.
 
       hash_form = {
-        stream_item: stream_item, 
+        stream: stream_item, 
         nest_count: nest_count, 
         sub_hash_array: sub_array, 
         popularity_score: popularity_score
@@ -51,7 +51,7 @@ class Stream < ActiveRecord::Base
 
     end
 
-    stream_hash_array = stream_hash_array.sort! {|stream_hash| stream_hash[:popularity_score]}
+    #stream_hash_array = stream_hash_array.sort! {|stream_hash| stream_hash[:popularity_score]}
 
     #for now make a maximum of 5 recursions... per comment. But modify that later. Must be limited more intelligently than that later.
     return stream_hash_array

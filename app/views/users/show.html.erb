@@ -65,8 +65,9 @@
 
   <div class = "stock-page-aside col-sm-8">
 
-    <%= render "streams/stream" %>
-
+    <% @stream_hash_array.each do |stream_hash|%>
+      <%= render partial: "streams/stream", locals: {stream_hash: stream_hash} %>
+    <%end%>  
     <div class = "prediction-post-comment">
       <div class = "row">
         <div class = "col-xs-3 col-sm-2 col-md-2">
@@ -78,7 +79,7 @@
           <p class = "handle">
             <a href = "#"> Dw</a> &nbsp;&bull;&nbsp; 29th dec.
           </p>
-          <p class = "comment-txt">commmmment hererere</p>
+          <p class = "comment-txt">these are default comment in show.html</p>
           <div class = "prediction-post-txt-icons">
             <i class="fa fa-reply fa-lg">&nbsp;&nbsp; 100</i>
             <i class="fa fa-thumbs-o-down fa-lg">&nbsp;&nbsp;50</i>
@@ -102,7 +103,7 @@
           <p class = "prediction-txt"><a href="#">&#36; AAPL &#58;&nbsp;
           $100 in 100 days</a>
             <span>&ndash; 100 </span></p>
-          <p class = "comment-txt">the comment is herhererererere</p>
+          <p class = "comment-txt">default comment in show.html</p>
 
           <div class = "prediction-post-txt-icons">
             <i class="fa fa-reply fa-lg">&nbsp;&nbsp; 100 </i>

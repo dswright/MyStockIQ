@@ -1,7 +1,20 @@
-<% @streams.each do |stream_item| 
-  if stream_item.streamable_type == "Comment" %>
-    <%= render partial: "streams/stream_comment", locals: {comment: stream_item.streamable} %>
-  <% elsif stream_item.streamable_type == "Prediction" %>
-    <%= render partial: "streams/stream_prediction", locals: {prediction: stream_item.streamable} %>
-  <%end%>
-<%end%>
+
+<%#need to use a seperate method here to create the recursive effect on the embedded stream arrays.%>
+<%# stream_hash_process(stream_hash) %>
+<div class = "prediction-post-comment">
+  <div class = "row" style = "margin-left: <%= stream_hash[:nest_count] * 20 %>px;">
+
+    <%if stream_hash[:stream].streamable_type == "Comment" %>
+      <%= render partial: "streams/stream_comment", locals: {comment: stream_hash[:stream].streamable} %>
+    <% elsif stream_hash[:stream].streamable_type == "Prediction" %>
+      <%= render partial: "streams/stream_prediction", locals: {prediction: stream_hash[:stream].streamable} %>
+    <%end%>
+
+    <%= render partial: "streams/stream_comment_form", locals: {stream_string: "#{stream_hash[:stream].streamable_type}:#{stream_hash[:stream].streamable_id}"} %>
+
+    <%unless stream_hash[:sub_hash_array].empty?
+      stream_hash[:sub_hash_array].each do |stream_hash|%>
+        <%= render partial: "streams/stream", locals: {stream_hash: stream_hash} %>
+      <%end%>
+    <%end%>
+

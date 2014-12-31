@@ -19,9 +19,9 @@ class CommentsController < ApplicationController
 			comment.save
 			@streams.each {|stream| stream.save}
 			flash[:success] = "Post Created!"
-			#redirect to the first target item defined by the comments form. First item should be the page the comment is coming from.
-			redirect_to stock_or_user_page(@streams[0])
-		else 
+			#redirect to the page and id specified by the landing_page param, passed from the page view.
+			redirect_to stream_redirect_processor(params[:landing_page])
+		else
 			render '/stocks/show/'
 			#render stock_or_user_page(stream)
 		end
