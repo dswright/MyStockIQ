@@ -20,8 +20,13 @@ module PredictionsHelper
 
 	def update_score(prediction)
 		stock = Stock.find_by(id: prediction.streams.stock_id)
-		prediction_price = interpolate( start_price, start_price)
-		actual_price = stock.daily_stock_price
+		prediction_price = interpolate( prediction.created_at, prediction.start_price, prediction.end_date, prediction.prediction_score, Time.now )
+		todays_price = stock.daily_stock_price
+
+		if increase_or_decrease?(prediction) == "increase"
+			score = percent_change
+		else
+		end
 	end
 
 	def interpolate(x0, y0, x1, y1, x2)
