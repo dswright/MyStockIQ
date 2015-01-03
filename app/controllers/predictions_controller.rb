@@ -29,7 +29,7 @@ class PredictionsController < ApplicationController
 			flash[:success] = "Prediction Created!"
 
 			#The first element in the @stream array is the page that the user was on
-			redirect_to stock_or_user_page(@streams[0])
+			redirect_to stream_redirect_processor(params[:landing_page])
 		else
 			render '/stocks/show/'
 			#render stock_or_user_page(stream)

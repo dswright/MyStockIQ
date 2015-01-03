@@ -10,6 +10,7 @@
       <%= render 'shared/error_messages', object: f.object %>
       <%= f.text_area :content, placeholder: "Enter comment", class: "stock-page-comment-field", id: "comment" %>
       <%= hidden_field_tag :stream_string, @comment_stream_inputs %>
+      <%= hidden_field_tag :landing_page, @comment_landing_page %>
       <%= f.submit "Post", class: "btn btn-primary" %>
     <% end %>
 

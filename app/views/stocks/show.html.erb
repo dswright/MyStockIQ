@@ -66,15 +66,8 @@
     </script>
 
 
-<!-- Comment Form -->
-	<% if logged_in? %>
-    	<div class = "stock-page-comment-box">
-     	 <p class = "stock-page-prediction-header">
-        	Comment on <%= @stock[:ticker_symbol] %>
-      	</p>
       	<%= render 'shared/comment_form' %>
-    	</div>
-    <% end %>
+    
 
 
     <div class = "stock-page-top-analysts">
@@ -117,10 +110,7 @@
             >
             <%= date_limits_hash[:name] %>
           </button>
-        <% end %>
-        <button id="button" onclick="simpleAlert()">
-          test
-        </button>
+        <% end %>   
       </div>
       
 
@@ -140,7 +130,7 @@
 
 
 <!-- STREAM POSTS -->
-  <%= render "streams/stream" %>
+  <%= render partial: "streams/stream", locals: {stream_hash_array: @stream_hash_array}  %>
 
 
     <div class = "prediction-post-comment">
