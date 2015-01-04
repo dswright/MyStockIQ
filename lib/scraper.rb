@@ -309,6 +309,8 @@ class NewsData
     source = CGI.unescapeHTML(source)
     source = source.gsub("'","''")
 
+    url = row.url.gsub("'", "''")
+
     title = CGI.unescapeHTML(row.title)
     title = title.gsub("'","''")
     price_hash = {
@@ -316,7 +318,7 @@ class NewsData
       "ticker_symbol" => ticker_symbol,
       "title" => title,
       "source" => source,
-      "url" => row.url,
+      "url" => url,
       "summary" => summary,
       "date" => row.published
     }
