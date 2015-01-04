@@ -301,12 +301,19 @@ class NewsData
     summary = CGI.unescapeHTML(summary)
     summary = summary.gsub("'","''")
 
+    marker1 = "color:#888888;\">"
+    marker2 = "</"
+    source = row.summary[/#{Regexp.escape(marker1)}(.*?)#{Regexp.escape(marker2)}/m,1]
+    source = CGI.unescapeHTML(source)
+    source = source.gsub("'","''")
+
     title = CGI.unescapeHTML(row.title)
     title = title.gsub("'","''")
     price_hash = {
       "google_news_id" => row.entry_id,
       "ticker_symbol" => ticker_symbol,
       "title" => title,
+      "source" => source,
       "url" => row.url,
       "summary" => summary,
       "date" => row.published
