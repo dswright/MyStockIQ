@@ -349,7 +349,7 @@ class NewsData
 
   def single_row_insert(news_hash)
     time = Time.now.to_s(:db)
-    price_string = "('#{news_hash["google_news_id"]}','#{news_hash["title"]}','#{news_hash["url"]}','#{news_hash["summary"]}','#{news_hash["date"]}','#{time}','#{time},'#{news_hash["source"]})"
+    price_string = "('#{news_hash["google_news_id"]}','#{news_hash["title"]}','#{news_hash["url"]}','#{news_hash["summary"]}','#{news_hash["date"]}','#{time}','#{time}','#{news_hash["source"]}')"
   end
 
 end
