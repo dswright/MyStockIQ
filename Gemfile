@@ -9,7 +9,7 @@ gem 'unicorn'
 gem 'newrelic_rpm'
 gem 'oink'
 gem 'gon'
-
+gem 'feedjira'
 
 #add bcrypt for the password encryption
 gem 'bcrypt',               '3.1.7'
