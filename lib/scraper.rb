@@ -116,11 +116,11 @@ class Scraper
 
   def self.process_csv_file(url, class_with_process, count, ticker_symbol=nil, dup = true)
     if count <= 10
-      begin
-        hash_array = []
-        open(url) do |f|
-          f.each_line do |line|
-            CSV.parse(line) do |row|
+      hash_array = []
+      open(url) do |f|
+        f.each_line do |line|
+          CSV.parse(line) do |row|
+            begin
               hash_item = class_with_process.data_hash(row, ticker_symbol)
               if hash_item
                 if dup == true
@@ -131,42 +131,38 @@ class Scraper
                   end
                 end
               end
+            rescue
+              next
             end
           end
         end
-        return hash_array
-      rescue
-        Scraper.process_csv_file(url, class_with_process, count+1, ticker_symbol, dup)
       end
+      return hash_array
     end  
     return false
   end
 
   def self.process_rss_feed(url, class_with_process, count, ticker_symbol=nil, dup = true)
     if count <= 2
-      begin
-        hash_array = []
-        feed = Feedjira::Feed.fetch_and_parse(url)
-        feed.entries.each do |row|
-          begin
-            hash_item = class_with_process.data_hash(row, ticker_symbol)
-            if hash_item
-              if dup == true
+      hash_array = []
+      feed = Feedjira::Feed.fetch_and_parse(url)
+      feed.entries.each do |row|
+        begin
+          hash_item = class_with_process.data_hash(row, ticker_symbol)
+          if hash_item
+            if dup == true
+              hash_array << hash_item
+            else
+              if class_with_process.check_for_dup(row, ticker_symbol)
                 hash_array << hash_item
-              else
-                if class_with_process.check_for_dup(row, ticker_symbol)
-                  hash_array << hash_item
-                end
               end
             end
-          rescue
-            next
           end
-        end        
-        return hash_array
-      rescue
-        Scraper.process_rss_feed(url, class_with_process, count+1, ticker_symbol, dup)
-      end
+        rescue
+          next
+        end
+      end        
+      return hash_array
     end  
     return false
   end
