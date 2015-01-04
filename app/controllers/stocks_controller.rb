@@ -12,20 +12,25 @@ class StocksController < ApplicationController
 		@stock = Stock.find_by(ticker_symbol: params[:ticker_symbol])
 		#Stock's posts, comments, and predictions to be shown in the view
 		streams = Stream.where(target_type: "Stock", target_id: @stock.id)
-    @stream_hash_array = Stream.stream_maker(streams, 0)
+   		@stream_hash_array = Stream.stream_maker(streams, 0)
 
 		#creates comment variable to be used to set up the comment creation form (see app/views/shared folder)
     	@comment = Comment.new
 
    		#creates comment variable to be used to set up the prediction creation form (see app/views/shared folder)
-    	@prediction = Prediction.new(score: 0, active: 1, start_price: @stock.daily_stock_price) 	
+    	@prediction = @current_user.predictions.build(score: 0, active: 1, start_price: @stock.daily_stock_price, stock_id: @stock.id) 	
+
+    	#If active prediction exists, show active prediction
+    	if active_prediction_exists?(@prediction)
+    		@prediction = Prediction.where(user_id: @current_user.id, stock_id: @stock.id, active: 1).first
+    	end
 
     	@comment_stream_inputs = "Stock:#{@stock.id}"
     	@prediction_stream_inputs = "Stock:#{@stock.id}"
 
-      @prediction_landing_page = "stocks:#{@stock.ticker_symbol}"
-      @comment_landing_page = "stocks:#{@stock.ticker_symbol}"
-      @stream_comment_landing_page = "stocks:#{@stock.ticker_symbol}"
+      	@prediction_landing_page = "stocks:#{@stock.ticker_symbol}"
+      	@comment_landing_page = "stocks:#{@stock.ticker_symbol}"
+      	@stream_comment_landing_page = "stocks:#{@stock.ticker_symbol}"
     
 
     	gon.ticker_symbol = params[:ticker_symbol]

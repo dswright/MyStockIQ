@@ -48,7 +48,11 @@
       <p class = "stock-page-prediction-header">
         <%= @stock.ticker_symbol %>
       </p>
+      <% if active_prediction_exists?(@prediction) %>
+        <%= render @prediction %>
+      <% else %>
         <%= render 'shared/prediction_form' %>
+      <% end %>
     </div>
 
 

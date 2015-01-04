@@ -7,7 +7,9 @@ class PredictionsController < ApplicationController
 		#sets up a hash of prediction parameters to build prediction object. 'prediction_params' method is defined below.
 		prediction = prediction_params
 
+
 		@prediction = @user.predictions.build(prediction)
+		@prediction.days_remaining = to_days((@prediction.end_date - Time.now)).round
 
 		@streams = []
 		#Determines target type and id for Streams Model insert
@@ -21,9 +23,8 @@ class PredictionsController < ApplicationController
 			end
 		end
 
-		if @prediction.valid?
+		unless @prediction.invalid? or @prediction.active_prediction_exists?
 			@prediction.save
-
 			@streams.each {|stream| stream.save}
 
 			flash[:success] = "Prediction Created!"
@@ -42,8 +43,13 @@ class PredictionsController < ApplicationController
 		predictions = Prediction.where(active: 1)
 
 		predictions.each do |prediction|
-			score = percent_change(prediction)
+			update_prediction(prediction)
 		end
+
+	end
+
+	def destroy
+
 
 	end
 
@@ -53,6 +59,6 @@ class PredictionsController < ApplicationController
 	def prediction_params
 			#Obtains parameters from 'prediction form' in app/views/shared.
 			#Permits adjustment of only the 'content' & 'ticker_symbol' columns in the 'predictions' model.
-			params.require(:prediction).permit(:prediction_price, :end_date, :prediction_comment, :score, :active, :start_price)
+			params.require(:prediction).permit(:prediction_price, :end_date, :prediction_comment, :score, :active, :start_price, :landing_page, :stock_id)
 	end
 end
