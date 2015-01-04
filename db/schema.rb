@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141228004722) do
+ActiveRecord::Schema.define(version: 20150104075650) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "adminpack"
@@ -25,6 +25,19 @@ ActiveRecord::Schema.define(version: 20141228004722) do
   end
 
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
+
+  create_table "newsarticles", force: true do |t|
+    t.string   "google_news_id"
+    t.string   "title"
+    t.string   "url"
+    t.string   "summary"
+    t.datetime "date"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.string   "source"
+  end
+
+  add_index "newsarticles", ["google_news_id", "id"], name: "index_newsarticles_on_google_news_id_and_id", using: :btree
 
   create_table "predictions", force: true do |t|
     t.float    "prediction_price"

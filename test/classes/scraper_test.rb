@@ -1,7 +1,7 @@
 require 'test_helper'
 require 'scraper'
 
-class UserTest < ActiveSupport::TestCase
+class ScraperTest < ActiveSupport::TestCase
 
   test "enough_volume" do
     price_hash_array_for_volume = [
@@ -72,5 +72,18 @@ class UserTest < ActiveSupport::TestCase
 
     Scraper.update_db(industry_hash_array, IndustryData.new, 2)
     assert_not Stock.find_by(ticker_symbol:"AAPL").stock_industry.nil?
+  end
+
+  test "NewsData - process feed && update_db" do
+    url = "https://www.google.co.uk/finance/company_news?q=LNKD&output=rss"
+    news_hash_array = Scraper.process_rss_feed(url, NewsData.new, 0, "LNKD", false)
+    assert news_hash_array[0]["ticker_symbol"] == "LNKD"
+
+    initial_count = Newsarticle.all.count
+    Scraper.new.save_to_db(news_hash_array, NewsData.new)
+
+    after_count = Newsarticle.all.count
+    assert after_count > initial_count
+
   end
 end
