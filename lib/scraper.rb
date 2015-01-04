@@ -1,5 +1,21 @@
 class ScraperPublic
 
+  def self.fetch_news(ticker_symbol)
+    url = "https://www.google.co.uk/finance/company_news?q=#{ticker_symbol}&output=rss"
+    if news_hash_array = Scraper.process_rss_feed(url, NewsData.new, 0, ticker_symbol, false)
+      unless news_hash_array.empty?
+        Scraper.new.save_to_db(news_hash_array, NewsData.new)
+        #need something tha tprocesses the comment for targets.
+        #and also something that makes a stream relation based on the tickersymbol
+        #if that relation does not already exist.
+        #something in the check dup function?
+        #another check up function?
+        Scraper.new.save_to_stream(news_hash_array)
+        #Scraper.new.save_to_stream(stream_hash_array, NewsData.new)
+      end
+    end
+  end
+
   #Stock Scrapers
   def self.fetch_stocks(page)
     stock_array = []
@@ -60,6 +76,7 @@ end
 class Scraper
   require 'open-uri'
   require 'csv'
+  require 'cgi'
 
   #Available Scraper URLs
   def url_latest(ticker_symbol)
@@ -94,14 +111,7 @@ class Scraper
   end
 
   def return_encoded_url(url, count)
-    if count<=10
-      begin
-        return URI.encode(url)
-      rescue
-        return_encoded_url(url, count+1)
-      end
-    end
-    return false
+    return URI.encode(url)
   end
 
   def self.process_csv_file(url, class_with_process, count, ticker_symbol=nil, dup = true)
@@ -126,7 +136,36 @@ class Scraper
         end
         return hash_array
       rescue
-        Scraper.process_csv_file(url, class_with_process, count+1, ticker_symbol)
+        Scraper.process_csv_file(url, class_with_process, count+1, ticker_symbol, dup)
+      end
+    end  
+    return false
+  end
+
+  def self.process_rss_feed(url, class_with_process, count, ticker_symbol=nil, dup = true)
+    if count <= 2
+      begin
+        hash_array = []
+        feed = Feedjira::Feed.fetch_and_parse(url)
+        feed.entries.each do |row|
+          begin
+            hash_item = class_with_process.data_hash(row, ticker_symbol)
+            if hash_item
+              if dup == true
+                hash_array << hash_item
+              else
+                if class_with_process.check_for_dup(row, ticker_symbol)
+                  hash_array << hash_item
+                end
+              end
+            end
+          rescue
+            next
+          end
+        end        
+        return hash_array
+      rescue
+        Scraper.process_rss_feed(url, class_with_process, count+1, ticker_symbol, dup)
       end
     end  
     return false
@@ -142,6 +181,16 @@ class Scraper
       ActiveRecord::Base.connection.execute(sql)
     end
   end
+
+  def save_to_stream(hash_array)
+    hash_array.each do |news_item|
+      news_object = Newsarticle.find_by(google_news_id:news_item["google_news_id"])
+      target_stock = Stock.find_by(ticker_symbol:news_item["ticker_symbol"])
+      new_stream = news_object.streams.build(target_type:"Stock", target_id:target_stock.id)
+      new_stream.save
+    end
+  end
+
 
   def self.update_db(hash_array, class_with_process, case_lines)
     case_array = []
@@ -248,6 +297,57 @@ class Scraper
 
 end
 
+class NewsData
+  def data_hash(row, ticker_symbol)
+    marker1 = "width:80%;\">"
+    marker2 = "</div>"
+    summary = row.summary[/#{Regexp.escape(marker1)}(.*?)#{Regexp.escape(marker2)}/m, 1]
+    summary = CGI.unescapeHTML(summary)
+    summary = summary.gsub("'","''")
+
+    title = CGI.unescapeHTML(row.title)
+    title = title.gsub("'","''")
+    price_hash = {
+      "google_news_id" => row.entry_id,
+      "ticker_symbol" => ticker_symbol,
+      "title" => title,
+      "url" => row.url,
+      "summary" => summary,
+      "date" => row.published
+    }
+  end
+
+  def check_for_dup(row,ticker_symbol=nil)
+    if Newsarticle.where(google_news_id:row.entry_id).exists?
+      #put in an extra stream check function here..
+      existing_article = Newsarticle.find_by(google_news_id:row.entry_id)
+      NewsData.new.add_one_stream(existing_article, ticker_symbol)
+      false
+    else
+      true
+    end
+  end
+
+  def add_one_stream(existing_article, ticker_symbol)
+    stock_id_of_ticker_symbol = Stock.find_by(ticker_symbol:ticker_symbol).id
+    unless Stream.where(streamable_type:"Newsarticle", streamable_id:existing_article.id).exists?
+      add_stream = existing_article.streams.build(target_type:"Stock", target_id:stock_id_of_ticker_symbol)
+      add_stream.save
+    end
+  end
+
+  def all_data_insert(news_array)
+    sql = "INSERT INTO newsarticles 
+      (google_news_id, title, url, summary, date, created_at, updated_at)
+      VALUES #{news_array.join(", ")}"
+  end
+
+  def single_row_insert(news_hash)
+    time = Time.now.to_s(:db)
+    price_string = "('#{news_hash["google_news_id"]}','#{news_hash["title"]}','#{news_hash["url"]}','#{news_hash["summary"]}','#{news_hash["date"]}','#{time}','#{time}')"
+  end
+
+end
 
 class PriceData
 
