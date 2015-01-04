@@ -146,23 +146,25 @@ class Scraper
     if count <= 2
       hash_array = []
       feed = Feedjira::Feed.fetch_and_parse(url)
-      feed.entries.each do |row|
-        begin
-          hash_item = class_with_process.data_hash(row, ticker_symbol)
-          if hash_item
-            if dup == true
-              hash_array << hash_item
-            else
-              if class_with_process.check_for_dup(row, ticker_symbol)
+      unless feed == 400
+        feed.entries.each do |row|
+          begin
+            hash_item = class_with_process.data_hash(row, ticker_symbol)
+            if hash_item
+              if dup == true
                 hash_array << hash_item
+              else
+                if class_with_process.check_for_dup(row, ticker_symbol)
+                  hash_array << hash_item
+                end
               end
             end
+          rescue
+            next
           end
-        rescue
-          next
         end
+        return hash_array
       end        
-      return hash_array
     end  
     return false
   end
@@ -341,13 +343,13 @@ class NewsData
 
   def all_data_insert(news_array)
     sql = "INSERT INTO newsarticles 
-      (google_news_id, title, url, summary, date, created_at, updated_at)
+      (google_news_id, title, url, summary, date, created_at, updated_at, source)
       VALUES #{news_array.join(", ")}"
   end
 
   def single_row_insert(news_hash)
     time = Time.now.to_s(:db)
-    price_string = "('#{news_hash["google_news_id"]}','#{news_hash["title"]}','#{news_hash["url"]}','#{news_hash["summary"]}','#{news_hash["date"]}','#{time}','#{time}')"
+    price_string = "('#{news_hash["google_news_id"]}','#{news_hash["title"]}','#{news_hash["url"]}','#{news_hash["summary"]}','#{news_hash["date"]}','#{time}','#{time},'#{news_hash["source"]})"
   end
 
 end
