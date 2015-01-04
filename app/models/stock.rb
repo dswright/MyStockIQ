@@ -2,10 +2,14 @@ class Stock < ActiveRecord::Base
 
   require 'scraper'
 
+  has_many :predictions
+  
   validates :stock,         presence: true
 
   validates :ticker_symbol, presence: true,
             uniqueness: {case_sensitive: false}
+
+
 
   #this takes a date in the form of - "2014-12-16 00:00:00 UTC"
   def self.utc_time(date_string)
