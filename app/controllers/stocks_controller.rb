@@ -16,6 +16,7 @@ class StocksController < ApplicationController
 
 		#creates comment variable to be used to set up the comment creation form (see app/views/shared folder)
     	@comment = Comment.new
+      @like = Like.new
 
    		#creates comment variable to be used to set up the prediction creation form (see app/views/shared folder)
     	@prediction = Prediction.new(score: 0, active: 1, start_price: @stock.daily_stock_price) 	
