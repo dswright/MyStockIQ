@@ -26,6 +26,8 @@ Rails.application.routes.draw do
   post    'streams'                      =>   'streams#create'
   delete  'streams/:id'                  =>   'streams#destroy'
 
+  post    'likes'                        =>   'likes#create'
+
 
   post     'comments'                    =>   'comments#create'
   delete   'comments/:id'                =>   'comments#destroy'

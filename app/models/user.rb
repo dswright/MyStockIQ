@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   #sets an association that the User will have many stream posts associated to it
   has_many :comments
   has_many :predictions
+  has_many :likes
 
 	#we need to add a new 
 
