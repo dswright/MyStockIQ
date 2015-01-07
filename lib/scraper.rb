@@ -77,6 +77,7 @@ class Scraper
   require 'open-uri'
   require 'csv'
   require 'cgi'
+  require 'rest-client'
 
   #Available Scraper URLs
   def url_latest(ticker_symbol)
@@ -145,7 +146,9 @@ class Scraper
   def self.process_rss_feed(url, class_with_process, count, ticker_symbol=nil, dup = true)
     if count <= 2
       hash_array = []
-      feed = Feedjira::Feed.fetch_and_parse(url)
+      f = RestClient.get url
+      f2 = f.force_encoding("utf-8")
+      feed = Feedjira::Feed.parse f2
       unless feed == 400
         feed.entries.each do |row|
           begin
