@@ -2,7 +2,7 @@
 <% stream_hash_array.each do |stream_hash|%>
 <%#need to use a seperate method here to create the recursive effect on the embedded stream arrays.%>
 <%# stream_hash_process(stream_hash) %>
-  <div class = "prediction-post-comment">
+  <div class = "prediction-post-comment" id="first_one">
     <div class = "row" style = "margin-left: <%= stream_hash[:nest_count] * 20 %>px;">
 
       <%if stream_hash[:stream].streamable_type == "Comment" %>
