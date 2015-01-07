@@ -23,15 +23,14 @@ Rails.application.routes.draw do
  
   get     'stocks/:ticker_symbol'        =>   'stocks#show'
 
+  post    'streams'                      =>   'streams#create'
+  delete  'streams/:id'                  =>   'streams#destroy'
 
-  post 'streams'                          =>   'streams#create'
-  delete  'streams/:id'                  =>    'streams#destroy'
 
+  post     'comments'                    =>   'comments#create'
+  delete   'comments/:id'                =>   'comments#destroy'
 
-  post     'comments'                     =>   'comments#create'
-  delete   'comments/:id'                 =>   'comments#destroy'
-
-  post     'predictions'                   =>    'predictions#create'
+  post     'predictions'                 =>   'predictions#create'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
