@@ -144,32 +144,33 @@ class Scraper
   end
 
   def self.process_rss_feed(url, class_with_process, count, ticker_symbol=nil, dup = true)
-    if count <= 2
-      hash_array = []
+    hash_array = []
+    begin
       f = RestClient.get url
-      f2 = f.force_encoding("utf-8")
-      feed = Feedjira::Feed.parse f2
-      unless feed == 400
-        feed.entries.each do |row|
-          begin
-            hash_item = class_with_process.data_hash(row, ticker_symbol)
-            if hash_item
-              if dup == true
-                hash_array << hash_item
-              else
-                if class_with_process.check_for_dup(row, ticker_symbol)
-                  hash_array << hash_item
-                end
-              end
+    rescue Exception => e
+      if e.message =~ /400 Bad Request/
+        return false
+      end
+    end
+    f2 = f.force_encoding("utf-8")
+    feed = Feedjira::Feed.parse f2
+    feed.entries.each do |row|
+      begin
+        hash_item = class_with_process.data_hash(row, ticker_symbol)
+        if hash_item
+          if dup == true
+            hash_array << hash_item
+          else
+            if class_with_process.check_for_dup(row, ticker_symbol)
+              hash_array << hash_item
             end
-          rescue
-            next
           end
         end
-        return hash_array
-      end        
-    end  
-    return false
+      rescue
+        next
+      end
+    end
+    return hash_array
   end
 
   def save_to_db(hash_array, class_with_process)
