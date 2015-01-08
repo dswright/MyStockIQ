@@ -1,5 +1,14 @@
 class ScraperPublic
 
+  def self.fetch_intradayprices(ticker_symbol, days)
+    url = URI.encode("http://www.google.com/finance/getprices?i=300&p=#{days}d&f=d,o,h,l,c,v&df=cpct&q=#{ticker_symbol}")
+    if daily_hash_array = Scraper.process_csv_file(url, DailyData.new, 0, ticker_symbol, false, true)
+      unless daily_hash_array.empty?
+        Scraper.new.save_to_db(daily_hash_array, DailyData.new)
+      end
+    end
+  end
+
   def self.fetch_news(ticker_symbol)
     url = "https://www.google.co.uk/finance/company_news?q=#{ticker_symbol}&output=rss"
     if news_hash_array = Scraper.process_rss_feed(url, NewsData.new, 0, ticker_symbol, false)
@@ -115,32 +124,33 @@ class Scraper
     return URI.encode(url)
   end
 
-  def self.process_csv_file(url, class_with_process, count, ticker_symbol=nil, dup = true)
-    if count <= 10
-      hash_array = []
-      open(url) do |f|
-        f.each_line do |line|
-          CSV.parse(line) do |row|
-            begin
-              hash_item = class_with_process.data_hash(row, ticker_symbol)
-              if hash_item
-                if dup == true
-                  hash_array << hash_item
-                else
-                  if class_with_process.check_for_dup(row, ticker_symbol)
-                    hash_array << hash_item
-                  end
-                end
+  def self.process_csv_file(url, class_with_process, count, ticker_symbol=nil, dup = true, check_time = false)
+    hash_array = []
+    time_start = 0
+    open(url) do |f|
+      f.each_line do |line|
+        CSV.parse(line) do |row|
+          if check_time == true
+            if start_time_row = class_with_process.start_time_row(row)
+              time_start = start_time_row
+            end
+            hash_item = class_with_process.data_hash(row, ticker_symbol, time_start)
+          else
+            hash_item = class_with_process.data_hash(row, ticker_symbol)
+          end
+          if hash_item
+            if dup == true
+              hash_array << hash_item
+            else
+              if class_with_process.check_for_dup(hash_item)
+                hash_array << hash_item
               end
-            rescue
-              next
             end
           end
         end
       end
-      return hash_array
-    end  
-    return false
+    end
+    return hash_array
   end
 
   def self.process_rss_feed(url, class_with_process, count, ticker_symbol=nil, dup = true)
@@ -161,7 +171,7 @@ class Scraper
           if dup == true
             hash_array << hash_item
           else
-            if class_with_process.check_for_dup(row, ticker_symbol)
+            if class_with_process.check_for_dup(hash_item)
               hash_array << hash_item
             end
           end
@@ -299,6 +309,59 @@ class Scraper
 
 end
 
+class DailyData
+  def data_hash(row, ticker_symbol, time_start)
+    #if the row[0] is less than 1000000, then its just the integer from the google data, if its greater,
+    #then its the actual time stamp, and the correct date.
+    if row[0].gsub('a','').to_i <= 1000000
+      time_start = time_start + (row[0].to_i * 300)
+    end
+    daily_hash = {
+      "ticker_symbol" => ticker_symbol,
+      "date" => Time.at(time_start).in_time_zone('Eastern Time (US & Canada)').strftime("%Y-%m-%d %H:%M:%S"),
+      "open_price" => row[4].to_f,
+      "close_price" => row[1].to_f
+    }
+    if daily_hash["open_price"] == 0
+      return false
+    else
+      return daily_hash
+    end
+
+  end
+
+  def start_time_row(row)
+    if row[0].start_with? "a"
+      time_start = row[0].gsub('a','').to_i
+    else
+      false
+    end
+  end
+
+  def check_for_dup(hash_item)
+    ticker_symbol = hash_item["ticker_symbol"]
+    date = hash_item["date"]
+    if Intradayprice.where(ticker_symbol:ticker_symbol, date:date).exists?
+      false
+    else
+      true
+    end
+  end
+
+  def all_data_insert(price_array)
+    sql = "INSERT INTO intradayprices 
+      (ticker_symbol, date, open_price, close_price, created_at, updated_at)
+      VALUES #{price_array.join(", ")}"
+  end
+
+    #Hash To Insert Strings
+  def single_row_insert(price_hash)
+    time = Time.now.to_s(:db)
+    price_string = "('#{price_hash["ticker_symbol"]}','#{price_hash["date"]}','#{price_hash["open_price"]}','#{price_hash["close_price"]}','#{time}','#{time}')"
+  end
+
+end
+
 class NewsData
   def data_hash(row, ticker_symbol)
     marker1 = "width:80%;\">"
@@ -328,11 +391,11 @@ class NewsData
     }
   end
 
-  def check_for_dup(row,ticker_symbol=nil)
-    if Newsarticle.where(google_news_id:row.entry_id).exists?
+  def check_for_dup(hash_item)
+    if Newsarticle.where(google_news_id:hash_item["google_news_id"]).exists?
       #put in an extra stream check function here..
-      existing_article = Newsarticle.find_by(google_news_id:row.entry_id)
-      NewsData.new.add_one_stream(existing_article, ticker_symbol)
+      existing_article = Newsarticle.find_by(google_news_id:hash_item["google_news_id"])
+      NewsData.new.add_one_stream(existing_article, hash_item["ticker_symbol"])
       false
     else
       true
@@ -362,9 +425,9 @@ end
 
 class PriceData
 
-  def check_for_dup(row,ticker_symbol=nil)
+  def check_for_dup(hash_item)
     date = row[0]
-    if Stockprice.where(ticker_symbol:ticker_symbol, date:date).exists?
+    if Stockprice.where(ticker_symbol:hash_item["ticker_symbol"], date:hash_item["date"]).exists?
       false
     else
       true
@@ -399,9 +462,8 @@ end
 class StockData
 
   #the ticker_symbol is for the PriceData dup check, this dup check sets the ticker from the csv row.
-  def check_for_dup(row, ticker_symbol=nil)
-    ticker_symbol = row[0].gsub(/EOD\//,"")
-    if Stock.where(ticker_symbol:ticker_symbol).exists?
+  def check_for_dup(hash_item)
+    if Stock.where(ticker_symbol:hash_item["ticker_symbol"]).exists?
       false
     else
       true
@@ -417,7 +479,8 @@ class StockData
     stock_hash = { 
       "stock" => real_name,
       "ticker_symbol" => code,
-      "active" => true
+      "active" => true,
+      "viewed" => false
     }
   end
 
@@ -466,9 +529,8 @@ end
 class IndustryData
 
   #the logic of this method is flipped. We want the ticker to exist in order to be added to the array.
-  def check_for_dup(row, ticker_symbol=nil)
-    csv_ticker = row[0].gsub('.','_').gsub('/','_').gsub('-','_')
-    if Stock.where(ticker_symbol:csv_ticker).exists?
+  def check_for_dup(hash_item)
+    if Stock.where(ticker_symbol:hash_item["ticker_symbol"]).exists?
       true
     else
       false

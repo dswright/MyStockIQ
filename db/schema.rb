@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150107005325) do
+ActiveRecord::Schema.define(version: 20150108174947) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "adminpack"
@@ -25,6 +25,18 @@ ActiveRecord::Schema.define(version: 20150107005325) do
   end
 
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
+
+  create_table "intradayprices", force: true do |t|
+    t.string   "ticker_symbol"
+    t.datetime "date"
+    t.float    "open_price"
+    t.float    "close_price"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "intradayprices", ["date"], name: "index_intradayprices_on_date", using: :btree
+  add_index "intradayprices", ["ticker_symbol"], name: "index_intradayprices_on_ticker_symbol", using: :btree
 
   create_table "likes", force: true do |t|
     t.string   "like_type"
@@ -99,6 +111,7 @@ ActiveRecord::Schema.define(version: 20150107005325) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "stock_sector"
+    t.boolean  "viewed"
   end
 
   add_index "stocks", ["active"], name: "index_stocks_on_active", using: :btree

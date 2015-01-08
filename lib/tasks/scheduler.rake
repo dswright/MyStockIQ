@@ -50,5 +50,12 @@ namespace :scraper do
     end
   end
 
+  task :fetch_intradayprices => :environment do
+    stocks = Stock.where(active:true)
+    stocks.each do |stock|
+      IntradayWorker.perform_async(stock.ticker_symbol, 1)
+    end
+  end
+
 end
 
