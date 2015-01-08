@@ -56,7 +56,7 @@ namespace :scraper do
     weekday = eastern_time.wday
     hour = eastern_time.strftime("%H:%M")
     hour_split = hour.split(":")
-    hour_num = (hour_split[0] * 60) + hour_split[1]
+    hour_num = (hour_split[0].to_i * 60) + hour_split[1].to_i
     #between the eastern hours of 9:28 am and 4:12 pm run the intraday scraper.
     if hour_num >=  567 && hour_num <= 972
       if weekday != 6 && weekday != 0
