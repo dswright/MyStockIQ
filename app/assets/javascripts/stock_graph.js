@@ -16,16 +16,13 @@ function resizeChart() {
   $("#stock-div").css("height", height);
   $(".stockgraph-container1").css("height", height+10);
 };
- 
+
+
 var chart1; // globally available
 $(document).ready(function () {
-  var width = $("#stock-div").width();
-
   //resize the container height based on the width.
-  var height = $("#stock-div").width()/3+30;
-  $("#stock-div").css("height", height);
-  $(".stockgraph-container1").css("height", height + 10);
-
+  resizeChart();
+  $(window).bind("orientationchange resize", resizeChart);
 
   var price_array = gon.price_array;
   var ticker_symbol = gon.ticker_symbol;
@@ -64,8 +61,7 @@ $(document).ready(function () {
   };
 
   $("button[data-x-range-min]").click(get_ranges);
-   
-  $(window).bind("orientationchange resize", resizeChart);
+  
 
   //remove branding logo that says 'highcarts'
   $( "text" ).remove( ":contains('Highcharts.com')" );
