@@ -17,8 +17,7 @@ class StocksController < ApplicationController
     @stream_hash_array = Stream.stream_maker(streams, 0)
 
     #if a stock gets viewed, update the stocks table so that the stock gets real time stock data.
-    stock_to_update = Stock.find_by(ticker_symbol:ticker_symbol)
-    if (stock_to_update.viewed == false)
+    if (@stock.viewed == false)
       stock_to_update.viewed = true
       stock_to_update.save
       IntradayWorker.perform_async(ticker_symbol, 5)
