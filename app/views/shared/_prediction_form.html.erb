@@ -9,6 +9,7 @@
 		<%= f.hidden_field :score %>
 		<%= f.hidden_field :active %>
 		<%= f.hidden_field :start_price %>
+		<%= hidden_field_tag :ticker_symbol, @ticker_symbol %>
 		<%= hidden_field_tag :landing_page, @prediction_landing_page %>
 		<%= hidden_field_tag :stream_array, @prediction_stream_inputs %>
 	</div>

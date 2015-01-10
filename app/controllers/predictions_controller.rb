@@ -6,6 +6,7 @@ class PredictionsController < ApplicationController
 
 		#sets up a hash of prediction parameters to build prediction object. 'prediction_params' method is defined below.
 		prediction = prediction_params
+		prediction[:stock_id] = Stock.find_by(ticker_symbol:params[:ticker_symbol])
 
 		@prediction = @user.predictions.build(prediction)
 
@@ -53,6 +54,6 @@ class PredictionsController < ApplicationController
 	def prediction_params
 			#Obtains parameters from 'prediction form' in app/views/shared.
 			#Permits adjustment of only the 'content' & 'ticker_symbol' columns in the 'predictions' model.
-			params.require(:prediction).permit(:prediction_price, :end_date, :prediction_comment, :score, :active, :start_price)
+			params.require(:prediction).permit(:prediction_price, :end_date, :prediction_comment, :score, :active, :start_price, :ticker_symbol)
 	end
 end
