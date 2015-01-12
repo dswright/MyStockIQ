@@ -43,6 +43,9 @@ class StocksController < ApplicationController
   	gon.daily_price_array = Stock.get_daily_price_array(@ticker_symbol)    
 
     gon.intraday_price_array = Intradayprice.get_intraday_price_array(@ticker_symbol)
+    
+
+    #gon.intraday_forward_array = Intradayprice.forward_array()
 
   	#this gets used by the view to generate the html buttons.
   	@date_limits_array = Stock.create_x_date_limits(gon.daily_price_array, gon.intraday_price_array)

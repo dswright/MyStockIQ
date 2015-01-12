@@ -37,6 +37,7 @@ function createGraph() {
     x_range_max = $(this).data("x-range-max");
     y_range_min = $(this).data("y-range-min");
     button_type = $(this).data("button-type");
+    forward_date_array = $(this).data("forward-date-array");
 
     if (button_type == "1d" || button_type == "5d") {
       chart1.series[0].setData(gon.intraday_price_array);
@@ -72,9 +73,7 @@ function createSeriesVar () {
     }, 
     {
       name : "prediction",
-      data : [[1420718100000+(100*3600*24*1000),240],[1420818800000+(100*3600*24*1000),250],[1420718100000+(200*3600*24*1000),240]],
-      //gon.prediction_points_array
-      
+      data : gon.prediction_points_array,
       lineWidth : 0,
       marker : {
         enabled : true,
@@ -115,6 +114,7 @@ function createChart1 () {
     navigator: {
       enabled: false
     },
+
     series: seriesVar
   }); 
 }

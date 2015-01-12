@@ -26,14 +26,14 @@ class Stock < ActiveRecord::Base
   def self.start_time_for_day(last_utc_date_intraday, days_back)
     date_string = CustomDate.utc_time_to_string(last_utc_date_intraday)
     day = date_string.beginning_of_day
-    morning_time = CustomDate.utc_time(day.to_s) + (days_back*60*60*24*1000) + ((1.5*60*60)*1000)
+    morning_time = CustomDate.utc_time(day.to_s) + (days_back*60*60*24*1000) + ((9.5*60*60)*1000)
     return morning_time
   end
 
   def self.end_time_for_day(last_utc_date_intraday)
     date_string = CustomDate.utc_time_to_string(last_utc_date_intraday)
     day = date_string.beginning_of_day
-    closing_time = CustomDate.utc_time(day.to_s) + ((8*60*60)*1000)
+    closing_time = CustomDate.utc_time(day.to_s) + ((16*60*60)*1000)
     return closing_time
   end
 
@@ -43,17 +43,20 @@ class Stock < ActiveRecord::Base
     return min_item[1]
   end
 
+  def self.forward_date_array(end_of_stock_data, forward_position)
+  end
+
   def self.create_x_date_limits(daily_array, intraday_array)
     last_utc_date_daily = daily_array.last[0]
     last_utc_date_intraday = intraday_array.last[0]
-    array_details_intraday = [{name:"1d", start:0},
-                     {name:"5d", start:-7}]
+    array_details_intraday = [{name:"1d", start:0, forward_time:"1/2 day"}, #shows all or nothing.
+                     {name:"5d", start:-7, forward_time:"3d eod"}]
 
-    array_details_daily = [{name:"1m", start:-31, finish:15},
-                     {name:"3m", start:-90, finish:45},
-                     {name:"6m", start:-180, finish:90},
-                     {name:"1yr", start:-360, finish:180},
-                     {name:"5yr", start:-1825, finish:900}]
+    array_details_daily = [{name:"1m", start:-30, finish:15, forward_time:15},
+                     {name:"3m", start:-90, finish:45, forward_time:45},
+                     {name:"6m", start:-180, finish:90, forward_time:90},
+                     {name:"1yr", start:-360, finish:180, forward_time:180},
+                     {name:"5yr", start:-1825, finish:900, forward_time:900}]
 
     date_hash_array = []
 
@@ -65,6 +68,7 @@ class Stock < ActiveRecord::Base
                           x_range_min:start_time, 
                           x_range_max:end_time,
                           y_range_min:Stock.find_y_min(intraday_array, start_time, end_time)
+                          #forward_date_range: Stock.forward_date_array(end_time)
                         }
     end
 
@@ -75,6 +79,7 @@ class Stock < ActiveRecord::Base
                           x_range_min:start_time, 
                           x_range_max:end_time,
                           y_range_min:Stock.find_y_min(daily_array, start_time, end_time)
+                          #forward_date_range: Stock.forward_date_array(end_time)
                         }
     end
     return date_hash_array

@@ -1,4 +1,5 @@
 class PredictionsController < ApplicationController
+	require 'customdate'
 
 	def create
 		#Obtain user session information from Session Helper function 'current_user'.
@@ -6,8 +7,9 @@ class PredictionsController < ApplicationController
 
 		#sets up a hash of prediction parameters to build prediction object. 'prediction_params' method is defined below.
 		prediction = prediction_params
-		prediction[:stock_id] = Stock.find_by(ticker_symbol:params[:ticker_symbol])
-
+		prediction[:stock_id] = Stock.find_by(ticker_symbol:params[:ticker_symbol]).id
+		prediction_utc_time = CustomDate.utc_time(Time.now.to_s) + (params[:days].to_i * 24* 3600 * 1000)  + (params[:hours].to_i * 3600*1000) + (params[:minutes].to_i * 60 * 1000)
+		prediction[:end_date] = CustomDate.utc_time_to_string(prediction_utc_time)
 		@prediction = @user.predictions.build(prediction)
 
 		@streams = []
