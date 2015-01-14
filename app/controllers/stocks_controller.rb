@@ -1,4 +1,5 @@
 class StocksController < ApplicationController
+require 'stockgraph'
 
 	#Function to pull the whole stock file and then update all records.
 	#Run daily
@@ -10,7 +11,6 @@ class StocksController < ApplicationController
 
     stock_id = Stock.find_by(ticker_symbol:params[:ticker_symbol])
     @ticker_symbol = params[:ticker_symbol]
-
 
 		@current_user = current_user
 		@stock = Stock.find(stock_id)
@@ -40,22 +40,21 @@ class StocksController < ApplicationController
     @stream_comment_landing_page = "stocks:#{@stock.ticker_symbol}"
 
   	gon.ticker_symbol = @ticker_symbol
-  	gon.daily_price_array = Stock.get_daily_price_array(@ticker_symbol)    
+  	gon.daily_price_array = StockGraph.get_daily_price_array(@ticker_symbol)    
 
-    gon.intraday_price_array = Intradayprice.get_intraday_price_array(@ticker_symbol)
-    
+    gon.intraday_price_array = StockGraph.get_intraday_price_array(@ticker_symbol) 
 
-    #gon.intraday_forward_array = Intradayprice.forward_array()
+    gon.intraday_forward_array = StockGraph.intraday_forward_array(gon.intraday_price_array.last[0])  #this end of time needs to be defined. THen this array will work. 
+    #may need to store this array in the loops?? Not sure how to get the end_time variable in here, and also not sure how to load the 2
+    #different looking foward arrays... Just load both. Each needs it's own definition function.
 
   	#this gets used by the view to generate the html buttons.
-  	@date_limits_array = Stock.create_x_date_limits(gon.daily_price_array, gon.intraday_price_array)
+  	@date_limits_array = StockGraphPublic.create_x_date_limits(gon.daily_price_array, gon.intraday_price_array)
 
     gon.graph_default_x_range_min = @date_limits_array[2][:x_range_min] #the 1 month settings
     gon.graph_default_x_range_max = @date_limits_array[2][:x_range_max] #the 1 month settings
     gon.graph_default_y_range_min = @date_limits_array[2][:y_range_min] #the 1 month settings
 
     gon.prediction_points_array = Prediction.graph_prediction_points(stock_id)
-
 	end
-
 end

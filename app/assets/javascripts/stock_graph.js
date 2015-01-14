@@ -57,13 +57,6 @@ function createGraph() {
   $( "text" ).remove( ":contains('Highcharts.com')" );
 };
 
-function dateArray() {
-  date_array = []
-  for (i=0;i<=200;i++) {
-    date_array.push([1420718100000 + (i*3600*24*1000), null])
-  }
-  return date_array
-}
 
 function createSeriesVar () {
   var seriesVar = [
@@ -82,12 +75,8 @@ function createSeriesVar () {
     },
     {
       name: "dateseries",
-      data : dateArray(),
-      lineWidth : 0,
-      marker : {enabled:false},
-      tooltip: {
-            enabled:false
-        }
+      data : gon.intraday_forward_array,
+      lineWidth : 1
     }
   ];
   return seriesVar;

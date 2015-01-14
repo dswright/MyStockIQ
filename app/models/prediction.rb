@@ -16,8 +16,8 @@ class Prediction < ActiveRecord::Base
     graph_array = []
     prediction_array = Prediction.where(stock_id:stock_id)
     prediction_array.each do |prediction|
-      utc_time = CustomDate.utc_time(prediction.end_date.to_s)
-      graph_array << [utc_time, prediction.prediction_price]
+      utc_date_number = CustomDate.utc_date_string_to_utc_date_number(prediction.end_date)
+      graph_array << [utc_date_number, prediction.prediction_price]
     end
     graph_array.sort_by! {|price_point| price_point[0]}
     return graph_array
