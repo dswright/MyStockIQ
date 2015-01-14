@@ -4,7 +4,6 @@
 
 <div class = "constrainer">
   <div class = "main-aside col-sm-4">
-
     <div class = "stock-container">
       <div class = "row">
         <div class = "col-xs-4">
@@ -76,13 +75,7 @@
       });
     </script>
 
-
-
-      	<%= render 'shared/comment_form' %>
-    
-       
-
-
+    <%= render 'shared/comment_form' %>
 
     <div class = "stock-page-top-analysts">
 
@@ -115,16 +108,19 @@
   <div class = "stock-page-aside col-sm-8">
 
     <div class = "graph-container">
-      <div class = "graph-buttons">
+      <div class = "graph-buttons" style="width:450px">
         <% @date_limits_array.each do |date_limits_hash| %>
-          
           <button id="button" 
               data-x-range-min=<%= date_limits_hash[:x_range_min] %> 
               data-x-range-max=<%= date_limits_hash[:x_range_max] %>
-            >
+              data-y-range-min=<%= date_limits_hash[:y_range_min] %>
+              data-button-type=<%= date_limits_hash[:name] %>
+              >
             <%= date_limits_hash[:name] %>
           </button>
-        <% end %>   
+
+        <% end %>
+        
       </div>
       
 

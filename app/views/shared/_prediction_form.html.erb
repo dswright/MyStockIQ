@@ -4,13 +4,14 @@
 	<%= render 'shared/error_messages', object: f.object %>
 	<div class = "field">
 		<%= f.text_area :prediction_price, placeholder: "Future stock price will be... (eg. 100)", class: "stock-page-prediction-field" %>
-		<%= f.date_select :end_date%>
+		days: <%= text_field_tag :days %>
+		hours: <%= text_field_tag :hours %>
+		minutes: <%= text_field_tag :minutes %>
 		<%= f.text_area :prediction_comment, placeholder: "Add a comment... (optional)", class: "stock-page-comment-field" %>
 		<%= f.hidden_field :score %>
 		<%= f.hidden_field :active %>
 		<%= f.hidden_field :start_price %>
 		<%= f.hidden_field :stock_id %>
-		<%= hidden_field_tag :landing_page, @prediction_landing_page %>
 		<%= hidden_field_tag :stream_array, @prediction_stream_inputs %>
 	</div>
 	<%= f.submit "Make Prediction", class: "btn btn-primary" %>

@@ -1,4 +1,5 @@
 class PredictionsController < ApplicationController
+	require 'customdate'
 
 	def create
 		#Obtain user session information from Session Helper function 'current_user'.
@@ -7,7 +8,10 @@ class PredictionsController < ApplicationController
 		#sets up a hash of prediction parameters to build prediction object. 'prediction_params' method is defined below.
 		prediction = prediction_params
 
-
+		#these functions are incorrect.
+		prediction_utc_time = CustomDate.utc_time(Time.now.to_s) + (params[:days].to_i * 24* 3600 * 1000)  + (params[:hours].to_i * 3600*1000) + (params[:minutes].to_i * 60 * 1000)
+		prediction[:end_date] = CustomDate.utc_time_to_string(prediction_utc_time)
+		
 		@prediction = @user.predictions.build(prediction)
 		@prediction.days_remaining = to_days((@prediction.end_date - Time.now)).round
 
@@ -65,6 +69,6 @@ class PredictionsController < ApplicationController
 	def prediction_params
 			#Obtains parameters from 'prediction form' in app/views/shared.
 			#Permits adjustment of only the 'content' & 'ticker_symbol' columns in the 'predictions' model.
-			params.require(:prediction).permit(:prediction_price, :end_date, :prediction_comment, :score, :active, :start_price, :landing_page, :stock_id)
+			params.require(:prediction).permit(:prediction_price, :end_date, :prediction_comment, :score, :active, :start_price, :stock_id)
 	end
 end

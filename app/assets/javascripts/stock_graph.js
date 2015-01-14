@@ -11,34 +11,88 @@ function simpleAlert() {
   window.alert("simpleAlert")
 };
 
+
+
 function resizeChart() {
   var height = $("#stock-div").width()/3+30;
   $("#stock-div").css("height", height);
   $(".stockgraph-container1").css("height", height+10);
 };
 
+$(document).ready(createGraph);
 
 var chart1; // globally available
-$(document).ready(function () {
-  //resize the container height based on the width.
+
+function createGraph() {
   resizeChart();
   $(window).bind("orientationchange resize", resizeChart);
 
-  var price_array = gon.price_array;
-  var ticker_symbol = gon.ticker_symbol;
 
-  var seriesVar = [{
-    name : ticker_symbol,
-    data : price_array
-  }];
+  seriesVar = createSeriesVar();
 
-  chart1 = new Highcharts.StockChart({
+  chart1 = createChart1();
+
+  get_ranges = function() {
+    x_range_min = $(this).data("x-range-min");
+    x_range_max = $(this).data("x-range-max");
+    y_range_min = $(this).data("y-range-min");
+    button_type = $(this).data("button-type");
+    forward_date_array = $(this).data("forward-date-array");
+
+    if (button_type == "1d" || button_type == "5d") {
+      chart1.series[0].setData(gon.intraday_price_array);
+    }
+    else {
+      chart1.series[0].setData(gon.daily_price_array);
+    }
+
+    chart1.yAxis[0].setExtremes(y_range_min,null);
+    chart1.xAxis[0].setExtremes(x_range_min, x_range_max);
+    
+    //window.alert(range_min + range_max)
+  };
+
+  $("button[data-x-range-min]").click(get_ranges);
+  //remove branding logo that says 'highcarts'
+  $( "text" ).remove( ":contains('Highcharts.com')" );
+};
+
+
+function createSeriesVar () {
+  var seriesVar = [
+    {
+      name : gon.ticker_symbol,
+      data : gon.daily_price_array
+    }, 
+    {
+      name : "prediction",
+      data : gon.prediction_points_array,
+      lineWidth : 0,
+      marker : {
+        enabled : true,
+        radius : 4
+      },
+    },
+    {
+      name: "dateseries",
+      data : gon.intraday_forward_array,
+      lineWidth : 1
+    }
+  ];
+  return seriesVar;
+}
+
+function createChart1 () {
+  return new Highcharts.StockChart({
     chart: {
       renderTo: 'stock-div'
     },
     xAxis: {
-      min: 1406800000000,
-      max: 1418342400000
+      min: gon.graph_default_x_range_min,
+      max: gon.graph_default_x_range_max
+          },
+    yAxis: {
+      min: gon.graph_default_y_range_min
     },
     rangeSelector : {
       enabled: false
@@ -49,24 +103,11 @@ $(document).ready(function () {
     navigator: {
       enabled: false
     },
+
     series: seriesVar
-  });
+  }); 
+}
 
-  get_ranges = function() {
-    range_min = $(this).data("x-range-min");
-    range_max = $(this).data("x-range-max");
-    chart1.yAxis[0].setExtremes(0,null);
-    chart1.xAxis[0].setExtremes(range_min, range_max);
-    //window.alert(range_min + range_max)
-  };
-
-  $("button[data-x-range-min]").click(get_ranges);
-  
-
-  //remove branding logo that says 'highcarts'
-  $( "text" ).remove( ":contains('Highcharts.com')" );
-
-});
 
 
 /*$(document).ready(function () {
