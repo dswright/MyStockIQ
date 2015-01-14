@@ -4,7 +4,7 @@
     <div class = "user-page-info-container">
       <div class = "row user-info-header">
         <div class = "col-xs-6">
-          <h2>Dw</h2>
+          <h2><%= @user.username %></h2>
         </div>
         <div class = "col-xs-6">
           <!-- <a href = "#" class = "btn user-follow-btn">Follow</a> -->
@@ -17,27 +17,42 @@
         <div class = "col-xs-6">
           <p class = "user-info-stats">Total Score: 95<br /></p>
           <p class = "user-info-stats">Level: 96<br /></p>
+          <p class = "user-info_stats">Followers: <%= @user.followers.count %><br /></p>
+          <p class = "user-info_stats">Following: <%= @user.followings.count %></p>
+      
+          <%= render 'shared/follow_form'%>
         </div>
       </div>
     </div>
 
+
     <div class = "user-page-current-predictions">
       <div class = "user-page-current-predictions-header">
-        <h2>Dw's Open Predictions</h2>
+        <h2><%= @user.username %>'s Open Predictions</h2>
       </div>
-        <a href = "#">
-          <div class = "row">
-            <div class = "col-xs-6">
-              <div class = "user-page-current-predictions-info">
-                <p> 10 days remaining </p>
-                <p> AAPL - 49 points </p>
+      <% unless @predictions == nil %>
+        <% @predictions.each do |prediction| %>
+          <a href = "#">
+            <div class = "row">
+              <div class = "col-xs-6">
+                <div class = "user-page-current-predictions-info">
+                  <p> <%= prediction.days_remaining.ceil %> days remaining </p>
+                  <p> <%= "#{prediction.stock.ticker_symbol}" %> </p>
+                </div>
+              </div>
+              <div class = "user-page-current-predictions-btn col-xs-6">
+                <p> <%= "#{prediction.score} points" %> </p>
               </div>
             </div>
-            <div class = "user-page-current-predictions-btn col-xs-6">
-              <p> 25 points </p>
-            </div>
+          </a>
+        <% end %>
+        <% else %>
+        <div class = "row">
+          <div class = "col-x6-6">
+            <p><%= "#{@user.username} has no open predictions" %></p>
           </div>
-        </a>
+        </div>
+      <% end %>
     </div>
 
     <%= render 'shared/comment_form' %>
@@ -112,5 +127,10 @@
         </div>
       </div>
     </div>
+
+
+
+
+
   </div>
 </div>

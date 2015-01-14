@@ -5,17 +5,24 @@ class UsersController < ApplicationController
   #the Newuser.new creates a new user from the model.
   
   def show
+    
+    #Logged in user
     @current_user = current_user
 
-    @comment = Comment.new 
-    @like = Like.new
-
+    #Target user
     @user = User.find_by(username: params[:username])
-    streams = Stream.where(target_type: "User", target_id: @user.id)
+
+    #All active predictions by target user
+    @predictions = Prediction.where(active: 1, user_id: @user.id)
+
+    #All streams about target user
+    streams = Stream.where(target_type: @user.class.name, target_id: @user.id)
 
     #Run every new stream through the streammaker recursively..
     @stream_hash_array = Stream.stream_maker(streams, 0)
 
+    #Determines relationship between current user and target user
+    @target = @user
 
     @comment_header = "Comment on #{params[:username]}"
     @comment_stream_inputs = "User:#{@user.id}"
@@ -23,12 +30,6 @@ class UsersController < ApplicationController
     @comment_landing_page = "users:#{@user.username}"
     @stream_comment_landing_page = "users:#{@user.username}"
     
-
-    #all user posts are assigned to @posts, with the posts split by page to prevent displaying too many posts.
-    #@posts = @user.streams
-
-    #creates post variable to be used to set up the post creation form (see app/views/shared folder)
-    #@post = current_user.streams.build
 
     #creates empty comment object to plug into the form.
     #right now the comment takes: id, content, ticker_symbol, stream_id, created_at, updated_at. Stream id should be implicit..

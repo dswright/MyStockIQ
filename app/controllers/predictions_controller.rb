@@ -7,7 +7,9 @@ class PredictionsController < ApplicationController
 		#sets up a hash of prediction parameters to build prediction object. 'prediction_params' method is defined below.
 		prediction = prediction_params
 
+
 		@prediction = @user.predictions.build(prediction)
+		@prediction.days_remaining = to_days((@prediction.end_date - Time.now)).round
 
 		@streams = []
 		#Determines target type and id for Streams Model insert
@@ -21,16 +23,16 @@ class PredictionsController < ApplicationController
 			end
 		end
 
-		if @prediction.valid?
+		unless @prediction.invalid? or active_prediction_exists?(@prediction)
 			@prediction.save
-
 			@streams.each {|stream| stream.save}
 
 			flash[:success] = "Prediction Created!"
 
-			#The first element in the @stream array is the page that the user was on
-			redirect_to stream_redirect_processor(params[:landing_page])
+			#Redirects back to previous page. If previous redirect is not specified, login_path is used.
+			redirect_to request.referrer || login_path
 		else
+
 			render '/stocks/show/'
 			#render stock_or_user_page(stream)
 		end
@@ -42,9 +44,19 @@ class PredictionsController < ApplicationController
 		predictions = Prediction.where(active: 1)
 
 		predictions.each do |prediction|
-			score = percent_change(prediction)
+			update_prediction(prediction)
 		end
 
+	end
+
+	def destroy
+
+		#Set prediction active = 0 and redirect back to previous page
+		prediction = Prediction.find_by(id: params[:id])
+		prediction.active = 0
+		prediction.save
+    	flash[:success] = "Prediction canceled!"
+    	redirect_to request.referrer || login_path
 	end
 
 	private
@@ -53,6 +65,6 @@ class PredictionsController < ApplicationController
 	def prediction_params
 			#Obtains parameters from 'prediction form' in app/views/shared.
 			#Permits adjustment of only the 'content' & 'ticker_symbol' columns in the 'predictions' model.
-			params.require(:prediction).permit(:prediction_price, :end_date, :prediction_comment, :score, :active, :start_price)
+			params.require(:prediction).permit(:prediction_price, :end_date, :prediction_comment, :score, :active, :start_price, :landing_page, :stock_id)
 	end
 end

@@ -20,11 +20,11 @@
       <div class = "row">
         <div class = "col-xs-4">
           <p class = "stock-ticker-detail-header">Predictions</p>
-          <p class = "stock-ticker-detail-number">38</p>
+          <p class = "stock-ticker-detail-number"><%= @stock.predictions.count %></p>
         </div>
         <div class = "col-xs-4">
           <p class = "stock-ticker-detail-header">Comments</p>
-          <p class = "stock-ticker-detail-number">28</p>
+          <p class = "stock-ticker-detail-number">38</p>
         </div>
       </div>
       <div class = "row">
@@ -41,6 +41,13 @@
           <p class = "stock-ticker-detail-number">28</p>
         </div>
       </div>
+      <div class = "row">
+        <div class = "col-xs-4">
+          <p class = "stock-ticker-detail-header">Followers</p>
+          <p class = "stock-ticker-detail-number"><%= @stock.followers.count %></p>
+        </div>
+          <%= render 'shared/follow_form'%>
+      </div>
     </div>
 
 <!-- PREDICTION FORM -->
@@ -48,7 +55,11 @@
       <p class = "stock-page-prediction-header">
         <%= @stock.ticker_symbol %>
       </p>
+      <% if active_prediction_exists?(@prediction) %>
+        <%= render @prediction %>
+      <% else %>
         <%= render 'shared/prediction_form' %>
+      <% end %>
     </div>
 
 

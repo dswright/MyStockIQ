@@ -1,5 +1,6 @@
 class StocksController < ApplicationController
 
+	
 	#Function to pull the whole stock file and then update all records.
 	#Run daily
 	#def create
@@ -14,7 +15,7 @@ class StocksController < ApplicationController
 		@stock = Stock.find_by(ticker_symbol: ticker_symbol)
 		#Stock's posts, comments, and predictions to be shown in the view
 		streams = Stream.where(target_type: "Stock", target_id: @stock.id)
-    @stream_hash_array = Stream.stream_maker(streams, 0)
+   		@stream_hash_array = Stream.stream_maker(streams, 0)
 
     #if a stock gets viewed, update the stocks table so that the stock gets real time stock data.
     if (@stock.viewed == false)
@@ -27,8 +28,17 @@ class StocksController < ApplicationController
   	@comment = Comment.new
     @like = Like.new
 
- 		#creates comment variable to be used to set up the prediction creation form (see app/views/shared folder)
-  	@prediction = Prediction.new(score: 0, active: 1, start_price: @stock.daily_stock_price) 	
+   		#creates comment variable to be used to set up the prediction creation form (see app/views/shared folder)
+    	@prediction = @current_user.predictions.build(score: 0, active: 1, start_price: @stock.daily_stock_price, stock_id: @stock.id) 	
+
+    	#If active prediction exists, show active prediction
+    	if active_prediction_exists?(@prediction)
+    		@prediction = Prediction.where(user_id: @current_user.id, stock_id: @stock.id, active: 1).first
+    	end
+
+      #Determines relationship between current user and target user
+      @target = @stock
+
 
   	@comment_stream_inputs = "Stock:#{@stock.id}"
   	@prediction_stream_inputs = "Stock:#{@stock.id}"
@@ -36,7 +46,7 @@ class StocksController < ApplicationController
     @prediction_landing_page = "stocks:#{@stock.ticker_symbol}"
     @comment_landing_page = "stocks:#{@stock.ticker_symbol}"
     @stream_comment_landing_page = "stocks:#{@stock.ticker_symbol}"
-  
+    
 
   	gon.ticker_symbol = ticker_symbol
   	gon.price_array = Stock.get_historical_prices(ticker_symbol)    

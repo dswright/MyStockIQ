@@ -2,10 +2,14 @@ class Stock < ActiveRecord::Base
 
   require 'scraper'
 
+  has_many :predictions
+  
   validates :stock,         presence: true
 
   validates :ticker_symbol, presence: true,
             uniqueness: {case_sensitive: false}
+
+
 
   #this takes a date in the form of - "2014-12-16 00:00:00 UTC"
   def self.utc_time(date_string)
@@ -38,6 +42,10 @@ class Stock < ActiveRecord::Base
       {name: "1yr", x_range_min:Stock.return_date_based_on_days(-360, last_utc_date), x_range_max:Stock.return_date_based_on_days(180, last_utc_date)},
       {name: "5yr", x_range_min:Stock.return_date_based_on_days(-1825, last_utc_date), x_range_max:Stock.return_date_based_on_days(900, last_utc_date)},
     ]
+  end
+
+  def followers
+    Relationship.where(followed_id: self.id, followed_type: self.class.name)
   end
 end
 
