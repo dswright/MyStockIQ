@@ -44,7 +44,7 @@ namespace :scraper do
   end
 
   task :fetch_news => :environment do
-    stocks = Stock.where(active:true)
+    stocks = Stock.where(viewed:true)
     stocks.each do |stock|
       NewsWorker.perform_async(stock.ticker_symbol)
     end

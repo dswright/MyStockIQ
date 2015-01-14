@@ -69,11 +69,11 @@ class StockGraphPublic
                      #The date_forward_array will always be set to 3 days ahead, so setting this value to more than 3 days
                      #will have minimal affect.
 
-    array_details_daily = [{name:"1m", start:20*6.5, finish:10*6.5},
-                     {name:"3m", start:60*6.5, finish:30*6.5},
-                     {name:"6m", start:120*6.5, finish:60*6.5},
-                     {name:"1yr", start:240*6.5, finish:120*6.5},
-                     {name:"5yr", start:1200*6.5, finish:600*6.5}]
+    array_details_daily = [{name:"1m", start:-30, finish:15},
+                     {name:"3m", start:-90, finish:45},
+                     {name:"6m", start:-180, finish:90},
+                     {name:"1yr", start:-360, finish:180},
+                     {name:"5yr", start:-1500, finish:700}]
 
     date_hash_array = []
 
