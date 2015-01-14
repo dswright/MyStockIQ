@@ -1,11 +1,17 @@
 class User < ActiveRecord::Base
 	#this class has many built in methods like .new which would create a new user without any methods in here.
 	
-  #sets an association that the User will have many stream posts associated to it
+  #sets an association that the User will have many comments and predictions associated to it
   has_many :comments
   has_many :predictions
 
-	#we need to add a new 
+  #Foreign key is the default index that would be used. 
+  has_many :active_relationships, class_name: "Relationship",
+                                  foreign_key: "follower_id",
+                                  dependent: :destroy
+
+  #This sets up the relationship such that current_user.followings returns an array of followed objects
+  has_many :followings, through: :active_relationships, source: :followed
 
 	#form validation for the username
 	before_save { self.email = self.email.downcase } #before inserting the data, make sure it is all downcase.
@@ -63,4 +69,23 @@ class User < ActiveRecord::Base
     BCrypt::Password.new(remember_digest).is_password?(remember_token)
   end
 
+  #Follows a user
+  def follow(object)
+    #sets followed id = other_user id and follower id = user id
+    active_relationships.create(followed_id: object.id, followed_type: object.class.name)
+  end
+
+  #Unfollows a user
+  def unfollow(object)
+    active_relationships.find_by(followed_id: object.id, followed_type: object.class.name).destroy
+  end
+
+  #Returns true if the current user is following the other user
+  def following?(object)
+    active_relationships.find_by(followed_id: object.id, followed_type: object.class.name)
+  end
+
+  def followers
+    Relationship.where(followed_id: self.id)
+  end
 end

@@ -23,15 +23,16 @@ class PredictionsController < ApplicationController
 			end
 		end
 
-		unless @prediction.invalid? or @prediction.active_prediction_exists?
+		unless @prediction.invalid? or active_prediction_exists?(@prediction)
 			@prediction.save
 			@streams.each {|stream| stream.save}
 
 			flash[:success] = "Prediction Created!"
 
-			#The first element in the @stream array is the page that the user was on
-			redirect_to stream_redirect_processor(params[:landing_page])
+			#Redirects back to previous page. If previous redirect is not specified, login_path is used.
+			redirect_to request.referrer || login_path
 		else
+
 			render '/stocks/show/'
 			#render stock_or_user_page(stream)
 		end
@@ -50,7 +51,12 @@ class PredictionsController < ApplicationController
 
 	def destroy
 
-
+		#Set prediction active = 0 and redirect back to previous page
+		prediction = Prediction.find_by(id: params[:id])
+		prediction.active = 0
+		prediction.save
+    	flash[:success] = "Prediction canceled!"
+    	redirect_to request.referrer || login_path
 	end
 
 	private

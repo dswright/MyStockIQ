@@ -1,5 +1,6 @@
 class StocksController < ApplicationController
 
+	
 	#Function to pull the whole stock file and then update all records.
 	#Run daily
 	#def create
@@ -24,6 +25,9 @@ class StocksController < ApplicationController
     	if active_prediction_exists?(@prediction)
     		@prediction = Prediction.where(user_id: @current_user.id, stock_id: @stock.id, active: 1).first
     	end
+
+      #Determines relationship between current user and target user
+      @target = @stock
 
     	@comment_stream_inputs = "Stock:#{@stock.id}"
     	@prediction_stream_inputs = "Stock:#{@stock.id}"

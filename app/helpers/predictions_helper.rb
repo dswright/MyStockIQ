@@ -78,7 +78,7 @@ module PredictionsHelper
 	def active_prediction_exists?(prediction)
 
 	 	#Find current user prediction related to that stock
-	 	other_predictions = Prediction.where(active: 1, user_id: prediction.user_id, stock_id: prediction.stock_id)
+	 	other_predictions = Prediction.where(active: 1, user_id: prediction.user_id, stock_id: prediction.stock_id).first
 
     	if other_predictions == nil
       		false
@@ -90,7 +90,7 @@ module PredictionsHelper
   	def number_of_predictions(object)
   		Prediction.where(target_id: object.id).count
   	end
-  	
+
 	#Converts seconds to days
 	def to_days(seconds)
 		days = seconds/(60*60*24)
