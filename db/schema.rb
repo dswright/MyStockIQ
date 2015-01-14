@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150104232421) do
+ActiveRecord::Schema.define(version: 20150108174947) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,30 @@ ActiveRecord::Schema.define(version: 20150104232421) do
   end
 
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
+
+  create_table "intradayprices", force: true do |t|
+    t.string   "ticker_symbol"
+    t.datetime "date"
+    t.float    "open_price"
+    t.float    "close_price"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "intradayprices", ["date"], name: "index_intradayprices_on_date", using: :btree
+  add_index "intradayprices", ["ticker_symbol"], name: "index_intradayprices_on_ticker_symbol", using: :btree
+
+  create_table "likes", force: true do |t|
+    t.string   "like_type"
+    t.string   "target_type"
+    t.integer  "target_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "user_id"
+  end
+
+  add_index "likes", ["target_type", "target_id", "like_type"], name: "index_likes_on_target_type_and_target_id_and_like_type", using: :btree
+  add_index "likes", ["user_id"], name: "index_likes_on_user_id", using: :btree
 
   create_table "newsarticles", force: true do |t|
     t.string   "google_news_id"
@@ -97,6 +121,7 @@ ActiveRecord::Schema.define(version: 20150104232421) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "stock_sector"
+    t.boolean  "viewed"
   end
 
   add_index "stocks", ["active"], name: "index_stocks_on_active", using: :btree

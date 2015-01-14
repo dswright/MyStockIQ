@@ -10,6 +10,9 @@ gem 'newrelic_rpm'
 gem 'oink'
 gem 'gon'
 gem 'feedjira'
+gem 'responders', '~> 2.0'
+
+gem 'rest-client', '~> 1.7.2'
 
 #add bcrypt for the password encryption
 gem 'bcrypt',               '3.1.7'

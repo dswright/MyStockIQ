@@ -34,6 +34,7 @@ class UsersController < ApplicationController
     #creates empty comment object to plug into the form.
     #right now the comment takes: id, content, ticker_symbol, stream_id, created_at, updated_at. Stream id should be implicit..
     @comment = Comment.new 
+    @like = Like.new
 
     #@comment = current_user.comments.build  #this assumes an association between comments and current user. Which does not exist.
   end

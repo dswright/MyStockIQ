@@ -1,8 +1,13 @@
 
-<% stream_hash_array.each do |stream_hash|%>
+<% stream_hash_array.each do |stream_hash|
+  icons = {}
+  icons[:likes] = Like.where(like_type:"like", target_type: stream_hash[:stream].streamable_type, target_id: stream_hash[:stream].streamable_id).count
+  icons[:dislikes] = Like.where(like_type:"dislike",target_type: stream_hash[:stream].streamable_type, target_id:stream_hash[:stream].streamable_id).count
+  icons[:replies] = Stream.where(target_type:stream_hash[:stream].streamable_type, target_id: stream_hash[:stream].streamable_id).count
+  %>
 <%#need to use a seperate method here to create the recursive effect on the embedded stream arrays.%>
 <%# stream_hash_process(stream_hash) %>
-  <div class = "prediction-post-comment">
+  <div class = "prediction-post-comment" id="first_one">
     <div class = "row" style = "margin-left: <%= stream_hash[:nest_count] * 20 %>px;">
 
       <%if stream_hash[:stream].streamable_type == "Comment" %>
@@ -14,9 +19,10 @@
       <%end%>
 
       <%= render partial: "streams/stream_comment_form", locals: {stream_string: "#{stream_hash[:stream].streamable_type}:#{stream_hash[:stream].streamable_id}"} %>
-    </div>
-  </div>
-  
+
+  <%#the stream icons partial closes the top 2 divs %>
+  <%= render partial: "streams/stream_icons", locals: {icons: icons, stream: stream_hash[:stream]} %>
+
   <%unless stream_hash[:sub_hash_array].empty? %>
     <%= render partial: "streams/stream", locals: {stream_hash_array: stream_hash[:sub_hash_array]} %>
   <% end %>

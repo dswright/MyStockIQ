@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   #sets an association that the User will have many comments and predictions associated to it
   has_many :comments
   has_many :predictions
+  has_many :likes
 
   #Foreign key is the default index that would be used. 
   has_many :active_relationships, class_name: "Relationship",

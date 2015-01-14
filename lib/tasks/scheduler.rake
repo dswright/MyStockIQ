@@ -50,5 +50,23 @@ namespace :scraper do
     end
   end
 
+  task :fetch_intradayprices => :environment do
+    d = Time.now.utc
+    eastern_time = d.in_time_zone('Eastern Time (US & Canada)')
+    weekday = eastern_time.wday
+    hour = eastern_time.strftime("%H:%M")
+    hour_split = hour.split(":")
+    hour_num = (hour_split[0].to_i * 60) + hour_split[1].to_i
+    #between the eastern hours of 9:28 am and 4:12 pm run the intraday scraper.
+    if hour_num >=  567 && hour_num <= 972
+      if weekday != 6 && weekday != 0
+        stocks = Stock.where(viewed:true)
+        stocks.each do |stock|
+          IntradayWorker.perform_async(stock.ticker_symbol, 1)
+        end
+      end
+    end
+  end
+
 end
 
