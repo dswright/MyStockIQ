@@ -1,17 +1,36 @@
 require 'rake'
 require 'scraper'
+require 'customdate'
 
 namespace :scraper do
 
-  #Stock Rakes
-  task :fetch_stocks => :environment do
-    x = 30
-    1.upto(30) do |i|
-      StocksWorker.perform_async(i)
+  #Google Data Rakes
+  task :google_daily_historical => :environment do
+    start_date = "01-01-2010"
+    dups_allowed = true
+    stocks = Stock.where(active:true) 
+    stocks.each do |stock|
+      GoogledailyWorker.perform_async(stock.ticker_symbol, start_date, dups_allowed)
     end
   end
 
-  task :fetch_stocks_pe => :environment do
+  task :google_daily_recent => :environment do
+    dups_allowed = false
+    start_date = 5.days.ago.in_time_zone.strftime("%m-%d-%Y")
+    stocks = Stock.where(active:true) 
+    stocks.each do |stock|
+      GoogledailyWorker.perform_async(stock.ticker_symbol, start_date, dups_allowed)
+    end
+  end
+
+  task :quandl_allstocks => :environment do
+    x = 30
+    1.upto(30) do |i|
+      QuandlallstocksWorker.perform_async(i)
+    end
+  end
+
+  task :yahoo_pe => :environment do
     stock_array = Stock.where(active:true)
     sliced = stock_array.each_slice(199).to_a
     sliced.each do |small_stock_array|
@@ -19,54 +38,50 @@ namespace :scraper do
       small_stock_array.each do |single_stock|
         small_array << {"ticker_symbol" => single_stock.ticker_symbol}
       end
-      PEWorker.perform_async(small_array)
+      YahoopeWorker.perform_async(small_array)
     end
   end
 
-  task :fetch_stocks_industry => :environment do
+  task :quandl_industry => :environment do
     stock_array = Stock.where(active:true)
-    IndustryWorker.perform_async(stock_array)
+    QuandlindustryWorker.perform_async(stock_array)
   end
 
-  #Price Data Rakes
-  task :fetch_historical_prices => :environment do
-    stocks = Stock.where(date:nil, active:true) 
-    stocks.each do |stock|
-      HistoricalWorker.perform_async(stock.ticker_symbol)
-    end
-  end
-
-  task :fetch_recent_prices => :environment do
-    stocks = Stock.where(active:true)
-    stocks.each do |stock|
-      LatestWorker.perform_async(stock.ticker_symbol)
-    end
-  end
-
-  task :fetch_news => :environment do
+  task :google_news => :environment do
     stocks = Stock.where(viewed:true)
     stocks.each do |stock|
-      NewsWorker.perform_async(stock.ticker_symbol)
+      GooglenewsWorker.perform_async(stock.ticker_symbol)
     end
   end
 
-  task :fetch_intradayprices => :environment do
-    d = Time.now.utc
-    eastern_time = d.in_time_zone('Eastern Time (US & Canada)')
-    weekday = eastern_time.wday
-    hour = eastern_time.strftime("%H:%M")
-    hour_split = hour.split(":")
-    hour_num = (hour_split[0].to_i * 60) + hour_split[1].to_i
-    #between the eastern hours of 9:28 am and 4:12 pm run the intraday scraper.
-    if hour_num >=  567 && hour_num <= 972
-      if weekday != 6 && weekday != 0
-        stocks = Stock.where(viewed:true)
-        stocks.each do |stock|
-          IntradayWorker.perform_async(stock.ticker_symbol, 1)
-        end
+  task :google_intradayprices => :environment do
+    #only run this task during the schedule stock market hours
+    d = Time.zone.now
+    #est sets the utc time back 5 hours to get it into est. 
+    #Subtract additional 10 minutes to time for Google data to populate.
+    est = CustomDate.utc_date_string_to_utc_date_number(d) - 3600*24*5*1000 - 10*60*1000
+    unless CustomDate.check_if_out_of_time(est)
+      stocks = Stock.where(viewed:true)
+      stocks.each do |stock|
+        GoogleintradayWorker.perform_async(stock.ticker_symbol, 1)
       end
     end
   end
-
 end
+
+#DEAD RAKE TASKS, NO LONGER IN SERVICE
+#Price Data Rakes
+  #task :fetch_historical_prices => :environment do
+  #  stocks = Stock.where(date:nil, active:true) 
+  #  stocks.each do |stock|
+  #    HistoricalWorker.perform_async(stock.ticker_symbol)
+  #  end
+  #end
+
+  #task :fetch_recent_prices => :environment do
+  #  stocks = Stock.where(active:true)
+  #  stocks.each do |stock|
+  #    LatestWorker.perform_async(stock.ticker_symbol)
+  #  end
+  #end
 
