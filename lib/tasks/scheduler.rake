@@ -63,7 +63,7 @@ namespace :scraper do
     unless CustomDate.check_if_out_of_time(est)
       stocks = Stock.where(viewed:true)
       stocks.each do |stock|
-        GoogleintradayWorker.perform_async(stock.ticker_symbol, 1)
+        GoogleintradayWorker.perform_async(stock.ticker_symbol, 6) #look 6 days back for intraday data.
       end
     end
   end
