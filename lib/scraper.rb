@@ -1,19 +1,47 @@
+require 'open-uri'
+require 'csv'
+require 'cgi'
+require 'rest-client'
+require 'customdate'
+
 class ScraperPublic
 
-  def self.fetch_intradayprices(ticker_symbol, days)
-    url = URI.encode("http://www.google.com/finance/getprices?i=300&p=#{days}d&f=d,o,h,l,c,v&df=cpct&q=#{ticker_symbol}")
-    if daily_hash_array = Scraper.process_csv_file(url, DailyData.new, 0, ticker_symbol, false, true)
-      unless daily_hash_array.empty?
-        Scraper.new.save_to_db(daily_hash_array, DailyData.new)
+  def self.google_daily(ticker_symbol, start_date, dups_allowed)
+    price_hash_array = []
+    end_date = Time.now.in_time_zone.strftime("%m-%d-%Y")
+    url = "http://www.google.com/finance/historical?q=#{ticker_symbol}&startdate=#{start_date}&enddate=#{end_date}&output=csv&head=false"
+    encoded_url = URI.encode(url)
+    begin
+      if price_hash_array = Scraper.process_csv_file(encoded_url, GoogleDaily.new, ticker_symbol, dups_allowed)
+        #if Scraper.new.enough_volume?(price_hash_array)
+        Scraper.new.save_to_db(price_hash_array, GoogleDaily.new)
+        Scraper.new.update_stock(ticker_symbol)
+        #Stockprice.split_stock(ticker_symbol, input_prices_array)
+        #else
+        #  Scraper.new.update_to_inactive(ticker_symbol)
+        #end
+      end
+    rescue Exception => e
+      if e.message =~ /400 Bad Request/ || e.message =~ /404 Not Found/
+        Scraper.new.update_to_inactive(ticker_symbol)
       end
     end
   end
 
-  def self.fetch_news(ticker_symbol)
+  def self.google_intraday(ticker_symbol, days)
+    url = URI.encode("http://www.google.com/finance/getprices?i=300&p=#{days}d&f=d,o,h,l,c,v&df=cpct&q=#{ticker_symbol}")
+    if daily_hash_array = Scraper.process_csv_file(url, GoogleIntraday.new, ticker_symbol, false, true)
+      unless daily_hash_array.empty?
+        Scraper.new.save_to_db(daily_hash_array, GoogleIntraday.new)
+      end
+    end
+  end
+
+  def self.google_news(ticker_symbol)
     url = "https://www.google.co.uk/finance/company_news?q=#{ticker_symbol}&output=rss"
-    if news_hash_array = Scraper.process_rss_feed(url, NewsData.new, 0, ticker_symbol, false)
+    if news_hash_array = Scraper.process_rss_feed(url, GoogleNews.new, 0, ticker_symbol, false)
       unless news_hash_array.empty?
-        Scraper.new.save_to_db(news_hash_array, NewsData.new)
+        Scraper.new.save_to_db(news_hash_array, GoogleNews.new)
         #need something tha tprocesses the comment for targets.
         #and also something that makes a stream relation based on the tickersymbol
         #if that relation does not already exist.
@@ -25,86 +53,35 @@ class ScraperPublic
     end
   end
 
-  #Stock Scrapers
-  def self.fetch_stocks(page)
+  def self.quandl_allstocks(page)
     stock_array = []
-    if encoded_url = Scraper.new.url_stock_list(page)
-      if stock_hash_array = Scraper.process_csv_file(encoded_url, StockData.new, 0, nil, false)
-        unless stock_hash_array.empty?
-          Scraper.new.save_to_db(stock_hash_array, StockData.new)
-        end
+    url = "http://www.quandl.com/api/v2/datasets.csv?source_code=EOD&per_page=300&page=#{page}&auth_token=sVaP2d6ACjxmP-jM_6V-"
+    encoded_url = URI.encode(url)
+    if stock_hash_array = Scraper.process_csv_file(encoded_url, QuandlAllstocks.new, nil, false)
+      unless stock_hash_array.empty?
+        Scraper.new.save_to_db(stock_hash_array, QuandlAllstocks.new)
       end
     end
   end
 
-  def self.fetch_stocks_pe(stock_array)
+  def self.yahoo_pe(stock_array)
     if encoded_url = Scraper.new.url_pe_ratios(stock_array)
-      if pe_hash_array = Scraper.process_csv_file(encoded_url, PEData.new, 0, nil, true)
-        Scraper.update_db(pe_hash_array, PEData.new, 1)
+      if pe_hash_array = Scraper.process_csv_file(encoded_url, YahooPE.new, nil, true)
+        Scraper.update_db(pe_hash_array, YahooPE.new, 1)
       end
     end
   end
 
-  def self.fetch_stocks_industry(stock_array)
-    encoded_url = Scraper.new.url_industry_list
-    if industry_hash_array = Scraper.process_csv_file(encoded_url, IndustryData.new, 0, nil, false)
-      Scraper.update_db(industry_hash_array, IndustryData.new, 2)
+  def self.quandl_industry(stock_array) #pulls the stock industry, and the exchange!
+    url = "https://s3.amazonaws.com/quandl-static-content/Ticker+CSV's/Stock+Exchanges/stockinfo.csv"
+    encoded_url = URI.encode(url)
+    if industry_hash_array = Scraper.process_csv_file(encoded_url, QuandlIndustry.new, nil, false)
+      Scraper.update_db(industry_hash_array, QuandlIndustry.new, 2)
     end
   end
-
-  #Stock Prices Scrapers
-  def self.fetch_historical_prices(ticker_symbol)
-    price_hash_array = []
-    if encoded_url = Scraper.new.url_historic(ticker_symbol)
-      if price_hash_array = Scraper.process_csv_file(encoded_url, PriceData.new, 0, ticker_symbol, true)
-        if Scraper.new.enough_volume?(price_hash_array)
-          Scraper.new.save_to_db(price_hash_array, PriceData.new)
-          Scraper.new.update_stock(ticker_symbol)
-          #Stockprice.split_stock(ticker_symbol, input_prices_array)
-        else
-          Scraper.new.update_to_inactive(ticker_symbol)
-        end
-      end
-    end
-  end
-
-  def self.fetch_recent_prices(ticker_symbol)
-    price_hash_array = []
-    if encoded_url = Scraper.new.url_latest(ticker_symbol)
-      if price_hash_array = Scraper.process_csv_file(encoded_url, PriceData.new, 0, ticker_symbol, false)
-        unless price_hash_array.empty?
-          Scraper.new.save_to_db(price_hash_array, PriceData.new)
-          Scraper.new.update_stock(ticker_symbol)
-        end
-      end
-    end
-  end
-
 end
 
 class Scraper
-  require 'open-uri'
-  require 'csv'
-  require 'cgi'
-  require 'rest-client'
-
-  #Available Scraper URLs
-  def url_latest(ticker_symbol)
-    rows_of_data = 15
-    url = "http://www.quandl.com/api/v1/datasets/EOD/#{ticker_symbol}.csv?exclude_headers=true&rows=#{rows_of_data}&auth_token=sVaP2d6ACjxmP-jM_6V-"
-    return_encoded_url(url, 0)
-  end
-
-  def url_historic(ticker_symbol)
-    rows_of_data = 1500
-    url = "http://www.quandl.com/api/v1/datasets/EOD/#{ticker_symbol}.csv?exclude_headers=true&rows=#{rows_of_data}&auth_token=sVaP2d6ACjxmP-jM_6V-"
-    return_encoded_url(url, 0)
-  end
-
-  def url_stock_list(page)
-    url = "http://www.quandl.com/api/v2/datasets.csv?source_code=EOD&per_page=300&page=#{page}&auth_token=sVaP2d6ACjxmP-jM_6V-"
-    return_encoded_url(url,0)
-  end
 
   def url_pe_ratios(stock_array)
     ticker_string = ""
@@ -112,26 +89,17 @@ class Scraper
       ticker_string = "#{ticker_string}#{stock["ticker_symbol"]}+"
     end
     url = "http://finance.yahoo.com/d/quotes.csv?s=#{ticker_string}&f=|r"
-    return_encoded_url(url,0)
-  end
-
-  def url_industry_list
-    url = "https://s3.amazonaws.com/quandl-static-content/Ticker+CSV's/Stock+Exchanges/stockinfo.csv"
-    return_encoded_url(url, 0)
-  end
-
-  def return_encoded_url(url, count)
     return URI.encode(url)
   end
 
-  def self.process_csv_file(url, class_with_process, count, ticker_symbol=nil, dup = true, check_time = false)
+  def self.process_csv_file(url, class_with_process, ticker_symbol=nil, dup = true, check_time = false)
     hash_array = []
     time_start = 0
     open(url) do |f|
       f.each_line do |line|
         CSV.parse(line) do |row|
           if check_time == true
-            if start_time_row = class_with_process.start_time_row(row)
+            if start_time_row = class_with_process.start_time_row(row)  #this is for the Google intraday scraper, which is funky.
               time_start = start_time_row
             end
             hash_item = class_with_process.data_hash(row, ticker_symbol, time_start)
@@ -139,7 +107,7 @@ class Scraper
             hash_item = class_with_process.data_hash(row, ticker_symbol)
           end
           if hash_item
-            if dup == true
+            if dup == true  #the larger historical scrapers allow for dups for input efficiency.
               hash_array << hash_item
             else
               if class_with_process.check_for_dup(hash_item)
@@ -153,7 +121,8 @@ class Scraper
     return hash_array
   end
 
-  def self.process_rss_feed(url, class_with_process, count, ticker_symbol=nil, dup = true)
+  #used only by the news feed.
+  def self.process_rss_feed(url, class_with_process, count, ticker_symbol=nil, dup = true) 
     hash_array = []
     begin
       f = RestClient.get url
@@ -194,7 +163,7 @@ class Scraper
     end
   end
 
-  def save_to_stream(hash_array)
+  def save_to_stream(hash_array) #used by the news scaper.
     hash_array.each do |news_item|
       news_object = Newsarticle.find_by(google_news_id:news_item["google_news_id"])
       target_stock = Stock.find_by(ticker_symbol:news_item["ticker_symbol"])
@@ -203,8 +172,7 @@ class Scraper
     end
   end
 
-
-  def self.update_db(hash_array, class_with_process, case_lines)
+  def self.update_db(hash_array, class_with_process, case_lines) #used by yahoo pe and quandl industry update.
     case_array = []
     case_array2 = []
     where_array = []
@@ -224,8 +192,6 @@ class Scraper
           case_array2 << new_line
         end
       end
-      
-
     end
     unless case_array.empty?
       if case_lines != 2
@@ -238,7 +204,7 @@ class Scraper
     end
   end
 
-  def enough_volume?(price_hash_array)
+  def enough_volume?(price_hash_array) #volume evaluation for google daily scraper. Out of comission at the moment.
     low_volume_count = 0
     volume_sum = 0
     price_hash_array.each do |price_hash|
@@ -263,36 +229,6 @@ class Scraper
     end
   end
 
-  def update_to_inactive(ticker_symbol)
-    stock_to_update = Stock.find_by(ticker_symbol: ticker_symbol)
-    stock_to_update.update(active:false)
-  end
-
-  def update_stock(ticker_symbol)
-    price_list = Stockprice.where(ticker_symbol:ticker_symbol)
-    latest_date = Date.parse('01-01-0000')
-    update_complete = false
-    latest_daily_stock_price = 0
-    latest_daily_volume = 0
-    price_list.each do |price_hash|
-      if price_hash.date > latest_date
-        latest_date = price_hash.date
-        latest_daily_stock_price = price_hash.close_price
-        latest_daily_volume = price_hash.volume
-        update_complete = true
-      end
-    end
-    if update_complete
-      stock_to_update = Stock.find_by(ticker_symbol:ticker_symbol)
-      stock_to_update.date = latest_date
-      stock_to_update.daily_stock_price = latest_daily_stock_price
-      stock_to_update.daily_volume = latest_daily_volume
-      stock_to_update.save
-    end
-    pricelist = nil
-    latest_date = nil
-  end
-
   def low_volume_days_cutoff
     1000
   end
@@ -301,24 +237,41 @@ class Scraper
     10000
   end
 
-  #the split date cutoff is necessary because it appears that splits 
-  #before a certain time were already applied to the stock price data
-  def split_date_cutoff
-    "1996/01/01"
+  def update_to_inactive(ticker_symbol) #used by the google daily scraper to update invalid stocks.
+    stock_to_update = Stock.find_by(ticker_symbol: ticker_symbol)
+    stock_to_update.update(active:false)
   end
 
+  #need to make this work for the intraday scraper as well
+  def update_stock(ticker_symbol, price_class)  #used by the intraday scraper and daily scraper to update the latest stock price.
+    price_list = price_class.where(ticker_symbol:ticker_symbol)
+    update_complete = false
+    latest_hash = {}
+    latest_hash[:date] = Stock.find_by(ticker_symbol:ticker_symbol).date || "0000-01-01" #if the date is nil, plug in a very old date.
+    update_true = false
+    price_list.each do |price_hash|
+      if price_hash.date > latest_hash[:date]
+        latest_hash = {date:price_hash.date, close_price:price_hash.close_price}
+        update_complete = true
+      end
+    end
+    if update_complete
+      stock_to_update = Stock.find_by(ticker_symbol:ticker_symbol)
+      stock_to_update.update(date:latest_hash[:date], daily_stock_price:latest_hash[:close_price])
+    end
+  end
 end
 
-class DailyData
+class GoogleIntraday
   def data_hash(row, ticker_symbol, time_start)
     #if the row[0] is less than 1000000, then its just the integer from the google data, if its greater,
     #then its the actual time stamp, and the correct date.
     if row[0].gsub('a','').to_i <= 1000000
-      time_start = time_start + (row[0].to_i * 300)
+      time_start = time_start + (row[0].to_i * 300) + 5*3600*1000 #add 5 hours to get the time in actual utc zone.
     end
     daily_hash = {
       "ticker_symbol" => ticker_symbol,
-      "date" => Time.at(time_start).in_time_zone('Eastern Time (US & Canada)').strftime("%Y-%m-%d %H:%M:%S"),
+      "date" =>  CustomDate.utc_date_number_to_utc_date_string(time_start*1000),
       "open_price" => row[4].to_f,
       "close_price" => row[1].to_f
     }
@@ -327,7 +280,6 @@ class DailyData
     else
       return daily_hash
     end
-
   end
 
   def start_time_row(row)
@@ -362,7 +314,7 @@ class DailyData
 
 end
 
-class NewsData
+class GoogleNews
   def data_hash(row, ticker_symbol)
     marker1 = "width:80%;\">"
     marker2 = "</div>"
@@ -423,26 +375,23 @@ class NewsData
 
 end
 
-class PriceData
 
-  def check_for_dup(hash_item)
-    date = row[0]
-    if Stockprice.where(ticker_symbol:hash_item["ticker_symbol"], date:hash_item["date"]).exists?
-      false
-    else
-      true
-    end
-  end
+class GoogleDaily
 
   def data_hash(row, ticker_symbol)
-    price_hash = {
-      "ticker_symbol" => ticker_symbol,
-      "date" => row[0],
-      "open_price" => row[1].to_f,
-      "close_price" => row[4].to_f,
-      "volume" => row[5].to_i,
-      "split" => row[7].to_i
-    }
+    unless row[1] == "Open" #this csv file has headers, this ignores the header line.
+      date = Time.zone.parse(row[0].to_s).strftime("20%y-%m-%d 21:10:00")
+      return price_hash = {
+        "ticker_symbol" => ticker_symbol,
+        "date" => date, #date is in the form "1/7/2015", and it converts to date format OK.
+        "open_price" => row[1].to_f,
+        "close_price" => row[4].to_f,
+        "volume" => row[5].to_i,
+        "split" => 1
+      }
+    else
+      return false
+    end
   end
 
   def all_data_insert(price_array)
@@ -453,13 +402,13 @@ class PriceData
 
     #Hash To Insert Strings
   def single_row_insert(price_hash)
-    time = Time.now.to_s(:db)
+    time = Time.now.in_time_zone.strftime('%Y-%m-%d %H:%M:%S')
     price_string = "('#{price_hash["ticker_symbol"]}','#{price_hash["date"]}','#{price_hash["open_price"]}','#{price_hash["close_price"]}','#{price_hash["volume"]}','#{price_hash["split"]}','#{time}','#{time}')"
   end
-
 end
 
-class StockData
+
+class QuandlAllstocks
 
   #the ticker_symbol is for the PriceData dup check, this dup check sets the ticker from the csv row.
   def check_for_dup(hash_item)
@@ -495,11 +444,12 @@ class StockData
     time = Time.now.to_s(:db)
     price_string = "('#{stock_hash["stock"]}','#{stock_hash["ticker_symbol"]}',#{stock_hash["active"]},'#{time}','#{time}')"
   end
+
 end
 
-class PEData
+class YahooPE
   def data_hash(row, ticker_symbol)
-    if row[1] == "N/A"
+    if row[1] == "N/A" #if the ticker_symbol is invalid and yahoo doesn't have the data, it will return 'N/A'
       return false
     else
       pe_hash = {
@@ -526,8 +476,7 @@ class PEData
   end
 end
 
-class IndustryData
-
+class QuandlIndustry
   #the logic of this method is flipped. We want the ticker to exist in order to be added to the array.
   def check_for_dup(hash_item)
     if Stock.where(ticker_symbol:hash_item["ticker_symbol"]).exists?
@@ -574,6 +523,73 @@ class IndustryData
   def create_where_line(data_hash)
     return "'#{data_hash["ticker_symbol"]}'"
   end 
-    
-          #add this row of the csv file to the array to return
 end
+
+
+
+
+#Dead Classes
+
+#class PriceData
+ #def check_for_dup(hash_item)
+    #date = row[0]
+    #if Stockprice.where(ticker_symbol:hash_item["ticker_symbol"], date:hash_item["date"]).exists?
+    #  false
+    #else
+    #  true
+    #end
+  #end
+
+  #def data_hash(row, ticker_symbol)
+  #  price_hash = {
+  #    "ticker_symbol" => ticker_symbol,
+  #    "date" => row[0],
+  #    "open_price" => row[1].to_f,
+  #    "close_price" => row[4].to_f,
+  #    "volume" => row[5].to_i,
+  #   "split" => row[7].to_i
+  #  }
+  #end
+
+  #def all_data_insert(price_array)
+  #  sql = "INSERT INTO stockprices 
+  #    (ticker_symbol, date, open_price, close_price, volume, split, created_at, updated_at)
+  #    VALUES #{price_array.join(", ")}"
+  #end
+
+    #Hash To Insert Strings
+  #def single_row_insert(price_hash)
+  #  time = Time.now.to_s(:db)
+  #  price_string = "('#{price_hash["ticker_symbol"]}','#{price_hash["date"]}','#{price_hash["open_price"]}','#{price_hash["close_price"]}','#{price_hash["volume"]}','#{price_hash["split"]}','#{time}','#{time}')"
+  #end
+
+#end
+
+  #Stock Prices Scrapers
+  #def self.fetch_historical_prices(ticker_symbol)
+  #  price_hash_array = []
+  #  encoded_url = Scraper.new.url_prices(ticker_symbol, 1500)
+  #  if price_hash_array = Scraper.process_csv_file(encoded_url, PriceData.new, 0, ticker_symbol, true)
+  #    if Scraper.new.enough_volume?(price_hash_array)
+  #      Scraper.new.save_to_db(price_hash_array, PriceData.new)
+  #      Scraper.new.update_stock(ticker_symbol)
+        #Stockprice.split_stock(ticker_symbol, input_prices_array)
+  #    else
+  #      Scraper.new.update_to_inactive(ticker_symbol)
+  #    end
+  #  end
+  #end
+
+  #def self.fetch_recent_prices(ticker_symbol)
+  #  price_hash_array = []
+  #  encoded_url = Scraper.new.url_prices(ticker_symbol, 20)
+  #  if price_hash_array = Scraper.process_csv_file(encoded_url, PriceData.new, 0, ticker_symbol, false)
+  #    unless price_hash_array.empty?
+  #      Scraper.new.save_to_db(price_hash_array, PriceData.new)
+  #      Scraper.new.update_stock(ticker_symbol)
+  #    end
+  #  end
+  #end
+
+#end
+
