@@ -54,6 +54,8 @@ require 'stockgraph'
   	
     gon.daily_price_array = StockGraph.get_daily_price_array(@ticker_symbol)
 
+
+    #add one more bit of data to the end of the daily graph array, if there has been an intra-day update on the price.
     extra_last_day = CustomDate.utc_date_string_to_utc_date_number(stock.date)
     if extra_last_day > gon.daily_price_array.last[0]
       #set the during the day price to the end of the day, so that it dispalys evenly on the graph.
