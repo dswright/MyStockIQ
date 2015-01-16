@@ -1,4 +1,4 @@
-class QuandlindustryWorker
+class QuandlallstocksWorker
   include Sidekiq::Worker
   require 'scraper'
 

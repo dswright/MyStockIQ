@@ -15,7 +15,7 @@ class ScraperPublic
       if price_hash_array = Scraper.process_csv_file(encoded_url, GoogleDaily.new, ticker_symbol, dups_allowed)
         #if Scraper.new.enough_volume?(price_hash_array)
         Scraper.new.save_to_db(price_hash_array, GoogleDaily.new)
-        Scraper.new.update_stock(ticker_symbol)
+        Scraper.new.update_stock(ticker_symbol, Stockprice)
         #Stockprice.split_stock(ticker_symbol, input_prices_array)
         #else
         #  Scraper.new.update_to_inactive(ticker_symbol)
@@ -33,6 +33,7 @@ class ScraperPublic
     if daily_hash_array = Scraper.process_csv_file(url, GoogleIntraday.new, ticker_symbol, false, true)
       unless daily_hash_array.empty?
         Scraper.new.save_to_db(daily_hash_array, GoogleIntraday.new)
+        Scraper.new.update_stock(ticker_symbol, Intradayprice)
       end
     end
   end
@@ -267,7 +268,7 @@ class GoogleIntraday
     #if the row[0] is less than 1000000, then its just the integer from the google data, if its greater,
     #then its the actual time stamp, and the correct date.
     if row[0].gsub('a','').to_i <= 1000000
-      time_start = time_start + (row[0].to_i * 300) + 5*3600*1000 #add 5 hours to get the time in actual utc zone.
+      time_start = time_start + row[0].to_i * 5*60 #add 5 minutes per increment. Comes in as utc time zone.
     end
     daily_hash = {
       "ticker_symbol" => ticker_symbol,
