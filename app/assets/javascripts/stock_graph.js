@@ -40,9 +40,11 @@ function createGraph() {
     forward_date_array = $(this).data("forward-date-array");
 
     if (button_type == "1d" || button_type == "5d") {
+      chart1.series[2].setData(gon.intraday_forward_array);
       chart1.series[0].setData(gon.intraday_price_array);
     }
     else {
+      chart1.series[2].setData(gon.daily_forward_array);
       chart1.series[0].setData(gon.daily_price_array);
     }
 
@@ -75,7 +77,7 @@ function createSeriesVar () {
     },
     {
       name: "dateseries",
-      data : gon.intraday_forward_array,
+      data : gon.daily_forward_array,
       lineWidth : 1
     }
   ];

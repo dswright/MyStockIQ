@@ -10,11 +10,11 @@ require 'stockgraph'
 
 	def show
 
-    stock_id = Stock.find_by(ticker_symbol:params[:ticker_symbol])
+    stock = Stock.find_by(ticker_symbol:params[:ticker_symbol])
     @ticker_symbol = params[:ticker_symbol]
 
 		@current_user = current_user
-		@stock = Stock.find(stock_id)
+		@stock = Stock.find(stock.id)
 		#Stock's posts, comments, and predictions to be shown in the view
 		streams = Stream.where(target_type: "Stock", target_id: @stock.id)
    		@stream_hash_array = Stream.stream_maker(streams, 0)
@@ -51,10 +51,19 @@ require 'stockgraph'
 
 
   	gon.ticker_symbol = @ticker_symbol
-  	gon.daily_price_array = StockGraph.get_daily_price_array(@ticker_symbol)    
+  	
+    gon.daily_price_array = StockGraph.get_daily_price_array(@ticker_symbol)
+
+    extra_last_day = CustomDate.utc_date_string_to_utc_date_number(stock.date)
+    if extra_last_day > gon.daily_price_array.last[0]
+      #set the during the day price to the end of the day, so that it dispalys evenly on the graph.
+      eod_utc_date = CustomDate.utc_date_string_to_utc_date_number(stock.date.beginning_of_day) + 3600*16*1000 + 60*10*1000
+      gon.daily_price_array << [eod_utc_date, stock.daily_stock_price]
+    end
+
+    gon.daily_forward_array = StockGraph.daily_forward_array(gon.daily_price_array.last[0])
 
     gon.intraday_price_array = StockGraph.get_intraday_price_array(@ticker_symbol) 
-
     gon.intraday_forward_array = StockGraph.intraday_forward_array(gon.intraday_price_array.last[0])  #this end of time needs to be defined. THen this array will work. 
     #may need to store this array in the loops?? Not sure how to get the end_time variable in here, and also not sure how to load the 2
     #different looking foward arrays... Just load both. Each needs it's own definition function.
@@ -66,6 +75,6 @@ require 'stockgraph'
     gon.graph_default_x_range_max = @date_limits_array[2][:x_range_max] #the 1 month settings
     gon.graph_default_y_range_min = @date_limits_array[2][:y_range_min] #the 1 month settings
 
-    gon.prediction_points_array = Prediction.graph_prediction_points(stock_id)
+    gon.prediction_points_array = Prediction.graph_prediction_points(stock.id)
 	end
 end
