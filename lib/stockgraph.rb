@@ -5,43 +5,69 @@ class StockGraph
     last_utc_date + (days*60*60*24*1000)
   end
 
-  def self.find_y_min(price_array, start_time, end_time)
+  def self.find_y_min(price_array, start_time, end_time, prediction_array)
+    #creates array out of the time and prices that are within the date limits
     limited_array = price_array.select{|price| price[0] >= start_time && price[0]<=end_time}
-    min_item = limited_array.min_by {|item| item[1]}
-    return min_item[1]
+    limited_prediction_array = prediction_array.select{|prediction| prediction[0] >= start_time && prediction[0]<=end_time}
+    min_price_array = limited_array.min_by {|item| item[1]}
+    min_price = min_price_array[1]
+    min_price_final = min_price
+    limited_prediction_array.each do |prediction|
+      if prediction[1] < min_price
+        if prediction[1] > min_price * 0.7 #if the min price is 300, the min prediction is 210.
+          min_price_final = prediction[1] * 0.95
+        end
+      end
+    end
+    return min_price_final
+  end
+
+  def self.find_y_max(price_array, start_time, end_time, prediction_array)
+    limited_array = price_array.select{|price| price[0] >= start_time && price[0]<=end_time}
+    limited_prediction_array = prediction_array.select{|prediction| prediction[0] >= start_time && prediction[0]<=end_time}
+    max_price_array = limited_array.max_by {|item| item[1]}
+    max_price = max_price_array[1]
+    max_price_final = max_price
+    limited_prediction_array.each do |prediction|
+      if prediction[1] > max_price
+        if prediction[1] < max_price * 1.3 #if the preidction price is 300, but stock must at least go down to 450 for the prediction to show.
+          max_price_final = prediction[1] * 1.05
+        end
+      end
+    end
+    return max_price_final
   end
 
   def self.graph_prediction_points(stock_id)  
     graph_array = []
-    prediction_array = Prediction.where(stock_id:stock_id)
+    prediction_array = Prediction.where(stock_id:stock_id).limit(1500).order('end_time asc')
     prediction_array.each do |prediction|
       utc_date_number = CustomDate.utc_date_string_to_utc_date_number(prediction.end_time) - 5*3600*24 #reduce db time by 5 hours to get to est.
       graph_array << [utc_date_number, prediction.prediction_price]
     end
-    graph_array.sort_by! {|price_point| price_point[0]}
     return graph_array
   end
 
   #this function forms a full 5 year array. The actual control is done with the x axis settings of the graph.
   def self.get_daily_price_array(ticker_symbol)
-    stock_prices = Stockprice.where(ticker_symbol:ticker_symbol).select("date, close_price")
+  stock_prices = Stockprice.where(ticker_symbol:ticker_symbol).limit(1500).order('date asc')    
     price_array = []
     stock_prices.each do |price|
       utc_time = CustomDate.utc_date_string_to_utc_date_number(price.date) - 5*3600*1000 #get into est
       price_array << [utc_time, price.close_price]
     end
-    price_array.sort_by! {|array| array[0]}
+    return price_array
   end
 
   def self.get_intraday_price_array(ticker_symbol)
-    stock_prices = Intradayprice.where(ticker_symbol:ticker_symbol)
-    price_array = []
+  stock_prices = Intradayprice.where(ticker_symbol:ticker_symbol).limit(400).order('date asc')    
+  price_array = []
     unless stock_prices.empty?
       stock_prices.each do |price|
         utc_time = CustomDate.utc_date_string_to_utc_date_number(price.date) - 5*3600*1000 #get into est
         price_array << [utc_time, price.close_price]
       end
-      price_array.sort_by! {|array| array[0]}
+      return price_array
     end
   end
 
@@ -89,7 +115,7 @@ class StockGraph
 end
 
 class StockGraphPublic
-  def self.create_x_date_limits(daily_array, intraday_array)
+  def self.create_x_date_limits(daily_array, intraday_array, prediction_array)
     last_utc_date_daily = daily_array.last[0]
     last_utc_date_intraday = intraday_array.last[0]
     array_details_intraday = [{name:"1d", start:1, finish:0.5}, #
@@ -112,18 +138,20 @@ class StockGraphPublic
       date_hash_array << {name: detail[:name],
                           x_range_min:start_time, 
                           x_range_max:end_time,
-                          y_range_min:StockGraph.find_y_min(intraday_array, start_time, end_time)
+                          y_range_min:StockGraph.find_y_min(intraday_array, start_time, end_time, prediction_array),
+                          y_range_max:StockGraph.find_y_max(intraday_array, start_time, end_time, prediction_array)
                         }
     end
 
-    #this part needs to be fixed to use the new formulas and shit. But we need new stock data first.
+    #The utc daily date get 5 hours subtracted to put them in valid range for the day the end time occurs.
     array_details_daily.each do |detail|
       start_time = CustomDate.valid_start_point(last_utc_date_daily-(5*3600*1000), 24*3600*1000, detail[:start]*24*3600*1000)
       end_time = CustomDate.valid_end_point(last_utc_date_daily-(5*3600*1000), 24*3600*1000, detail[:finish]*24*3600*1000)
       date_hash_array << {name: detail[:name], 
                           x_range_min:start_time, 
                           x_range_max:end_time,
-                          y_range_min:StockGraph.find_y_min(daily_array, start_time, end_time)
+                          y_range_min:StockGraph.find_y_min(daily_array, start_time, end_time, prediction_array),
+                          y_range_max:StockGraph.find_y_max(daily_array, start_time, end_time, prediction_array)
                         }
     end
     return date_hash_array
