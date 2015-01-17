@@ -72,13 +72,14 @@ require 'scraper'
     #may need to store this array in the loops?? Not sure how to get the end_time variable in here, and also not sure how to load the 2
     #different looking foward arrays... Just load both. Each needs it's own definition function.
 
+    gon.prediction_points_array = StockGraph.graph_prediction_points(stock.id)
+
   	#this gets used by the view to generate the html buttons.
-  	@date_limits_array = StockGraphPublic.create_x_date_limits(gon.daily_price_array, gon.intraday_price_array)
+  	@date_limits_array = StockGraphPublic.create_x_date_limits(gon.daily_price_array, gon.intraday_price_array, gon.prediction_points_array)
 
     gon.graph_default_x_range_min = @date_limits_array[2][:x_range_min] #the 1 month settings
     gon.graph_default_x_range_max = @date_limits_array[2][:x_range_max] #the 1 month settings
     gon.graph_default_y_range_min = @date_limits_array[2][:y_range_min] #the 1 month settings
 
-    gon.prediction_points_array = StockGraph.graph_prediction_points(stock.id)
 	end
 end

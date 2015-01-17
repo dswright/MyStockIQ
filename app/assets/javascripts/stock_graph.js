@@ -37,7 +37,6 @@ function createGraph() {
     x_range_max = $(this).data("x-range-max");
     y_range_min = $(this).data("y-range-min");
     button_type = $(this).data("button-type");
-    forward_date_array = $(this).data("forward-date-array");
 
     if (button_type == "1d" || button_type == "5d") {
       chart1.series[2].setData(gon.intraday_forward_array);
