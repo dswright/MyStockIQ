@@ -11,6 +11,17 @@ class StockGraph
     return min_item[1]
   end
 
+  def self.graph_prediction_points(stock_id)  
+    graph_array = []
+    prediction_array = Prediction.where(stock_id:stock_id)
+    prediction_array.each do |prediction|
+      utc_date_number = CustomDate.utc_date_string_to_utc_date_number(prediction.end_time) - 5*3600*24 #reduce db time by 5 hours to get to est.
+      graph_array << [utc_date_number, prediction.prediction_price]
+    end
+    graph_array.sort_by! {|price_point| price_point[0]}
+    return graph_array
+  end
+
   #this function forms a full 5 year array. The actual control is done with the x axis settings of the graph.
   def self.get_daily_price_array(ticker_symbol)
     stock_prices = Stockprice.where(ticker_symbol:ticker_symbol).select("date, close_price")
@@ -23,7 +34,7 @@ class StockGraph
   end
 
   def self.get_intraday_price_array(ticker_symbol)
-    stock_prices = Intradayprice.where(ticker_symbol:ticker_symbol).select("date, close_price")
+    stock_prices = Intradayprice.where(ticker_symbol:ticker_symbol)
     price_array = []
     unless stock_prices.empty?
       stock_prices.each do |price|
@@ -44,7 +55,7 @@ class StockGraph
       if CustomDate.check_if_out_of_time(time_spot)
         iterations += 1
       else
-        forward_array << [time_spot+5*3600*1000, 220]
+        forward_array << [time_spot+5*3600*1000, nil]
       end
       i += 1
     end
@@ -68,7 +79,7 @@ class StockGraph
       if CustomDate.check_if_out_of_time(time_spot)
         iterations += 1
       else
-        forward_array << [time_spot, 220]
+        forward_array << [time_spot, nil]
       end
       i += 1
     end

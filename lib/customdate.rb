@@ -114,4 +114,70 @@ class CustomDate
     end_time = start_time - interval*iterations_back
     return end_time
   end
+
+  def self.closest_end_time(end_utc_time)
+    #first, round to the nearest minute
+    rounded_utc_string = CustomDate.utc_date_number_to_utc_date_string(end_utc_time).strftime("%Y-%m-%d %H:%M:00")
+    
+    #number has to be moved back 5 hours because the validation is in est.
+    est_round_utc_number = CustomDate.utc_date_string_to_utc_date_number(rounded_utc_string) - 5*3600*1000
+
+    #first check if the current time is valid
+    #if this returns false, its in the time frame.
+    unless CustomDate.check_if_out_of_time(est_round_utc_number)
+      return CustomDate.utc_date_number_to_utc_date_string(est_round_utc_number + 5*3600*1000) #need to return the number to utc time for database insert.
+    end
+
+    #If its not in the current time frame, the prediction should always move to an EOD price.
+    #If the prediction were to end in the morning of the next day, we need to subtract hours to get to the previous day.
+    #so by default, we will subtract 9.5 hours, so that all times are gauranteed to fall into the previous day.
+    back_dated_time = est_round_utc_number - 9.5*3600*1000
+
+    i=0
+    while i<= 10 #A valid day should be returned within 10 days.
+      #if the first day is an invalid end day, then we need to iterate onto the next day.
+      next_date = back_dated_time + i*24*3600*1000
+      day_start_string = CustomDate.utc_date_number_to_utc_date_string(next_date).beginning_of_day
+      day_end_number = CustomDate.utc_date_string_to_utc_date_number(day_start_string) + 16*3600*1000
+      unless CustomDate.check_if_out_of_time(day_end_number)
+        return CustomDate.utc_date_number_to_utc_date_string(day_end_number + 5*3600*1000)
+      else
+        #if the eod number is invalid, we should check the mid day number to ensure the day is not just a holiday.
+        day_mid_number = CustomDate.utc_date_string_to_utc_date_number(day_start_string) + 13*3600*1000
+        unless CustomDate.check_if_out_of_time(day_mid_number)
+          return CustomDate.utc_date_number_to_utc_date_string(day_mid_number + 5*3600*1000)
+        end
+      end
+      i+=1
+    end
+  end
+
+  def self.closest_start_time(start_utc_time)
+    rounded_utc_string = CustomDate.utc_date_number_to_utc_date_string(start_utc_time).strftime("%Y-%m-%d %H:%M:00")
+    #number has to be moved back 5 hours because the validation is in est.
+    est_round_utc_number = CustomDate.utc_date_string_to_utc_date_number(rounded_utc_string) - 5*3600*1000
+
+    #first check if the current time is valid
+    #if this returns false, its in the time frame.
+    unless CustomDate.check_if_out_of_time(est_round_utc_number)
+      return CustomDate.utc_date_number_to_utc_date_string(round_utc_number + 5*3600*1000) #need to return the number to utc time for database insert.
+    end
+
+    forward_dated_time = est_round_utc_number + 8*3600*1000 #move forward 8 hours to move any times in the afternoon to the next morning.
+
+    #if the number is out of range, then move to the next day, incrementally.
+    i=0
+    while i<= 10 #A valid day should be returned within 10 days.
+      #if the first day is an invalid end day, then we need to iterate onto the next day.
+      next_date = forward_dated_time + i*24*3600*1000
+      day_start_string = CustomDate.utc_date_number_to_utc_date_string(next_date).beginning_of_day
+      day_start_number = CustomDate.utc_date_string_to_utc_date_number(day_start_string) + 9.5*3600*1000
+      unless CustomDate.check_if_out_of_time(day_start_number)
+        return CustomDate.utc_date_number_to_utc_date_string(day_start_number + 5*3600*1000)
+      end
+      i+=1
+    end
+  end
+
+
 end

@@ -1,5 +1,6 @@
 class StocksController < ApplicationController
 require 'stockgraph'
+require 'scraper'
 
 	
 	#Function to pull the whole stock file and then update all records.
@@ -17,29 +18,30 @@ require 'stockgraph'
 		@stock = Stock.find(stock.id)
 		#Stock's posts, comments, and predictions to be shown in the view
 		streams = Stream.where(target_type: "Stock", target_id: @stock.id)
-   		@stream_hash_array = Stream.stream_maker(streams, 0)
+   	@stream_hash_array = Stream.stream_maker(streams, 0)
 
     #if a stock gets viewed, update the stocks table so that the stock gets real time stock data.
     if (@stock.viewed == false)
-      @stock.viewed = true
-      @stock.save
-      IntradayWorker.perform_async(@ticker_symbol, 5)
+      days = 6
+      ScraperPublic.google_intraday(@ticker_symbol, days)
+      @stock.update(viewed:true)
+
     end
 
 		#creates comment variable to be used to set up the comment creation form (see app/views/shared folder)
   	@comment = Comment.new
     @like = Like.new
 
-   		#creates comment variable to be used to set up the prediction creation form (see app/views/shared folder)
-    	@prediction = @current_user.predictions.build(score: 0, active: 1, start_price: @stock.daily_stock_price, stock_id: @stock.id) 	
+ 		#creates prediction variable to be used to set up the prediction creation form (see app/views/shared folder)
+  	@prediction = @current_user.predictions.build(score: 0, active: 1, start_price: @stock.daily_stock_price, stock_id: @stock.id) 	
 
-    	#If active prediction exists, show active prediction
-    	if active_prediction_exists?(@prediction)
-    		@prediction = Prediction.where(user_id: @current_user.id, stock_id: @stock.id, active: 1).first
-    	end
+  	#If active prediction exists, show active prediction
+  	if active_prediction_exists?(@prediction)
+  		@prediction = Prediction.where(user_id: @current_user.id, stock_id: @stock.id, active: 1).first
+  	end
 
-      #Determines relationship between current user and target user
-      @target = @stock
+    #Determines relationship between current user and target user
+    @target = @stock
 
 
   	@comment_stream_inputs = "Stock:#{@stock.id}"
@@ -50,8 +52,8 @@ require 'stockgraph'
     @stream_comment_landing_page = "stocks:#{@stock.ticker_symbol}"
 
 
+    #Graph functions
   	gon.ticker_symbol = @ticker_symbol
-  	
     gon.daily_price_array = StockGraph.get_daily_price_array(@ticker_symbol)
 
 
@@ -77,6 +79,6 @@ require 'stockgraph'
     gon.graph_default_x_range_max = @date_limits_array[2][:x_range_max] #the 1 month settings
     gon.graph_default_y_range_min = @date_limits_array[2][:y_range_min] #the 1 month settings
 
-    gon.prediction_points_array = Prediction.graph_prediction_points(stock.id)
+    gon.prediction_points_array = StockGraph.graph_prediction_points(stock.id)
 	end
 end
