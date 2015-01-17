@@ -78,7 +78,10 @@ class User < ActiveRecord::Base
 
   #Unfollows a user
   def unfollow(object)
+    
+    #Destroy relationship
     active_relationships.find_by(followed_id: object.id, followed_type: object.class.name).destroy
+
   end
 
   #Returns true if the current user is following the other user
