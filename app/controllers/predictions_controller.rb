@@ -8,12 +8,17 @@ class PredictionsController < ApplicationController
 		#sets up a hash of prediction parameters to build prediction object. 'prediction_params' method is defined below.
 		prediction = prediction_params
 
-		#these functions are incorrect.
-		prediction_utc_time = CustomDate.utc_time(Time.now.to_s) + (params[:days].to_i * 24* 3600 * 1000)  + (params[:hours].to_i * 3600*1000) + (params[:minutes].to_i * 60 * 1000)
-		prediction[:end_date] = CustomDate.utc_time_to_string(prediction_utc_time)
-		
+
+		prediction_end_time = CustomDate.utc_date_string_to_utc_date_number(Time.zone.now) + (params[:days].to_i * 24* 3600 * 1000)  + (params[:hours].to_i * 3600*1000) + (params[:minutes].to_i * 60 * 1000)
+
+		#now test if this is a valid time, if not, move it forward.
+		#return closest valid time function
 		@prediction = @user.predictions.build(prediction)
-		@prediction.days_remaining = to_days((@prediction.end_date - Time.now)).round
+
+		@prediction.end_time = CustomDate.closest_end_time(prediction_end_time)
+		exact_start_time = CustomDate.utc_date_string_to_utc_date_number(Time.zone.now)
+		@prediction.start_time = CustomDate.closest_start_time(exact_start_time)
+		
 
 		@streams = []
 		#Determines target type and id for Streams Model insert
@@ -69,6 +74,6 @@ class PredictionsController < ApplicationController
 	def prediction_params
 			#Obtains parameters from 'prediction form' in app/views/shared.
 			#Permits adjustment of only the 'content' & 'ticker_symbol' columns in the 'predictions' model.
-			params.require(:prediction).permit(:prediction_price, :end_date, :prediction_comment, :score, :active, :start_price, :stock_id)
+			params.require(:prediction).permit(:prediction_price, :prediction_comment, :score, :active, :start_price, :stock_id)
 	end
 end

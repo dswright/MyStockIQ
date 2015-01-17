@@ -3,7 +3,7 @@
     <div class = "row" style = "margin-left: 20px;">
 
       <p><%= prediction.score %> points</p>
-      <p><%= prediction.days_remaining.round %> days remaining</p>
+      <p>5 days remaining</p>
       <p><%= link_to "Cancel Prediction", "/predictions/#{prediction.id}", method: :delete, data: { confirm: "Are you sure you want to cancel your #{prediction.stock.ticker_symbol} prediction?" } %></p>
 
     </div>

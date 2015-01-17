@@ -10,7 +10,6 @@
       </p>
 
       <p class = "prediction-txt">
-        <%= "$#{@stock.ticker_symbol} will #{increase_or_decrease?(prediction)} to #{prediction.prediction_price} points (#{prediction_percent(prediction)}%) in #{pluralize(prediction.days_remaining.ceil,"day")}" %>
       </p>
 
       <p class = "comment-txt"><%= prediction.prediction_comment %></p>
