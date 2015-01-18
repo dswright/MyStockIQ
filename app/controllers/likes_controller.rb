@@ -15,9 +15,9 @@ class LikesController < ApplicationController
     @streamable_id = like[:target_id]
 
     if @like_type == "like"
-      @streamable_like_change = params[:streamable_likes].to_i + 1
+      @updated_likes = params[:streamable_likes].to_i + 1
     else
-      @streamable_like_change = params[:streamable_dislikes].to_i + 1
+      @updated_likes = params[:streamable_dislikes].to_i + 1
     end
 
 
