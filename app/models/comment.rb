@@ -32,11 +32,11 @@ class Comment < ActiveRecord::Base
 	end
 
 	def likes
-		likes = Like.where(like_type: "like", target_id: self.id).count
+		likes = Like.where(like_type: "like", target_id: self.id, target_type:"Comment").count
 	end
 
 	def dislikes
-		dislikes = Like.where(like_type: "dislike", target_id: self.id).count
+		dislikes = Like.where(like_type: "dislike", target_id: self.id, target_type:"Comment").count
 	end
 
 	def replies
