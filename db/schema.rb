@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150117000810) do
+ActiveRecord::Schema.define(version: 20150119011600) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "adminpack"
@@ -67,15 +67,16 @@ ActiveRecord::Schema.define(version: 20150117000810) do
     t.float    "prediction_price"
     t.integer  "user_id"
     t.float    "score"
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
     t.string   "prediction_comment"
     t.datetime "end_time"
-    t.integer  "active"
-    t.decimal  "start_price"
     t.integer  "stock_id"
     t.datetime "start_time"
-    t.boolean  "start_price_verfified"
+    t.boolean  "start_price_verified"
+    t.boolean  "end_price_verified"
+    t.boolean  "active"
+    t.float    "start_price"
   end
 
   add_index "predictions", ["stock_id"], name: "index_predictions_on_stock_id", using: :btree
