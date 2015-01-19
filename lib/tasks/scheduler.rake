@@ -84,6 +84,7 @@ namespace :predictions do
     predictions.each do |prediction|
       PredictionendWorker.perform_async(prediction.id)
     end
+    #another function here runs to check if any prediction prices are below/above the stock price.
   end
 
 end
