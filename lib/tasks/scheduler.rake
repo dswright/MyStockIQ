@@ -69,6 +69,28 @@ namespace :scraper do
   end
 end
 
+namespace :predictions do
+  task :prediction_start => :environment do
+    time_now = Time.zone.now
+    predictions = Prediction.where("start_time < ?", time_now).where(start_price_verified:false)
+    predictions.each do |prediction|
+      PredictionstartWorker.perform_async(prediction.id)
+    end
+  end
+
+  task :prediction_end => :environment do
+    time_now = Time.zone.now
+    predictions = Prediction.where("end_time < ?", time_now).where(start_price_verified:true, end_price_verified:false)
+    predictions.each do |prediction|
+      PredictionendWorker.perform_async(prediction.id)
+    end
+    #another function here runs to check if any prediction prices are below/above the stock price.
+  end
+
+end
+
+
+
 #DEAD RAKE TASKS, NO LONGER IN SERVICE
 #Price Data Rakes
   #task :fetch_historical_prices => :environment do

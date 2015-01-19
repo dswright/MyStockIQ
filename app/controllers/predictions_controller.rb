@@ -8,17 +8,22 @@ class PredictionsController < ApplicationController
 		#sets up a hash of prediction parameters to build prediction object. 'prediction_params' method is defined below.
 		prediction = prediction_params
 
-
 		prediction_end_time = CustomDate.utc_date_string_to_utc_date_number(Time.zone.now) + (params[:days].to_i * 24* 3600 * 1000)  + (params[:hours].to_i * 3600*1000) + (params[:minutes].to_i * 60 * 1000)
 
 		#now test if this is a valid time, if not, move it forward.
 		#return closest valid time function
 		@prediction = @user.predictions.build(prediction)
 
+		@prediction.score = 0
+		@prediction.active = true
+		@prediction.start_price_verified = false
+		@prediction.end_price_verified = false
+
 		@prediction.end_time = CustomDate.closest_end_time(prediction_end_time)
 		exact_start_time = CustomDate.utc_date_string_to_utc_date_number(Time.zone.now)
 		@prediction.start_time = CustomDate.closest_start_time(exact_start_time)
 		
+
 
 		@streams = []
 		#Determines target type and id for Streams Model insert
