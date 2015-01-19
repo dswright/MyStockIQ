@@ -20,6 +20,8 @@ require 'scraper'
 		streams = Stream.where(target_type: "Stock", target_id: @stock.id)
    	@stream_hash_array = Stream.stream_maker(streams, 0)
 
+    
+
     #if a stock gets viewed, update the stocks table so that the stock gets real time stock data.
     if (@stock.viewed == false)
       days = 6
