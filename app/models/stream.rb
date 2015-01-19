@@ -28,7 +28,7 @@ class Stream < ActiveRecord::Base
       #like [array_item, nest_count, sub_array, popularity_score],[array_item, nest_count, sub_array, popularity_score]
       sub_array = []
       
-
+      
       #the streamable_type and streamable_id will be the way to find the children of this stream item.
       sub_array = Stream.where(target_type: stream_item.streamable_type, target_id: stream_item.streamable_id)
       unless sub_array.empty?

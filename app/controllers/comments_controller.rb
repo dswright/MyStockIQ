@@ -31,6 +31,8 @@ class CommentsController < ApplicationController
 
 	end
 
+
+
 	private
 		def comment_params
 			#Obtains parameters from 'comment form' in app/views/shared.
