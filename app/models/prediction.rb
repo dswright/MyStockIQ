@@ -24,51 +24,51 @@ class Prediction < ActiveRecord::Base
     end
   end
 
-  def update_prediction(prediction)
-    #Check the amount of time remaining on the prediction
-    prediction.days_remaining = prediction.end_date - Time.now
-    prediction.days_remaining = 0 if prediction.days_remaining < 0  
-
-    #Set prediction to be inactive if there is no time remaining
-    if prediction.days_remaining = 0
-      prediction.active = 0
-    end
+  def update_prediction
 
     #Finds stock associated with prediction
-    stock = Stock.find_by(id: prediction.stock_id)
-
-    #Calculates today's projected prediction price
-    todays_prediction = interpolate( prediction.created_at, prediction.start_price, prediction.end_date, prediction.prediction_price, Time.now )
-    
-    #Actual stock price for comparison
-    todays_price = stock.daily_stock_price
+    stock = Stock.find_by(id: self.stock_id)
 
     #Calculates percentchange of prediction/start price and actual price/start price
-    prediction_percentage = percent_change(todays_prediction, prediction.start_price)
-    actual_percentage = percent_change(todays_price, prediction.start_price)
+    prediction_percentage = percent_change(self.prediction_price, self.start_price)
+    actual_percentage = percent_change(stock.daily_stock_price, self.start_price)
 
     #Update prediction score
-    prediction.score = calculate_score(prediction_percentage, actual_percentage)
+    self.score = calculate_score(prediction_percentage, actual_percentage)
 
-    prediction.save
+    #If actual price has surpassed prediction, cancel prediction
+    self.active = false if actual_percentage.abs > prediction_percentage.abs
+
+    self.save
   end
 
   def calculate_score(prediction_percentage, actual_percentage)
     #IF PREDICTION IS CORRECT: 
     if same_sign?(prediction_percentage, actual_percentage)
 
-      #points are awarded
-      if prediction_percentage.abs <= actual_percentage.abs
-        score = prediction_percentage.abs.round(2)
-      else 
-        score = (actual_percentage.abs - (prediction_percentage.abs - actual_percentage.abs)).round(2)
-        score = 0 if score < 0
-      end
+      #Award points based on actual percentage change
+      score = actual_percentage.abs.round(2)
 
     #IF PREDICTION IS INCORRECT:
     else
-      #No points are awarded
-      score = 0
+
+      #Lose points based on actual percentage change
+      score = -1*actual_percentage.abs.round(2)
+    end
+  end
+
+
+  def percent_change(new_score, base_score)
+    ((new_score - base_score)/base_score*100)
+  end
+
+  def same_sign?(num1, num2)
+    if num1 >= 0 && num2 >= 0
+      return true
+    elsif num1 < 0 && num2 < 0
+      return true
+    else
+      return false
     end
   end
 

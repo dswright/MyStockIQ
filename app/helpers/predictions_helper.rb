@@ -17,17 +17,6 @@ module PredictionsHelper
 	end
 
 
-	def same_sign?(num1, num2)
-		if num1 >= 0 && num2 >= 0
-			return true
-		elsif num1 < 0 && num2 < 0
-			return true
-		else
-			return false
-		end
-	end
-
-
   	def number_of_predictions(object)
   		Prediction.where(target_id: object.id).count
   	end
@@ -37,9 +26,5 @@ module PredictionsHelper
 		days = seconds/(60*60*24)
 	end
 
-	def interpolate(x0, y0, x1, y1, x2)
-        y2 = 0
-        y2 = y0 + ((y1-y0)*(x2-x0)/(x1-x0))
-    end
 
 end
