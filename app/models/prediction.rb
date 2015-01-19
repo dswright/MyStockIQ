@@ -70,11 +70,11 @@ class Prediction < ActiveRecord::Base
       #No points are awarded
       score = 0
     end
+  end
 
-
-#rake task executes a function. This function. It first checks for any predictions to verify. This could even go in the rake task.
-#for the predictions that it does find to be unverified and past time... Execute the Google minute scraper for that stock.
-#let the worker mark the prediction as verified.
+  #rake task executes a function. This function. It first checks for any predictions to verify. This could even go in the rake task.
+  #for the predictions that it does find to be unverified and past time... Execute the Google minute scraper for that stock.
+  #let the worker mark the prediction as verified.
   def predictions_to_verify
     time_now = Time.zone.now
     predictions = Prediction.where("start_time > ?", time_now)
