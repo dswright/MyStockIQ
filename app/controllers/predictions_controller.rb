@@ -37,7 +37,7 @@ class PredictionsController < ApplicationController
 			end
 		end
 
-		unless @prediction.invalid? or active_prediction_exists?(@prediction)
+		unless @prediction.invalid? or @prediction.active_prediction_exists?
 			@prediction.save
 			@streams.each {|stream| stream.save}
 

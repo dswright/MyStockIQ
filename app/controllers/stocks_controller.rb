@@ -38,7 +38,7 @@ require 'scraper'
   	@prediction = @current_user.predictions.build(score: 0, active: 1, start_price: @stock.daily_stock_price, stock_id: @stock.id) 	
 
   	#If active prediction exists, show active prediction
-  	if active_prediction_exists?(@prediction)
+  	if @prediction.active_prediction_exists?
   		@prediction = Prediction.where(user_id: @current_user.id, stock_id: @stock.id, active: 1).first
   	end
 

@@ -7,8 +7,6 @@ class Comment < ActiveRecord::Base
 	default_scope -> { order(created_at: :desc) }
 
 	def update_popularity_score
-
-
 		#calculate score of comment itself
 		self.popularity_score = self.likes - self.dislikes
 		#set score equal to zero if negative
