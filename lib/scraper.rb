@@ -38,6 +38,11 @@ class ScraperPublic
     end
   end
 
+  def self.google_minute(ticker_symbol)
+    url = URI.encode("http://www.google.com/finance/getprices?i=60&p=3d&f=d,o,h,l,c,v&df=cpct&q=#{ticker_symbol}")
+    return daily_hash_array = Scraper.process_csv_file(url, GoogleIntraday.new, ticker_symbol, true, true)
+  end
+
   def self.google_news(ticker_symbol)
     url = "https://www.google.co.uk/finance/company_news?q=#{ticker_symbol}&output=rss"
     if news_hash_array = Scraper.process_rss_feed(url, GoogleNews.new, 0, ticker_symbol, false)
