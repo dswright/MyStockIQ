@@ -3,7 +3,7 @@
 <% #Renders post form error messages using error_messages helper in app/views/shared/ %>
 	<%= render 'shared/error_messages', object: f.object %>
 	<div class = "field">
-		<%= f.text_area :prediction_price, placeholder: "Future stock price will be... (eg. 100)", class: "stock-page-prediction-field" %>
+		<%= f.text_area :prediction_end_price, placeholder: "Future stock price will be... (eg. 100)", class: "stock-page-prediction-field" %>
 		days: <%= text_field_tag :days %>
 		hours: <%= text_field_tag :hours %>
 		minutes: <%= text_field_tag :minutes %>

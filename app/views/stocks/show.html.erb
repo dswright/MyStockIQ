@@ -109,14 +109,15 @@
 
     <div class = "graph-container">
       <div class = "graph-buttons" style="width:450px">
-        <% @date_limits_array.each do |date_limits_hash| %>
+        <% @graph_ranges.each do |ranges| %>
           <button id="button" 
-              data-x-range-min=<%= date_limits_hash[:x_range_min] %> 
-              data-x-range-max=<%= date_limits_hash[:x_range_max] %>
-              data-y-range-min=<%= date_limits_hash[:y_range_min] %>
-              data-button-type=<%= date_limits_hash[:name] %>
+              data-x-range-min=<%= ranges[:x_range_min] %> 
+              data-x-range-max=<%= ranges[:x_range_max] %>
+              data-y-range-min=<%= ranges[:y_range_min] %>
+              data-y-range-max=<%= ranges[:y_range_max] %>
+              data-button-type=<%= ranges[:name] %>
               >
-            <%= date_limits_hash[:name] %>
+            <%= ranges[:name] %>
           </button>
 
         <% end %>

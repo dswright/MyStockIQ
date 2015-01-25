@@ -59,8 +59,8 @@ namespace :scraper do
     d = Time.zone.now
     #est sets the utc time back 5 hours to get it into est. 
     #Subtract additional 10 minutes to time for Google data to populate.
-    est = CustomDate.utc_date_string_to_utc_date_number(d) - 3600*24*5*1000 - 10*60*1000
-    unless CustomDate.check_if_out_of_time(est)
+    utc_time = d.utc_time_int - 10*60
+    if utc_time.valid_stock_time?
       stocks = Stock.where(viewed:true)
       stocks.each do |stock|
         GoogleintradayWorker.perform_async(stock.ticker_symbol, 6) #look 6 days back for intraday data.
@@ -79,16 +79,35 @@ namespace :predictions do
   end
 
   task :prediction_end => :environment do
+
+    #checks current predictions to see if the current stock price exceeds the prediction price.
+    predictions = Prediction.where(active:true, start_price_verified:true)
+    predictions.each do |prediction|
+      prediction.price_exceeds_prediction #check if the stock price exceeds the prediction price, if so, move date and set to active:false
+      prediction.prediction_update #run an update on the current score.
+    end
+
+    #checks predictions where the end price is not verified to see if they have exceeded their prediction end time.
     time_now = Time.zone.now
-    predictions = Prediction.where("end_time < ?", time_now).where(start_price_verified:true, end_price_verified:false)
+    predictions = Prediction.where("actual_end_time < ?", time_now).where(start_price_verified:true, end_price_verified:false)
     predictions.each do |prediction|
       PredictionendWorker.perform_async(prediction.id)
     end
-    #another function here runs to check if any prediction prices are below/above the stock price.
+
+    #update all active prediction scores.
+
+        
+
   end
 
 end
 
+  #run all of this in the same worker and same rake task...
+# 1. Check for predictions to verify start times. Done!
+# 2. Check for predictions to verify end times and end the prediction.
+# 2. Regularly re-score current predictions based on current stock prices.
+# 3. Check for predictions to cancel due to price exceeding.
+# 4. Send prediction confirmation email when prediction is ended.
 
 
 #DEAD RAKE TASKS, NO LONGER IN SERVICE

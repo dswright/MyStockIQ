@@ -1,5 +1,5 @@
 class StocksController < ApplicationController
-require 'stockgraph'
+require 'graph'
 require 'scraper'
 
 	
@@ -55,33 +55,21 @@ require 'scraper'
 
 
     #Graph functions
+
+    graph = Graph.new(@ticker_symbol)
+
   	gon.ticker_symbol = @ticker_symbol
-    gon.daily_price_array = StockGraph.get_daily_price_array(@ticker_symbol)
+    gon.daily_prices = graph.daily_prices
+    gon.daily_forward_prices = graph.daily_forward_prices
+    gon.intraday_prices = graph.intraday_prices
+    gon.intraday_forward_prices = graph.intraday_forward_prices
+    gon.predictions = graph.predictions
+    
+    #used by the view to generate the html buttons
+    @graph_ranges = graph.ranges
 
 
-    #add one more bit of data to the end of the daily graph array, if there has been an intra-day update on the price.
-    extra_last_day = CustomDate.utc_date_string_to_utc_date_number(stock.date)
-    if extra_last_day > gon.daily_price_array.last[0]
-      #set the during the day price to the end of the day, so that it dispalys evenly on the graph.
-      eod_utc_date = CustomDate.utc_date_string_to_utc_date_number(stock.date.beginning_of_day) + 3600*16*1000 + 60*10*1000
-      gon.daily_price_array << [eod_utc_date, stock.daily_stock_price]
-    end
-
-    gon.daily_forward_array = StockGraph.daily_forward_array(gon.daily_price_array.last[0])
-
-    gon.intraday_price_array = StockGraph.get_intraday_price_array(@ticker_symbol) 
-    gon.intraday_forward_array = StockGraph.intraday_forward_array(gon.intraday_price_array.last[0])  #this end of time needs to be defined. THen this array will work. 
-    #may need to store this array in the loops?? Not sure how to get the end_time variable in here, and also not sure how to load the 2
-    #different looking foward arrays... Just load both. Each needs it's own definition function.
-
-    gon.prediction_points_array = StockGraph.graph_prediction_points(stock.id)
-
-  	#this gets used by the view to generate the html buttons.
-  	@date_limits_array = StockGraphPublic.create_x_date_limits(gon.daily_price_array, gon.intraday_price_array, gon.prediction_points_array)
-
-    gon.graph_default_x_range_min = @date_limits_array[2][:x_range_min] #the 1 month settings
-    gon.graph_default_x_range_max = @date_limits_array[2][:x_range_max] #the 1 month settings
-    gon.graph_default_y_range_min = @date_limits_array[2][:y_range_min] #the 1 month settings
+    gon.graph_defaults = @graph_ranges[2]
 
 	end
 end
