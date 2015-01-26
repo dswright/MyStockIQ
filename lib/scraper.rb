@@ -403,6 +403,14 @@ class GoogleDaily
     end
   end
 
+  def check_for_dup(hash_item)
+    if Stockprice.where(ticker_symbol:hash_item["ticker_symbol"], date:hash_item["date"]).exists?
+      false
+    else
+      true
+    end
+  end
+
   def all_data_insert(price_array)
     sql = "INSERT INTO stockprices 
       (ticker_symbol, date, open_price, close_price, volume, split, created_at, updated_at)
