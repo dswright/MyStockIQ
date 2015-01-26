@@ -1,58 +1,54 @@
 class PredictionsController < ApplicationController
+
+	respond_to :html, :js
+
 	require 'customdate'
 
 	def create
 		#Obtain user session information from Session Helper function 'current_user'.
 		@user = current_user
 
-		#sets up a hash of prediction parameters to build prediction object. 'prediction_params' method is defined below.
-		prediction = prediction_params
-
-		prediction_end_time = Time.zone.now.utc_time_int + (params[:days].to_i * 24* 3600)  + (params[:hours].to_i * 3600) + (params[:minutes].to_i * 60)
-
-		#now test if this is a valid time, if not, move it forward.
-		#return closest valid time function
+		#Create the prediction settings.
+		prediction_start_time = Time.zone.now.utc_time_int.closest_start_time
+		prediction_end_time = (Time.zone.now.utc_time_int + 
+													(params[:days].to_i * 24* 3600) + 
+													(params[:hours].to_i * 3600) + 
+													(params[:minutes].to_i * 60)).closest_end_time
+		prediction = {prediction_end_time: prediction_end_time, score: 0, active: true, start_price_verified:false, 
+									end_price_verified:false, start_time: prediction_start_time }
+		#merge the prediction settings with the params from the prediction form.
+		prediction.merge(prediction_params)
 		@prediction = @user.predictions.build(prediction)
+		@prediction.start_price = @prediction.stock.daily_stock_price
 
-		@prediction.score = 0
-		@prediction.active = true
-		@prediction.start_price_verified = false
-		@prediction.end_price_verified = false
 
-		@prediction.prediction_end_time = prediction_end_time.closest_end_time
-		@prediction.actual_end_time = nil
-		@prediction.actual_end_price = nil
-
-		@prediction.start_time = Time.zone.now.utc_time_int.closest_start_time
-
-		if @prediction.start_time > @prediction.prediction_end_time
-			@error_msg = "invalid prediction. Please start and end the prediction during market hours."
-			#make this a condition of saving the prediction.
-		end
-
+		#Create the stream inserts for the prediction.
 		@streams = []
-		#Determines target type and id for Streams Model insert
-		unless params[:stream_array].empty?
-			stream_input_array = params[:stream_array].split(",")
-			stream_input_array.each do |stream_item|
-				#Must add validation of these parameters against existing stock/user ids to prevent hacking.
-				stream_elements = stream_item.split(":")
-				stream_input = {target_type: stream_elements[0], target_id: stream_elements[1]}
-				@streams << @prediction.streams.build(stream_input)
-			end
+		stream_params_array = stream_params_process(params[:stream_string])
+		stream_params_array.each do |stream_item|
+			@streams << @prediction.streams.build(stream_item)
 		end
 
-		unless @prediction.invalid? or @prediction.active_prediction_exists?
+		#Create the proper response to the prediciton input.
+		@response_msg = []
+
+		if @prediction.invalid?
+			@response_msg << "Prediction invalid. Please refresh page and try again."
+		end
+
+		if @prediction.active_prediction_exists?
+			@response_msg << "You already have an active prediction on #{stock.ticker_symbol}"
+		end
+
+		if prediction.prediction_end_time <= prediction.prediction_start_time
+			@response_msg << "Today's market is currently closed. Please end your prediction when the market is open."
+		end
+
+		unless @prediction.invalid? or @prediction.active_prediction_exists? or prediction.prediction_end_time <= prediction.prediction_start_time
 			@prediction.save
 			@streams.each {|stream| stream.save}
-
-			flash[:success] = "Prediction Created!"
-
-			#Redirects back to previous page. If previous redirect is not specified, login_path is used.
-			redirect_to request.referrer || login_path
-		else
-			render '/stocks/show/'
-			#render stock_or_user_page(stream)
+			@response_msg + ["Prediction input!", "start price: #{prediction.start_price}", "start time: #{prediction.start_time}", 
+				"end time: #{prediction.end time}", "end price: #{prediction.end_price}", "start price will be updated at the start time."]
 		end
 	end
 
@@ -68,11 +64,16 @@ class PredictionsController < ApplicationController
 		#Set prediction active = 0 and redirect back to previous page
 		prediction = Prediction.find_by(id: params[:id])
 		prediction.active = false
-		prediction.actual_end_time = CustomDate.closest_end_time(Time.zone.now)
+		prediction.actual_end_time = Time.zone.now.closest_end_time
 		prediction.save
 
-    flash[:success] = "Prediction canceled!"
+		@resonse_box = "prediction is cancelled.. send this to ajax response."
+
     redirect_to request.referrer || login_path
+		
+		#need to put the ajax response here..
+		#need to put that response box on the page...
+
 	end
 
 	private

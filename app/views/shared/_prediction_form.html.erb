@@ -1,4 +1,4 @@
-<%= form_for(@prediction) do |f| %>
+<%= form_for(@prediction, remote:true) do |f| %>
 
 <% #Renders post form error messages using error_messages helper in app/views/shared/ %>
 	<%= render 'shared/error_messages', object: f.object %>
@@ -8,11 +8,8 @@
 		hours: <%= text_field_tag :hours %>
 		minutes: <%= text_field_tag :minutes %>
 		<%= f.text_area :prediction_comment, placeholder: "Add a comment... (optional)", class: "stock-page-comment-field" %>
-		<%= f.hidden_field :score %>
-		<%= f.hidden_field :active %>
-		<%= f.hidden_field :start_price %>
 		<%= f.hidden_field :stock_id %>
-		<%= hidden_field_tag :stream_array, @prediction_stream_inputs %>
+		<%= hidden_field_tag :stream_string, @prediction_stream_inputs %>
 	</div>
 	<%= f.submit "Make Prediction", class: "btn btn-primary" %>
 <% end %>

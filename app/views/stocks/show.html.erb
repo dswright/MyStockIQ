@@ -106,8 +106,11 @@
 <!-- STOCK GRAPH -->
 
   <div class = "stock-page-aside col-sm-8">
-
     <div class = "graph-container">
+
+    <div id="response-box" style="color:red">
+  </div>
+
       <div class = "graph-buttons" style="width:450px">
         <% @graph_ranges.each do |ranges| %>
           <button id="button" 
