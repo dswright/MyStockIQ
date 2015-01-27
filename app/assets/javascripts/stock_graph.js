@@ -19,9 +19,9 @@ function resizeChart() {
   $(".stockgraph-container1").css("height", height+10);
 };
 
-$(document).ready(createGraph);
-
 var chart1; // globally available
+
+$(document).ready(createGraph);
 
 function createGraph() {
   resizeChart();
@@ -54,10 +54,35 @@ function createGraph() {
     //window.alert(range_min + range_max)
   };
 
+  //this works. its inside the chart variable. so dumb.
+  /* $("#dummylink").click(function () {
+    chart = chart1;
+    chart.series[3].setData(
+      [
+        [1422460800000, 90]
+      ]
+    )
+  }); */
+
   $("button[data-x-range-min]").click(get_ranges);
   //remove branding logo that says 'highcarts'
   $( "text" ).remove( ":contains('Highcharts.com')" );
 };
+
+/*
+$document.ready( function() {
+  ("#dummylink").click(function () {
+    chart = chart1 // $('#stock-div').highcharts();
+    chart.series[3].setData(
+      [
+        [1422460800000, 90]
+      ]
+    );
+  });
+});*/
+/*("#dummylink").click(function () {
+  createGraph();
+});*/
 
 
 function createSeriesVar () {
@@ -79,7 +104,17 @@ function createSeriesVar () {
       name: "dateseries",
       data : gon.daily_forward_prices,
       lineWidth : 1
+    },
+    {
+      name:"myprediction",
+      data: null, //[[1422460800000, 90]]
+      marker : {
+        enabled : true,
+        radius : 4,
+        color: "#DC143C"
+      }
     }
+
   ];
   return seriesVar;
 }
@@ -110,6 +145,9 @@ function createChart1 () {
     series: seriesVar
   }); 
 }
+
+
+
 
 
 

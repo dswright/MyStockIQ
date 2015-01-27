@@ -6,7 +6,6 @@ class Prediction < ActiveRecord::Base
   has_many :streams, as: :streamable
 
   validates :prediction_end_price, presence: true, numericality: true
-  validates :score, presence: true, numericality: true
   validates :stock_id, presence: true, numericality: true
   validates :prediction_comment, length: {maximum: 140}
   default_scope -> { order(created_at: :desc) }
@@ -15,12 +14,10 @@ class Prediction < ActiveRecord::Base
   def active_prediction_exists?
 
 	 #Find current user prediction related to that stock
-	 other_predictions = Prediction.where(active: true, user_id: self.user.id, stock_id: self.stock.id)
-
-    unless other_predictions == nil
-      false
-    else 
+	 if Prediction.where(active: true, user_id: self.user.id, stock_id: self.stock.id).exists?
       true
+    else 
+      false
     end
   end
 
