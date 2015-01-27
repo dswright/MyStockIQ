@@ -7,6 +7,7 @@ class PredictionsController < ApplicationController
 	def create
 		#Obtain user session information from Session Helper function 'current_user'.
 		@user = current_user
+		stock = Stock.find(prediction_params[:stock_id])
 
 		#Create the prediction settings.
 		prediction_start_time = Time.zone.now.utc_time_int.closest_start_time
@@ -17,9 +18,9 @@ class PredictionsController < ApplicationController
 		prediction = {prediction_end_time: prediction_end_time, score: 0, active: true, start_price_verified:false, 
 									end_price_verified:false, start_time: prediction_start_time }
 		#merge the prediction settings with the params from the prediction form.
-		prediction.merge(prediction_params)
+		prediction.merge!(prediction_params)
 		@prediction = @user.predictions.build(prediction)
-		@prediction.start_price = @prediction.stock.daily_stock_price
+		@prediction.start_price = stock.daily_stock_price
 
 
 		#Create the stream inserts for the prediction.
@@ -40,15 +41,18 @@ class PredictionsController < ApplicationController
 			@response_msg << "You already have an active prediction on #{stock.ticker_symbol}"
 		end
 
-		if prediction.prediction_end_time <= prediction.prediction_start_time
+		invalid_start = false
+		if @prediction.prediction_end_time <= @prediction.start_time
 			@response_msg << "Today's market is currently closed. Please end your prediction when the market is open."
+			invalid_start = true
 		end
 
-		unless @prediction.invalid? or @prediction.active_prediction_exists? or prediction.prediction_end_time <= prediction.prediction_start_time
+		unless @prediction.invalid? or @prediction.active_prediction_exists? or invalid_start
 			@prediction.save
 			@streams.each {|stream| stream.save}
-			@response_msg + ["Prediction input!", "start price: #{prediction.start_price}", "start time: #{prediction.start_time}", 
-				"end time: #{prediction.end time}", "end price: #{prediction.end_price}", "start price will be updated at the start time."]
+			@response_msg = ["Prediction input!", "start price: #{@prediction.start_price}", "start time: #{@prediction.start_time}", 
+				"prediction end time: #{@prediction.prediction_end_time}", "prediction target: #{@prediction.prediction_end_price}", 
+				"start price will be updated at the start time."]
 		end
 	end
 
