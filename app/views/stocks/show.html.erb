@@ -51,29 +51,12 @@
 
 <!-- PREDICTION FORM -->
     <div class = "stock-page-prediction-box">
-      <p class = "stock-page-prediction-header">
-        <%= @stock.ticker_symbol %>
-      </p>
       <% if @prediction.active_prediction_exists? %>
         <%= render @prediction %>
       <% else %>
         <%= render 'shared/prediction_form' %>
       <% end %>
     </div>
-
-
-    <script>
-      $("#target-price").focus(function () {
-        alert("fuuuuuuck");
-      //  if ($("#prediction-fields").is(":show"))
-      // {
-      //  $("#prediction-fields").slideDown("normal");
-      // }
-      //  else  {
-      //  $("#prediction-fields").hide();
-      // }
-      });
-    </script>
 
     <%= render 'shared/comment_form' %>
 
@@ -115,15 +98,11 @@
     <button id="dummylink">dummy link</button>
 
       <div class = "graph-buttons" style="width:450px">
-        <% @graph_ranges.each do |ranges| %>
-          <button id="button" 
-              data-x-range-min=<%= ranges[:x_range_min] %> 
-              data-x-range-max=<%= ranges[:x_range_max] %>
-              data-y-range-min=<%= ranges[:y_range_min] %>
-              data-y-range-max=<%= ranges[:y_range_max] %>
-              data-button-type=<%= ranges[:name] %>
+        <% @graph_buttons.each do |button| %>
+          <button id="button"
+              data-button-type=<%= button %>
               >
-            <%= ranges[:name] %>
+            <%= button %>
           </button>
 
         <% end %>

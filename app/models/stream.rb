@@ -1,6 +1,6 @@
 class Stream < ActiveRecord::Base
   #declares a polymorphic association for the streams table. 
-  belongs_to :streamable, polymorphic: true, dependent: :destroy
+  belongs_to :streamable, polymorphic: true
 
   #has_many :comments, dependent: :destroy
   #has_many :predictions, dependent: :destroy

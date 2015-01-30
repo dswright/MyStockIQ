@@ -1,3 +1,14 @@
+//window.updatePredictions(1422460800000, 200);
+
+window.updatePredictions(<%= j @graph_time.to_s %>, <%= j @prediction.prediction_end_price.to_s %>)
+
+$('.stock-page-prediction-box').html("<%= j render @prediction %>").fadeIn("slow");
+
+// 
+//window.updatePredictions;
+ 
+
+//end_time, end_price
 //<% @response_msg.each do |msg| %>
 //  $('#response-box').append("<li><%= j msg %></li>")
 //<% end %>

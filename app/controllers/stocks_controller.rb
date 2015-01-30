@@ -21,7 +21,7 @@ require 'scraper'
     #if a stock gets viewed, update the stocks table so that the stock gets real time stock data.
     if (@stock.viewed == false)
       days = 6
-      ScraperPublic.google_intraday(stock.ticker_symbol, days)
+      ScraperPublic.google_intraday(@stock.ticker_symbol, days)
       @stock.update(viewed:true)
     end
 
@@ -47,20 +47,43 @@ require 'scraper'
     @comment_landing_page = "stocks:#{@stock.ticker_symbol}"
     @stream_comment_landing_page = "stocks:#{@stock.ticker_symbol}"
 
+
+
     #Graph functions
-    graph = Graph.new(@stock.ticker_symbol)
-
-  	gon.ticker_symbol = @stock.ticker_symbol
-    gon.daily_prices = graph.daily_prices
-    gon.daily_forward_prices = graph.daily_forward_prices
-    gon.intraday_prices = graph.intraday_prices
-    gon.intraday_forward_prices = graph.intraday_forward_prices
-    gon.predictions = graph.predictions
     
-    #used by the view to generate the html buttons
-    @graph_ranges = graph.ranges
 
-    gon.graph_defaults = @graph_ranges[2]
+    #@predictions = graph.predictions
+    #@daily_prices = graph.daily_prices
+    #@daily_forward_prices = graph.daily_forward_prices
+    #@intraday_prices = graph.intraday_prices
+    #@intraday_forward_prices = graph.intraday_forward_prices
+
+  	#gon.ticker_symbol = @stock.ticker_symbol
+    #gon.daily_prices = graph.daily_prices
+    #gon.daily_forward_prices = graph.daily_forward_prices
+    #gon.intraday_prices = graph.intraday_prices
+    #gon.intraday_forward_prices = graph.intraday_forward_prices
+    #gon.predictions = graph.predictions
+    
+    @graph_buttons = ["1d", "5d", "1m", "3m", "6m", "1yr", "5yr"]
+    #used by the view to generate the html buttons
+
+    gon.ticker_symbol = @stock.ticker_symbol
+
+    respond_to do |format|
+      format.html
+      format.json {
+        graph = Graph.new(@stock.ticker_symbol)
+        render json: {
+        :ranges => graph.ranges,
+        :daily_prices => graph.daily_prices, 
+        :predictions => graph.predictions, 
+        :daily_forward_prices => graph.daily_forward_prices,
+        :intraday_prices => graph.intraday_prices,
+        :intraday_forward_prices => graph.intraday_forward_prices
+        }
+      }
+    end
 
 	end
 end

@@ -1,17 +1,4 @@
 
-//so some basic js is created here.. what can i do with it..? It's precompiled.. but I also need it to use ruby data..
-//maybe make the js accept ruby params that are passed in to it?
-
-//this gets the element by id demo and changes the text in that demo... incredible. Make sure to use the innerhtml method..
-function changeText() {
-  document.getElementById("demo").innerHTML = "Paragraph changed.";
-};
-
-function simpleAlert() {
-  window.alert("simpleAlert")
-};
-
-
 
 function resizeChart() {
   var height = $("#stock-div").width()/3+30;
@@ -19,81 +6,22 @@ function resizeChart() {
   $(".stockgraph-container1").css("height", height+10);
 };
 
-var chart1; // globally available
+//Global variables 
+var graph;
+var chart1;
+var current_range;
 
-$(document).ready(createGraph);
-
-function createGraph() {
+$(document).ready(function () {
   resizeChart();
   $(window).bind("orientationchange resize", resizeChart);
 
-
-  seriesVar = createSeriesVar();
-
-  chart1 = createChart1();
-
-  get_ranges = function() {
-    x_range_min = $(this).data("x-range-min");
-    x_range_max = $(this).data("x-range-max");
-    y_range_min = $(this).data("y-range-min");
-    y_range_max = $(this).data("y-range-max");
-    button_type = $(this).data("button-type");
-
-    if (button_type == "1d" || button_type == "5d") {
-      chart1.series[2].setData(gon.intraday_forward_prices);
-      chart1.series[0].setData(gon.intraday_prices);
-    }
-    else {
-      chart1.series[2].setData(gon.daily_forward_prices);
-      chart1.series[0].setData(gon.daily_prices);
-    }
-
-    chart1.yAxis[0].setExtremes(y_range_min, y_range_max);
-    chart1.xAxis[0].setExtremes(x_range_min, x_range_max);
-    
-    //window.alert(range_min + range_max)
-  };
-
-  //this works. its inside the chart variable. so dumb.
-  /* $("#dummylink").click(function () {
-    chart = chart1;
-    chart.series[3].setData(
-      [
-        [1422460800000, 90]
-      ]
-    )
-  }); */
-
-  $("button[data-x-range-min]").click(get_ranges);
-  //remove branding logo that says 'highcarts'
-  $( "text" ).remove( ":contains('Highcharts.com')" );
-};
-
-/*
-$document.ready( function() {
-  ("#dummylink").click(function () {
-    chart = chart1 // $('#stock-div').highcharts();
-    chart.series[3].setData(
-      [
-        [1422460800000, 90]
-      ]
-    );
-  });
-});*/
-/*("#dummylink").click(function () {
-  createGraph();
-});*/
-
-
-function createSeriesVar () {
-  var seriesVar = [
+  seriesVar = [
     {
-      name : gon.ticker_symbol,
-      data : gon.daily_prices
+      name : gon.ticker_symbol
+      // data : data
     }, 
     {
       name : "prediction",
-      data : gon.predictions,
       lineWidth : 0,
       marker : {
         enabled : true,
@@ -102,36 +30,22 @@ function createSeriesVar () {
     },
     {
       name: "dateseries",
-      data : gon.daily_forward_prices,
       lineWidth : 1
     },
     {
       name:"myprediction",
-      data: null, //[[1422460800000, 90]]
       marker : {
         enabled : true,
         radius : 4,
         color: "#DC143C"
       }
     }
-
   ];
-  return seriesVar;
-}
 
-function createChart1 () {
-  return new Highcharts.StockChart({
+  chart1 = new Highcharts.StockChart({
     chart: {
       renderTo: 'stock-div'
     },
-    xAxis: {
-      min: gon.graph_defaults["x_range_min"],
-      max: gon.graph_defaults["x_range_max"]
-          },
-    yAxis: {
-      min: gon.graph_defaults["y_range_min"],
-      max: gon.graph_defaults["y_range_max"]
-    },
     rangeSelector : {
       enabled: false
     },
@@ -141,148 +55,103 @@ function createChart1 () {
     navigator: {
       enabled: false
     },
-
     series: seriesVar
-  }); 
-}
+  });
 
 
+  var range_hash = {}
+  var apiUrl = "/stocks/" + gon.ticker_symbol + ".json";
+  chart1.showLoading('Loading data from server');
+  $.getJSON(apiUrl, function (data) {
 
+    graph = data
 
+    chart1.series[0].setData(data["daily_prices"]);
+    chart1.series[1].setData(data["predictions"]);
+    chart1.series[2].setData(data["daily_forward_prices"]);
+    chart1.hideLoading();
 
+    //create the range hash...
+    graph["ranges"].forEach(function(element, index, array) { 
+    range_hash[element["name"]]={"x_max":element["x_range_max"], 
+                                  "x_min":element["x_range_min"], 
+                                  "y_max":element["y_range_max"], 
+                                  "y_min":element["y_range_min"]}
+                                });
 
-/*$(document).ready(function () {
-  var width = $("#container").width();
+    chart1.yAxis[0].setExtremes(range_hash["1m"]["y_min"], range_hash["1m"]["y_max"]);
+    chart1.xAxis[0].setExtremes(range_hash["1m"]["x_min"], range_hash["1m"]["x_max"]);
 
-  //resize the container height based on the width.
-  var height = $("#container").width()/3+30;
-  $("#container").css("height", height);
-  $(".stockgraph-container1").css("height", height + 10);
+    current_range = range_hash["1m"];
+  });
 
-
-  var price_array = gon.price_array;
-  var ticker_symbol = gon.ticker_symbol;
-
-  //var prediction_array = <?php echo json_encode($userpredictiongraphdata); ?>;
-
-  //var date_array = <?php echo json_encode($datearray); ?>;
-
-  //var min_array = <?php echo json_encode($stockattributes); ?>;
-
-  //var tickersymbol = <?php echo json_encode($tickersymbol); ?>
-
-  var seriesVar = [{
-    name : ticker_symbol,
-    data : price_array
-  }];
-
-  /*if (prediction_array != false)
-  {
-    prediction_array.sort();
-    seriesVar.push({
-    name : "Your " + tickersymbol + " prediction",
-    data : prediction_array
-    });
-  }
   
-  if (date_array[5] != null){
-    var x_min = date_array[5][0];
-    var x_max = date_array[5][1];
-  }
-  else{
-    var x_min = date_array[0][0];
-    var x_max = date_array[0][1];
-  }
+  get_ranges1 = function() {
+    //for updating the graph with a new prediction, create an 
+    //onclick function to refresh the predictions array on prediction click.
 
-  if (min_array[5] != null){
-    var y_min = min_array[5][0];
-  }
-  else{
-    var y_min = min_array[0][0];
-  }
+    //the trick is that the graph ranges has to be defined... 
+    //replace these with the graph["ranges"]["3m"] variable, ect.. maybe pass that variable in through the function.
+    button_type = $(this).data("button-type");
+    ranges = range_hash[button_type];
 
-  // Create the chart
-  var chart = new Highcharts.StockChart({
+    if (button_type == "1d" || button_type == "5d") {
+      chart1.series[2].setData(graph["intraday_forward_prices"]);
+      chart1.series[0].setData(graph["intraday_prices"]);
+    }
+    else {
+      chart1.series[2].setData(graph["daily_forward_prices"]);
+      chart1.series[0].setData(graph["daily_prices"]);
+    }
 
-    chart: {
-      renderTo: 'container'
-    },
+    chart1.yAxis[0].setExtremes(ranges["y_min"], ranges["y_max"]);
+    chart1.xAxis[0].setExtremes(ranges["x_min"], ranges["x_max"]);
 
-    /*xAxis: {
-      min: x_min,
-      max: x_max
-    },
-
-    rangeSelector : {
-      enabled: false
-    },
-
-    scrollbar: {
-      enabled: false
-    },
-
-    /*
-    yAxis: {
-      min: y_min
-    },
-
-    exporting: {
-      enabled: false
-    },
-
-    navigator: {
-      enabled: false
-    },
-
-    series : seriesVar
-
-  });
-
-
-  $('#button0').click(function () {
-    chart.yAxis[0].setExtremes(min_array[0],null);
-    chart.xAxis[0].setExtremes(date_array[0][0], date_array[0][1]);
-  });
+    current_range = range_hash[button_type];
+    
+    //window.alert(range_min + range_max)
+  };
   
-  $('#button1').click(function() {
-    chart.yAxis[0].setExtremes(min_array[1],null);
-    chart.xAxis[0].setExtremes(date_array[1][0], date_array[1][1]);
-  });
+
+  function predictionXMax(end_time){
+    return end_time+(end_time-current_range["x_min"])*0.05;
+  };
+  function predictionYMax(end_price){
+    return end_price+(end_price-current_range["y_min"])*0.1;
+  };
+  function predictionYMin(end_price){
+    return end_price-(end_price-current_range["y_min"])*0.1;
+  };
   
-  $('#button2').click(function() {
-    chart.yAxis[0].setExtremes(min_array[2],null);
-    chart.xAxis[0].setExtremes(date_array[2][0], date_array[2][1]);
-  });
-  
-  $('#button3').click(function() {
-    chart.yAxis[0].setExtremes(min_array[3],null);
-    chart.xAxis[0].setExtremes(date_array[3][0], date_array[3][1]);
-  });
+  //window.function has the affect of setting the function as a global function, and its available in the ajax function.
+  window.updatePredictions = function(end_time, end_price) {
+    chart1.series[3].setData([[end_time, end_price]]);
 
-  $('#button4').click(function() {
-    chart.yAxis[0].setExtremes(min_array[4],null);
-    chart.xAxis[0].setExtremes(date_array[4][0], date_array[4][1]);
-  });
+    if (end_time > current_range["x_max"]) {
+      chart1.xAxis[0].setExtremes(current_range["x_min"], predictionXMax(end_time));
+    }
+    if (end_price > current_range["y_max"]) {
+      chart1.yAxis[0].setExtremes(current_range["y_min"], predictionYMax(end_price));
+    }
+    if (end_price < current_range["y_min"]) {
+      chart1.yAxis[0].setExtremes(current_range["y_min"], predictionYMin(end_price));
+    }
+  };
 
-  if (date_array[5] != null)
-  {
-    $('#button5').click(function() {
-      chart.yAxis[0].setExtremes(min_array[5],null);
-      chart.xAxis[0].setExtremes(date_array[5][0], date_array[5][1]); 
-    });
-  }
-
-  //$('#button0').click(function() {
-  //chart.series[0].setData(data_array0)
-  //});
-
-
-  // execute chart resize function to resize screen onload.
-  $(window).bind("orientationchange resize", resizeChart);
-
+  //$("button[data-x-range-min]").click(get_ranges);
+  $("button[data-button-type]").click(get_ranges1);
   //remove branding logo that says 'highcarts'
   $( "text" ).remove( ":contains('Highcharts.com')" );
 
 });
-*/
+
+$(document).ready(function () {
+  $("#dummylink").click(window.alert1);
+});
+/*("#dummylink").click(function () {
+  createGraph();
+});*/
+
+
+
 
