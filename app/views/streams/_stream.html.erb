@@ -5,9 +5,8 @@
   icons[:dislikes] = Like.where(like_type:"dislike",target_type: stream_hash[:stream].streamable_type, target_id:stream_hash[:stream].streamable_id).count
   icons[:replies] = Stream.where(target_type:stream_hash[:stream].streamable_type, target_id: stream_hash[:stream].streamable_id).count
   %>
-<%#need to use a seperate method here to create the recursive effect on the embedded stream arrays.%>
-<%# stream_hash_process(stream_hash) %>
-  <div class = "prediction-post-comment" id="first_one">
+
+  <div class = "prediction-post-comment" id="stream-<%= stream_hash[:stream].streamable_type %>_<%= stream_hash[:stream].streamable_id %>">
     <div class = "row" style = "margin-left: <%= stream_hash[:nest_count] * 20 %>px;">
 
       <%if stream_hash[:stream].streamable_type == "Comment" %>

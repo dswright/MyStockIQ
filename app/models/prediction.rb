@@ -1,9 +1,12 @@
 class Prediction < ActiveRecord::Base
   require 'customdate'
+  require 'action_view'
+  include ActionView::Helpers::DateHelper
+  
 
   belongs_to :stock
   belongs_to :user
-  has_many :streams, as: :streamable
+  has_many :streams, as: :streamable, dependent: :destroy
 
   validates :prediction_end_price, presence: true, numericality: true
   validates :stock_id, presence: true, numericality: true

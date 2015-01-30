@@ -22,6 +22,8 @@ class PredictionsController < ApplicationController
 		@prediction = @user.predictions.build(prediction)
 		@prediction.start_price = stock.daily_stock_price
 
+		@graph_time = prediction_end_time.utc_time_int.graph_time_int
+
 
 		#Create the stream inserts for the prediction.
 		@streams = []
@@ -67,13 +69,27 @@ class PredictionsController < ApplicationController
 	def destroy
 		#Set prediction active = 0 and redirect back to previous page
 		prediction = Prediction.find_by(id: params[:id])
-		prediction.active = false
-		prediction.actual_end_time = Time.zone.now.closest_end_time
-		prediction.save
 
-		@resonse_box = "prediction is cancelled.. send this to ajax response."
+		#prediction should be destroyed if cancelled before starting.
+		#anything that happens on prediction creation should be removed.
 
-    redirect_to request.referrer || login_path
+		children = Stream.where(target_type = 'Prediction', target_id = prediction.id)
+
+		if prediction.start_time > Time.zone.now
+			unless children.exist?
+				prediction.destroy
+				@response_box = "prediction removed."
+			end
+		else
+			prediction.active = false
+			prediction.actual_end_time = Time.zone.now.closest_end_time
+			prediction.actual_end_price = prediction.stock.daily_stock_price
+			#trigger the addition of a cancellation item to the stream.
+			#need a table of cancelled predictions as well? Like another stream item? Yes.
+			#send email when the actual end price is updated.
+			prediction.save
+			@response_box = "prediction is cancelled.. send this to ajax response."
+		end
 		
 		#need to put the ajax response here..
 		#need to put that response box on the page...

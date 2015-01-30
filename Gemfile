@@ -33,6 +33,7 @@ gem 'coffee-rails',         '4.0.1'
 # gem 'therubyracer',  platforms: :ruby
 
 gem 'json', '~> 1.8.1'
+gem 'rabl' #used to build the ajax api for the graph.
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails',         '3.1.2'

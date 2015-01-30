@@ -1,17 +1,19 @@
-    <div class = "col-xs-3 col-sm-2 col-md-2">
-      <div class = "prediction-post-mug-container">
-        <img src= "http://stocktators.com/assets/images/user.png">
-      </div>
-    </div>
-    <div class = "prediction-post-txt-container col-xs-9" style="width:400px;">
+<div class = "col-xs-3 col-sm-2 col-md-2">
+  <div class = "prediction-post-mug-container">
+    <img src= "http://stocktators.com/assets/images/user.png">
+  </div>
+</div>
+<div class = "prediction-post-txt-container col-xs-9" style="width:400px;">
 
-      <p class = "handle">
-        <%= link_to prediction.user.username%>&nbsp;&bull;&nbsp;<%= time_ago_in_words(prediction.created_at) %> ago
-      </p>
+  <p class = "handle">
+    <%= link_to prediction.user.username %>&nbsp;&bull;&nbsp;<%= time_ago_in_words(prediction.created_at) %> ago
+  </p>
 
-      <p class = "prediction-txt">
-      </p>
+  <p class = "prediction-txt">
+    <p>score: <%= prediction.score %></p>
+    <p>end price: <%= prediction.prediction_end_price %></p>
+  </p>
 
-      <p class = "comment-txt"><%= prediction.prediction_comment %></p>
-    </div>
+  <p class = "comment-txt"><%= prediction.prediction_comment %></p>
+</div>
 

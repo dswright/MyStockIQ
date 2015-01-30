@@ -22,11 +22,11 @@ class Graph
   #Limited to 400 5 minute periods, which is 2000 minutes, just over the 975 minutes in 5 6.5 hour days.
   def intraday_prices
     price_array = []
-    stock_prices = Intradayprice.where(ticker_symbol:self.ticker_symbol).limit(400).order('date desc').each do |price|    
+    stock_prices = Intradayprice.where(ticker_symbol:self.ticker_symbol).limit(400).order('date desc').reverse.each do |price|    
       graph_time = price.date.utc_time_int.graph_time_int
       price_array << [graph_time, price.close_price]
     end
-    return price_array.reverse
+    return price_array
   end
 
   #this function forms a full 5 year array. The actual control is done with the x axis settings of the graph.
