@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require highstock
+//= require shared
 //= require exporting
 //= require_tree .
 

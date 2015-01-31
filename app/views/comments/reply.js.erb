@@ -1,0 +1,1 @@
+$('#stream-<%= j @parent %>').after("<%= j render partial: 'streams/stream', locals: {stream_hash_array: @stream_hash_array}  %> ").fadeIn("slow");

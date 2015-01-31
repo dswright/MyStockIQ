@@ -1,1 +1,5 @@
-$('#first_one').before("<div class = \"prediction-post-comment\" id =\"first_one\"><div class = \"row\" style=\"margin-left: 0px;\"><%= j render partial: 'streams/stream_comment', locals:{comment: @comment} %></div></div>").fadeIn("slow");
+$('.prediction-post-comment:eq(1)').before("<%= j render partial: 'streams/stream', locals: {stream_hash_array: @stream_hash_array}  %> ").fadeIn("slow");
+
+var responses = $.parseHTML("<%= j raw @response %>");
+$('#response-box').html(responses).fadeIn("slow");
+

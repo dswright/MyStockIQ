@@ -33,29 +33,33 @@ class PredictionsController < ApplicationController
 		end
 
 		#Create the proper response to the prediciton input.
-		@response_msg = []
+		@response_msgs = []
 
 		if @prediction.invalid?
-			@response_msg << "Prediction invalid. Please refresh page and try again."
+			@response_msgs << "Prediction invalid. Please refresh page and try again."
 		end
 
 		if @prediction.active_prediction_exists?
-			@response_msg << "You already have an active prediction on #{stock.ticker_symbol}"
+			@response_msgs << "You already have an active prediction on #{stock.ticker_symbol}"
 		end
 
 		invalid_start = false
 		if @prediction.prediction_end_time <= @prediction.start_time
-			@response_msg << "Today's market is currently closed. Please end your prediction when the market is open."
+			@response_msgs << "Today's market is currently closed. Please end your prediction when the market is open."
 			invalid_start = true
 		end
 
 		unless @prediction.invalid? or @prediction.active_prediction_exists? or invalid_start
 			@prediction.save
 			@streams.each {|stream| stream.save}
-			@response_msg = ["Prediction input!", "start price: #{@prediction.start_price}", "start time: #{@prediction.start_time}", 
-				"prediction end time: #{@prediction.prediction_end_time}", "prediction target: #{@prediction.prediction_end_price}", 
-				"start price will be updated at the start time."]
+			stream = Stream.where(streamable_type: 'Prediction', streamable_id: @prediction.id).first
+			@stream_hash_array = Stream.stream_maker([stream], 0) #gets inserted to top of stream with ajax.
+			@comment = Comment.new
+			@like = Like.new
+			@response_msgs << "Prediction input!"
 		end
+
+		@response = response_maker(@response_msgs)
 	end
 
 	def update
@@ -78,7 +82,7 @@ class PredictionsController < ApplicationController
 		if prediction.start_time > Time.zone.now
 			unless children.exist?
 				prediction.destroy
-				@response_box = "prediction removed."
+				@response_msgs << "prediction removed."
 			end
 		else
 			prediction.active = false
@@ -88,12 +92,11 @@ class PredictionsController < ApplicationController
 			#need a table of cancelled predictions as well? Like another stream item? Yes.
 			#send email when the actual end price is updated.
 			prediction.save
-			@response_box = "prediction is cancelled.. send this to ajax response."
+			@response_msgs << "prediction is cancelled.. send this to ajax response."
 		end
 		
 		#need to put the ajax response here..
 		#need to put that response box on the page...
-
 	end
 
 	private
