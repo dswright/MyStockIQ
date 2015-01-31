@@ -17,4 +17,15 @@ module StreamsHelper
     landing_page_elements = landing_page.split(":")
     return "/#{landing_page_elements[0]}/#{landing_page_elements[1]}/"
   end
+
+  def response_maker(msgs)
+    html = ""
+    if msgs
+      msgs.each do |msg|
+        html += html + "<li>" + msg + "</li>";
+      end
+    end
+    return html
+  end
+
 end

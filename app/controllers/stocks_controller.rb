@@ -43,12 +43,6 @@ require 'scraper'
   	@comment_stream_inputs = "Stock:#{@stock.id}"
   	@prediction_stream_inputs = "Stock:#{@stock.id}"
 
-    @prediction_landing_page = "stocks:#{@stock.ticker_symbol}"
-    @comment_landing_page = "stocks:#{@stock.ticker_symbol}"
-    @stream_comment_landing_page = "stocks:#{@stock.ticker_symbol}"
-
-
-
     #Graph functions
     
 
