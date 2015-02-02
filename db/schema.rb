@@ -11,9 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+
 ActiveRecord::Schema.define(version: 20150201192049) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "adminpack"
   enable_extension "plpgsql"
 
   create_table "comments", force: true do |t|
@@ -64,20 +66,25 @@ ActiveRecord::Schema.define(version: 20150201192049) do
   add_index "newsarticles", ["google_news_id", "id"], name: "index_newsarticles_on_google_news_id_and_id", using: :btree
 
   create_table "predictions", force: true do |t|
-    t.float    "prediction_price"
     t.integer  "user_id"
     t.float    "score"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
     t.string   "prediction_comment"
-    t.datetime "end_time"
     t.integer  "stock_id"
     t.datetime "start_time"
     t.boolean  "start_price_verified"
     t.boolean  "end_price_verified"
     t.boolean  "active"
     t.float    "start_price"
+<<<<<<< HEAD
     t.float    "popularity_score"
+=======
+    t.float    "actual_end_price"
+    t.datetime "actual_end_time"
+    t.datetime "prediction_end_time"
+    t.float    "prediction_end_price"
+>>>>>>> FETCH_HEAD
   end
 
   add_index "predictions", ["stock_id"], name: "index_predictions_on_stock_id", using: :btree

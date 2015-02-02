@@ -8,7 +8,7 @@ class ScraperPublic
 
   def self.google_daily(ticker_symbol, start_date, dups_allowed)
     price_hash_array = []
-    end_date = Time.now.in_time_zone.strftime("%m-%d-%Y")
+    end_date = Time.zone.now.strftime("%m-%d-%Y")
     url = "http://www.google.com/finance/historical?q=#{ticker_symbol}&startdate=#{start_date}&enddate=#{end_date}&output=csv&head=false"
     encoded_url = URI.encode(url)
     begin
@@ -256,7 +256,10 @@ class Scraper
     latest_hash[:date] = Stock.find_by(ticker_symbol:ticker_symbol).date || "0000-01-01" #if the date is nil, plug in a very old date.
     update_true = false
     price_list.each do |price_hash|
-      if price_hash.date > latest_hash[:date]
+      #this updates the price and time of the stock. The latest possible is 21:00, UTC time.
+      #The intraday scraper will update to 21:00, but this scraper will run after that one ends,
+      #and it will have a time equal to 21:00, so it will overwrite that amount.
+      if price_hash.date >= latest_hash[:date]
         latest_hash = {date:price_hash.date, close_price:price_hash.close_price}
         update_complete = true
       end
@@ -277,7 +280,7 @@ class GoogleIntraday
     end
     daily_hash = {
       "ticker_symbol" => ticker_symbol,
-      "date" =>  CustomDate.utc_date_number_to_utc_date_string(time_start*1000),
+      "date" =>  time_start.utc_time,
       "open_price" => row[4].to_f,
       "close_price" => row[1].to_f
     }
@@ -314,7 +317,7 @@ class GoogleIntraday
 
     #Hash To Insert Strings
   def single_row_insert(price_hash)
-    time = Time.now.to_s(:db)
+    time = Time.zone.now.to_s(:db)
     price_string = "('#{price_hash["ticker_symbol"]}','#{price_hash["date"]}','#{price_hash["open_price"]}','#{price_hash["close_price"]}','#{time}','#{time}')"
   end
 
@@ -375,7 +378,7 @@ class GoogleNews
   end
 
   def single_row_insert(news_hash)
-    time = Time.now.to_s(:db)
+    time = Time.zone.now.to_s(:db)
     price_string = "('#{news_hash["google_news_id"]}','#{news_hash["title"]}','#{news_hash["url"]}','#{news_hash["summary"]}','#{news_hash["date"]}','#{time}','#{time}','#{news_hash["source"]}')"
   end
 
@@ -386,7 +389,7 @@ class GoogleDaily
 
   def data_hash(row, ticker_symbol)
     unless row[1] == "Open" #this csv file has headers, this ignores the header line.
-      date = Time.zone.parse(row[0].to_s).strftime("20%y-%m-%d 21:10:00")
+      date = Time.zone.parse(row[0].to_s).strftime("20%y-%m-%d 21:00:00")
       return price_hash = {
         "ticker_symbol" => ticker_symbol,
         "date" => date, #date is in the form "1/7/2015", and it converts to date format OK.
@@ -400,6 +403,14 @@ class GoogleDaily
     end
   end
 
+  def check_for_dup(hash_item)
+    if Stockprice.where(ticker_symbol:hash_item["ticker_symbol"], date:hash_item["date"]).exists?
+      false
+    else
+      true
+    end
+  end
+
   def all_data_insert(price_array)
     sql = "INSERT INTO stockprices 
       (ticker_symbol, date, open_price, close_price, volume, split, created_at, updated_at)
@@ -408,7 +419,7 @@ class GoogleDaily
 
     #Hash To Insert Strings
   def single_row_insert(price_hash)
-    time = Time.now.in_time_zone.strftime('%Y-%m-%d %H:%M:%S')
+    time = Time.zone.now.strftime('%Y-%m-%d %H:%M:%S')
     price_string = "('#{price_hash["ticker_symbol"]}','#{price_hash["date"]}','#{price_hash["open_price"]}','#{price_hash["close_price"]}','#{price_hash["volume"]}','#{price_hash["split"]}','#{time}','#{time}')"
   end
 end

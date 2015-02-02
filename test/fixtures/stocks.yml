@@ -18,12 +18,12 @@ BNNY:
   price_to_earnings: nil
   stock_industry: nil
 
-BLAH:
-  stock: "not here"
-  ticker_symbol: "blah"
+#this is used by the graph tests. It should be added to the daily prices array.
+LNKD:
+  id: 1
+  stock: "Linked In"
+  ticker_symbol: "LNKD"
   stock_industry: nil
   price_to_earnings: nil
-  stock_industry: nil
-
-#
-#  column: value
+  daily_stock_price: 100
+  date: "2015-01-12 15:00:00" #10 AM

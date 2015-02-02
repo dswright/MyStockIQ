@@ -7,7 +7,7 @@ class Prediction < ActiveRecord::Base
   belongs_to :user
   has_many :streams, as: :streamable
 
-  validates :prediction_price, presence: true, numericality: true
+  validates :prediction_end_price, presence: true, numericality: true
   validates :score, presence: true, numericality: true
   validates :stock_id, presence: true, numericality: true
   validates :prediction_comment, length: {maximum: 140}
@@ -17,7 +17,7 @@ class Prediction < ActiveRecord::Base
   def active_prediction_exists?
 
 	 #Find current user prediction related to that stock
-	 other_predictions = Prediction.where(active: 1, user_id: self.user.id, stock_id: self.stock.id)
+	 other_predictions = Prediction.where(active: true, user_id: self.user.id, stock_id: self.stock.id)
 
     unless other_predictions == nil
       false
@@ -26,10 +26,27 @@ class Prediction < ActiveRecord::Base
     end
   end
 
+  def price_exceeds_prediction
+
+    stock = Stock.find(self.stock_id)
+
+    prediction_percentage = percent_change(self.prediction_price, self.start_price)
+    actual_percentage = percent_change(stock.daily_stock_price, self.start_price)
+
+    #If actual price has surpassed prediction, move the actual end time of the current prediction to the current time.
+    if actual_percentage.abs > prediction_percentage.abs
+      self.update(active:false)
+      self.actual_end_time = stock.date
+    end
+    
+
+  end
+
+
   def update_prediction
 
     #Finds stock associated with prediction
-    stock = Stock.find_by(id: self.stock_id)
+    stock = Stock.find(self.stock_id)
 
     #Calculates percentchange of prediction/start price and actual price/start price
     prediction_percentage = percent_change(self.prediction_price, self.start_price)
@@ -37,11 +54,8 @@ class Prediction < ActiveRecord::Base
 
     #Update prediction score
     self.score = calculate_score(prediction_percentage, actual_percentage)
-
-    #If actual price has surpassed prediction, cancel prediction
-    self.active = false if actual_percentage.abs > prediction_percentage.abs
-
     self.save
+
   end
 
   def calculate_score(prediction_percentage, actual_percentage)

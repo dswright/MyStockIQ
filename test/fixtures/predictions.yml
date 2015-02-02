@@ -1,7 +1,39 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 sean:
-  prediction_price: 9.99
+  prediction_end_price: 9.99
   user_id: 1
   stock_id: 1
   score: 20
+
+#these 2 predictions are used for the graph tests. end time and end price are what get tested.
+LNKD1:
+  user_id: 1
+  score: 0
+  prediction_comment: ""
+  stock_id: 1
+  start_time: "2015-01-21 14:30:00"
+  start_price_verified: false
+  end_price_verified: false
+  active: true
+  start_price: 105.99
+  actual_end_price: null
+  actual_end_time: null
+  prediction_end_time: "2015-01-23 21:00:00"
+  prediction_end_price: 110
+
+LNKD2:
+  user_id: 2
+  score: 0
+  prediction_comment: ""
+  stock_id: 1
+  start_time: "2015-01-21 16:30:00"
+  start_price_verified: false
+  end_price_verified: false
+  active: true
+  start_price: 105.99
+  actual_end_price: null
+  actual_end_time: null
+  prediction_end_time: "2015-01-26 21:00:00"
+  prediction_end_price: 120
+

@@ -51,6 +51,7 @@ class Stream < ActiveRecord::Base
 
       stream_hash_array << hash_form
 
+      #stream_hash_array.sort_by! {|stream| stream[:popularity_score]}
     end
 
     #stream_hash_array = stream_hash_array.sort! {|stream_hash| stream_hash[:popularity_score]}

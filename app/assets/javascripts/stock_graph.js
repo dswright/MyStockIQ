@@ -36,18 +36,19 @@ function createGraph() {
     x_range_min = $(this).data("x-range-min");
     x_range_max = $(this).data("x-range-max");
     y_range_min = $(this).data("y-range-min");
+    y_range_max = $(this).data("y-range-max");
     button_type = $(this).data("button-type");
 
     if (button_type == "1d" || button_type == "5d") {
-      chart1.series[2].setData(gon.intraday_forward_array);
-      chart1.series[0].setData(gon.intraday_price_array);
+      chart1.series[2].setData(gon.intraday_forward_prices);
+      chart1.series[0].setData(gon.intraday_prices);
     }
     else {
-      chart1.series[2].setData(gon.daily_forward_array);
-      chart1.series[0].setData(gon.daily_price_array);
+      chart1.series[2].setData(gon.daily_forward_prices);
+      chart1.series[0].setData(gon.daily_prices);
     }
 
-    chart1.yAxis[0].setExtremes(y_range_min,null);
+    chart1.yAxis[0].setExtremes(y_range_min, y_range_max);
     chart1.xAxis[0].setExtremes(x_range_min, x_range_max);
     
     //window.alert(range_min + range_max)
@@ -63,11 +64,11 @@ function createSeriesVar () {
   var seriesVar = [
     {
       name : gon.ticker_symbol,
-      data : gon.daily_price_array
+      data : gon.daily_prices
     }, 
     {
       name : "prediction",
-      data : gon.prediction_points_array,
+      data : gon.predictions,
       lineWidth : 0,
       marker : {
         enabled : true,
@@ -76,7 +77,7 @@ function createSeriesVar () {
     },
     {
       name: "dateseries",
-      data : gon.daily_forward_array,
+      data : gon.daily_forward_prices,
       lineWidth : 1
     }
   ];
@@ -89,11 +90,12 @@ function createChart1 () {
       renderTo: 'stock-div'
     },
     xAxis: {
-      min: gon.graph_default_x_range_min,
-      max: gon.graph_default_x_range_max
+      min: gon.graph_defaults["x_range_min"],
+      max: gon.graph_defaults["x_range_max"]
           },
     yAxis: {
-      min: gon.graph_default_y_range_min
+      min: gon.graph_defaults["y_range_min"],
+      max: gon.graph_defaults["y_range_max"]
     },
     rangeSelector : {
       enabled: false
