@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150119011600) do
+ActiveRecord::Schema.define(version: 20150201192049) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 20150119011600) do
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.integer  "user_id"
-    t.integer  "popularity_score"
+    t.float    "popularity_score"
   end
 
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(version: 20150119011600) do
     t.boolean  "end_price_verified"
     t.boolean  "active"
     t.float    "start_price"
+    t.float    "popularity_score"
   end
 
   add_index "predictions", ["stock_id"], name: "index_predictions_on_stock_id", using: :btree

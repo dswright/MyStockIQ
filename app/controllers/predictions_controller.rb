@@ -1,6 +1,7 @@
 class PredictionsController < ApplicationController
 	require 'customdate'
-
+	require 'popularity'
+	
 	def create
 		#Obtain user session information from Session Helper function 'current_user'.
 		@user = current_user
@@ -15,9 +16,11 @@ class PredictionsController < ApplicationController
 		@prediction = @user.predictions.build(prediction)
 
 		@prediction.score = 0
+		@prediction.popularity_score = 0
 		@prediction.active = true
 		@prediction.start_price_verified = false
 		@prediction.end_price_verified = false
+
 
 		@prediction.end_time = CustomDate.closest_end_time(prediction_end_time)
 		exact_start_time = CustomDate.utc_date_string_to_utc_date_number(Time.zone.now)

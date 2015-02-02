@@ -6,7 +6,9 @@ class CommentsController < ApplicationController
 		#Obtain user session information from Session Helper function 'current_user'.
 		@user = current_user
 		#assign the permitted comment form values to the comment variable. 
+		comment_params[:popularity_score]  = 0
 		comment = comment_params
+
 		#build the comment for input to the db.
 		@comment = @user.comments.build(comment)
 

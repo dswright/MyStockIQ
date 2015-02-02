@@ -16,9 +16,21 @@ require 'scraper'
 
 		@current_user = current_user
 		@stock = Stock.find(stock.id)
+
+
+
 		#Stock's posts, comments, and predictions to be shown in the view
 		streams = Stream.where(target_type: "Stock", target_id: @stock.id)
-   	@stream_hash_array = Stream.stream_maker(streams, 0)
+
+    streams.each {|stream| stream.streamable.update_popularity_score}
+    streams = sort_by_popularity(streams)
+    streams = streams.reverse
+
+    unless streams == nil
+      @stream_hash_array = Stream.stream_maker(streams, 0)
+    end
+
+
 
     
 
