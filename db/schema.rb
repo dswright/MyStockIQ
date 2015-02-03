@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150120192733) do
+ActiveRecord::Schema.define(version: 20150202173643) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "adminpack"
@@ -64,6 +64,17 @@ ActiveRecord::Schema.define(version: 20150120192733) do
 
   add_index "newsarticles", ["google_news_id", "id"], name: "index_newsarticles_on_google_news_id_and_id", using: :btree
 
+  create_table "predictionends", force: true do |t|
+    t.float    "actual_end_price"
+    t.datetime "actual_end_time"
+    t.boolean  "end_price_verified"
+    t.integer  "prediction_id"
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
+  end
+
+  add_index "predictionends", ["prediction_id"], name: "index_predictionends_on_prediction_id", using: :btree
+
   create_table "predictions", force: true do |t|
     t.integer  "user_id"
     t.float    "score"
@@ -73,11 +84,8 @@ ActiveRecord::Schema.define(version: 20150120192733) do
     t.integer  "stock_id"
     t.datetime "start_time"
     t.boolean  "start_price_verified"
-    t.boolean  "end_price_verified"
     t.boolean  "active"
     t.float    "start_price"
-    t.float    "actual_end_price"
-    t.datetime "actual_end_time"
     t.datetime "prediction_end_time"
     t.float    "prediction_end_price"
   end

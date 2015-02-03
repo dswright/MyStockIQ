@@ -1,7 +1,5 @@
 class PredictionsController < ApplicationController
 
-	respond_to :html, :js
-
 	require 'customdate'
 
 	def create
@@ -15,8 +13,9 @@ class PredictionsController < ApplicationController
 													(params[:days].to_i * 24* 3600) + 
 													(params[:hours].to_i * 3600) + 
 													(params[:minutes].to_i * 60)).closest_end_time
-		prediction = {prediction_end_time: prediction_end_time, score: 0, active: true, start_price_verified:false, 
-									end_price_verified:false, start_time: prediction_start_time }
+		prediction = {stock_id: stock.id, prediction_end_time: prediction_end_time, score: 0, active: true, start_price_verified:false, 
+									start_time: prediction_start_time }
+
 		#merge the prediction settings with the params from the prediction form.
 		prediction.merge!(prediction_params)
 		@prediction = @user.predictions.build(prediction)
@@ -33,70 +32,43 @@ class PredictionsController < ApplicationController
 		end
 
 		#Create the proper response to the prediciton input.
-		@response_msgs = []
-
-		if @prediction.invalid?
-			@response_msgs << "Prediction invalid. Please refresh page and try again."
-		end
-
-		if @prediction.active_prediction_exists?
-			@response_msgs << "You already have an active prediction on #{stock.ticker_symbol}"
-		end
+		response_msgs = []
 
 		invalid_start = false
-		if @prediction.prediction_end_time <= @prediction.start_time
-			@response_msgs << "Today's market is currently closed. Please end your prediction when the market is open."
+		if @prediction.invalid?
+			response_msgs << "Prediction invalid. Please refresh page and try again."
 			invalid_start = true
 		end
 
-		unless @prediction.invalid? or @prediction.active_prediction_exists? or invalid_start
+		if @prediction.active_prediction_exists?
+			response_msgs << "You already have an active prediction on #{stock.ticker_symbol}"
+			invalid_start = true
+		end
+
+		if @prediction.prediction_end_time <= @prediction.start_time
+			response_msgs << "Today's market is currently closed. Please end your prediction when the market is open."
+			invalid_start = true
+		end
+
+		unless invalid_start
 			@prediction.save
 			@streams.each {|stream| stream.save}
 			stream = Stream.where(streamable_type: 'Prediction', streamable_id: @prediction.id).first
 			@stream_hash_array = Stream.stream_maker([stream], 0) #gets inserted to top of stream with ajax.
-			@comment = Comment.new
-			@like = Like.new
-			@response_msgs << "Prediction input!"
+			response_msgs << "Prediction input!"
 		end
 
-		@response = response_maker(@response_msgs)
-	end
+		@response = response_maker(response_msgs)
 
-	def update
-		predictions = Prediction.where(active: 1)
-		predictions.each do |prediction|
-			update_prediction(prediction)
-		end
-	end
-
-
-	def destroy
-		#Set prediction active = 0 and redirect back to previous page
-		prediction = Prediction.find_by(id: params[:id])
-
-		#prediction should be destroyed if cancelled before starting.
-		#anything that happens on prediction creation should be removed.
-
-		children = Stream.where(target_type = 'Prediction', target_id = prediction.id)
-
-		if prediction.start_time > Time.zone.now
-			unless children.exist?
-				prediction.destroy
-				@response_msgs << "prediction removed."
-			end
-		else
-			prediction.active = false
-			prediction.actual_end_time = Time.zone.now.closest_end_time
-			prediction.actual_end_price = prediction.stock.daily_stock_price
-			#trigger the addition of a cancellation item to the stream.
-			#need a table of cancelled predictions as well? Like another stream item? Yes.
-			#send email when the actual end price is updated.
-			prediction.save
-			@response_msgs << "prediction is cancelled.. send this to ajax response."
-		end
-		
-		#need to put the ajax response here..
-		#need to put that response box on the page...
+		respond_to do |f|
+      f.js { 
+        if invalid_start
+         render 'shared/_error_messages.js.erb'
+        else 
+          render "create.js.erb"
+        end 
+      }
+    end
 	end
 
 	private
@@ -105,6 +77,6 @@ class PredictionsController < ApplicationController
 	def prediction_params
 		#Obtains parameters from 'prediction form' in app/views/shared.
 		#Permits adjustment of only the 'content' & 'ticker_symbol' columns in the 'predictions' model.
-		params.require(:prediction).permit(:prediction_end_price, :prediction_comment, :score, :active, :start_price, :stock_id)
+		params.require(:prediction).permit(:prediction_end_price, :prediction_comment, :stock_id)
 	end
 end

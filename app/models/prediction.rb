@@ -7,11 +7,35 @@ class Prediction < ActiveRecord::Base
   belongs_to :stock
   belongs_to :user
   has_many :streams, as: :streamable, dependent: :destroy
+  has_many :predictionends, dependent: :destroy
 
   validates :prediction_end_price, presence: true, numericality: true
   validates :stock_id, presence: true, numericality: true
   validates :prediction_comment, length: {maximum: 140}
   default_scope -> { order(created_at: :desc) }
+
+
+  def update_score
+    #Calculates percentchange of prediction/start price and actual price/start price
+    prediction_percentage = percent_change(self.prediction_end_price, self.start_price)
+    actual_percentage = percent_change(prediction.stock.daily_stock_price, self.start_price)
+
+    #Update prediction score
+    self.score = calculate_score(prediction_percentage, actual_percentage)
+    self.save
+  end
+
+  def final_update_score
+    endprediction = Predictionend.find_by(prediction_id: self.id)
+
+    prediction_percentage = percent_change(self.prediction_end_price, self.start_price)
+    actual_percentage = percent_change(prediction.actual_end_price, self.start_price)
+
+    #Update prediction score
+    self.score = calculate_score(prediction_percentage, actual_percentage)
+    self.save
+
+  end
 
 
   def active_prediction_exists?
@@ -24,37 +48,46 @@ class Prediction < ActiveRecord::Base
     end
   end
 
-  def price_exceeds_prediction
+  def exceeds_end_time
+    stock = Stock.find(self.stock_id)
+    if stock.date >= self.prediction_end_time
+      self.update(active:false)
+      predictionend = self.predictionends.build(actual_end_time: stock.date, actual_end_price: stock.daily_stock_price, end_price_verified: false)
+      predictionend.save
+
+      stream_string = "Prediction:#{self.id},Stock:#{self.stock.id}"
+      #build stream items for cancellation.
+      stream_params_process(stream_string).each do |stream|
+        predictionend.streams.build(stream).save
+      end
+
+    end
+  end
+
+  def exceeds_end_price
 
     stock = Stock.find(self.stock_id)
 
     prediction_percentage = percent_change(self.prediction_price, self.start_price)
     actual_percentage = percent_change(stock.daily_stock_price, self.start_price)
 
-    #If actual price has surpassed prediction, move the actual end time of the current prediction to the current time.
+    #If actual price has surpassed prediction, end the prediction.
     if actual_percentage.abs > prediction_percentage.abs
       self.update(active:false)
-      self.actual_end_time = stock.date
+      predictionend = self.predictionends.build(actual_end_time: stock.date, actual_end_price: self.stock.daily_stock_price, end_price_verified: false)
+      predictionend.save
+
+      stream_string = "Prediction:#{self.id},Stock:#{self.stock.id}"
+      #build stream items for cancellation.
+      stream_params_process(stream_string).each do |stream|
+        predictionend.streams.build(stream).save
+      end
+
     end
     
 
   end
 
-
-  def update_prediction
-
-    #Finds stock associated with prediction
-    stock = Stock.find(self.stock_id)
-
-    #Calculates percentchange of prediction/start price and actual price/start price
-    prediction_percentage = percent_change(self.prediction_price, self.start_price)
-    actual_percentage = percent_change(stock.daily_stock_price, self.start_price)
-
-    #Update prediction score
-    self.score = calculate_score(prediction_percentage, actual_percentage)
-    self.save
-
-  end
 
   def calculate_score(prediction_percentage, actual_percentage)
     #IF PREDICTION IS CORRECT: 

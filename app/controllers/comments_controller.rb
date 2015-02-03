@@ -24,14 +24,10 @@ class CommentsController < ApplicationController
 				@stream_hash_array = Stream.stream_maker([stream], params[:nest_count].to_i + 1) #gets inserted below the response item, with proper indent.
 				response_msgs << "Comment added!" #gets inserted at top of page with ajax.
 				@parent = params[:parent]
-				@comment = Comment.new
-				@like = Like.new
 			else #what to do when it is a regular comment.
 				stream = Stream.where(streamable_type: 'Comment', streamable_id: comment.id).first
 				@stream_hash_array = Stream.stream_maker([stream], 0) #gets inserted to top of stream with ajax.
 				response_msgs << "Comment added!" #gets inserted at top of page with ajax.
-				@comment = Comment.new
-				@like = Like.new
 			end
 		else
 			response_msgs << "Comment invalid." #gets inserted at top of page with ajax.

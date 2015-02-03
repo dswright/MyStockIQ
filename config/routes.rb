@@ -37,8 +37,8 @@ Rails.application.routes.draw do
 
   
   post     'predictions'                 =>   'predictions#create'
-  delete   'predictions/:id'             =>   'predictions#destroy'
 
+  get     'predictionends/:id'          =>   'predictionends#create'
 
   resources :relationships
 

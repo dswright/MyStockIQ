@@ -1,0 +1,21 @@
+<div class = "col-xs-3 col-sm-2 col-md-2">
+  <div class = "prediction-post-mug-container">
+    <img src= "http://stocktators.com/assets/images/user.png">
+  </div>
+</div>
+<div class = "prediction-post-txt-container col-xs-9" style="width:400px;">
+
+  <p class = "handle">
+    <%= link_to predictionend.prediction.user.username, "/users/#{predictionend.prediction.user.username}/" %>&nbsp;&bull;&nbsp;<%= time_ago_in_words(predictionend.created_at) %> ago
+  </p>
+
+  <p class = "prediction-txt">
+  <p><b>Prediction End</b></p>
+    <p>final score: <%= predictionend.prediction.score %></p>
+    <p>end price: <%= predictionend.actual_end_price %></p>
+    <p>start time: <%= predictionend.prediction.start_time %></p>
+    <p>end time: <%= predictionend.prediction.prediction_end_time %></p>
+  </p>
+
+  <p class = "comment-txt">No comment yet.</p>
+</div>
