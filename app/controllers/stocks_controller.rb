@@ -30,7 +30,7 @@ require 'scraper'
     @like = Like.new
 
  		#creates prediction variable to be used to set up the prediction creation form (see app/views/shared folder)
-  	@prediction = @current_user.predictions.build(stock_id: @stock.id) 	
+  	@prediction = @current_user.predictions.build(stock_id: @stock.id)	
 
   	#If active prediction exists, show active prediction
   	if @prediction.active_prediction_exists?

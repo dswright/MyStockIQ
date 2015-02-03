@@ -5,7 +5,7 @@
     </div>
     <div class = "prediction-post-txt-container col-xs-9" style="width:400px;">
       <p class = "handle">
-        <a href = "#"><%= comment.user.username %></a> &nbsp;&bull;&nbsp; <%= time_ago_in_words(comment.created_at) %>
+        <a href = "#"><%= link_to comment.user.username, "/users/#{comment.user.username}/" %></a> &nbsp;&bull;&nbsp; <%= time_ago_in_words(comment.created_at) %>
       </p>
       <p class = "comment-txt"><%= comment.content %></p>
     </div>

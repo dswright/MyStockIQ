@@ -6,12 +6,15 @@
 <div class = "prediction-post-txt-container col-xs-9" style="width:400px;">
 
   <p class = "handle">
-    <%= link_to prediction.user.username %>&nbsp;&bull;&nbsp;<%= time_ago_in_words(prediction.created_at) %> ago
+    <%= link_to prediction.user.username, "/users/#{prediction.user.username}/" %>&nbsp;&bull;&nbsp;<%= time_ago_in_words(prediction.created_at) %> ago
   </p>
 
   <p class = "prediction-txt">
+  <p><b>prediction start</b></p>
     <p>score: <%= prediction.score %></p>
     <p>end price: <%= prediction.prediction_end_price %></p>
+    <p>start time: <%= prediction.start_time %></p>
+    <p>end time: <%= prediction.prediction_end_time %></p>
   </p>
 
   <p class = "comment-txt"><%= prediction.prediction_comment %></p>

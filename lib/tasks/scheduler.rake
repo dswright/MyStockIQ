@@ -79,25 +79,25 @@ namespace :predictions do
   end
 
   task :prediction_end => :environment do
-
-    #checks current predictions to see if the current stock price exceeds the prediction price.
-    predictions = Prediction.where(active:true, start_price_verified:true)
+    predictions = Prediction.where(start_price_verified:false)
     predictions.each do |prediction|
-      prediction.price_exceeds_prediction #check if the stock price exceeds the prediction price, if so, move date and set to active:false
-      prediction.prediction_update #run an update on the current score.
+      PredictionstartWorker.perform_async(prediction.id)
     end
 
-    #checks predictions where the end price is not verified to see if they have exceeded their prediction end time.
-    time_now = Time.zone.now
-    predictions = Prediction.where("actual_end_time < ?", time_now).where(start_price_verified:true, end_price_verified:false)
+    predictions = Prediction.where(active:true, start_price_verified:true)
     predictions.each do |prediction|
-      PredictionendWorker.perform_async(prediction.id)
+      prediction.exceeds_end_price #check if the stock price exceeds the prediction price, if so, move date and set to active:false
+      prediction.exceeds_end_time #check if the current time exceeds the prediction end time.
+      prediction.update_score #run an update of the current score.
+    end
+
+    #checks predictionends where the end price is not verified.
+    predictionends = Predictionend.where(end_price_verified:false)
+    predictionends.each do |predictionend|
+      PredictionendWorker.perform_async(predictionend.prediction.id)
     end
 
     #update all active prediction scores.
-
-        
-
   end
 
 end

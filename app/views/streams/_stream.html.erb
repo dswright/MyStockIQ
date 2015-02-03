@@ -15,6 +15,8 @@
         <%= render partial: "streams/stream_prediction", locals: {prediction: stream_hash[:stream].streamable} %>
       <% elsif stream_hash[:stream].streamable_type == "Newsarticle" %>
         <%= render partial: "streams/stream_newsarticle", locals: {newsarticle: stream_hash[:stream].streamable} %>
+      <% elsif stream_hash[:stream].streamable_type == "Predictionend" %>
+        <%= render partial: "streams/stream_predictionend", locals: {predictionend: stream_hash[:stream].streamable} %>
       <%end%>
 
       <%= render partial: "streams/stream_comment_form", locals: {stream_string: "#{stream_hash[:stream].streamable_type}:#{stream_hash[:stream].streamable_id}", stream_obj: stream_hash[:stream], nest_count: stream_hash[:nest_count]} %>

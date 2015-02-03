@@ -1,5 +1,5 @@
 
-<%= form_for(@comment, remote:true) do |f| %>
+<%= form_for(Comment.new, remote:true) do |f| %>
   <% #Renders post form error messages using error_messages helper in app/views/shared/ %>
   <%= f.text_area :content, placeholder: "crappy reply box placeholder", class: "stock-page-comment-field", id: "comment", style: "width:100px; height:70px; float:left;" %>
   <%= hidden_field_tag :stream_string, stream_string %>

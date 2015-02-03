@@ -1,5 +1,3 @@
-
-
 function resizeChart() {
   var height = $("#stock-div").width()/3+30;
   $("#stock-div").css("height", height);
@@ -136,6 +134,10 @@ $(document).ready(function () {
     if (end_price < current_range["y_min"]) {
       chart1.yAxis[0].setExtremes(current_range["y_min"], predictionYMin(end_price));
     }
+  };
+
+  window.removePrediction = function() {
+    chart1.series[3].setData([null, null]);
   };
 
   //$("button[data-x-range-min]").click(get_ranges);
