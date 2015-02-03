@@ -70,6 +70,7 @@ namespace :scraper do
 end
 
 namespace :predictions do
+  #this no longer seems necessary...
   task :prediction_start => :environment do
     time_now = Time.zone.now
     predictions = Prediction.where("start_time < ?", time_now).where(start_price_verified:false)

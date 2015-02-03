@@ -30,9 +30,9 @@ class ScraperPublic
 
   def self.google_intraday(ticker_symbol, days)
     url = URI.encode("http://www.google.com/finance/getprices?i=300&p=#{days}d&f=d,o,h,l,c,v&df=cpct&q=#{ticker_symbol}")
-    if daily_hash_array = Scraper.process_csv_file(url, GoogleIntraday.new, ticker_symbol, false, true)
+    if daily_hash_array = Scraper.process_csv_file(url, GoogleIntraday.new(5), ticker_symbol, false, true)
       unless daily_hash_array.empty?
-        Scraper.new.save_to_db(daily_hash_array, GoogleIntraday.new)
+        Scraper.new.save_to_db(daily_hash_array, GoogleIntraday.new(5))
         Scraper.new.update_stock(ticker_symbol, Intradayprice)
       end
     end
@@ -40,7 +40,7 @@ class ScraperPublic
 
   def self.google_minute(ticker_symbol)
     url = URI.encode("http://www.google.com/finance/getprices?i=60&p=3d&f=d,o,h,l,c,v&df=cpct&q=#{ticker_symbol}")
-    return daily_hash_array = Scraper.process_csv_file(url, GoogleIntraday.new, ticker_symbol, true, true)
+    return daily_hash_array = Scraper.process_csv_file(url, GoogleIntraday.new(1), ticker_symbol, true, true)
   end
 
   def self.google_news(ticker_symbol)
@@ -272,11 +272,17 @@ class Scraper
 end
 
 class GoogleIntraday
+  attr_reader :increment
+
+  def initialize(increment)
+    @increment = increment
+  end
+
   def data_hash(row, ticker_symbol, time_start)
     #if the row[0] is less than 1000000, then its just the integer from the google data, if its greater,
     #then its the actual time stamp, and the correct date.
     if row[0].gsub('a','').to_i <= 1000000
-      time_start = time_start + row[0].to_i * 5*60 #add 5 minutes per increment. Comes in as utc time zone.
+      time_start = time_start + row[0].to_i * @increment*60 #add X minutes per increment. Comes in as utc time zone.
     end
     daily_hash = {
       "ticker_symbol" => ticker_symbol,
