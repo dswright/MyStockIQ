@@ -1,7 +1,8 @@
 class PredictionsController < ApplicationController
 
 	require 'customdate'
-
+	require 'popularity'
+	
 	def create
 		#Obtain user session information from Session Helper function 'current_user'.
 		@user = current_user

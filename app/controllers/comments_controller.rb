@@ -3,7 +3,11 @@ class CommentsController < ApplicationController
 	def create
 		#Obtain user session information from Session Helper function 'current_user'.
 		@user = current_user
-		#build the comment for input to the db with the comment_params method.
+
+		#assign the permitted comment form values to the comment variable. 
+		comment_params[:popularity_score]  = 0
+
+		#build the comment for input to the db.
 		comment = @user.comments.build(comment_params)
 
 		#process the stream input array using the stream_params_process function from the streams helper.

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150202173643) do
+ActiveRecord::Schema.define(version: 20150203070632) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "adminpack"
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20150202173643) do
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.integer  "user_id"
-    t.integer  "popularity_score"
+    t.float    "popularity_score"
   end
 
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
@@ -57,9 +57,10 @@ ActiveRecord::Schema.define(version: 20150202173643) do
     t.string   "url"
     t.string   "summary"
     t.datetime "date"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
     t.string   "source"
+    t.float    "popularity_score"
   end
 
   add_index "newsarticles", ["google_news_id", "id"], name: "index_newsarticles_on_google_news_id_and_id", using: :btree
@@ -88,6 +89,7 @@ ActiveRecord::Schema.define(version: 20150202173643) do
     t.float    "start_price"
     t.datetime "prediction_end_time"
     t.float    "prediction_end_price"
+    t.float    "popularity_score"
   end
 
   add_index "predictions", ["stock_id"], name: "index_predictions_on_stock_id", using: :btree

@@ -1,4 +1,6 @@
 class Stream < ActiveRecord::Base
+
+
   #declares a polymorphic association for the streams table. 
   belongs_to :streamable, polymorphic: true
 
@@ -56,6 +58,67 @@ class Stream < ActiveRecord::Base
 
     #for now make a maximum of 5 recursions... per comment. But modify that later. Must be limited more intelligently than that later.
     return stream_hash_array
+  end
+
+  def update_stream_popularity_score
+
+     net_likes = (self.streamable.likes - self.streamable.dislikes)
+     net_likes = 1 if net_likes <= 0
+
+      #calculate score of comment itself
+      self.streamable.popularity_score = Math.log(net_likes)
+
+        #Dylan's shitty code put into the middle of your function
+        #write function that takes an array of replies.
+        #in the function, loop through the replies.
+        #if a reply has a reply, load the function again with that array of replies.
+        #if it doesn't, log the popularity score
+          #
+        # def popularity_processor(streams)
+        #  streams.each do |stream|
+         #   streamable.popularity_score = streamable.likes - streamable.disklikes
+            #put in exception for predictions.
+          #  stream.replies.exist? #if there are replies, get the popularity score of those replies. this will also save and update the popularity of those sub-items.
+           #   popularity_score += populiarty_processor(stream.replies) #loops the same function and sends in the stream array.
+            #end
+
+        #  streamable.save #updates the popularity score, including in the score the popularity scores of the sub items. Sub items will be updated also.
+        #  return popularity_score
+        #end
+
+      #obtain array of replies to comments
+      replies = self.streamable.replies
+
+      unless replies.empty?
+        replies.each do |reply|
+
+          #Find all additional replies attached to 'reply', and add them to 'replies' array
+          reply.replies.each {|reply| replies << reply}
+
+          net_likes = (reply.likes - reply.dislikes)
+          net_likes = 1 if net_likes <= 0
+          self.streamable.popularity_score += Math.log(net_likes)
+        end
+      end
+
+      #For prediction posts, addtional points are awarded for prediction score
+      if self.streamable.class.name == "Prediction"
+        #10 times prediction score is added to popularity score
+        self.streamable.popularity_score += self.streamable.score
+      end
+
+      #Reduce popularity score 1 point per half day
+      self.streamable.popularity_score -= (Time.zone.now - self.streamable.created_at)/(2*60*60*24)
+
+      #Minimum popularity score obtainable is self popularity (likes minus dislikes)
+      self.streamable.popularity_score = (self.streamable.likes - self.streamable.dislikes) if self.streamable.popularity_score < (self.streamable.likes - self.streamable.dislikes)
+
+      #convert popularity score to integer
+      self.streamable.popularity_score.round(0)
+
+      self.streamable.save
+
+      return self.streamable.popularity_score 
   end
 
 end
