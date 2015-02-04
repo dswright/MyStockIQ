@@ -72,6 +72,7 @@ ActiveRecord::Schema.define(version: 20150203070632) do
     t.integer  "prediction_id"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
+    t.float    "popularity_score"
   end
 
   add_index "predictionends", ["prediction_id"], name: "index_predictionends_on_prediction_id", using: :btree

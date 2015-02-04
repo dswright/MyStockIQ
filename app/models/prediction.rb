@@ -19,7 +19,7 @@ class Prediction < ActiveRecord::Base
   def update_score
     #Calculates percentchange of prediction/start price and actual price/start price
     prediction_percentage = percent_change(self.prediction_end_price, self.start_price)
-    actual_percentage = percent_change(prediction.stock.daily_stock_price, self.start_price)
+    actual_percentage = percent_change(self.stock.daily_stock_price, self.start_price)
 
     #Update prediction score
     self.score = calculate_score(prediction_percentage, actual_percentage)
@@ -40,7 +40,6 @@ class Prediction < ActiveRecord::Base
 
 
   def active_prediction_exists?
-
 	 #Find current user prediction related to that stock
 	 if Prediction.where(active: true, user_id: self.user.id, stock_id: self.stock.id).exists?
       true
@@ -61,7 +60,6 @@ class Prediction < ActiveRecord::Base
       stream_params_process(stream_string).each do |stream|
         predictionend.streams.build(stream).save
       end
-
     end
   end
 
@@ -69,7 +67,7 @@ class Prediction < ActiveRecord::Base
 
     stock = Stock.find(self.stock_id)
 
-    prediction_percentage = percent_change(self.prediction_price, self.start_price)
+    prediction_percentage = percent_change(self.prediction_end_price, self.start_price)
     actual_percentage = percent_change(stock.daily_stock_price, self.start_price)
 
     #If actual price has surpassed prediction, end the prediction.
