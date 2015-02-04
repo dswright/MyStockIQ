@@ -9,7 +9,7 @@ var graph;
 var chart1;
 var current_range;
 
-window.load(function () {
+$(window).load(function () {
   setTimeout(function() {
     resizeChart();
     $(window).bind("orientationchange resize", resizeChart);
@@ -145,7 +145,7 @@ window.load(function () {
     $("button[data-button-type]").click(get_ranges1);
     //remove branding logo that says 'highcarts'
     $( "text" ).remove( ":contains('Highcharts.com')" );
-  }, 0); 
+  }, 5); 
 });
 
 $(document).ready(function () {
