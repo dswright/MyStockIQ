@@ -160,7 +160,7 @@ class Button
     min_price_final = min_price
     limited_predictions.each do |point|
       if point[1] < min_price_final
-        if point[1] > min_price * 0.7
+        if point[1] > min_price * 0.4
           min_price_final = point[1] * 0.95
         end
       end
@@ -173,7 +173,7 @@ class Button
     max_price_final = max_price
     limited_predictions.each do |point|
       if point[1] > max_price_final
-        if point[1] > max_price * 1.3
+        if point[1] < max_price * 2.5
           max_price_final = point[1] * 1.05
         end
       end
