@@ -40,9 +40,7 @@ require 'scraper'
       @stock.update(viewed:true)
     end
 
-		#creates comment variable to be used to set up the comment creation form (see app/views/shared folder)
-  	@comment = Comment.new
-    @like = Like.new
+
 
  		#creates prediction variable to be used to set up the prediction creation form (see app/views/shared folder)
   	@prediction = @current_user.predictions.build(stock_id: @stock.id)	

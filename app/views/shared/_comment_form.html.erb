@@ -5,7 +5,7 @@
       <%= @comment_header %>
     </p>
 
-    <%= form_for(@comment, remote:true) do |f| %>
+    <%= form_for(Comment.new, remote:true) do |f| %>
 
       <%= f.text_area :content, placeholder: "Enter comment", class: "stock-page-comment-field", id: "comment" %>
       <%= hidden_field_tag :stream_string, @comment_stream_inputs %>
