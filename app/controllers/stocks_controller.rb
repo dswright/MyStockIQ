@@ -18,7 +18,9 @@ require 'scraper'
 		#Stock's posts, comments, and predictions to be shown in the view
 		streams = Stream.where(target_type: "Stock", target_id: @stock.id).limit(15)
 
-    streams.each {|stream| stream.streamable.update_popularity_score}
+    unless streams == nil
+      streams.each {|stream| stream.streamable.update_popularity_score}
+    end
 
     #this line makes sorts the stream by popularity score.
     streams = streams.sort_by {|stream| stream.streamable.popularity_score}
