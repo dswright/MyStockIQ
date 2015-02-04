@@ -61,28 +61,7 @@ $(window).load(function () {
     var range_hash = {}
     var apiUrl = "/stocks/" + gon.ticker_symbol + ".json";
     chart1.showLoading('Loading data from server');
-    $.getJSON(apiUrl, function (data) {
-
-      graph = data
-
-      chart1.series[0].setData(data["daily_prices"]);
-      chart1.series[1].setData(data["predictions"]);
-      chart1.series[2].setData(data["daily_forward_prices"]);
-      chart1.hideLoading();
-
-      //create the range hash...
-      graph["ranges"].forEach(function(element, index, array) { 
-      range_hash[element["name"]]={"x_max":element["x_range_max"], 
-                                    "x_min":element["x_range_min"], 
-                                    "y_max":element["y_range_max"], 
-                                    "y_min":element["y_range_min"]}
-                                  });
-
-      chart1.yAxis[0].setExtremes(range_hash["1m"]["y_min"], range_hash["1m"]["y_max"]);
-      chart1.xAxis[0].setExtremes(range_hash["1m"]["x_min"], range_hash["1m"]["x_max"]);
-
-      current_range = range_hash["1m"];
-    });
+    
 
   
     get_ranges1 = function() {
@@ -148,12 +127,6 @@ $(window).load(function () {
   }, 5); 
 });
 
-$(document).ready(function () {
-  $("#dummylink").click(window.alert1);
-});
-/*("#dummylink").click(function () {
-  createGraph();
-});*/
 
 
 
