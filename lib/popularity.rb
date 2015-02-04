@@ -51,10 +51,10 @@ module Popularity
 		end
  	
 		#Reduce popularity score 1 point per half day
-		popularity_score -= (Time.zone.now - self.created_at)/(2*60*60*24)
+		popularity_score -= (Time.zone.now - self.created_at)/(60*60*12)
 
 		#Minimum popularity score is 0
-		popularity_score = 0.0 if popularity_score < 0
+		#popularity_score = 0.0 if popularity_score < 0
 
 		self.popularity_score = popularity_score.round(3)
 

@@ -9,7 +9,7 @@ var graph;
 var chart1;
 var current_range;
 
-$(document).ready(function () {
+$(window).load(function () {
   resizeChart();
   $(window).bind("orientationchange resize", resizeChart);
 

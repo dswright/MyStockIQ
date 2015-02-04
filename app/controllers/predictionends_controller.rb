@@ -21,6 +21,7 @@ class PredictionendsController < ApplicationController
       predictionend.actual_end_time = Time.zone.now.utc_time_int.closest_end_time
       predictionend.actual_end_price = prediction.stock.daily_stock_price
       predictionend.end_price_verified = false
+      predictionend.popularity_score = 0
 
       #if the prediction is ended before it begins, and it has children, the end time must be updated to equal the start time in the morning.
       if predictionend.actual_end_time < prediction.start_time

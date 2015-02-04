@@ -20,8 +20,10 @@ require 'scraper'
 
     streams.each {|stream| stream.streamable.update_popularity_score}
 
-    streams = sort_by_popularity(streams)
-    streams = streams.reverse
+    #this line makes sorts the stream by popularity score.
+    streams = streams.sort_by {|stream| stream.streamable.popularity_score}
+    #streams = sort_by_popularity(streams)
+    #streams = streams.reverse
 
     unless streams == nil
       @stream_hash_array = Stream.stream_maker(streams, 0)
