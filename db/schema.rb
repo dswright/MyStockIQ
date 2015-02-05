@@ -11,8 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
-ActiveRecord::Schema.define(version: 20150203070632) do
+ActiveRecord::Schema.define(version: 20150203205437) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -89,8 +88,6 @@ ActiveRecord::Schema.define(version: 20150203070632) do
     t.boolean  "active"
     t.float    "start_price"
     t.float    "popularity_score"
-    t.float    "actual_end_price"
-    t.datetime "actual_end_time"
     t.datetime "prediction_end_time"
     t.float    "prediction_end_price"
   end
