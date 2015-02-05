@@ -8,7 +8,7 @@ class Prediction < ActiveRecord::Base
   belongs_to :stock
   belongs_to :user
   has_many :streams, as: :streamable, dependent: :destroy
-  has_many :predictionends, dependent: :destroy
+  has_one :predictionend, dependent: :destroy
 
   validates :prediction_end_price, presence: true, numericality: true
   validates :stock_id, presence: true, numericality: true
@@ -27,10 +27,8 @@ class Prediction < ActiveRecord::Base
   end
 
   def final_update_score
-    endprediction = Predictionend.find_by(prediction_id: self.id)
-
     prediction_percentage = percent_change(self.prediction_end_price, self.start_price)
-    actual_percentage = percent_change(prediction.actual_end_price, self.start_price)
+    actual_percentage = percent_change(self.predictionend.actual_end_price, self.start_price)
 
     #Update prediction score
     self.score = calculate_score(prediction_percentage, actual_percentage)

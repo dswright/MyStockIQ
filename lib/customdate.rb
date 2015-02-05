@@ -93,9 +93,13 @@ class Integer
 
   #returns the closest end time. Used for a variety of things. probably best as a function of ints.
   #expects to receieve an int, but returns a date string..
+  
+  #THIS FUNCTION IS NOW OUT OF USE.
   def closest_end_time
+    #increase the time by 1 minute, since these formulas round down.
+    int_time = self + 60
     #first, round to the nearest minute
-    rounded_utc_time_int = self.utc_time.strftime("%Y-%m-%d %H:%M:00").utc_time.utc_time_int
+    rounded_utc_time_int = int_time.utc_time.strftime("%Y-%m-%d %H:%M:00").utc_time.utc_time_int
 
     #first check if the current time is valid
     #if this returns false, its in the time frame.
@@ -128,7 +132,9 @@ class Integer
   end
 
   def closest_start_time
-    rounded_utc_time_int = self.utc_time.strftime("%Y-%m-%d %H:%M:00").utc_time.utc_time_int
+    #increase the time by 1 minute, since these formulas round down.
+    int_time = self + 60
+    rounded_utc_time_int = int_time.utc_time.strftime("%Y-%m-%d %H:%M:00").utc_time.utc_time_int
 
     #first check if the current time is valid
     #if this returns false, its in the time frame.

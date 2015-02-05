@@ -13,7 +13,7 @@ class PredictionsController < ApplicationController
 		prediction_end_time = (Time.zone.now.utc_time_int + 
 													(params[:days].to_i * 24* 3600) + 
 													(params[:hours].to_i * 3600) + 
-													(params[:minutes].to_i * 60)).closest_end_time
+													(params[:minutes].to_i * 60)).closest_start_time
 		prediction = {stock_id: stock.id, prediction_end_time: prediction_end_time, score: 0, active: true, start_price_verified:false, 
 									start_time: prediction_start_time, popularity_score:0 }
 
@@ -47,7 +47,7 @@ class PredictionsController < ApplicationController
 		end
 
 		if @prediction.prediction_end_time <= @prediction.start_time
-			response_msgs << "Today's market is currently closed. Please end your prediction when the market is open."
+			response_msgs << "Your prediction starts and ends at the same time. Please increase your prediction end time."
 			invalid_start = true
 		end
 

@@ -12,6 +12,8 @@ module Popularity
     	reply_stream = Stream.where(target_id: self.id, target_type: self.class.name)
     	replies = []
     	reply_stream.each do |stream|
+        #this limits all replies to being comments, which is not the case.
+        #predictionends are replies to the original prediction.
       		replies << Comment.find_by(id: stream.streamable_id)
     	end
 

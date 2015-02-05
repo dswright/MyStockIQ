@@ -18,12 +18,14 @@ require 'scraper'
 		#Stock's posts, comments, and predictions to be shown in the view
 		streams = Stream.where(target_type: "Stock", target_id: @stock.id).limit(15)
 
-    unless streams == nil
-      streams.each {|stream| stream.update_stream_popularity_scores}
-    end
+
+    #unless streams == nil
+    #  streams.each {|stream| stream.streamable.update_popularity_score}
+    #end
+
 
     #this line makes sorts the stream by popularity score.
-    streams = streams.sort_by {|stream| stream.streamable.popularity_score}
+    #streams = streams.sort_by {|stream| stream.streamable.popularity_score}
     #streams = sort_by_popularity(streams)
     streams = streams.reverse
 
@@ -40,9 +42,7 @@ require 'scraper'
       @stock.update(viewed:true)
     end
 
-		#creates comment variable to be used to set up the comment creation form (see app/views/shared folder)
-  	@comment = Comment.new
-    @like = Like.new
+
 
  		#creates prediction variable to be used to set up the prediction creation form (see app/views/shared folder)
   	@prediction = @current_user.predictions.build(stock_id: @stock.id)	
@@ -82,10 +82,11 @@ require 'scraper'
     respond_to do |format|
       format.html
       format.json {
-        graph = Graph.new(@stock.ticker_symbol)
+        graph = Graph.new(@stock.ticker_symbol, current_user)
         render json: {
         :ranges => graph.ranges,
-        :daily_prices => graph.daily_prices, 
+        :daily_prices => graph.daily_prices,
+        :my_prediction => graph.my_prediction,
         :predictions => graph.predictions, 
         :daily_forward_prices => graph.daily_forward_prices,
         :intraday_prices => graph.intraday_prices,

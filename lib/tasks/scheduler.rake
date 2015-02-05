@@ -85,7 +85,7 @@ namespace :predictions do
       PredictionstartWorker.perform_async(prediction.id)
     end
 
-    predictions = Prediction.where(active:true, start_price_verified:true)
+    predictions = Prediction.where(active:true)
     predictions.each do |prediction|
       prediction.exceeds_end_price #check if the stock price exceeds the prediction price, if so, move date and set to active:false
       prediction.exceeds_end_time #check if the current time exceeds the prediction end time.
@@ -93,7 +93,7 @@ namespace :predictions do
     end
 
     #checks predictionends where the end price is not verified.
-    predictionends = Predictionend.where(end_price_verified:false)
+    predictionends = Predictionend.where(end_price_verified:false, start_price_verified:true)
     predictionends.each do |predictionend|
       PredictionendWorker.perform_async(predictionend.prediction.id)
     end
