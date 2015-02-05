@@ -1,20 +1,36 @@
 class Graph
   require 'customdate'
+  require 'sessions_helper'
+  include SessionsHelper
 
   attr_reader :ticker_symbol, :stock_id
   
   GraphPoint = Struct.new(:graph_time, :stock_price)
 
-  def initialize(ticker_symbol)
+  def initialize(ticker_symbol, current_user)
     @ticker_symbol = ticker_symbol
     @stock_id = Stock.find_by(ticker_symbol: ticker_symbol)
+    @current_user = current_user
+
+  end
+
+  def my_prediction
+    my_prediction = []
+    Prediction.where(stock_id: stock_id, active:true, user_id: @current_user.id).each do |prediction|
+      graph_time = prediction.prediction_end_time.utc_time_int.graph_time_int
+      my_prediction << [graph_time, prediction.prediction_end_price.round(2)]
+    end
+    if my_prediction.empty?
+      my_prediction << [0, nil]
+    end
+    return my_prediction
   end
 
   def predictions
     predictions = []
-    Prediction.where(stock_id: stock_id, active:true).limit(1500).order('prediction_end_time asc').each do |prediction|
+    Prediction.where(stock_id: stock_id, active:true).where('user_id not in (?)', [@current_user.id]).limit(1500).order('prediction_end_time desc').reverse.each do |prediction|
       graph_time = prediction.prediction_end_time.utc_time_int.graph_time_int
-      predictions << [graph_time, prediction.prediction_end_price]
+      predictions << [graph_time, prediction.prediction_end_price.round(2)]
     end
     return predictions
   end
@@ -24,7 +40,7 @@ class Graph
     price_array = []
     stock_prices = Intradayprice.where(ticker_symbol:self.ticker_symbol).limit(400).order('date desc').reverse.each do |price|    
       graph_time = price.date.utc_time_int.graph_time_int
-      price_array << [graph_time, price.close_price]
+      price_array << [graph_time, price.close_price.round(2)]
     end
     return price_array
   end
@@ -35,7 +51,7 @@ class Graph
     price_array = []
     stock_prices.each do |price|
       graph_time = price.date.utc_time_int.graph_time_int
-      price_array << [graph_time, price.close_price]
+      price_array << [graph_time, price.close_price.round(2)]
     end
     price_array.reverse!
 
@@ -43,7 +59,7 @@ class Graph
     extra_day = stock.date.utc_time_int.graph_time_int
     if extra_day > price_array.last[0]
       extra_day = extra_day.utc_time_int.utc_time.beginning_of_day.strftime("%Y-%m-%d 21:00:00").utc_time.utc_time_int.graph_time_int
-      price_array << [extra_day, stock.daily_stock_price]
+      price_array << [extra_day, stock.daily_stock_price.round(2)]
     end
     return price_array
   end
@@ -93,8 +109,8 @@ class Graph
   ButtonSetting = Struct.new(:name, :start, :settings)
 
   def ranges
-    intraday_settings = RangeSetting.new(60*5*1000, 6.5*3600*1000.to_i, predictions, intraday_prices)
-    daily_settings = RangeSetting.new(24*3600*1000, 24*3600*1000.to_i, predictions, daily_prices)
+    intraday_settings = RangeSetting.new(60*5*1000, 6.5*3600*1000.to_i, predictions+my_prediction, intraday_prices)
+    daily_settings = RangeSetting.new(24*3600*1000, 24*3600*1000.to_i, predictions+my_prediction, daily_prices)
     buttons = [ButtonSetting.new("1d", 1, intraday_settings), 
                 ButtonSetting.new("5d", 5, intraday_settings),
                 ButtonSetting.new("1m", 20, daily_settings),

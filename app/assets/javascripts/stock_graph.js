@@ -1,3 +1,11 @@
+
+//adjust the array class to create a method called .last! so cool.
+if (!Array.prototype.last){
+    Array.prototype.last = function(){
+        return this[this.length - 1];
+    };
+};
+
 function resizeChart() {
   var height = $("#stock-div").width()/3+30;
   $("#stock-div").css("height", height);
@@ -8,6 +16,7 @@ function resizeChart() {
 var graph;
 var chart1;
 var current_range;
+var range_hash = {}
 
 $(document).ready(function () {
   resizeChart();
@@ -57,7 +66,6 @@ $(document).ready(function () {
   });
 
 
-  var range_hash = {}
   var apiUrl = "/stocks/" + gon.ticker_symbol + ".json";
   chart1.showLoading('Loading data from server');
   $.getJSON(apiUrl, function (data) {
@@ -67,6 +75,7 @@ $(document).ready(function () {
     chart1.series[0].setData(data["daily_prices"]);
     chart1.series[1].setData(data["predictions"]);
     chart1.series[2].setData(data["daily_forward_prices"]);
+    chart1.series[3].setData(data["my_prediction"])
     chart1.hideLoading();
 
     //create the range hash...
@@ -110,7 +119,6 @@ $(document).ready(function () {
     //window.alert(range_min + range_max)
   };
 
-
   function predictionXMax(end_time){
     return end_time+(end_time-current_range["x_min"])*0.05;
   };
@@ -120,20 +128,39 @@ $(document).ready(function () {
   function predictionYMin(end_price){
     return end_price-(end_price-current_range["y_min"])*0.1;
   };
+
+  //when a prediction is input, the graph ranges must be updated with new y max and mins so the button ranges include that
+  //prediction.
+  function updateRanges(end_time, end_price){
+    for (var value in range_hash) {
+      if (end_price <= range_hash[value]["y_min"] && end_time <= range_hash[value]["x_max"]) {
+        range_hash[value]["y_min"] = predictionYMin(end_price);
+      }
+      if (end_price >= range_hash[value]["y_max"] && end_time <= range_hash[value]["x_max"]) {
+        range_hash[value]["y_max"] = predictionYMax(end_price);
+      }
+    };
+  };
   
   //window.function has the affect of setting the function as a global function, and its available in the ajax function.
   window.updatePredictions = function(end_time, end_price) {
     chart1.series[3].setData([[end_time, end_price]]);
 
     if (end_time > current_range["x_max"]) {
-      chart1.xAxis[0].setExtremes(current_range["x_min"], predictionXMax(end_time));
+      chart1.series[2].setData(graph["daily_forward_prices"]);
+      chart1.series[0].setData(graph["daily_prices"]);
+      chart1.xAxis[0].setExtremes(range_hash["1m"]["x_min"], predictionXMax(end_time)); //set to the 1 month min range by default. change this later.
+      chart1.yAxis[0].setExtremes(range_hash["1m"]["y_min"], range_hash["1m"]["y_max"]);
+      current_range = range_hash["1m"]
     }
-    if (end_price > current_range["y_max"]) {
+    if (end_price >= current_range["y_max"]) {
       chart1.yAxis[0].setExtremes(current_range["y_min"], predictionYMax(end_price));
     }
-    if (end_price < current_range["y_min"]) {
-      chart1.yAxis[0].setExtremes(current_range["y_min"], predictionYMin(end_price));
+    if (end_price <= current_range["y_min"]) {
+      chart1.yAxis[0].setExtremes(predictionYMin(end_price), current_range["y_max"]);
     }
+
+    updateRanges(end_time, end_price);
   };
 
   window.removePrediction = function() {
