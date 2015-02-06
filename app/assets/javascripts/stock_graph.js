@@ -1,10 +1,4 @@
 
-//adjust the array class to create a method called .last! so cool.
-if (!Array.prototype.last){
-    Array.prototype.last = function(){
-        return this[this.length - 1];
-    };
-};
 
 function resizeChart() {
   var height = $("#stock-div").width()/3+30;
@@ -170,7 +164,7 @@ $(document).ready(function () {
   //$("button[data-x-range-min]").click(get_ranges);
   $("button[data-button-type]").click(get_ranges1);
   //remove branding logo that says 'highcarts'
-  $( "text" ).remove( ":contains('Highcharts.com')" );
+  $("text").remove( ":contains('Highcharts.com')" );
 });
 
 

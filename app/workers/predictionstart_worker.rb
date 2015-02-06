@@ -10,5 +10,6 @@ class PredictionstartWorker
       min_minute = times_ahead.min_by {|item| item["date"]}
       prediction.update(start_time:min_minute["date"], start_price:min_minute["close_price"].round(2), start_price_verified:true)
     end
+    return prediction #this return is only necessary for the test to pass.
   end
 end

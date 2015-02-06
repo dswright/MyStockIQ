@@ -16,6 +16,7 @@ class Prediction < ActiveRecord::Base
   default_scope -> { order(created_at: :desc) }
 
 
+
   def update_score
     #Calculates percentchange of prediction/start price and actual price/start price
     prediction_percentage = percent_change(self.prediction_end_price, self.start_price)
@@ -46,23 +47,8 @@ class Prediction < ActiveRecord::Base
     end
   end
 
-  def exceeds_end_time
-    stock = Stock.find(self.stock_id)
-    if stock.date >= self.prediction_end_time
-      self.update(active:false)
-      predictionend = self.predictionends.build(actual_end_time: stock.date, actual_end_price: stock.daily_stock_price, end_price_verified: false)
-      predictionend.save
-
-      stream_string = "Prediction:#{self.id},Stock:#{self.stock.id}"
-      #build stream items for cancellation.
-      stream_params_process(stream_string).each do |stream|
-        predictionend.streams.build(stream).save
-      end
-    end
-  end
 
   def exceeds_end_price
-
     stock = Stock.find(self.stock_id)
 
     prediction_percentage = percent_change(self.prediction_end_price, self.start_price)
@@ -71,18 +57,24 @@ class Prediction < ActiveRecord::Base
     #If actual price has surpassed prediction, end the prediction.
     if actual_percentage.abs > prediction_percentage.abs
       self.update(active:false)
-      predictionend = self.predictionends.build(actual_end_time: stock.date, actual_end_price: self.stock.daily_stock_price, end_price_verified: false)
+      predictionend = self.build_predictionend(actual_end_time: stock.date, actual_end_price: self.stock.daily_stock_price, end_price_verified: false)
       predictionend.save
 
-      stream_string = "Prediction:#{self.id},Stock:#{self.stock.id}"
-      #build stream items for cancellation.
-      stream_params_process(stream_string).each do |stream|
-        predictionend.streams.build(stream).save
-      end
-
+      stream = self.streams.build(target_type:"Prediction", target_id: self.id)
+      stream = self.streams.build(target_type:"Stock", target_id: self.stock.id)
     end
-    
+  end
 
+
+  def exceeds_end_time
+    if self.stock.date >= self.prediction_end_time
+      self.update(active:false)
+      predictionend = self.build_predictionend(actual_end_time: self.prediction_end_time, actual_end_price: self.stock.daily_stock_price, end_price_verified: false)
+      predictionend.save
+
+      stream = self.streams.build(target_type:"Prediction", target_id: self.id)
+      stream = self.streams.build(target_type:"Stock", target_id: self.stock.id)
+    end
   end
 
 

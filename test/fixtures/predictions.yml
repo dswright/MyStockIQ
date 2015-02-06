@@ -1,39 +1,101 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-sean:
-  prediction_end_price: 9.99
-  user_id: 1
-  stock_id: 1
-  score: 20
 
 #these 2 predictions are used for the graph tests. end time and end price are what get tested.
 LNKD1:
+  id: 1
   user_id: 1
   score: 0
   prediction_comment: ""
   stock_id: 1
   start_time: "2015-01-21 14:30:00"
   start_price_verified: false
-  end_price_verified: false
   active: true
   start_price: 105.99
-  actual_end_price: null
-  actual_end_time: null
   prediction_end_time: "2015-01-23 21:00:00"
   prediction_end_price: 110
 
 LNKD2:
+  id: 2
   user_id: 2
   score: 0
   prediction_comment: ""
   stock_id: 1
   start_time: "2015-01-21 16:30:00"
   start_price_verified: false
-  end_price_verified: false
   active: true
   start_price: 105.99
-  actual_end_price: null
-  actual_end_time: null
   prediction_end_time: "2015-01-26 21:00:00"
   prediction_end_price: 120
+
+LNKD3: #this is used to test the exceeded price.
+  id: 3
+  user_id: 3
+  score: 0
+  prediction_comment: ""
+  stock_id: 1
+  start_time: "2015-01-21 16:30:00"
+  start_price_verified: false
+  active: true
+  start_price: 0.50
+  prediction_end_time: "2015-01-26 21:00:00"
+  prediction_end_price: 1
+
+LNKD4: #this is used to test the exceeded time. The time has to be set back a bit because the date on the LNKD stock is 1/12/2015.
+  id: 4
+  user_id: 4
+  score: 0
+  prediction_comment: ""
+  stock_id: 1
+  start_time: "2015-01-02 16:30:00"
+  start_price_verified: false
+  active: true
+  start_price: 0.50
+  prediction_end_time: "2015-01-08 17:00:00"
+  prediction_end_price: 1
+
+LNKD5: #this is used to test the score update.
+  id: 5
+  user_id: 5
+  score: 0
+  prediction_comment: ""
+  stock_id: 1
+  start_time: "2015-01-02 16:30:00"
+  start_price_verified: true #start price verified will be true for these..
+  active: true
+  start_price: 80 #increases from 80 to 100, a 25% increase, should be 25 points.
+  prediction_end_time: "2015-01-15 14:30:00" #set the prediction end date to after the date of the stock. date of the stock is 1/12/2015 10 am.
+  prediction_end_price: 150
+
+LNKD6: #used to test the prediction end worker.
+  id: 6
+  user_id: 6
+  score: 0
+  prediction_comment: ""
+  stock_id: 1
+  start_time: "2015-01-02 16:30:00"
+  start_price_verified: true #start price verified will be true for these..
+  active: false
+  start_price: 80 #increases from 80 to over 100 based on LNKD's current price. 
+  prediction_end_time: "2015-01-15 14:30:00" #set the prediction end date to before today.
+  prediction_end_price: 150
+
+#used to test final score update
+LNKD7:
+  id: 7
+  user_id: 7
+  score: 0
+  prediction_comment: ""
+  stock_id: 1
+  start_time: "2015-01-02 16:30:00"
+  start_price_verified: true #start price verified will be true for these..
+  active: false
+  start_price: 80 #increases from 80 to final price of 100
+  prediction_end_time: "2015-01-15 14:30:00" #set the prediction end date to before today.
+  prediction_end_price: 150
+
+
+
+
+
 
