@@ -87,8 +87,8 @@ namespace :predictions do
 
     predictions = Prediction.where(active:true)
     predictions.each do |prediction|
-      prediction.exceeds_end_price #check if the stock price exceeds the prediction price, if so, move date and set to active:false
-      prediction.exceeds_end_time #check if the current time exceeds the prediction end time.
+      prediction.exceeds_end_price #if the stock price exceeds the prediction price, move date and set to active:false, create prediction ends
+      prediction.exceeds_end_time #if the current time exceeds the prediction end time, set active:false, create prediction ends.
       prediction.update_score #run an update of the current score.
     end
 
@@ -96,6 +96,7 @@ namespace :predictions do
     predictionends = Predictionend.where(end_price_verified:false)
     predictionends.each do |predictionend|
       PredictionendWorker.perform_async(predictionend) #updates the predictionend to verified status.
+      
       if predictionend.end_price_verified
         predictionend.prediction.final_update_score #calculates the final score for the prediction.
         PredictionendMailer.predictioncomplete(predictionend).deliver_now #send confirmation email of prediction complete.

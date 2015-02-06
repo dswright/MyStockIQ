@@ -60,8 +60,10 @@ class Prediction < ActiveRecord::Base
       predictionend = self.build_predictionend(actual_end_time: stock.date, actual_end_price: self.stock.daily_stock_price, end_price_verified: false)
       predictionend.save
 
-      stream = self.streams.build(target_type:"Prediction", target_id: self.id)
-      stream = self.streams.build(target_type:"Stock", target_id: self.stock.id)
+      stream = predictionend.streams.build(target_type:"Prediction", target_id: self.id)
+      stream.save
+      stream = predictionend.streams.build(target_type:"Stock", target_id: self.stock.id)
+      stream.save
     end
   end
 
@@ -72,8 +74,10 @@ class Prediction < ActiveRecord::Base
       predictionend = self.build_predictionend(actual_end_time: self.prediction_end_time, actual_end_price: self.stock.daily_stock_price, end_price_verified: false)
       predictionend.save
 
-      stream = self.streams.build(target_type:"Prediction", target_id: self.id)
-      stream = self.streams.build(target_type:"Stock", target_id: self.stock.id)
+      stream = predictionend.streams.build(target_type:"Prediction", target_id: self.id)
+      stream.save
+      stream = predictionend.streams.build(target_type:"Stock", target_id: self.stock.id)
+      stream.save
     end
   end
 
