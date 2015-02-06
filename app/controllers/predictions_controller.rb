@@ -14,6 +14,7 @@ class PredictionsController < ApplicationController
 													(params[:days].to_i * 24* 3600) + 
 													(params[:hours].to_i * 3600) + 
 													(params[:minutes].to_i * 60)).closest_start_time
+		
 		prediction = {stock_id: stock.id, prediction_end_time: prediction_end_time, score: 0, active: true, start_price_verified:false, 
 									start_time: prediction_start_time, popularity_score:0 }
 
