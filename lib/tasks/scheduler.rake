@@ -96,8 +96,10 @@ namespace :predictions do
     predictionends = Predictionend.where(end_price_verified:false)
     predictionends.each do |predictionend|
       PredictionendWorker.perform_async(predictionend) #updates the predictionend to verified status.
-      predictionend.prediction.final_update_score #calculates the final score for the prediction.
-      #send email here when prediction update is done.     
+      if predictionend.end_price_verified
+        predictionend.prediction.final_update_score #calculates the final score for the prediction.
+        PredictionendMailer.predictioncomplete(predictionend).deliver_now #send confirmation email of prediction complete.
+      end
     end
 
     #update all active prediction scores.
