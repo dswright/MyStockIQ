@@ -57,7 +57,7 @@ class Prediction < ActiveRecord::Base
     #If actual price has surpassed prediction, end the prediction.
     if actual_percentage.abs > prediction_percentage.abs
       self.update(active:false)
-      predictionend = self.build_predictionend(actual_end_time: stock.date, actual_end_price: self.stock.daily_stock_price, end_price_verified: false)
+      predictionend = self.build_predictionend(actual_end_time: stock.date, actual_end_price: self.stock.daily_stock_price, end_price_verified: false, popularity_score:0)
       predictionend.save
 
       stream = predictionend.streams.build(target_type:"Prediction", target_id: self.id)
@@ -71,7 +71,7 @@ class Prediction < ActiveRecord::Base
   def exceeds_end_time
     if self.stock.date >= self.prediction_end_time
       self.update(active:false)
-      predictionend = self.build_predictionend(actual_end_time: self.prediction_end_time, actual_end_price: self.stock.daily_stock_price, end_price_verified: false)
+      predictionend = self.build_predictionend(actual_end_time: self.prediction_end_time, actual_end_price: self.stock.daily_stock_price, end_price_verified: false, popularity_score: 0)
       predictionend.save
 
       stream = predictionend.streams.build(target_type:"Prediction", target_id: self.id)
