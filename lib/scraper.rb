@@ -28,6 +28,7 @@ class ScraperPublic
     end
   end
 
+
   def self.google_intraday(ticker_symbol, days)
     url = URI.encode("http://www.google.com/finance/getprices?i=300&p=#{days}d&f=d,o,h,l,c,v&df=cpct&q=#{ticker_symbol}")
     if daily_hash_array = Scraper.process_csv_file(url, GoogleIntraday.new(5), ticker_symbol, false, true)
