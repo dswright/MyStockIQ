@@ -24,10 +24,6 @@ module Popularity
 
 
   		net_likes = (self.likes - self.dislikes)
-     	net_likes = 1 if net_likes <= 0
-
-		#calculate score of comment itself
-		popularity_score = Math.log(net_likes)
 
 		#obtain array of replies to comments
 		replies = self.replies
@@ -38,12 +34,12 @@ module Popularity
 				#Find all additional replies attached to 'reply', and add them to 'replies' array
 				reply.replies.each {|reply| replies << reply}
 
-				net_likes = (reply.likes - reply.dislikes)
-          		net_likes = 1 if net_likes <= 0
-
-				popularity_score += Math.log(net_likes)
+				net_likes += (reply.likes - reply.dislikes)
 			end
 		end
+
+		net_likes = 1 if net_likes <=0
+		popularity_score = Math.log(net_likes)
 
 		#For prediction posts, addtional points are awarded for prediction score
 		if self.class.name == "Prediction"
@@ -55,10 +51,8 @@ module Popularity
 		#Reduce popularity score 1 point per half day
 		popularity_score -= (Time.zone.now - self.created_at)/(60*60*12)
 
-		#Minimum popularity score is 0
-		#popularity_score = 0.0 if popularity_score < 0
 
-		self.popularity_score = popularity_score.round(3)
+		self.popularity_score = popularity_score.round(6)
 
 		self.save
 

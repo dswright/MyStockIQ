@@ -5,33 +5,30 @@ class StreamTest < ActiveSupport::TestCase
  #Setup test post
   def setup
   	@user = users(:dylan)
-  	@stream = @user.streams.build(content: "Lorem ipsum", user_id: @user.id)
+  	@comment_stream = Streams.new(
+                                            streamable_id: 1
+                                            streamable_type: "Comment"
+                                            target_type: "Stock", 
+                                            target_id: 1),
+
   end
 
-  #Runs model validation tests on the stream
   test "should be valid" do
-  	assert @stream.valid?
+  	assert @comment_stream.valid?
   end
 
-  #Tests if user_id exists
-  test "user id should be present" do
-  	@stream.user_id = nil
-  	assert_not @stream.valid?
+  test "parent id should be present" do
+  	@comment_stream.streamable_id = nil
+  	assert_not @comment_stream.valid?
   end
 
-  test "content should be present" do
-  	@stream.content = "  "
-  	assert_not @stream.valid?
+  test "parent type should be present" do
+  	@comment_stream.streamable_type = nil
+  	assert_not @comment_stream.valid?
   end
 
-  test "content should be at most 140 characters" do
-  	@stream.content = "a" * 141
-  	assert_not @stream.valid?
-  end
   
-
-  #Tests to make sure most recent user post is listed first
-  test "stream order should be most recent first" do
+  test "stream model order should be most recent first" do
   	assert_equal Stream.first, streams(:most_recent)
   end
 end
