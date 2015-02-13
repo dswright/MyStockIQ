@@ -84,22 +84,16 @@ $(document).ready(function () {
     chart1.series[3].setData(graph["my_prediction"]);
     chart1.hideLoading();
 
-    //intraday predictions need to be a bit different...
-    //predictions that end today appear odd on the monthly graphs.
-    //these predictions, that end today, need to be rounded forward to the end of the day.
-    //so the dot does not appear wierd on the monthly graphs. It appears to end before the current time.
-    //which would be incorrect.
-    //it only happens with predictions that are ending today.
-    //need a function that loops through the array, looks for all predictions ending today, and sets their endtime, for the graph only,
-    //to be at the end of the day...
-    //need to loop through both the predictions and the my_prediction arrays.
+    //create prediction arrays where predictions ending that day are rounded to the end of the day to appear nicely on the 1m+ graphs.
     graph["daily_predictions"] = DailyPredictions(graph["predictions"], graph["daily_prices"].last()[0]);
-    graph["daily_my_predictions"] = DailyPredictions(graph["my_prediction"], graph["daily_prices"].last()[0]);
-
+    graph["daily_my_prediction"] = DailyPredictions(graph["my_prediction"], graph["daily_prices"].last()[0]);
+    //this is not quite done yet. I need to make it work on prediction input as well.
+    //that will be a bit more complex.
 
     //create the rangeHash to be used by the buttons.
     //note that by adding the my_prediction here, it will fall under the limited array filter.
-    graphSettings = {intradayPrices: graph["intraday_prices"], dailyPrices:graph["daily_prices"], predictions:graph["predictions"].concat(graph["my_prediction"])};
+    //the daily_predictions and daily_my_predictions are used here because the default setting is a monthly graph.
+    graphSettings = {intradayPrices: graph["intraday_prices"], dailyPrices:graph["daily_prices"], predictions:graph["daily_predictions"].concat(graph["daily_my_prediction"])};
     rangeHash = new StockGraphButtons(graphSettings);
 
     chart1.yAxis[0].setExtremes(rangeHash["1m"]["yMin"], rangeHash["1m"]["yMax"]);
@@ -125,7 +119,7 @@ $(document).ready(function () {
       chart1.series[2].setData(graph["predictions"]);
       chart1.series[3].setData(graph["my_prediction"]);
     }
-    else { //current range is not one of these, load the dily prices.
+    else { //current range is not one of these, load the daily prices.
       chart1.series[0].setData(graph["daily_prices"]);
       chart1.series[1].setData(graph["daily_forward_prices"]);
 
