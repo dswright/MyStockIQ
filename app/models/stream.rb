@@ -42,7 +42,7 @@ class Stream < ActiveRecord::Base
         stream: stream, 
         nest_count: nest_count, 
         sub_hash_array: sub_stream, 
-        popularity_score: popularity_score
+        popularity_score: stream.streamable.popularity_score
       }
 
       stream_hashes << stream_hash
@@ -50,8 +50,8 @@ class Stream < ActiveRecord::Base
       
     end
 
-    stream_hash_array.sort_by! {|stream| stream[:popularity_score]}
-    stream_hash_array.reverse!
+    stream_hashes.sort_by! {|stream| stream[:popularity_score]}
+    stream_hashes.reverse!
     #for now make a maximum of 5 recursions... per comment. But modify that later. Must be limited more intelligently than that later.
     return stream_hashes
   end
