@@ -30,7 +30,7 @@ class PredictionendsController < ApplicationController
         prediction.active = false
         prediction.save #update the prediction to inactive.
 
-        predictionend = prediction.build_prediction() #build a predictino end.
+        predictionend = prediction.build_predictionend() #build a prediction end.
         predictionend.actual_end_time = Time.zone.now.utc_time_int.closest_start_time
         predictionend.actual_end_price = prediction.stock.daily_stock_price
         predictionend.end_price_verified = false
