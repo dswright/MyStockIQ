@@ -20,6 +20,13 @@ $(document).ready(function () {
       dataGrouping: {
         enabled: false
       }
+    },
+    {
+      name: "dateseries",
+      lineWidth : 1,
+      dataGrouping: {
+        enabled: false
+      }
     }, 
     {
       name : "prediction",
@@ -31,13 +38,6 @@ $(document).ready(function () {
         enabled : true,
         radius : 4
       },
-    },
-    {
-      name: "dateseries",
-      lineWidth : 1,
-      dataGrouping: {
-        enabled: false
-      }
     },
     {
       name:"myprediction",
@@ -78,17 +78,28 @@ $(document).ready(function () {
 
     graph = data
 
-    chart1.series[0].setData(data["daily_prices"]);
-    chart1.series[1].setData(data["predictions"]);
-    chart1.series[2].setData(data["daily_forward_prices"]);
-    chart1.series[3].setData(data["my_prediction"]);
+    chart1.series[0].setData(graph["daily_prices"]);
+    chart1.series[1].setData(graph["daily_forward_prices"]);
+    chart1.series[2].setData(graph["predictions"]);
+    chart1.series[3].setData(graph["my_prediction"]);
     chart1.hideLoading();
 
-    //create the range hash...
+    //intraday predictions need to be a bit different...
+    //predictions that end today appear odd on the monthly graphs.
+    //these predictions, that end today, need to be rounded forward to the end of the day.
+    //so the dot does not appear wierd on the monthly graphs. It appears to end before the current time.
+    //which would be incorrect.
+    //it only happens with predictions that are ending today.
+    //need a function that loops through the array, looks for all predictions ending today, and sets their endtime, for the graph only,
+    //to be at the end of the day...
+    //need to loop through both the predictions and the my_prediction arrays.
+    graph["daily_predictions"] = DailyPredictions(graph["predictions"], daily_prices.last()[0]);
+    graph["daily_my_predictions"] = DailyPredictions(graph["my_prediction"], daily_prices.last()[0]);
 
 
+    //create the rangeHash to be used by the buttons.
     //note that by adding the my_prediction here, it will fall under the limited array filter.
-    graphSettings = {intradayPrices: data["intraday_prices"], dailyPrices:data["daily_prices"], predictions:data["predictions"].concat(data["my_prediction"])};
+    graphSettings = {intradayPrices: graph["intraday_prices"], dailyPrices:graph["daily_prices"], predictions:graph["predictions"].concat(graph["my_prediction"])};
     rangeHash = new StockGraphButtons(graphSettings);
 
     chart1.yAxis[0].setExtremes(rangeHash["1m"]["yMin"], rangeHash["1m"]["yMax"]);
@@ -107,12 +118,20 @@ $(document).ready(function () {
 
     //originally i wanted to change the frequency with which the data arrays are reset, but it doesn't seem to matter.
     if (buttonType == "1d" || buttonType == "5d") {
-      chart1.series[2].setData(graph["intraday_forward_prices"]);
       chart1.series[0].setData(graph["intraday_prices"]);
+      chart1.series[1].setData(graph["intraday_forward_prices"]);
+
+      //set the prediction arrays to the precise times if the graph is looking at 5d or 1d.
+      chart1.series[2].setData(graph["predictions"]);
+      chart1.series[3].setData(graph["my_prediction"]);
     }
     else { //current range is not one of these, load the dily prices.
-      chart1.series[2].setData(graph["daily_forward_prices"]);
-      chart1.series[0].setData(graph["daily_prices"]);
+      chart1.series[0].setData(graph["daily_forward_prices"]);
+      chart1.series[1].setData(graph["daily_prices"]);
+
+      //set the prediction arrays so that today's predictions are rounded forward so that they don't appear to end before the graph does.
+      chart1.series[2].setData(graph["daily_predictions"]);
+      chart1.series[3].setData(graph["daily_my_prediction"]);
     }
 
     chart1.yAxis[0].setExtremes(ranges["yMin"], ranges["yMax"]);
@@ -149,11 +168,19 @@ $(document).ready(function () {
   //window.function has the affect of setting the function as a global function, and its available in the ajax function.
   //updatePredictions adjsuts the graph ranges to show a prediction when it is put onto the graph.
   window.updatePredictions = function(endTime, endPrice) {
+    
+    /*if (currentRange["buttonType"] != "1d" && currentRange["buttonType"] != "5d") {
+      if (endTime < graph["daily_prices"].last()[0]) {
+        
+      }
+    }*/
+
     chart1.series[3].setData([[endTime, endPrice]]);
 
     if (endTime > currentRange["rangeHash"]["xMax"]) { //if the endtime of the prediction is greater than the endtime in the current view, increase the end time.
-      chart1.series[2].setData(graph["daily_forward_prices"]); //update to the daily forward price array.
       chart1.series[0].setData(graph["daily_prices"]); //update to the daily price history array.
+      chart1.series[1].setData(graph["daily_forward_prices"]); //update to the daily forward price array.
+      
       chart1.xAxis[0].setExtremes(rangeHash["1m"]["xMin"], predictionXMax(endTime)); //set to the 1 month min range by default. This lookback window should be larger for large predictions so that the current stock data doesn't look disproportionately small after the prediction is made.
       chart1.yAxis[0].setExtremes(rangeHash["1m"]["yMin"], rangeHash["1m"]["yMax"]);
       current_range = rangeHash["1m"]

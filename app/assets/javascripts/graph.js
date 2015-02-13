@@ -44,6 +44,18 @@ Array.prototype.select = function(closure){
   return new_array;
 }
 
+function DailyPredictions (predictions, min_time) {
+  prediction_array = [];
+  predictions.forEach(function(element, index, arr) {
+    if (element[0] < min_time) { //if the prediction time is less than the minimum time amount (the end of the daily stock data), reset the prediction time for the graph.
+      prediction_array.push([min_time, element[1]]);
+    }
+    else {
+      prediction_array.push([element[0],element[1]]);
+    }
+  });
+  return prediction_array;
+}
 
 function IntradayButton (prices, predictions) {
   this.timeInterval = 60*5*1000;
