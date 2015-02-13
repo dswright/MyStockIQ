@@ -15,5 +15,9 @@
 //= require turbolinks
 //= require highstock
 //= require exporting
+//= require moment
+//= require customdate
+//= require graph
+//= require stockgraph
 //= require_tree .
 

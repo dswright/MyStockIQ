@@ -21,31 +21,31 @@ class Stream < ActiveRecord::Base
 
 
   def self.stream_maker(streams, nest_count)
-    stream_hash_array = []
+
+    stream_hashes = []
     streams.each do |stream|
       #begin making the hash immediately, making the parent item the first item in the array? Or just the sub comments?
       #the original array is just a list of stream items.. can that be sustained?
       #yes, it could still pass back a significantly different looking array item.
       #needs a recurrsive loop to go through this.
       #like [array_item, nest_count, sub_array, popularity_score],[array_item, nest_count, sub_array, popularity_score]
-      sub_array = []
-      
+      sub_stream = []
       
       #the streamable_type and streamable_id will be the way to find the children of this stream item.
-      sub_array = Stream.where(target_type: stream.streamable_type, target_id: stream.streamable_id)
-      unless sub_array.empty?
-        sub_array = Stream.stream_maker(sub_array, nest_count+1)
+
+      sub_stream = Stream.where(target_type: stream.streamable_type, target_id: stream.streamable_id)
+      unless sub_stream.empty?
+        sub_stream = Stream.stream_maker(sub_stream, nest_count+1)
       end
 
-
-      hash_form = {
+      stream_hash = {
         stream: stream, 
         nest_count: nest_count, 
-        sub_hash_array: sub_array, 
-        popularity_score: stream.streamable.popularity_score
+        sub_hash_array: sub_stream, 
+        popularity_score: popularity_score
       }
 
-      stream_hash_array << hash_form
+      stream_hashes << stream_hash
 
       
     end
@@ -53,12 +53,10 @@ class Stream < ActiveRecord::Base
     stream_hash_array.sort_by! {|stream| stream[:popularity_score]}
     stream_hash_array.reverse!
     #for now make a maximum of 5 recursions... per comment. But modify that later. Must be limited more intelligently than that later.
-    return stream_hash_array
+    return stream_hashes
   end
 
   def update_stream_popularity_scores
-
-
       #Update stream item's popularity score
       self.streamable.update_popularity_score
 
