@@ -501,7 +501,7 @@ class YahooPE
 end
 
 class QuandlIndustry
-  #the logic of this method is flipped. We want the ticker to exist in order to be added to the array.
+  #the logic of this method is flipped. We want the ticker to exist in order to add the industry.
   def check_for_dup(hash_item)
     if Stock.where(ticker_symbol:hash_item["ticker_symbol"]).exists?
       true
@@ -514,11 +514,11 @@ class QuandlIndustry
     if (row[4] == "Stock no longer trades")
       return false
     else
-      csv_ticker = row[0].gsub('.','_').gsub('/','_').gsub('-','_')
+      csv_ticker = row[0].gsub('.','_').gsub('/','_').gsub('-','_') #why is this the csv ticker and not the ticker symbol..????
       industry_hash = {
         "ticker_symbol" => csv_ticker, 
-        "stock_industry" => row[3], 
-        "exchange" => row[4]
+        "stock_industry" => row[3], #double check these for accuracy and make sure they are the right column...
+        "exchange" => row[4] #something is off here.
       }
       return industry_hash
     end
@@ -530,7 +530,7 @@ class QuandlIndustry
               #{industry_case_array.join("\n")}
             END,
              exchange = CASE ticker_symbol
-              #{industry_case_array.join("\n")}
+              #{exchange_case_array.join("\n")}
             END
 
           WHERE ticker_symbol IN (#{industry_where_array.join(", ")})"

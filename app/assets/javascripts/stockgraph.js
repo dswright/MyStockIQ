@@ -24,6 +24,9 @@ $(document).ready(function () {
     {
       name : "prediction",
       lineWidth : 0,
+      dataGrouping: {
+        enabled: false
+      },
       marker : {
         enabled : true,
         radius : 4
@@ -42,6 +45,9 @@ $(document).ready(function () {
         enabled : true,
         radius : 4,
         color: "#DC143C"
+      },
+      dataGrouping: {
+        enabled: false
       }
     }
   ];
@@ -145,17 +151,17 @@ $(document).ready(function () {
   window.updatePredictions = function(endTime, endPrice) {
     chart1.series[3].setData([[endTime, endPrice]]);
 
-    if (endTime > currentRange["rangeHash"]["xMax"]) {
-      chart1.series[2].setData(graph["daily_forward_prices"]);
-      chart1.series[0].setData(graph["daily_prices"]);
-      chart1.xAxis[0].setExtremes(rangeHash["1m"]["xMin"], predictionXMax(endTime)); //set to the 1 month min range by default. change this later.
+    if (endTime > currentRange["rangeHash"]["xMax"]) { //if the endtime of the prediction is greater than the endtime in the current view, increase the end time.
+      chart1.series[2].setData(graph["daily_forward_prices"]); //update to the daily forward price array.
+      chart1.series[0].setData(graph["daily_prices"]); //update to the daily price history array.
+      chart1.xAxis[0].setExtremes(rangeHash["1m"]["xMin"], predictionXMax(endTime)); //set to the 1 month min range by default. This lookback window should be larger for large predictions so that the current stock data doesn't look disproportionately small after the prediction is made.
       chart1.yAxis[0].setExtremes(rangeHash["1m"]["yMin"], rangeHash["1m"]["yMax"]);
       current_range = rangeHash["1m"]
     }
-    if (endPrice >= currentRange["rangeHash"]["yMax"]) {
+    if (endPrice >= currentRange["rangeHash"]["yMax"]) { //increase the y max if the end price is greater than the current max.
       chart1.yAxis[0].setExtremes(currentRange["rangeHash"]["yMin"], predictionYMax(endPrice));
     }
-    if (endPrice <= currentRange["rangeHash"]["yMin"]) {
+    if (endPrice <= currentRange["rangeHash"]["yMin"]) { //increase the y min if the end price is lower than the current max.
       chart1.yAxis[0].setExtremes(predictionYMin(endPrice), currentRange["rangeHash"]["yMax"]);
     }
 
