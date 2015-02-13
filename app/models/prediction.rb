@@ -51,19 +51,15 @@ class Prediction < ActiveRecord::Base
   def exceeds_end_price
     stock = Stock.find(self.stock_id)
 
-    prediction_percentage = percent_change(self.prediction_end_price, self.start_price)
-    actual_percentage = percent_change(stock.daily_stock_price, self.start_price)
+    prediction_percentage = percent_change(self.prediction_end_price, self.start_price) #checks the amount and direction of the prediction.
+    actual_percentage = percent_change(stock.daily_stock_price, self.start_price) #checks the amount and direction of the actual movement.
 
-    #If actual price has surpassed prediction, end the prediction.
-    if actual_percentage.abs > prediction_percentage.abs
+    #If actual price has surpassed prediction, end the prediction. It also has to be in the correct direction....
+    if actual_percentage.abs > prediction_percentage.abs && same_sign?(prediction_percentage, actual_percentage)
       self.update(active:false)
-      predictionend = self.build_predictionend(actual_end_time: stock.date, actual_end_price: self.stock.daily_stock_price, end_price_verified: false, popularity_score:0)
-      predictionend.save
-
-      stream = predictionend.streams.build(target_type:"Prediction", target_id: self.id)
-      stream.save
-      stream = predictionend.streams.build(target_type:"Stock", target_id: self.stock.id)
-      stream.save
+      self.build_predictionend(actual_end_time: self.stock.date, actual_end_price: self.stock.daily_stock_price, end_price_verified: false, popularity_score:0).save
+      predictionend.streams.build(target_type:"User", target_id: self.user.id).save
+      predictionend.streams.build(target_type:"Stock", target_id: self.stock.id).save
     end
   end
 
@@ -71,13 +67,9 @@ class Prediction < ActiveRecord::Base
   def exceeds_end_time
     if self.stock.date >= self.prediction_end_time
       self.update(active:false)
-      predictionend = self.build_predictionend(actual_end_time: self.prediction_end_time, actual_end_price: self.stock.daily_stock_price, end_price_verified: false, popularity_score: 0)
-      predictionend.save
-
-      stream = predictionend.streams.build(target_type:"Prediction", target_id: self.id)
-      stream.save
-      stream = predictionend.streams.build(target_type:"Stock", target_id: self.stock.id)
-      stream.save
+      self.build_predictionend(actual_end_time: self.prediction_end_time, actual_end_price: self.stock.daily_stock_price, end_price_verified: false, popularity_score: 0).save
+      predictionend.streams.build(target_type:"User", target_id: self.user.id).save
+      predictionend.streams.build(target_type:"Stock", target_id: self.stock.id).save
     end
   end
 
@@ -91,7 +83,6 @@ class Prediction < ActiveRecord::Base
 
     #IF PREDICTION IS INCORRECT:
     else
-
       #Lose points based on actual percentage change
       score = -1*actual_percentage.abs.round(2)
     end

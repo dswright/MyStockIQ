@@ -87,8 +87,8 @@ namespace :predictions do
 
     predictions = Prediction.where(active:true)
     predictions.each do |prediction|
-      prediction.exceeds_end_price #if the stock price exceeds the prediction price, move date and set to active:false, create prediction ends
-      prediction.exceeds_end_time #if the current time exceeds the prediction end time, set active:false, create prediction ends.
+      prediction.exceeds_end_price #if the stock price exceeds the prediction price, move date and set to active:false, create prediction end and stream items.
+      prediction.exceeds_end_time #if the current time exceeds the prediction end time, set active:false, create prediction ends, and stream items.
       prediction.update_score #run an update of the current score.
     end
 
