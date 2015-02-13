@@ -93,8 +93,8 @@ $(document).ready(function () {
     //need a function that loops through the array, looks for all predictions ending today, and sets their endtime, for the graph only,
     //to be at the end of the day...
     //need to loop through both the predictions and the my_prediction arrays.
-    graph["daily_predictions"] = DailyPredictions(graph["predictions"], daily_prices.last()[0]);
-    graph["daily_my_predictions"] = DailyPredictions(graph["my_prediction"], daily_prices.last()[0]);
+    graph["daily_predictions"] = DailyPredictions(graph["predictions"], graph["daily_prices"].last()[0]);
+    graph["daily_my_predictions"] = DailyPredictions(graph["my_prediction"], graph["daily_prices"].last()[0]);
 
 
     //create the rangeHash to be used by the buttons.
@@ -126,8 +126,8 @@ $(document).ready(function () {
       chart1.series[3].setData(graph["my_prediction"]);
     }
     else { //current range is not one of these, load the dily prices.
-      chart1.series[0].setData(graph["daily_forward_prices"]);
-      chart1.series[1].setData(graph["daily_prices"]);
+      chart1.series[0].setData(graph["daily_prices"]);
+      chart1.series[1].setData(graph["daily_forward_prices"]);
 
       //set the prediction arrays so that today's predictions are rounded forward so that they don't appear to end before the graph does.
       chart1.series[2].setData(graph["daily_predictions"]);
