@@ -7,10 +7,12 @@ class Graph
   
   GraphPoint = Struct.new(:graph_time, :stock_price)
 
-  def initialize(ticker_symbol, current_user)
-    @ticker_symbol = ticker_symbol
-    @stock_id = Stock.find_by(ticker_symbol: ticker_symbol)
-    @current_user = current_user
+  #settings is a hash of parameters passed from the controller. 
+  #It takes ticker, current user, and more settings.
+  def initialize(settings = {})
+    @ticker_symbol = settings[:ticker_symbol]
+    @stock_id = Stock.find_by(ticker_symbol: @ticker_symbol)
+    @current_user = settings[:current_user]
 
   end
 
@@ -50,7 +52,7 @@ class Graph
     stock_prices = Stockprice.where(ticker_symbol: ticker_symbol).limit(1300).order('date desc') 
     price_array = []
     stock_prices.each do |price|
-      graph_time = price.date.utc_time_int.graph_time_int
+      graph_time = price.date.utc_time_int.graph_time_int #these methods will no longer be available... the database will send a date time stamp over the json api...
       price_array << [graph_time, price.close_price.round(2)]
     end
     price_array.reverse!
@@ -104,6 +106,9 @@ class Graph
     end
     return forward_array
   end
+end
+
+=begin
 
   RangeSetting = Struct.new(:time_interval, :time_length, :predictions, :prices)
   ButtonSetting = Struct.new(:name, :start, :settings)
@@ -145,12 +150,12 @@ class Button
     @end_time = end_point(1)
     @limited_prices = limited_array(buttonsetting.settings.prices)
     @limited_predictions = limited_array(buttonsetting.settings.predictions)
-
   end
 
   #returns the nearest valid start or end point. -1 interval direction is to get start point, 1 is to get endpoint.
   def end_point(interval_direction)
     last_utc_time_int = @buttonsetting.settings.prices.last[0]
+    #time_length is used to calculate the number of iterations..
     time_length = buttonsetting.settings.time_length * buttonsetting.start
     time_length /= 2 if interval_direction == 1 #if looking forward, cut the time length in half.
     interval = buttonsetting.settings.time_interval
@@ -168,7 +173,7 @@ class Button
   end
 
   def limited_array(graph_array)
-    graph_array.select{|point| point[0] >= start_time && point[0] <= end_time}
+    graph_array.select{|point| point[0] >= @start_time && point[0] <= @end_time}
   end
 
   def y_min
@@ -197,3 +202,4 @@ class Button
     return max_price_final
   end
 end
+=end

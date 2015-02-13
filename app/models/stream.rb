@@ -20,21 +20,20 @@ class Stream < ActiveRecord::Base
   	#validates :content, presence: true, length: {maximum: 140}
 
 
-  def self.stream_maker(stream, nest_count)
-    stream_hash_array = []
-    stream.each do |stream_item|
+  def self.stream_maker(streams, nest_count)
+    stream_hashes = []
+    streams.each do |stream|
       #begin making the hash immediately, making the parent item the first item in the array? Or just the sub comments?
       #the original array is just a list of stream items.. can that be sustained?
       #yes, it could still pass back a significantly different looking array item.
       #needs a recurrsive loop to go through this.
       #like [array_item, nest_count, sub_array, popularity_score],[array_item, nest_count, sub_array, popularity_score]
-      sub_array = []
-      
+      sub_stream = []
       
       #the streamable_type and streamable_id will be the way to find the children of this stream item.
-      sub_array = Stream.where(target_type: stream_item.streamable_type, target_id: stream_item.streamable_id)
-      unless sub_array.empty?
-        sub_array = Stream.stream_maker(sub_array, nest_count+1)
+      sub_stream = Stream.where(target_type: stream.streamable_type, target_id: stream.streamable_id)
+      unless sub_stream.empty?
+        sub_stream = Stream.stream_maker(sub_stream, nest_count+1)
       end
 
       #this table does not exist yet, but it will. Should this just be a calculation? An amalgomation of comments + votes?? 
@@ -42,14 +41,14 @@ class Stream < ActiveRecord::Base
       #popularity_score = Popularity.where(target_type: stream_item.streamable_type, target_id: stream_item.streamable_id)
       popularity_score = 0 #for now.
 
-      hash_form = {
-        stream: stream_item, 
+      stream_hash = {
+        stream: stream, 
         nest_count: nest_count, 
-        sub_hash_array: sub_array, 
+        sub_hash_array: sub_stream, 
         popularity_score: popularity_score
       }
 
-      stream_hash_array << hash_form
+      stream_hashes << stream_hash
 
       #stream_hash_array.sort_by! {|stream| stream[:popularity_score]}
     end
@@ -57,7 +56,7 @@ class Stream < ActiveRecord::Base
     #stream_hash_array = stream_hash_array.sort! {|stream_hash| stream_hash[:popularity_score]}
 
     #for now make a maximum of 5 recursions... per comment. But modify that later. Must be limited more intelligently than that later.
-    return stream_hash_array
+    return stream_hashes
   end
 
   def update_stream_popularity_scores

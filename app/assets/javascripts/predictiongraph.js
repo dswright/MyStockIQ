@@ -1,5 +1,4 @@
-
-
+/*
 function resizeChart() {
   var height = $("#stock-div").width()/3+30;
   $("#stock-div").css("height", height);
@@ -9,8 +8,8 @@ function resizeChart() {
 //Global variables 
 var graph;
 var chart1;
-var current_range;
-var range_hash = {}
+var currentRange;
+var rangeHash = {};
 
 $(document).ready(function () {
   resizeChart();
@@ -69,34 +68,31 @@ $(document).ready(function () {
     chart1.series[0].setData(data["daily_prices"]);
     chart1.series[1].setData(data["predictions"]);
     chart1.series[2].setData(data["daily_forward_prices"]);
-    chart1.series[3].setData(data["my_prediction"])
+    chart1.series[3].setData(data["my_prediction"]);
     chart1.hideLoading();
 
-    //create the range hash...
-    graph["ranges"].forEach(function(element, index, array) { 
-    range_hash[element["name"]]={"x_max":element["x_range_max"], 
-                                  "x_min":element["x_range_min"], 
-                                  "y_max":element["y_range_max"], 
-                                  "y_min":element["y_range_min"]}
-                                });
 
-    chart1.yAxis[0].setExtremes(range_hash["1m"]["y_min"], range_hash["1m"]["y_max"]);
-    chart1.xAxis[0].setExtremes(range_hash["1m"]["x_min"], range_hash["1m"]["x_max"]);
+    //note that by adding the my_prediction here, it will fall under the limited array filter.
+    var graphSettings = {intradayPrices: data["intraday_prices"], dailyPrices:data["daily_prices"], predictions:data["predictions"].concat(data["my_prediction"])};
+    rangeHash = new StockGraphButtons(graphSettings);
 
-    current_range = range_hash["1m"];
+    chart1.yAxis[0].setExtremes(rangeHash["1m"]["yMin"], rangeHash["1m"]["yMax"]);
+    chart1.xAxis[0].setExtremes(rangeHash["1m"]["xMin"], rangeHash["1m"]["xMax"]);
+
+    currentRange = rangeHash["1m"];
   });
 
 
-  get_ranges1 = function() {
+  function getRanges1() {
     //for updating the graph with a new prediction, create an 
     //onclick function to refresh the predictions array on prediction click.
 
     //the trick is that the graph ranges has to be defined... 
     //replace these with the graph["ranges"]["3m"] variable, ect.. maybe pass that variable in through the function.
-    button_type = $(this).data("button-type");
-    ranges = range_hash[button_type];
+    buttonType = $(this).data("button-type");
+    ranges = rangeHash[buttonType];
 
-    if (button_type == "1d" || button_type == "5d") {
+    if (buttonType == "1d" || buttonType == "5d") {
       chart1.series[2].setData(graph["intraday_forward_prices"]);
       chart1.series[0].setData(graph["intraday_prices"]);
     }
@@ -105,69 +101,67 @@ $(document).ready(function () {
       chart1.series[0].setData(graph["daily_prices"]);
     }
 
-    chart1.yAxis[0].setExtremes(ranges["y_min"], ranges["y_max"]);
-    chart1.xAxis[0].setExtremes(ranges["x_min"], ranges["x_max"]);
+    chart1.yAxis[0].setExtremes(ranges["yMin"], ranges["yMax"]);
+    chart1.xAxis[0].setExtremes(ranges["xMin"], ranges["xMax"]);
 
-    current_range = range_hash[button_type];
+    currentRange = rangeHash[buttonType];
     
     //window.alert(range_min + range_max)
   };
 
-  function predictionXMax(end_time){
-    return end_time+(end_time-current_range["x_min"])*0.05;
+  function predictionXMax(endTime){
+    return endTime+(endTime-currentRange["xMin"])*0.05;
   };
-  function predictionYMax(end_price){
-    return end_price+(end_price-current_range["y_min"])*0.1;
+  function predictionYMax(endPrice){
+    return endPrice+(endPrice-currentRange["yMin"])*0.1;
   };
-  function predictionYMin(end_price){
-    return end_price-(end_price-current_range["y_min"])*0.1;
+  function predictionYMin(endPrice){
+    return endPrice-(endPrice-currentRange["yMin"])*0.1;
   };
 
   //when a prediction is input, the graph ranges must be updated with new y max and mins so the button ranges include that
   //prediction.
-  function updateRanges(end_time, end_price){
-    for (var value in range_hash) {
-      if (end_price <= range_hash[value]["y_min"] && end_time <= range_hash[value]["x_max"]) {
-        range_hash[value]["y_min"] = predictionYMin(end_price);
+  function updateRanges(endTime, endPrice){
+    for (var value in rangeHash) {
+      if (endPrice <= rangeHash[value]["yMin"] && endTime <= rangeHash[value]["xMax"]) {
+        rangeHash[value]["yMin"] = predictionYMin(endPrice);
       }
-      if (end_price >= range_hash[value]["y_max"] && end_time <= range_hash[value]["x_max"]) {
-        range_hash[value]["y_max"] = predictionYMax(end_price);
+      if (endPrice >= rangeHash[value]["yMax"] && endTime <= rangeHash[value]["xMax"]) {
+        rangeHash[value]["yMax"] = predictionYMax(endPrice);
       }
     };
   };
   
   //window.function has the affect of setting the function as a global function, and its available in the ajax function.
-  window.updatePredictions = function(end_time, end_price) {
-    chart1.series[3].setData([[end_time, end_price]]);
+  //updatePredictions adjsuts the graph ranges to show a prediction when it is put onto the graph.
+  window.updatePredictions = function(endTime, endPrice) {
+    chart1.series[3].setData([[endTime, endPrice]]);
 
-    if (end_time > current_range["x_max"]) {
+    if (endTime > currentRange["x_max"]) {
       chart1.series[2].setData(graph["daily_forward_prices"]);
       chart1.series[0].setData(graph["daily_prices"]);
-      chart1.xAxis[0].setExtremes(range_hash["1m"]["x_min"], predictionXMax(end_time)); //set to the 1 month min range by default. change this later.
-      chart1.yAxis[0].setExtremes(range_hash["1m"]["y_min"], range_hash["1m"]["y_max"]);
-      current_range = range_hash["1m"]
+      chart1.xAxis[0].setExtremes(rangeHash["1m"]["xMin"], predictionXMax(endTime)); //set to the 1 month min range by default. change this later.
+      chart1.yAxis[0].setExtremes(rangeHash["1m"]["yMin"], rangeHash["1m"]["yMax"]);
+      current_range = rangeHash["1m"]
     }
-    if (end_price >= current_range["y_max"]) {
-      chart1.yAxis[0].setExtremes(current_range["y_min"], predictionYMax(end_price));
+    if (endPrice >= currentRange["yMax"]) {
+      chart1.yAxis[0].setExtremes(currentRange["yMin"], predictionYMax(endPrice));
     }
-    if (end_price <= current_range["y_min"]) {
-      chart1.yAxis[0].setExtremes(predictionYMin(end_price), current_range["y_max"]);
+    if (endPrice <= currentRange["yMin"]) {
+      chart1.yAxis[0].setExtremes(predictionYMin(endPrice), currentRange["yMax"]);
     }
 
-    updateRanges(end_time, end_price);
+    updateRanges(endTime, endPrice);
   };
 
   window.removePrediction = function() {
     chart1.series[3].setData([null, null]);
+    //a function to reset the ranges of the buttons needs to be set here too.
   };
 
   //$("button[data-x-range-min]").click(get_ranges);
-  $("button[data-button-type]").click(get_ranges1);
+  $("button[data-button-type]").click(getRanges1);
   //remove branding logo that says 'highcarts'
   $("text").remove( ":contains('Highcharts.com')" );
 });
-
-
-
-
-
+*/

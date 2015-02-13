@@ -73,6 +73,64 @@ class PredictionsController < ApplicationController
     end
 	end
 
+	def show
+
+	@prediction = Prediction.find(params[:id])
+	@stock = @prediction.stock
+
+		@current_user = current_user
+
+		#Stock's posts, comments, and predictions to be shown in the view
+		streams = Stream.where(target_type: "Prediction", target_id: @stock.id).limit(15)
+
+
+    #unless streams == nil
+    #  streams.each {|stream| stream.streamable.update_popularity_score}
+    #end
+
+
+    #this line makes sorts the stream by popularity score.
+    #streams = streams.sort_by {|stream| stream.streamable.popularity_score}
+    #streams = sort_by_popularity(streams)
+    streams = streams.reverse
+
+    unless streams == nil
+      @stream_hash_array = Stream.stream_maker(streams, 0)
+    end
+
+  	#If active prediction exists, show active prediction
+  	if @prediction.active_prediction_exists?
+  		@prediction = Prediction.find_by(user_id: @current_user.id, stock_id: @stock.id, active: true)
+  	end
+
+
+  	@comment_stream_inputs = "Prediction:#{@prediction.id}"
+
+    
+    @graph_buttons = ["1d", "5d", "1m", "3m", "6m", "1yr", "5yr"]
+    #used by the view to generate the html buttons
+
+    gon.ticker_symbol = @stock.ticker_symbol
+
+    respond_to do |format|
+      format.html
+      format.json {
+        graph = Graph.new(@stock.ticker_symbol, current_user) #something slightly different here.. curernt user is not needed.
+        #remember these are the ruby functions... that generate the json api.
+        render json: {
+        :daily_prices => graph.daily_prices,
+        :my_prediction => graph.my_prediction,
+        :predictions => graph.predictions, 
+        :daily_forward_prices => graph.daily_forward_prices,
+        :intraday_prices => graph.intraday_prices,
+        :intraday_forward_prices => graph.intraday_forward_prices
+        }
+      }
+    end
+
+	end
+
+
 	private
 
 	#def comment_params

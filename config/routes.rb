@@ -35,10 +35,10 @@ Rails.application.routes.draw do
   post     'comments'                    =>   'comments#create'
   delete   'comments/:id'                =>   'comments#destroy'
 
-  
-  post     'predictions'                 =>   'predictions#create'
+  post    'predictions'                  =>   'predictions#create'
+  get     'predictions/:id'              =>   'predictions#show'
 
-  get     'predictionends/:id'          =>   'predictionends#create'
+  get     'predictionends/:id'           =>   'predictionends#create'
 
   resources :relationships
 
