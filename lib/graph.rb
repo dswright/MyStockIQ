@@ -38,6 +38,7 @@ class Graph
   end
 
   #Limited to 400 5 minute periods, which is 2000 minutes, just over the 975 minutes in 5 6.5 hour days.
+
   def intraday_prices
     price_array = []
     stock_prices = Intradayprice.where(ticker_symbol:self.ticker_symbol).limit(400).order('date desc').reverse.each do |price|    
@@ -74,7 +75,7 @@ class Graph
     forward_array_start = intraday_prices.last[0]
     forward_array = []
     i = 0;
-    iterations = 236 # 3 6.5 hour days of 5 minute iterations
+    iterations = 390 # 5 6.5 hour days of 5 minute iterations. 5 days is necessary to generate the prediction details graph.
     while i<=iterations do
       time_spot = forward_array_start + i*5*60*1000
       if time_spot.utc_time_int.valid_stock_time?
@@ -94,7 +95,7 @@ class Graph
     forward_array_start = self.daily_prices.last[0]
     i = 1;
     forward_array = []
-    iterations = 602  #600 days is the maximum look-forward period for the x axis setting.
+    iterations = 1202  #its now a 5 year look forward period. 1200 days estimates 240 days per year.
     while i<=iterations do
       time_spot = forward_array_start + i*24*3600*1000
       if time_spot.utc_time_int.valid_stock_time? #adjust the est time to utc time for confirmation.

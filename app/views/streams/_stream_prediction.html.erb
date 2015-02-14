@@ -10,7 +10,7 @@
   </p>
 
   <p class = "prediction-txt">
-  <p><b>prediction start</b></p>
+  <p><%= link_to "prediction start", "/predictions/#{prediction.id}/" %></p>
     <p>score: <%= prediction.score %></p>
     <p>start price: <%= prediction.start_price %></p>
     <p>prediction end price: <%= prediction.prediction_end_price %></p>

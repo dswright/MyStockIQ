@@ -83,6 +83,7 @@ class PredictionsController < ApplicationController
 		#Stock's posts, comments, and predictions to be shown in the view
 		streams = Stream.where(target_type: "Prediction", target_id: @stock.id).limit(15)
 
+    gon.ticker_symbol = @stock.ticker_symbol
 
     #unless streams == nil
     #  streams.each {|stream| stream.streamable.update_popularity_score}
@@ -95,13 +96,8 @@ class PredictionsController < ApplicationController
     streams = streams.reverse
 
     unless streams == nil
-      @stream_hash_array = Stream.stream_maker(streams, 0)
+      @stream_hashes = Stream.stream_maker(streams, 0)
     end
-
-  	#If active prediction exists, show active prediction
-  	if @prediction.active_prediction_exists?
-  		@prediction = Prediction.find_by(user_id: @current_user.id, stock_id: @stock.id, active: true)
-  	end
 
 
   	@comment_stream_inputs = "Prediction:#{@prediction.id}"
@@ -111,19 +107,20 @@ class PredictionsController < ApplicationController
     #used by the view to generate the html buttons
 
     gon.ticker_symbol = @stock.ticker_symbol
+    gon.prediction_id = params[:id]
 
     respond_to do |format|
       format.html
       format.json {
-        graph = Graph.new(@stock.ticker_symbol, current_user) #something slightly different here.. curernt user is not needed.
+        settings = {ticker_symbol: @stock.ticker_symbol, current_user: @prediction.user}
+        graph = Graph.new(settings) #send in the owner of the prediction as the user... still not sure if that is correct.
         #remember these are the ruby functions... that generate the json api.
         render json: {
-        :daily_prices => graph.daily_prices,
-        :my_prediction => graph.my_prediction,
-        :predictions => graph.predictions, 
-        :daily_forward_prices => graph.daily_forward_prices,
-        :intraday_prices => graph.intraday_prices,
-        :intraday_forward_prices => graph.intraday_forward_prices
+          :daily_prices => graph.daily_prices,
+          :my_prediction => graph.my_prediction, #my prediction will be the prediciton to be displyed.
+          :daily_forward_prices => graph.daily_forward_prices,
+          :intraday_prices => graph.intraday_prices,
+          :intraday_forward_prices => graph.intraday_forward_prices
         }
       }
     end

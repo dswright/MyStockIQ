@@ -18,6 +18,4 @@
 //= require moment
 //= require customdate
 //= require graph
-//= require stockgraph
-//= require_tree .
 
