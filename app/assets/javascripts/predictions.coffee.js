@@ -1,3 +1,6 @@
+
+//this could be put in the graph.js and just called later. It definitely should be put over there. Get it working first?
+//the stockgraph container is not longer corrrect I dont think.
 function resizeChart() {
   var height = $("#prediction-div").width()/3+30;
   $("#prediction-div").css("height", height);
@@ -51,6 +54,11 @@ $(document).ready(function () {
     scrollbar: {
       enabled: false
     },
+    plotOptions: {
+      series: {
+          turboThreshold: 0
+      }
+    },
     navigator: {
       enabled: false
     },
@@ -69,21 +77,20 @@ $(document).ready(function () {
 
     chart1.series[0].setData(graph["daily_prices"]);
     chart1.series[1].setData(graph["daily_forward_prices"]);
-    //chart1.series[2].setData(graph["my_prediction"]);
-    chart1.series[2].setData([graph["daily_prices"].last(), graph["my_prediction"][0]]);
+    chart1.series[2].setData(graph["prediction"]);
 
     chart1.hideLoading();
 
     //create prediction arrays where predictions ending that day are rounded to the end of the day to appear nicely on the 1m+ graphs.
-    graph["daily_my_prediction"] = DailyPredictions(graph["my_prediction"], graph["daily_prices"].last()[0]);
+    //graph["prediction"] = DailyPredictions(graph["my_prediction"], graph["daily_prices"].last()[0]);
     //this is not quite done yet. I need to make it work on prediction input as well.
     //that will be a bit more complex.
 
     //create the rangeHash to be used by the buttons.
     //note that by adding the my_prediction here, it will fall under the limited array filter.
     //the daily_predictions and daily_my_predictions are used here because the default setting is a monthly graph.
-    graphSettings = {intradayPrices: graph["intraday_prices"], dailyPrices:graph["daily_prices"], predictions:graph["daily_predictions"]};
-    rangeHash = new StockGraphButtons(graphSettings);
+    graphSettings = {intradayPrices: graph["intraday_prices"], dailyPrices:graph["daily_prices"], predictions:graph["prediction"]};
+    rangeHash = new PredictionGraphButtons(graphSettings);
 
     chart1.yAxis[0].setExtremes(rangeHash["1m"]["yMin"], rangeHash["1m"]["yMax"]);
     chart1.xAxis[0].setExtremes(rangeHash["1m"]["xMin"], rangeHash["1m"]["xMax"]);
@@ -105,14 +112,14 @@ $(document).ready(function () {
       chart1.series[1].setData(graph["intraday_forward_prices"]);
 
       //set the prediction arrays to the precise times if the graph is looking at 5d or 1d.
-      chart1.series[2].setData(graph["my_prediction"]);
+      chart1.series[2].setData(graph["prediction"]);
     }
     else { //current range is not one of these, load the daily prices.
       chart1.series[0].setData(graph["daily_prices"]);
       chart1.series[1].setData(graph["daily_forward_prices"]);
 
       //set the prediction arrays so that today's predictions are rounded forward so that they don't appear to end before the graph does.
-      chart1.series[2].setData(graph["daily_my_prediction"]);
+      chart1.series[2].setData(graph["prediction"]);
     }
 
     chart1.yAxis[0].setExtremes(ranges["yMin"], ranges["yMax"]);

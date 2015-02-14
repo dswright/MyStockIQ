@@ -2,6 +2,7 @@ class PredictionsController < ApplicationController
 
 	require 'customdate'
 	require 'popularity'
+  require 'graph'
 	
 	def create
 		#Obtain user session information from Session Helper function 'current_user'.
@@ -75,7 +76,7 @@ class PredictionsController < ApplicationController
 
 	def show
 
-	@prediction = Prediction.find(params[:id])
+	@prediction = Prediction.find_by(id:params[:id])
 	@stock = @prediction.stock
 
 		@current_user = current_user
@@ -107,17 +108,17 @@ class PredictionsController < ApplicationController
     #used by the view to generate the html buttons
 
     gon.ticker_symbol = @stock.ticker_symbol
-    gon.prediction_id = params[:id]
+    gon.prediction_id = @prediction.id
 
     respond_to do |format|
       format.html
       format.json {
-        settings = {ticker_symbol: @stock.ticker_symbol, current_user: @prediction.user}
+        settings = {prediction:@prediction, ticker_symbol:@prediction.stock.ticker_symbol}
         graph = Graph.new(settings) #send in the owner of the prediction as the user... still not sure if that is correct.
         #remember these are the ruby functions... that generate the json api.
         render json: {
           :daily_prices => graph.daily_prices,
-          :my_prediction => graph.my_prediction, #my prediction will be the prediciton to be displyed.
+          :prediction => graph.prediction, #the specific prediction to be displayed on the graph.
           :daily_forward_prices => graph.daily_forward_prices,
           :intraday_prices => graph.intraday_prices,
           :intraday_forward_prices => graph.intraday_forward_prices

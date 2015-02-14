@@ -85,12 +85,12 @@ require 'scraper'
         settings = {ticker_symbol: @stock.ticker_symbol, current_user: current_user}
         graph = Graph.new(settings)
         render json: {
-        :my_prediction => graph.my_prediction,
-        :predictions => graph.predictions,
-        :daily_prices => graph.daily_prices,
-        :daily_forward_prices => graph.daily_forward_prices,
-        :intraday_prices => graph.intraday_prices,
-        :intraday_forward_prices => graph.intraday_forward_prices
+          :my_prediction => graph.my_prediction,
+          :predictions => graph.predictions,
+          :daily_prices => graph.daily_prices,
+          :daily_forward_prices => graph.daily_forward_prices,
+          :intraday_prices => graph.intraday_prices,
+          :intraday_forward_prices => graph.intraday_forward_prices
         }
       }
     end

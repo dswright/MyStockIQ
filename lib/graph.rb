@@ -14,6 +14,8 @@ class Graph
     @stock_id = Stock.find_by(ticker_symbol: @ticker_symbol)
     @current_user = settings[:current_user]
 
+    @prediction = settings[:prediction] #this is passed by the prediction details graph.
+
   end
 
   def my_prediction
@@ -27,6 +29,15 @@ class Graph
     end
     return my_prediction
   end
+
+  def prediction
+    prediction = @prediction
+    start_time = prediction.start_time.utc_time_int.graph_time_int
+    end_time = prediction.prediction_end_time.utc_time_int.graph_time_int
+    prediction_graph = [[start_time, prediction.start_price], [end_time, prediction.prediction_end_price]]
+    return prediction_graph
+  end
+
 
   def predictions
     predictions = []
