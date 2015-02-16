@@ -95,11 +95,11 @@ namespace :predictions do
     #checks predictionends where the end price is not verified. A prediction end will be created when the prediction is de-activated.
     predictionends = Predictionend.where(end_price_verified:false)
     predictionends.each do |predictionend|
-      PredictionendWorker.perform_async(predictionend) #updates the predictionend to verified status.
+      PredictionendWorker.perform_async(predictionend.id) #updates the predictionend to verified status.
       
       if predictionend.end_price_verified
         predictionend.prediction.final_update_score #calculates the final score for the prediction.
-        PredictionendMailer.predictioncomplete(predictionend).deliver_now #send confirmation email of prediction complete.
+        PredictionendMailer.predictioncomplete(predictionend.id).deliver_now #send confirmation email of prediction complete.
       end
     end
 
