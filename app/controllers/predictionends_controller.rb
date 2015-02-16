@@ -10,8 +10,8 @@ class PredictionendsController < ApplicationController
     response_msgs = []
 
     prediction_gone = false
-    if Prediction.where(id:params[:id]).exists? #check to see if the prediction exists, based on its id. 
-      prediction = Prediction.find_by(id: params[:id]) #if the prediction exists, find it.
+    if Prediction.where(id:params[:prediction_id]).exists? #check to see if the prediction exists, based on its id. 
+      prediction = Prediction.find_by(id: params[:prediction_id]) #if the prediction exists, find it.
       if Predictionend.where(prediction_id:prediction.id).exists? #if the predictionend exists, then the prediction is already ended.
         prediction_gone = true
         response_msgs << "prediction has already been ended."
@@ -49,7 +49,7 @@ class PredictionendsController < ApplicationController
 
         response_msgs << "prediction ended."
       else #if there are no children, and the prediction has not started, cancel the prediction.
-        @prediction_css_id = "Prediction_#{params[:id]}" #this is used to eliminate the stream item from the page when cancelled.
+        @prediction_css_id = "Prediction_#{params[:prediction_id]}" #this is used to eliminate the stream item from the page when cancelled.
         @prediction_stream_inputs = "Stock:#{prediction.stock.id},User:#{current_user.id}" #this is used to define the target stream items for the new prediction input form.
         response_msgs << "prediction removed."
         @prediction = current_user.predictions.build(stock_id: prediction.stock.id) #this is built to produce the form again.
@@ -62,13 +62,26 @@ class PredictionendsController < ApplicationController
 
     respond_to do |f|
       f.js {
-        if prediction_gone
-          render 'shared/_error_messages.js.erb'
-        else
-          if prediction_ended
-            render "ended.js.erb"
+        if params[:input_page] == "stockpage"
+          if prediction_gone
+            render 'shared/_error_messages.js.erb'
           else
-            render "removed.js.erb" 
+            if prediction_ended
+              render "stockpage_ended.js.erb"
+            else
+              render "stockpage_removed.js.erb" 
+            end
+          end
+        end
+        if params[:input_page] == "predictiondetails"
+          if prediction_gone
+            render 'shared/_error_messages.js.erb' #this one is easy and can stay the same.
+          else
+            if prediction_ended
+              render "predictiondetails_ended.js.erb" #this will have to be fancy. Alot of shit will need to change on the page with this one.
+            else
+              render js: "window.location.pathname='/stocks/#{@prediction.stock.ticker_symbol}/'" #redirect to the stockpage after cancellation on the details page.
+            end
           end
         end
       }

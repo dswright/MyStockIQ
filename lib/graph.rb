@@ -14,6 +14,8 @@ class Graph
     @stock_id = Stock.find_by(ticker_symbol: @ticker_symbol)
     @current_user = settings[:current_user]
 
+    @prediction = settings[:prediction] #this is passed by the prediction details graph.
+
   end
 
   def my_prediction
@@ -28,6 +30,24 @@ class Graph
     return my_prediction
   end
 
+  def prediction
+    prediction = @prediction
+    start_time = prediction.start_time.utc_time_int.graph_time_int
+    end_time = prediction.prediction_end_time.utc_time_int.graph_time_int
+    prediction_graph = [[start_time, prediction.start_price], [end_time, prediction.prediction_end_price]]
+    return prediction_graph
+  end
+
+  def predictionend
+    if @prediction.predictionend
+      return [[start_time, prediction.start_price], [@prediction.predictionend.actual_end_time, @prediction.predictionend.actual_end_price]]
+    else
+      return [[nil, nil]]
+    end
+  end
+
+
+
   def predictions
     predictions = []
     Prediction.where(stock_id: stock_id, active:true).where('user_id not in (?)', [@current_user.id]).limit(1500).order('prediction_end_time desc').reverse.each do |prediction|
@@ -38,6 +58,7 @@ class Graph
   end
 
   #Limited to 400 5 minute periods, which is 2000 minutes, just over the 975 minutes in 5 6.5 hour days.
+
   def intraday_prices
     price_array = []
     stock_prices = Intradayprice.where(ticker_symbol:self.ticker_symbol).limit(400).order('date desc').reverse.each do |price|    
@@ -74,7 +95,7 @@ class Graph
     forward_array_start = intraday_prices.last[0]
     forward_array = []
     i = 0;
-    iterations = 236 # 3 6.5 hour days of 5 minute iterations
+    iterations = 390 # 5 6.5 hour days of 5 minute iterations. 5 days is necessary to generate the prediction details graph.
     while i<=iterations do
       time_spot = forward_array_start + i*5*60*1000
       if time_spot.utc_time_int.valid_stock_time?
@@ -94,7 +115,7 @@ class Graph
     forward_array_start = self.daily_prices.last[0]
     i = 1;
     forward_array = []
-    iterations = 602  #600 days is the maximum look-forward period for the x axis setting.
+    iterations = 1202  #its now a 5 year look forward period. 1200 days estimates 240 days per year.
     while i<=iterations do
       time_spot = forward_array_start + i*24*3600*1000
       if time_spot.utc_time_int.valid_stock_time? #adjust the est time to utc time for confirmation.

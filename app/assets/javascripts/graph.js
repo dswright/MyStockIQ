@@ -91,6 +91,23 @@ function StockGraphButtons(graphSettings) {
   return rangeHash;
 }
 
+function PredictionGraphButtons(graphSettings) {
+  var intradayButton = new IntradayButton(graphSettings["intradayPrices"], graphSettings["predictions"]);
+  var dailyButton = new DailyButton(graphSettings["dailyPrices"], graphSettings["predictions"]);
+  var buttons = [{name:"1d", beforeDays:0.5, afterDays:1, settings:intradayButton},
+                        {name:"5d", beforeDays:2.5, afterDays:5, settings:intradayButton},
+                        {name:"1m", beforeDays:10, afterDays:20, settings:dailyButton},
+                        {name:"3m", beforeDays:30, afterDays:60, settings:dailyButton},
+                        {name:"6m", beforeDays:60, afterDays:120, settings:dailyButton},
+                        {name:"1yr", beforeDays:120, afterDays:240, settings:dailyButton},
+                        {name:"5yr", beforeDays:600, afterDays:1200, settings:dailyButton}];
+  var rangeHash = {};
+  buttons.forEach(function (element, index, array) {
+    var button = new Button(element);
+    rangeHash[element["name"]] = {"xMin":button.xMin, "xMax":button.xMax, "yMin":button.yMin, "yMax":button.yMax};
+  });
+  return rangeHash;
+}
 
 //return the full suite of correct buttons by passing in some parameters...
 //This should distinguish between the two main graphs...

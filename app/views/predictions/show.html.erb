@@ -1,4 +1,4 @@
-<%= javascript_include_tag "stocks.coffee.js" %>
+<%= javascript_include_tag "predictions.coffee.js" %>
 <%= include_gon(:init => true) %>
 
 
@@ -44,23 +44,9 @@
           <p class = "stock-ticker-detail-number">28</p>
         </div>
       </div>
-      <div class = "row">
-        <div class = "col-xs-4">
-          <p class = "stock-ticker-detail-header">Followers</p>
-          <p class = "stock-ticker-detail-number" id = "followers"><%= @stock.followers.count %></p>
-        </div>
-          <%= render 'shared/follow_form'%>
-      </div>
     </div>
 
-<!-- PREDICTION FORM -->
-    <div class = "stock-page-prediction-box">
-      <% if @prediction.active_prediction_exists? %>
         <%= render @prediction %>
-      <% else %>
-        <%= render 'shared/prediction_form' %>
-      <% end %>
-    </div>
 
     <%= render 'shared/comment_form' %>
 
@@ -113,7 +99,7 @@
       </div>
       
 
-      <div id="stock-div" style="min-width:50px;"></div>
+      <div id="prediction-div" style="min-width:50px;"></div>
     </div>
 
     <div class = "prediction-buttons-container">
@@ -129,7 +115,9 @@
 
 
 <!-- STREAM POSTS -->
+<% unless @stream_hashes.empty? %>
   <%= render partial: "streams/stream", locals: {stream_hash_array: @stream_hash_array}  %>
+<% end %>
 
   
 

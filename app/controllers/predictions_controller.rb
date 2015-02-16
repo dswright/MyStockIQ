@@ -2,6 +2,7 @@ class PredictionsController < ApplicationController
 
 	require 'customdate'
 	require 'popularity'
+  require 'graph'
 	
 	def create
 		#Obtain user session information from Session Helper function 'current_user'.
@@ -75,7 +76,7 @@ class PredictionsController < ApplicationController
 
 	def show
 
-	@prediction = Prediction.find(params[:id])
+	@prediction = Prediction.find_by(id:params[:id])
 	@stock = @prediction.stock
 
 		@current_user = current_user
@@ -83,6 +84,7 @@ class PredictionsController < ApplicationController
 		#Stock's posts, comments, and predictions to be shown in the view
 		streams = Stream.where(target_type: "Prediction", target_id: @stock.id).limit(15)
 
+    gon.ticker_symbol = @stock.ticker_symbol
 
     #unless streams == nil
     #  streams.each {|stream| stream.streamable.update_popularity_score}
@@ -95,35 +97,33 @@ class PredictionsController < ApplicationController
     streams = streams.reverse
 
     unless streams == nil
-      @stream_hash_array = Stream.stream_maker(streams, 0)
+      @stream_hashes = Stream.stream_maker(streams, 0)
     end
-
-  	#If active prediction exists, show active prediction
-  	if @prediction.active_prediction_exists?
-  		@prediction = Prediction.find_by(user_id: @current_user.id, stock_id: @stock.id, active: true)
-  	end
 
 
   	@comment_stream_inputs = "Prediction:#{@prediction.id}"
 
+    @prediction_end_input_page = "predictiondetails"
     
     @graph_buttons = ["1d", "5d", "1m", "3m", "6m", "1yr", "5yr"]
     #used by the view to generate the html buttons
 
     gon.ticker_symbol = @stock.ticker_symbol
+    gon.prediction_id = @prediction.id
 
     respond_to do |format|
       format.html
       format.json {
-        graph = Graph.new(@stock.ticker_symbol, current_user) #something slightly different here.. curernt user is not needed.
+        settings = {prediction:@prediction, ticker_symbol:@prediction.stock.ticker_symbol}
+        graph = Graph.new(settings) #send in the owner of the prediction as the user... still not sure if that is correct.
         #remember these are the ruby functions... that generate the json api.
         render json: {
-        :daily_prices => graph.daily_prices,
-        :my_prediction => graph.my_prediction,
-        :predictions => graph.predictions, 
-        :daily_forward_prices => graph.daily_forward_prices,
-        :intraday_prices => graph.intraday_prices,
-        :intraday_forward_prices => graph.intraday_forward_prices
+          :daily_prices => graph.daily_prices,
+          :prediction => graph.prediction, #the specific prediction to be displayed on the graph.
+          :predictionend => graph.predictionend,
+          :daily_forward_prices => graph.daily_forward_prices,
+          :intraday_prices => graph.intraday_prices,
+          :intraday_forward_prices => graph.intraday_forward_prices
         }
       }
     end
