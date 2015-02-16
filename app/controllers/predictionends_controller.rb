@@ -75,12 +75,12 @@ class PredictionendsController < ApplicationController
         end
         if params[:input_page] == "predictiondetails"
           if prediction_gone
-            render 'shared/_error_messages.js.erb'
+            render 'shared/_error_messages.js.erb' #this one is easy and can stay the same.
           else
             if prediction_ended
-              render "predictiondetails_ended.js.erb"
+              render "predictiondetails_ended.js.erb" #this will have to be fancy. Alot of shit will need to change on the page with this one.
             else
-              render "predictiondetails_removed.js.erb"
+              render js: "window.location.pathname='/stocks/#{@prediction.stock.ticker_symbol}/'" #redirect to the stockpage after cancellation on the details page.
             end
           end
         end

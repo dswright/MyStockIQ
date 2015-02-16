@@ -8,9 +8,10 @@
       <p>start price: $<%= prediction.start_price %></p>
       <p>end price: $<%= prediction.prediction_end_price %></p>
       <p><%= prediction.distance_of_time_in_words(Time.zone.now, prediction.prediction_end_time) %> remaining</p>
+      <p>
       
       <%= form_for(Predictionend.new, remote:true) do |f| %>
-        <%= hidden_field_tag :input_page, "stockpage" %>
+        <%= hidden_field_tag :input_page, @prediction_end_input_page %>
         <%= hidden_field_tag :prediction_id, prediction.id %>
         <%= f.submit "Cancel Prediction", class: "btn btn-primary" %>
       <% end %>

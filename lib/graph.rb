@@ -38,6 +38,15 @@ class Graph
     return prediction_graph
   end
 
+  def predictionend
+    if @prediction.predictionend
+      return [[start_time, prediction.start_price], [@prediction.predictionend.actual_end_time, @prediction.predictionend.actual_end_price]]
+    else
+      return [[nil, nil]]
+    end
+  end
+
+
 
   def predictions
     predictions = []

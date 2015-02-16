@@ -103,6 +103,7 @@ class PredictionsController < ApplicationController
 
   	@comment_stream_inputs = "Prediction:#{@prediction.id}"
 
+    @prediction_end_input_page = "predictiondetails"
     
     @graph_buttons = ["1d", "5d", "1m", "3m", "6m", "1yr", "5yr"]
     #used by the view to generate the html buttons
@@ -119,6 +120,7 @@ class PredictionsController < ApplicationController
         render json: {
           :daily_prices => graph.daily_prices,
           :prediction => graph.prediction, #the specific prediction to be displayed on the graph.
+          :predictionend => graph.predictionend,
           :daily_forward_prices => graph.daily_forward_prices,
           :intraday_prices => graph.intraday_prices,
           :intraday_forward_prices => graph.intraday_forward_prices

@@ -58,21 +58,8 @@ require 'scraper'
   	@comment_stream_inputs = "Stock:#{@stock.id}"
   	@prediction_stream_inputs = "Stock:#{@stock.id}"
 
-    #Graph functions
-    
+    @prediction_end_input_page = "stockspage" #for the prediction details box, set the input page for the prediction cancel button.
 
-    #@predictions = graph.predictions
-    #@daily_prices = graph.daily_prices
-    #@daily_forward_prices = graph.daily_forward_prices
-    #@intraday_prices = graph.intraday_prices
-    #@intraday_forward_prices = graph.intraday_forward_prices
-
-  	#gon.ticker_symbol = @stock.ticker_symbol
-    #gon.daily_prices = graph.daily_prices
-    #gon.daily_forward_prices = graph.daily_forward_prices
-    #gon.intraday_prices = graph.intraday_prices
-    #gon.intraday_forward_prices = graph.intraday_forward_prices
-    #gon.predictions = graph.predictions
     
     @graph_buttons = ["1d", "5d", "1m", "3m", "6m", "1yr", "5yr"]
     #used by the view to generate the html buttons

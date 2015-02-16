@@ -26,7 +26,7 @@ $(document).ready(function () {
     },
     {
       name: "dateseries",
-      lineWidth : 1,
+      lineWidth: 1,
       dataGrouping: {
         enabled: false
       }
@@ -41,6 +41,13 @@ $(document).ready(function () {
       dataGrouping: {
         enabled: false
       }
+    },
+    {
+      name:"endprediction",
+      dataGrouping: {
+        enabled: false
+      },
+      lineWidth: 2
     }
   ];
 
@@ -78,7 +85,9 @@ $(document).ready(function () {
     chart1.series[0].setData(graph["daily_prices"]);
     chart1.series[1].setData(graph["daily_forward_prices"]);
     chart1.series[2].setData(graph["prediction"]);
-
+    if (graph["predictionend"].length >= 1) { //this will be empty if the prediction end is not present.
+      chart1.series[3].setData(graph["predictionend"]);
+    }
     chart1.hideLoading();
 
     //create prediction arrays where predictions ending that day are rounded to the end of the day to appear nicely on the 1m+ graphs.
