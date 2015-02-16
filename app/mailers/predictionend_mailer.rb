@@ -1,7 +1,7 @@
 class PredictionendMailer < ActionMailer::Base
 	default from: "Stockhero"
-	def predictioncomplete(predictionend)
-    @predictionend = predictionend
+	def predictioncomplete(predictionend_id)
+    predictionend = Prediciton.find_by(predictionend_id)
 		mail(
 			from: "Prediction@Stockhero.com",
 			to: predictionend.prediction.user.email, 

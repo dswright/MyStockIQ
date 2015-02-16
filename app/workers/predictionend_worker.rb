@@ -4,7 +4,8 @@ class PredictionendWorker
 
   #for this prediction, scrape the google data, check to see if there is a valid minute in the array, reset the prediction prices
   #based on that valid minute stock price.
-  def perform(predictionend)
+  def perform(predictionend_id)
+    prediction = Predictionend.find_by(predictionend_id)
     minute_array = ScraperPublic.google_minute(predictionend.prediction.stock.ticker_symbol)
     times_ahead = minute_array.select {|minute| minute["date"] >= predictionend.actual_end_time}
     unless times_ahead.empty? 
