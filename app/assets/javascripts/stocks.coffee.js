@@ -79,8 +79,8 @@ $(document).ready(function () {
     graph = data
 
     //create prediction arrays where predictions ending that day are rounded to the end of the day to appear nicely on the 1m+ graphs.
-    graph["daily_predictions"] = DailyPredictions(graph["predictions"], graph["daily_prices"].last()[0]);
-    graph["daily_my_prediction"] = DailyPredictions(graph["my_prediction"], graph["daily_prices"].last()[0]);
+    graph["daily_predictions"] = new DailyPredictions(graph["predictions"], graph["daily_prices"].last()[0]);
+    graph["daily_my_prediction"] = new DailyPredictions(graph["my_prediction"], graph["daily_prices"].last()[0]);
     //this is not quite done yet. I need to make it work on prediction input as well.
     //that will be a bit more complex.
 
