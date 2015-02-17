@@ -109,6 +109,7 @@ $(document).ready(function () {
     buttonType = $(this).data("button-type");
     ranges = rangeHash[buttonType];
 
+    //no idea why these variables need to be reset here.. they have already been set in the data load function.
     graph["daily_predictions"] = new DailyPredictions(graph["predictions"], graph["daily_prices"].last()[0]);
     graph["daily_my_prediction"] = new DailyPredictions(graph["my_prediction"], graph["daily_prices"].last()[0]);
 
@@ -171,7 +172,11 @@ $(document).ready(function () {
       }
     }*/
 
-    chart1.series[3].setData([[endTime, endPrice]]);
+    graph["my_prediction"] = ([[endTime, endPrice]]);
+
+    //prediction gets rounded to the end of the day because this view defaults to the daily month view.
+    graph["daily_my_prediction"] = new DailyPredictions(graph["my_prediction"], graph["daily_prices"].last()[0]);
+    chart1.series[3].setData(graph["daily_my_prediction"]);
 
     if (endTime > currentRange["rangeHash"]["xMax"]) { //if the endtime of the prediction is greater than the endtime in the current view, increase the end time.
       chart1.series[0].setData(graph["daily_prices"]); //update to the daily price history array.
