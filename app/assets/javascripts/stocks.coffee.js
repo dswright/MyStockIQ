@@ -82,7 +82,7 @@ $(document).ready(function () {
     graph["daily_predictions"] = new DailyPredictions(graph["predictions"], graph["daily_prices"].last()[0]);
     graph["daily_my_prediction"] = new DailyPredictions(graph["my_prediction"], graph["daily_prices"].last()[0]);
     //this is not quite done yet. I need to make it work on prediction input as well.
-    //that will be a bit more complex.
+    //that will be a bDailit more complex.
 
     chart1.series[0].setData(graph["daily_prices"]);
     chart1.series[1].setData(graph["daily_forward_prices"]);
