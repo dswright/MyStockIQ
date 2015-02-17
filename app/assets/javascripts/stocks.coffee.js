@@ -86,7 +86,7 @@ $(document).ready(function () {
 
     chart1.series[0].setData(graph["daily_prices"]);
     chart1.series[1].setData(graph["daily_forward_prices"]);
-    chart1.series[2].setData(graph["predictions"]);
+    chart1.series[2].setData(graph["daily_predictions"]);
     chart1.series[3].setData(graph["daily_my_prediction"]);
     chart1.hideLoading();
 
@@ -124,8 +124,8 @@ $(document).ready(function () {
       chart1.series[1].setData(graph["daily_forward_prices"]);
 
       //set the prediction arrays so that today's predictions are rounded forward so that they don't appear to end before the graph does.
-      chart1.series[2].setData(graph["daily_predictions"]);
       chart1.series[3].setData(graph["daily_my_prediction"]);
+      chart1.series[2].setData(graph["daily_predictions"]);
     }
 
     chart1.yAxis[0].setExtremes(ranges["yMin"], ranges["yMax"]);
