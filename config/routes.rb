@@ -32,13 +32,16 @@ Rails.application.routes.draw do
 
   post    'likes'                        =>   'likes#create'
 
-  post    'comments'                    =>   'comments#create'
-  delete  'comments/:id'                =>   'comments#destroy'
+  post    'comments'                     =>   'comments#create'
+  delete  'comments/:id'                 =>   'comments#destroy'
 
   post    'predictions'                  =>   'predictions#create'
   get     'predictions/:id'              =>   'predictions#show'
 
   post    'predictionends'               =>   'predictionends#create'
+
+  get     'graphimages'                  =>   'graphimages#show'
+
 
   resources :relationships
 
