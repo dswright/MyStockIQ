@@ -46,15 +46,15 @@ Array.prototype.select = function(closure){
 
 function DailyPredictions (predictions, min_time) {
   var prediction_array = [];
-  predictions.forEach(function(element, index, arr) {
-    if (element[0] < min_time) { //if the prediction time is less than the minimum time amount (the end of the daily stock data), reset the prediction time for the graph.
-      prediction_array.concat([min_time, element[1]]);
+  for(var i = 0; i < predictions.length; i++ ) {
+    if (predictions[i][0] < min_time) {
+      prediction_array.push([min_time, predictions[i][1]]);
     }
     else {
-      prediction_array.concat([element[0],element[1]]);
+      prediction_array.push([predictions[i][0], predictions[i][1]]);
     }
-  });
-  return prediction_array;
+  }
+  return prediction_array
 }
 
 function IntradayButton (prices, predictions) {
