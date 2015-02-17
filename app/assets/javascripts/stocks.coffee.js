@@ -109,6 +109,8 @@ $(document).ready(function () {
     buttonType = $(this).data("button-type");
     ranges = rangeHash[buttonType];
 
+    graph["daily_predictions"] = new DailyPredictions(graph["predictions"], graph["daily_prices"].last()[0]);
+    graph["daily_my_prediction"] = new DailyPredictions(graph["my_prediction"], graph["daily_prices"].last()[0]);
 
     //originally i wanted to change the frequency with which the data arrays are reset, but it doesn't seem to matter.
     if (buttonType == "1d" || buttonType == "5d") {
@@ -119,7 +121,7 @@ $(document).ready(function () {
       chart1.series[2].setData(graph["predictions"]);
       chart1.series[3].setData(graph["my_prediction"]);
     }
-    else { //current range is not one of these, load the daily prices.
+    else { //button is not one of these, 
       chart1.series[0].setData(graph["daily_prices"]);
       chart1.series[1].setData(graph["daily_forward_prices"]);
 
