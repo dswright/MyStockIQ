@@ -78,17 +78,17 @@ $(document).ready(function () {
 
     graph = data
 
-    chart1.series[0].setData(graph["daily_prices"]);
-    chart1.series[1].setData(graph["daily_forward_prices"]);
-    chart1.series[2].setData(graph["predictions"]);
-    chart1.series[3].setData(graph["my_prediction"]);
-    chart1.hideLoading();
-
     //create prediction arrays where predictions ending that day are rounded to the end of the day to appear nicely on the 1m+ graphs.
     graph["daily_predictions"] = DailyPredictions(graph["predictions"], graph["daily_prices"].last()[0]);
     graph["daily_my_prediction"] = DailyPredictions(graph["my_prediction"], graph["daily_prices"].last()[0]);
     //this is not quite done yet. I need to make it work on prediction input as well.
     //that will be a bit more complex.
+
+    chart1.series[0].setData(graph["daily_prices"]);
+    chart1.series[1].setData(graph["daily_forward_prices"]);
+    chart1.series[2].setData(graph["predictions"]);
+    chart1.series[3].setData(graph["daily_my_prediction"]);
+    chart1.hideLoading();
 
     //create the rangeHash to be used by the buttons.
     //note that by adding the my_prediction here, it will fall under the limited array filter.
