@@ -5,7 +5,7 @@ function resizeChart() {
 };
 
 //Global variables 
-var graph;
+var graph = {};
 var chart1;
 var currentRange;
 var rangeHash = {};
