@@ -183,10 +183,10 @@ $(document).ready(function () {
     
     //if the range is intraday, set to the exact prediction end time, otherwise round to the daily value.
     if (currentRange["buttonType"] === "1d" || currentRange["buttonType"] === "5d") {
-      chart1.series[3].setData(graph["daily_my_prediction"]);
+      chart1.series[3].setData(graph["my_prediction"]);
     }
     else {
-      chart1.series[3].setData(graph["my_prediction"]);
+      chart1.series[3].setData(graph["daily_my_prediction"]);
     }
 
     if (endPrice >= currentRange["rangeHash"]["yMax"]) { //increase the y max if the end price is greater than the current max.
