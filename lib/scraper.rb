@@ -174,7 +174,7 @@ class Scraper
     hash_array.each do |news_item|
       news_object = Newsarticle.find_by(google_news_id:news_item["google_news_id"])
       target_stock = Stock.find_by(ticker_symbol:news_item["ticker_symbol"])
-      new_stream = news_object.streams.build(target_type:"Stock", target_id:target_stock.id)
+      new_stream = news_object.streams.build(target_type:"Stock", target_id:target_stock.id, popularity_score:0)
       new_stream.save
     end
   end
