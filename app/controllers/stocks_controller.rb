@@ -14,15 +14,14 @@ require 'scraper'
 
 		@current_user = current_user
 
+    unless @streams == nil
+      @streams.each {|stream| stream.update_stream_popularity_scores}
+    end
+
 		#Stock's posts, comments, and predictions to be shown in the view
     #will_paginate in view automatically generates params[:page]
 		@streams = Stream.where(target_type: "Stock", target_id: @stock.id).limit(20)
     @stream_hash_array = Stream.stream_maker(@streams, 0)
-
-
-    unless @streams == nil
-      @streams.each {|stream| stream.update_stream_popularity_scores}
-    end
 
 
     #this line makes sorts the stream by popularity score.
