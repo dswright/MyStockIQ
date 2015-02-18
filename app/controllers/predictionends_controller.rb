@@ -62,7 +62,7 @@ class PredictionendsController < ApplicationController
 
     respond_to do |f|
       f.js {
-        if params[:input_page] == "stockpage"
+        if params[:input_page] == "stockspage"
           if prediction_gone
             render 'shared/_error_messages.js.erb'
           else

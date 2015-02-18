@@ -54,6 +54,7 @@ class PredictionsController < ApplicationController
 		end
 
 		unless invalid_start
+      @prediction_end_input_page = "stockspage" #set this variable for the cancel button form on the stockspage.
 			@prediction.save
 			@streams.each {|stream| stream.save}
 			stream = Stream.where(streamable_type: 'Prediction', streamable_id: @prediction.id).first
