@@ -57,7 +57,7 @@ class PredictionsController < ApplicationController
 			@prediction.save
 			@streams.each {|stream| stream.save}
 			stream = Stream.where(streamable_type: 'Prediction', streamable_id: @prediction.id).first
-			@stream_hash_array = Stream.stream_maker([stream], 0) #gets inserted to top of stream with ajax.
+			@stream_hashes = Stream.stream_maker([stream], 0) #gets inserted to top of stream with ajax.
 			response_msgs << "Prediction input!"
 		end
 
