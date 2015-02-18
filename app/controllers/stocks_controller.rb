@@ -16,7 +16,8 @@ require 'scraper'
 
 		#Stock's posts, comments, and predictions to be shown in the view
     #will_paginate in view automatically generates params[:page]
-		@streams = Stream.where(target_type: "Stock", target_id: @stock.id)
+		@streams = Stream.where(target_type: "Stock", target_id: @stock.id).limit(20)
+    @stream_hash_array = Stream.stream_maker(@streams, 0)
 
 
     unless @streams == nil
@@ -33,7 +34,8 @@ require 'scraper'
       @stream_hash_array = Stream.stream_maker(@streams, 0)
     end
 
-    @streams = @streams.paginate(page: params[:page])
+
+    @streams = @streams.paginate(page: params[:page], per_page: 10)
 
     #if a stock gets viewed, update the stocks table so that the stock gets real time stock data.
     if (@stock.viewed == false)
