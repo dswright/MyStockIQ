@@ -3,7 +3,7 @@ window.updatePredictions(<%= j @graph_time.to_s %>, <%= j @prediction.prediction
 
 $('.stock-page-prediction-box').html("<%= j render @prediction %>").fadeIn("slow");
 
-$('.prediction-post-comment:eq(0)').before("<%= j render partial: 'streams/stream', locals: {stream_hash_array: @stream_hash_array}  %> ").fadeIn("slow");
+$('.prediction-post-comment:eq(0)').before("<%= j render partial: 'streams/stream', locals: {stream_hash_array: @stream_hashes}  %> ").fadeIn("slow");
 
 var responses = $.parseHTML("<%= j raw @response %>");
 $('#response-box').html(responses).fadeIn("slow");

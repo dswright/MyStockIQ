@@ -45,7 +45,7 @@ class PredictionendsController < ApplicationController
 
         #build stream item to insert to the top of the stream.
         stream = Stream.where(streamable_type:"Predictionend", streamable_id:predictionend.id)
-        @stream_hash_array = Stream.stream_maker([stream], 0) #gets inserted to top of stream with ajax.
+        @stream_hashes = Stream.stream_maker([stream], 0) #gets inserted to top of stream with ajax.
 
         response_msgs << "prediction ended."
       else #if there are no children, and the prediction has not started, cancel the prediction.

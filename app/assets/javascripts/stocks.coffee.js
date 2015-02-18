@@ -200,7 +200,7 @@ $(document).ready(function () {
   };
 
   window.removePrediction = function() {
-    chart1.series[3].setData([null, null]);
+    chart1.series[3].setData([[null, null]]);
     //reset the ranges on the buttons to be the original range amounts after the prediction is removed.
     var graphSettings = {intradayPrices: graph["intraday_prices"], dailyPrices:graph["daily_prices"], predictions:graph["predictions"]};
     rangeHash = new StockGraphButtons(graphSettings); //recreate the original ranges based on the data arrays.
