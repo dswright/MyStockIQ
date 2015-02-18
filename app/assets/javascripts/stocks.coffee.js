@@ -166,12 +166,6 @@ $(document).ready(function () {
   //updatePredictions adjsuts the graph ranges to show a prediction when it is put onto the graph.
   window.updatePredictions = function(endTime, endPrice) {
     
-    /*if (currentRange["buttonType"] != "1d" && currentRange["buttonType"] != "5d") {
-      if (endTime < graph["daily_prices"].last()[0]) {
-        
-      }
-    }*/
-
     graph["my_prediction"] = ([[endTime, endPrice]]);
 
     //prediction gets rounded to the end of the day because this view defaults to the daily month view.

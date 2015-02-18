@@ -47,7 +47,6 @@ class Graph
   end
 
 
-
   def predictions
     predictions = []
     Prediction.where(stock_id: stock_id, active:true).where('user_id not in (?)', [@current_user.id]).limit(1500).order('prediction_end_time desc').reverse.each do |prediction|
