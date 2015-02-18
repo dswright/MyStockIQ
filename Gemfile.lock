@@ -43,6 +43,8 @@ GEM
       debug_inspector (>= 0.0.1)
     bootstrap-sass (3.2.0.0)
       sass (~> 3.2)
+    bootstrap-will_paginate (0.0.10)
+      will_paginate
     builder (3.2.2)
     byebug (3.4.0)
       columnize (~> 0.8)
@@ -250,6 +252,7 @@ GEM
       sprockets-rails (>= 2.0, < 4.0)
     whenever (0.9.4)
       chronic (>= 0.6.3)
+    will_paginate (3.0.7)
 
 PLATFORMS
   ruby
@@ -257,6 +260,7 @@ PLATFORMS
 DEPENDENCIES
   bcrypt (= 3.1.7)
   bootstrap-sass (= 3.2.0.0)
+  bootstrap-will_paginate (= 0.0.10)
   byebug (= 3.4.0)
   coffee-rails (= 4.0.1)
   faker (= 1.4.2)
@@ -292,3 +296,4 @@ DEPENDENCIES
   unicorn
   web-console (= 2.0.0.beta3)
   whenever (= 0.9.4)
+  will_paginate (= 3.0.7)

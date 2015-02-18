@@ -1,4 +1,3 @@
-
 <% stream_hash_array.each do |stream_hash|
   icons = {}
   icons[:likes] = Like.where(like_type:"like", target_type: stream_hash[:stream].streamable_type, target_id: stream_hash[:stream].streamable_id).count
@@ -24,7 +23,7 @@
   <%#the stream icons partial closes the top 2 divs %>
   <%= render partial: "streams/stream_icons", locals: {icons: icons, stream: stream_hash[:stream]} %>
 
-  <%unless stream_hash[:sub_hash_array].empty? %>
+  <%unless stream_hash[:sub_hash_array].empty? or stream_hash[:nest_count] >= 6%>
     <%= render partial: "streams/stream", locals: {stream_hash_array: stream_hash[:sub_hash_array]} %>
   <% end %>
 <% end %>  

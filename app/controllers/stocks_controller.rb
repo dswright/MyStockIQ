@@ -1,7 +1,6 @@
 class StocksController < ApplicationController
 require 'graph'
 require 'scraper'
-
 	
 	#Function to pull the whole stock file and then update all records.
 	#Run daily
@@ -16,24 +15,25 @@ require 'scraper'
 		@current_user = current_user
 
 		#Stock's posts, comments, and predictions to be shown in the view
-		streams = Stream.where(target_type: "Stock", target_id: @stock.id).limit(15)
+    #will_paginate in view automatically generates params[:page]
+		@streams = Stream.where(target_type: "Stock", target_id: @stock.id)
 
 
-    unless streams == nil
-      streams.each {|stream| stream.update_stream_popularity_scores}
+    unless @streams == nil
+      @streams.each {|stream| stream.update_stream_popularity_scores}
     end
 
 
     #this line makes sorts the stream by popularity score.
-    streams = streams.sort_by {|stream| stream.streamable.popularity_score}
+    @streams = @streams.sort_by {|stream| stream.streamable.popularity_score}
     #streams = sort_by_popularity(streams)
-    streams = streams.reverse
+    @streams = @streams.reverse
 
-    unless streams == nil
-      @stream_hash_array = Stream.stream_maker(streams, 0)
+    unless @streams == nil
+      @stream_hash_array = Stream.stream_maker(@streams, 0)
     end
 
-
+    @streams = @streams.paginate(page: params[:page])
 
     #if a stock gets viewed, update the stocks table so that the stock gets real time stock data.
     if (@stock.viewed == false)

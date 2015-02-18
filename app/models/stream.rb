@@ -4,8 +4,6 @@ class Stream < ActiveRecord::Base
   #declares a polymorphic association for the streams table. 
   belongs_to :streamable, polymorphic: true
 
-  #has_many :comments, dependent: :destroy
-  #has_many :predictions, dependent: :destroy
   #uses Rails default_scope function to sort the posts such that the most recent one is first.
   default_scope -> {order('created_at DESC')}
 
@@ -18,6 +16,7 @@ class Stream < ActiveRecord::Base
 
   	#content exists and has a max length of 140 characters
   	#validates :content, presence: true, length: {maximum: 140}
+
 
 
   def self.stream_maker(streams, nest_count)

@@ -8,10 +8,20 @@ module Popularity
     	dislikes = Like.where(like_type: "dislike", target_id: self.id, target_type:self.class.name).count
   	end
 
+  	def has_replies?
+  		count = Stream.where(target_id: self.id, target_type: self.class.name).count
+  		if count > 0
+  			return true
+  		else 
+  			return false
+  		end
+  	end
+
   	def replies
     	reply_stream = Stream.where(target_id: self.id, target_type: self.class.name)
     	replies = []
     	reply_stream.each do |stream|
+
         #this limits all replies to being comments, which is not the case.
         #predictionends are replies to the original prediction.
       		replies << Comment.find_by(id: stream.streamable_id)

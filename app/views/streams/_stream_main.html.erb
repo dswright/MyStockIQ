@@ -1,0 +1,31 @@
+<% @streams.each do |stream|
+  icons = {}
+
+  icons[:likes] = stream.streamable.likes
+  icons[:dislikes] = stream.streamable.dislikes
+  icons[:replies] = stream.streamable.replies.count
+
+	%>
+   <div class = "prediction-post-comment" id="stream-<%= stream.streamable.class.name %>_<%= stream.streamable.id %>">
+     <div class = "row" style = "margin-left: <%= nest_count * 20 %>px;">
+      <% if stream.streamable.class.name == "Comment" %>
+          <%= render partial: "streams/stream_comment", locals: {comment: stream.streamable} %>
+
+      <% elsif stream.streamable.class.name == "Prediction" %>
+          <%= render partial: "streams/stream_prediction", locals: {prediction: stream.streamable} %>
+
+      <% elsif stream.streamable.class.name == "Newsarticle" %>
+          <%= render partial: "streams/stream_newsarticle", locals: {newsarticle: stream.streamable} %>
+
+      <% elsif stream.streamable.class.name == "Predictionend" %>
+          <%= render partial: "streams/stream_predictionend", locals: {predictionend: stream.streamable} %>
+      <%end%>
+
+      <%= render partial: "streams/stream_comment_form", locals: {stream_string: "#{stream.streamable.class.name}:#{stream.streamable.id}", stream_obj: stream, nest_count: nest_count} %>
+
+       <%#the stream icons partial closes the top 2 divs %>
+      <%= render partial: "streams/stream_icons", locals: {icons: icons, stream: stream} %>
+    </div>
+  </div> 
+
+<%end%>

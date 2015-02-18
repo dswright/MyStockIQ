@@ -12,7 +12,7 @@ stock = Stock.find_by(ticker_symbol: "AAPL")
 #Creates 50 comment posts
 50.times do 
 	content = Faker::Lorem.sentence(5)
-	comment = user.comments.create!(content: content)
-	comment.streams.create!(streamable_type: "comment", target_type: "stock", target_id: stock.id)
+	comment = user.comments.create!(content: content, popularity_score: 0)
+	comment.streams.create!(streamable_type: comment.class.name, target_type: stock.class.name, target_id: stock.id)
 end
 

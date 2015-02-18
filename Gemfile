@@ -18,6 +18,8 @@ gem 'rest-client', '~> 1.7.2'
 gem 'bcrypt',               '3.1.7'
 
 gem 'faker',				'1.4.2'
+gem 'will_paginate',           '3.0.7'
+
 
 # Use SCSS for stylesheets
 gem "sass", "~> 3.2.5"
@@ -25,6 +27,9 @@ gem "sass", "~> 3.2.5"
 gem 'sass-rails'
 
 gem 'bootstrap-sass',		'3.2.0.0'
+# Needed to use paginate
+gem 'bootstrap-will_paginate', '0.0.10'
+
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier',             '2.5.3'
 # Use CoffeeScript for .js.coffee assets and views
