@@ -170,16 +170,25 @@ $(document).ready(function () {
 
     //prediction gets rounded to the end of the day because this view defaults to the daily month view.
     graph["daily_my_prediction"] = new DailyPredictions(graph["my_prediction"], graph["daily_prices"].last()[0]);
-    chart1.series[3].setData(graph["daily_my_prediction"]);
 
+    //if the time gets set to the 1 month view, set the prediction to the rounded daily value.
     if (endTime > currentRange["rangeHash"]["xMax"]) { //if the endtime of the prediction is greater than the endtime in the current view, increase the end time.
       chart1.series[0].setData(graph["daily_prices"]); //update to the daily price history array.
       chart1.series[1].setData(graph["daily_forward_prices"]); //update to the daily forward price array.
-      
+
       chart1.xAxis[0].setExtremes(rangeHash["1m"]["xMin"], predictionXMax(endTime)); //set to the 1 month min range by default. This lookback window should be larger for large predictions so that the current stock data doesn't look disproportionately small after the prediction is made.
       chart1.yAxis[0].setExtremes(rangeHash["1m"]["yMin"], rangeHash["1m"]["yMax"]);
-      current_range = rangeHash["1m"]
+      currentRange = rangeHash["1m"]
     }
+    
+    //if the range is intraday, set to the exact prediction end time, otherwise round to the daily value.
+    if (currentRange["buttonType"] === "1d" || currentRange["buttonType"] === "5d") {
+      chart1.series[3].setData(graph["daily_my_prediction"]);
+    }
+    else {
+      chart1.series[3].setData(graph["my_prediction"]);
+    }
+
     if (endPrice >= currentRange["rangeHash"]["yMax"]) { //increase the y max if the end price is greater than the current max.
       chart1.yAxis[0].setExtremes(currentRange["rangeHash"]["yMin"], predictionYMax(endPrice));
     }
