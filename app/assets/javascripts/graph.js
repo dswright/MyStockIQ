@@ -57,18 +57,20 @@ function DailyPredictions (predictions, min_time) {
   return prediction_array
 }
 
-function IntradayButton (prices, predictions) {
+function IntradayButton (prices, predictions, myPrediction) {
   this.timeInterval = 60*5*1000;
   this.timeLength = 6.5*3600*1000;
   this.prices = prices;
   this.predictions = predictions;
+  this.myPrediction = myPrediction;
 }
 
-function DailyButton (prices, predictions) {
+function DailyButton (prices, predictions, myPrediction) {
   this.timeInterval = 24*3600*1000;
   this.timeLength = 24*3600*1000;
   this.prices = prices;
   this.predictions = predictions;
+  this.myPrediction = myPrediction;
 }
 
 function BestRange (endTime, rangeHash) {
@@ -82,8 +84,8 @@ function BestRange (endTime, rangeHash) {
 //graphSettings passes in: intraday_prices, predictions, daily_prices. For use in the buttonsettings.
 //this function creates the buttons for the graph.
 function StockGraphButtons(graphSettings) {
-  var intradayButton = new IntradayButton(graphSettings["intradayPrices"], graphSettings["predictions"]);
-  var dailyButton = new DailyButton(graphSettings["dailyPrices"], graphSettings["predictions"]);
+  var intradayButton = new IntradayButton(graphSettings["intradayPrices"], graphSettings["predictions"], graphSettings["myPrediction"]);
+  var dailyButton = new DailyButton(graphSettings["dailyPrices"], graphSettings["predictions"], graphSettings["myPrediction"]);
   var buttons = [{name:"1d", beforeDays:1, afterDays:0.5, settings:intradayButton},
                         {name:"5d", beforeDays:5, afterDays:2.5, settings:intradayButton},
                         {name:"1m", beforeDays:20, afterDays:10, settings:dailyButton},
@@ -100,8 +102,8 @@ function StockGraphButtons(graphSettings) {
 }
 
 function PredictionGraphButtons(graphSettings) {
-  var intradayButton = new IntradayButton(graphSettings["intradayPrices"], graphSettings["predictions"], graphSettings["myPrediction"]);
-  var dailyButton = new DailyButton(graphSettings["dailyPrices"], graphSettings["predictions"], graphSettings["myPrediction"]);
+  var intradayButton = new IntradayButton(graphSettings["intradayPrices"], graphSettings["predictions"], graphSettings["myPrediction"]); //the 'predictions' can come out of here...
+  var dailyButton = new DailyButton(graphSettings["dailyPrices"], graphSettings["predictions"], graphSettings["myPrediction"]); //the 'predictions' can come out of here... probably.
   var buttons = [{name:"1d", beforeDays:0.5, afterDays:1, settings:intradayButton},
                         {name:"5d", beforeDays:2.5, afterDays:5, settings:intradayButton},
                         {name:"1m", beforeDays:10, afterDays:20, settings:dailyButton},
@@ -130,7 +132,7 @@ function PredictionGraphButtons(graphSettings) {
 function Button(buttonSettings) {
   var beforeDays = buttonSettings["beforeDays"];
   var afterDays = buttonSettings["afterDays"];
-  var settings = buttonSettings["settings"]; //contains 4 items: timeInterval, timeLength, prices, predictions, my_prediction
+  var settings = buttonSettings["settings"]; //contains 4 items: timeInterval, timeLength, prices, predictions, myPrediction
   
   //intervalDirection is the direction to move from the start point.
   //startpoint is where to start counting from.
@@ -193,7 +195,7 @@ function Button(buttonSettings) {
         minPriceFinal = value[1];
       }
     });
-    return minPriceFinal-(min-minPriceFinal)*0.05 //decrease the min by an extra 5% of the difference of the adjustment. 
+    return minPriceFinal-(min-minPriceFinal)*0.05; //decrease the min by an extra 5% of the difference of the adjustment. 
   }
 
   function yMax(prices, predictions, myPrediction) {
@@ -210,8 +212,8 @@ function Button(buttonSettings) {
       }
     });
     myPrediction.forEach(function (value, index, arr) { //there is no limit for the myPrediction. It will always show.
-      if (value[1] < minPriceFinal) {
-        minPriceFinal = value[1];
+      if (value[1] > maxPriceFinal) {
+        maxPriceFinal = value[1];
       }
     });
     return maxPriceFinal+(maxPriceFinal-max)*0.05;

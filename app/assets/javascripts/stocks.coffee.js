@@ -83,7 +83,7 @@ $(document).ready(function () {
     graph["daily_my_prediction"] = new DailyPredictions(graph["my_prediction"], graph["daily_prices"].last()[0]);
 
 
-    var graphSettings = {intradayPrices: graph["intraday_prices"], dailyPrices:graph["daily_prices"], predictions:graph["predictions"].concat(graph["my_prediction"])}; //set the graph limits based on predictions and my prediction
+    var graphSettings = {intradayPrices: graph["intraday_prices"], dailyPrices:graph["daily_prices"], predictions:graph["predictions"], myPrediction:graph["my_prediction"]}; //set the graph limits based on predictions and my prediction
     rangeHash = new StockGraphButtons(graphSettings); //this returns all of the ranges for the butons. It is an array with keys: 1d,5d,1m,3m,6m,1yr,5yr
 
     if (graph["my_prediction"][0][0] === null) { //if there is no prediction set, default to the monthly settings.
@@ -210,7 +210,7 @@ $(document).ready(function () {
       chart1.series[3].setData(graph["daily_my_prediction"]);
     }
 
-    var graphSettings = {intradayPrices: graph["intraday_prices"], dailyPrices:graph["daily_prices"], predictions:graph["predictions"].concat(graph["my_prediction"])}; //set the graph limits based on predictions and my prediction. Graph is reset based on new prediction range.
+    var graphSettings = {intradayPrices: graph["intraday_prices"], dailyPrices:graph["daily_prices"], predictions:graph["predictions"], myPrediction:graph["my_prediction"]}; //set the graph limits based on predictions and my prediction. Graph is reset based on new prediction range.
     rangeHash = new StockGraphButtons(graphSettings); //this returns all of the ranges for the butons. It is an array with keys: 1d,5d,1m,3m,6m,1yr,5yr
 
 
@@ -226,7 +226,7 @@ $(document).ready(function () {
     chart1.series[3].setData([[null, null]]);
 
     //reset the ranges on the buttons to be the original range amounts after the prediction is removed.
-    var graphSettings = {intradayPrices: graph["intraday_prices"], dailyPrices:graph["daily_prices"], predictions:graph["predictions"]};
+    var graphSettings = {intradayPrices: graph["intraday_prices"], dailyPrices:graph["daily_prices"], predictions:graph["predictions"], myPrediction:[[null,null]]};
     rangeHash = new StockGraphButtons(graphSettings); //recreate the original ranges based on the data arrays.
     
     var buttonType = currentRange["buttonType"];
