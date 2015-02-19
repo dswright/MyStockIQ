@@ -57,7 +57,7 @@ class PredictionsController < ApplicationController
       @prediction_end_input_page = "stockspage" #set this variable for the cancel button form on the stockspage.
 			@prediction.save
 			@streams.each {|stream| stream.save}
-			stream = Stream.where(streamable_type: 'Prediction', streamable_id: prediction.id).first
+			stream = Stream.where(streamable_type: 'Prediction', streamable_id: @prediction.id).first
 			@stream_hashes = Stream.stream_maker([stream], 0) #gets inserted to top of stream with ajax.
 			response_msgs << "Prediction input!"
 		end
