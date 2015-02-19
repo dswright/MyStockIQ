@@ -25,6 +25,7 @@ class PredictionendsController < ApplicationController
       children = Stream.where(target_type: 'Prediction', target_id: prediction.id) #check to see if there are children already.
       prediction_ended = false
       @prediction = current_user.predictions.build(stock_id: prediction.stock.id) #this is built to produce the form again after the prediction is cancelled/ended.
+      @prediction_stream_inputs = "Stock:#{@stock.id}"
 
       if prediction.start_time < Time.zone.now || children.exists? #if children exist or the prediction started, end the prediction.
         prediction_ended = true
