@@ -100,8 +100,8 @@ function StockGraphButtons(graphSettings) {
 }
 
 function PredictionGraphButtons(graphSettings) {
-  var intradayButton = new IntradayButton(graphSettings["intradayPrices"], graphSettings["predictions"]);
-  var dailyButton = new DailyButton(graphSettings["dailyPrices"], graphSettings["predictions"]);
+  var intradayButton = new IntradayButton(graphSettings["intradayPrices"], graphSettings["predictions"], graphSettings["myPrediction"]);
+  var dailyButton = new DailyButton(graphSettings["dailyPrices"], graphSettings["predictions"], graphSettings["myPrediction"]);
   var buttons = [{name:"1d", beforeDays:0.5, afterDays:1, settings:intradayButton},
                         {name:"5d", beforeDays:2.5, afterDays:5, settings:intradayButton},
                         {name:"1m", beforeDays:10, afterDays:20, settings:dailyButton},
@@ -130,7 +130,7 @@ function PredictionGraphButtons(graphSettings) {
 function Button(buttonSettings) {
   var beforeDays = buttonSettings["beforeDays"];
   var afterDays = buttonSettings["afterDays"];
-  var settings = buttonSettings["settings"]; //contains 4 items: timeInterval, timeLength, prices, predictions
+  var settings = buttonSettings["settings"]; //contains 4 items: timeInterval, timeLength, prices, predictions, my_prediction
   
   //intervalDirection is the direction to move from the start point.
   //startpoint is where to start counting from.
@@ -171,42 +171,53 @@ function Button(buttonSettings) {
       return returnArray;
     }
   }
-  var limitedPredictions = limitedArray(settings.predictions); //The predictions that fall into the x axis time frame.
   var limitedPrices = limitedArray(settings.prices); //The stock prices that fall into the x axis time frame.
+  var limitedPredictions = limitedArray(settings.predictions); //The predictions that fall into the x axis time frame.
+  var limitedMyPrediction = limitedArray(settings.myPrediction);
 
   
-  function yMin(prices, predictions) { 
+  function yMin(prices, predictions, myPrediction) { 
     var min = prices.reduce(function (min, obj) {  //this reduce function needs to get the lowest price from the array.
       return obj[1] < min ? obj[1] : min; //if obj[1] (price) is less than the min, return obj[1], otherwise return min. 
     }, Infinity); //infinity is the value of the first min.
     var minPriceFinal = min;
-    
-    predictions.forEach(function (value, index, arr) {
+    predictions.forEach(function (value, index, arr) { //sets the min price that other people predictions will adjust the graph by.
       if (value[1] < minPriceFinal) {
-        if (value[1] > min * 0.4) {
-          minPriceFinal = value[1] * 0.95;
+        if (value[1] > min * 0.5) { //the min is 50% of the graph min price.
+          minPriceFinal = value[1];
         }
       }
     });
-    return minPriceFinal;
+    myPrediction.forEach(function (value, index, arr) { //the user's own prediction will always show up.
+      if (value[1] < minPriceFinal) {
+        minPriceFinal = value[1];
+      }
+    });
+    return minPriceFinal-(min-minPriceFinal)*0.05 //decrease the min by an extra 5% of the difference of the adjustment. 
   }
 
-  function yMax(prices, predictions) {
+  function yMax(prices, predictions, myPrediction) {
     var max = prices.reduce(function (max, obj) {
       return obj[1] > max ? obj[1] : max;
     }, 0);
     var maxPriceFinal = max;
 
-    predictions.forEach(function (value, index, arr) {
+    predictions.forEach(function (value, index, arr) { //this controls the max view for seeing predicitons.
       if (value[1] > maxPriceFinal) {
-        if (value[1] < max * 2.5) {
-          maxPriceFinal = value[1] * 1.05;
+        if (value[1] < max * 1.5) { //the limit is currently set to 1.5 times the max stockprice point.
+          maxPriceFinal = value[1];
         }
       }
     });
-    return maxPriceFinal;
+    myPrediction.forEach(function (value, index, arr) { //there is no limit for the myPrediction. It will always show.
+      if (value[1] < minPriceFinal) {
+        minPriceFinal = value[1];
+      }
+    });
+    return maxPriceFinal+(maxPriceFinal-max)*0.05;
   }
-  this.yMin = yMin(limitedPrices, limitedPredictions);  
-  this.yMax = yMax(limitedPrices, limitedPredictions);
+
+  this.yMin = yMin(limitedPrices, limitedPredictions, limitedMyPrediction);  
+  this.yMax = yMax(limitedPrices, limitedPredictions, limitedMyPrediction);
 
 } //for some reason this paren doesn't underline, but it does close the Button class.
