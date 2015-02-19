@@ -71,6 +71,14 @@ function DailyButton (prices, predictions) {
   this.predictions = predictions;
 }
 
+function BestRange (endTime, rangeHash) {
+  for (var value in rangeHash) { //loop through the values of the rangehash - 1d, 5d, 1m ect..
+    if (endTime < rangeHash[value]["xMax"]) { //if the endTime is less than the x max of the range, then its in range.
+      return value; //return that value, ie, the button name - "1d", "5d" ect.
+    }
+  }
+}
+
 //graphSettings passes in: intraday_prices, predictions, daily_prices. For use in the buttonsettings.
 //this function creates the buttons for the graph.
 function StockGraphButtons(graphSettings) {

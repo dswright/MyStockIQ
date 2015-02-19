@@ -24,6 +24,8 @@ class PredictionendsController < ApplicationController
     unless prediction_gone #unless the prediction is already cancelled or ended, do all of this.
       children = Stream.where(target_type: 'Prediction', target_id: prediction.id) #check to see if there are children already.
       prediction_ended = false
+      @prediction = current_user.predictions.build(stock_id: prediction.stock.id) #this is built to produce the form again after the prediction is cancelled/ended.
+
       if prediction.start_time < Time.zone.now || children.exists? #if children exist or the prediction started, end the prediction.
         prediction_ended = true
 
@@ -52,11 +54,12 @@ class PredictionendsController < ApplicationController
         @prediction_css_id = "Prediction_#{params[:prediction_id]}" #this is used to eliminate the stream item from the page when cancelled.
         @prediction_stream_inputs = "Stock:#{prediction.stock.id},User:#{current_user.id}" #this is used to define the target stream items for the new prediction input form.
         response_msgs << "prediction removed."
-        @prediction = current_user.predictions.build(stock_id: prediction.stock.id) #this is built to produce the form again.
         
         prediction.destroy
       end
+
     end
+
 
     @response = response_maker(response_msgs)
 

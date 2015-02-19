@@ -25,7 +25,7 @@ class Graph
       my_prediction << [graph_time, prediction.prediction_end_price.round(2)]
     end
     if my_prediction.empty?
-      my_prediction << [0, nil]
+      my_prediction << [nil, nil]
     end
     return my_prediction
   end

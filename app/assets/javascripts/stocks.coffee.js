@@ -81,25 +81,47 @@ $(document).ready(function () {
     //create prediction arrays where predictions ending that day are rounded to the end of the day to appear nicely on the 1m+ graphs.
     graph["daily_predictions"] = new DailyPredictions(graph["predictions"], graph["daily_prices"].last()[0]);
     graph["daily_my_prediction"] = new DailyPredictions(graph["my_prediction"], graph["daily_prices"].last()[0]);
-    //this is not quite done yet. I need to make it work on prediction input as well.
-    //that will be a bDailit more complex.
 
-    chart1.series[0].setData(graph["daily_prices"]);
-    chart1.series[1].setData(graph["daily_forward_prices"]);
-    chart1.series[2].setData(graph["daily_predictions"]);
-    chart1.series[3].setData(graph["daily_my_prediction"]);
-    chart1.hideLoading();
 
-    //create the rangeHash to be used by the buttons.
-    //note that by adding the my_prediction here, it will fall under the limited array filter.
-    //the daily_predictions and daily_my_predictions are used here because the default setting is a monthly graph.
-    graphSettings = {intradayPrices: graph["intraday_prices"], dailyPrices:graph["daily_prices"], predictions:graph["daily_predictions"].concat(graph["daily_my_prediction"])};
+    var graphSettings = {intradayPrices: graph["intraday_prices"], dailyPrices:graph["daily_prices"], predictions:graph["predictions"].concat(graph["my_prediction"])}; //set the graph limits based on predictions and my prediction
     rangeHash = new StockGraphButtons(graphSettings); //this returns all of the ranges for the butons. It is an array with keys: 1d,5d,1m,3m,6m,1yr,5yr
 
-    chart1.yAxis[0].setExtremes(rangeHash["1m"]["yMin"], rangeHash["1m"]["yMax"]);
-    chart1.xAxis[0].setExtremes(rangeHash["1m"]["xMin"], rangeHash["1m"]["xMax"]);
+    if (graph["my_prediction"][0][0] === null) { //if there is no prediction set, default to the monthly settings.
+      chart1.series[0].setData(graph["daily_prices"]);
+      chart1.series[1].setData(graph["daily_forward_prices"]);
+      chart1.series[2].setData(graph["daily_predictions"]);
+      chart1.hideLoading();
+      chart1.yAxis[0].setExtremes(rangeHash["1m"]["yMin"], rangeHash["1m"]["yMax"]); //set the ranges to the 1m default.
+      chart1.xAxis[0].setExtremes(rangeHash["1m"]["xMin"], rangeHash["1m"]["xMax"]);
+      currentRange = {rangeHash:rangeHash["1m"],buttonType:"1m"}; //the current range tracks the latest range button that the user has clicked.
+    }
+    else {
+      var endTime = graph["my_prediction"][0][0];
+      var bestButton = BestRange(endTime, rangeHash);
+      if (bestButton === "1d" || bestButton === "5d") { //if the prediction end time is within range of the 1d or 5d buttons, set the arrays to the intraday arrays.
+        chart1.series[0].setData(graph["intraday_prices"]);
+        chart1.series[1].setData(graph["intraday_forward_prices"]);
+        chart1.series[2].setData(graph["predictions"]);
+        chart1.series[3].setData(graph["my_prediction"]);
+        chart1.hideLoading();
+      }
+      else { //otherwise set the array to the daily arrays.
+        chart1.series[0].setData(graph["daily_prices"]);
+        chart1.series[1].setData(graph["daily_forward_prices"]);
+        chart1.series[2].setData(graph["daily_predictions"]);
+        chart1.series[3].setData(graph["daily_my_prediction"]);
+        chart1.hideLoading();
+      }
 
-    currentRange = {rangeHash:rangeHash["1m"],buttonType:"1m"}; //the current range tracks the latest range button that the user has clicked.
+      chart1.xAxis[0].setExtremes(rangeHash[bestButton]["xMin"], rangeHash[bestButton]["xMax"]); //set the extremes based on the bestButton range
+      chart1.yAxis[0].setExtremes(rangeHash[bestButton]["yMin"], rangeHash[bestButton]["yMax"]);
+      currentRange = {rangeHash:rangeHash[bestButton], buttonType:bestButton};
+    }
+    
+
+    //create the rangeHash to be used by the buttons.
+    //note that by adding the my_prediction here, it will fall under the limited array filter. The my prediction and prediction filter should be differentiated.
+    //the daily_predictions and daily_my_predictions are used here because the default setting is a monthly graph.
   });
 
 
@@ -139,9 +161,7 @@ $(document).ready(function () {
     //window.alert(range_min + range_max)
   };
 
-  function predictionXMax(endTime){
-    return endTime+(endTime-currentRange["rangeHash"]["xMin"])*0.05;
-  };
+
   function predictionYMax(endPrice){
     return endPrice+(endPrice-currentRange["rangeHash"]["yMin"])*0.1;
   };
@@ -170,34 +190,33 @@ $(document).ready(function () {
 
     //prediction gets rounded to the end of the day because this view defaults to the daily month view.
     graph["daily_my_prediction"] = new DailyPredictions(graph["my_prediction"], graph["daily_prices"].last()[0]);
+    //not sure why i need to, but resetting daily predictions too, just in case...
+    graph["daily_predictions"] = new DailyPredictions(graph["predictions"], graph["daily_prices"].last()[0]);
 
-    ranges = rangeHash
+    ranges = rangeHash;
 
-    //there needs to be logic here that specifies that this only applies to monthly situations.
-    if (endTime > currentRange["rangeHash"]["xMax"]) { //if the endtime of the prediction is greater than the endtime in the current view, increase the end time.
-      chart1.series[0].setData(graph["daily_prices"]); //update to the daily price history array.
-      chart1.series[1].setData(graph["daily_forward_prices"]); //update to the daily forward price array.
+    var bestButton = BestRange(endTime, rangeHash);
 
-      chart1.xAxis[0].setExtremes(rangeHash["1m"]["xMin"], predictionXMax(endTime)); //set to the 1 month min range by default. This lookback window should be larger for large predictions so that the current stock data doesn't look disproportionately small after the prediction is made.
-      chart1.yAxis[0].setExtremes(rangeHash["1m"]["yMin"], rangeHash["1m"]["yMax"]);
-      currentRange = {rangeHash:rangeHash["1m"], buttonType:rangeHash};
-    }
-    
-    //if the range is intraday, set to the exact prediction end time, otherwise round to the daily value.
-    if (currentRange["buttonType"] == "1d" || currentRange["buttonType"] == "5d") {
+    if (bestButton === "1d" || bestButton === "5d") { //if the prediction end time is within range of the 1d or 5d buttons, set the arrays to the intraday arrays.
+      chart1.series[0].setData(graph["intraday_prices"]);
+      chart1.series[1].setData(graph["intraday_forward_prices"]);
+      chart1.series[2].setData(graph["predictions"]);
       chart1.series[3].setData(graph["my_prediction"]);
     }
-    else {
+    else { //otherwise set the array to the daily arrays.
+      chart1.series[0].setData(graph["daily_prices"]);
+      chart1.series[1].setData(graph["daily_forward_prices"]);
+      chart1.series[2].setData(graph["daily_predictions"]);
       chart1.series[3].setData(graph["daily_my_prediction"]);
     }
 
-    if (endPrice >= currentRange["rangeHash"]["yMax"]) { //increase the y max if the end price is greater than the current max.
-      chart1.yAxis[0].setExtremes(currentRange["rangeHash"]["yMin"], predictionYMax(endPrice));
-    }
+    var graphSettings = {intradayPrices: graph["intraday_prices"], dailyPrices:graph["daily_prices"], predictions:graph["predictions"].concat(graph["my_prediction"])}; //set the graph limits based on predictions and my prediction. Graph is reset based on new prediction range.
+    rangeHash = new StockGraphButtons(graphSettings); //this returns all of the ranges for the butons. It is an array with keys: 1d,5d,1m,3m,6m,1yr,5yr
 
-    if (endPrice <= currentRange["rangeHash"]["yMin"]) { //increase the y min if the end price is lower than the current max.
-      chart1.yAxis[0].setExtremes(predictionYMin(endPrice), currentRange["rangeHash"]["yMax"]);
-    }
+
+    chart1.xAxis[0].setExtremes(rangeHash[bestButton]["xMin"], rangeHash[bestButton]["xMax"]); //set the extremes based on the bestButton range
+    chart1.yAxis[0].setExtremes(rangeHash[bestButton]["yMin"], rangeHash[bestButton]["yMax"]);
+    currentRange = {rangeHash:rangeHash[bestButton], buttonType:bestButton};
 
     updateRanges(endTime, endPrice); //update ranges updates the range variables for all buttons to take into account the new prediction.
 
