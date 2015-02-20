@@ -30,7 +30,7 @@ class Graph
     return my_prediction
   end
 
-  def prediction
+  def prediction #this is used for the predictiondetails graph.
     prediction = @prediction
     start_time = prediction.start_time.utc_time_int.graph_time_int
     end_time = prediction.prediction_end_time.utc_time_int.graph_time_int
@@ -38,7 +38,7 @@ class Graph
     return prediction_graph
   end
 
-  def predictionend
+  def predictionend #used for the prediction details graph.
     if @prediction.predictionend
       return [[@prediction.start_time, @prediction.start_price], [@prediction.predictionend.actual_end_time, @prediction.predictionend.actual_end_price]]
     else
@@ -47,20 +47,20 @@ class Graph
   end
 
 
-  def predictions
-    predictions = []
-    Prediction.where(stock_id: stock_id, active:true).where('user_id not in (?)', [@current_user.id]).limit(1500).order('prediction_end_time desc').reverse.each do |prediction|
+  def predictions #predictions for the stock graph.
+    predictions_array = []
+    Prediction.where(stock_id: stock_id, active:true).where('user_id not in (?)',[@current_user.id]).limit(1500).reorder('prediction_end_time desc').reverse.each do |prediction|
       graph_time = prediction.prediction_end_time.utc_time_int.graph_time_int
-      predictions << [graph_time, prediction.prediction_end_price.round(2)]
+      predictions_array << [graph_time, prediction.prediction_end_price.round(2)]
     end
-    return predictions
+    return predictions_array
   end
 
   #Limited to 400 5 minute periods, which is 2000 minutes, just over the 975 minutes in 5 6.5 hour days.
 
   def intraday_prices
     price_array = []
-    stock_prices = Intradayprice.where(ticker_symbol:self.ticker_symbol).limit(400).order('date desc').reverse.each do |price|    
+    Intradayprice.where(ticker_symbol:self.ticker_symbol).limit(400).reorder('date desc').reverse.each do |price|    
       graph_time = price.date.utc_time_int.graph_time_int
       price_array << [graph_time, price.close_price.round(2)]
     end
@@ -69,9 +69,8 @@ class Graph
 
   #this function forms a full 5 year array. The actual control is done with the x axis settings of the graph.
   def daily_prices
-    stock_prices = Stockprice.where(ticker_symbol: ticker_symbol).limit(1300).order('date desc') 
     price_array = []
-    stock_prices.each do |price|
+    Stockprice.where(ticker_symbol: self.ticker_symbol).limit(1300).reorder('date desc').each do |price|
       graph_time = price.date.utc_time_int.graph_time_int #these methods will no longer be available... the database will send a date time stamp over the json api...
       price_array << [graph_time, price.close_price.round(2)]
     end

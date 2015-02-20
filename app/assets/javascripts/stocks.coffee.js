@@ -131,9 +131,6 @@ $(document).ready(function () {
     buttonType = $(this).data("button-type");
     ranges = rangeHash[buttonType];
 
-    //no idea why these variables need to be reset here.. they have already been set in the data load function.
-    graph["daily_predictions"] = new DailyPredictions(graph["predictions"], graph["daily_prices"].last()[0]);
-    graph["daily_my_prediction"] = new DailyPredictions(graph["my_prediction"], graph["daily_prices"].last()[0]);
 
     //originally i wanted to change the frequency with which the data arrays are reset, but it doesn't seem to matter.
     if (buttonType == "1d" || buttonType == "5d") {
@@ -158,7 +155,6 @@ $(document).ready(function () {
 
     currentRange = {rangeHash:ranges, buttonType:buttonType};
     
-    //window.alert(range_min + range_max)
   };
 
 
@@ -188,10 +184,9 @@ $(document).ready(function () {
     
     graph["my_prediction"] = ([[endTime, endPrice]]);
 
-    //prediction gets rounded to the end of the day because this view defaults to the daily month view.
+    //reset the value of daily_my_prediction based on the new my_prediction value.
     graph["daily_my_prediction"] = new DailyPredictions(graph["my_prediction"], graph["daily_prices"].last()[0]);
-    //not sure why i need to, but resetting daily predictions too, just in case...
-    graph["daily_predictions"] = new DailyPredictions(graph["predictions"], graph["daily_prices"].last()[0]);
+
 
     ranges = rangeHash;
 
