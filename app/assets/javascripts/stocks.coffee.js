@@ -134,8 +134,8 @@ $(document).ready(function () {
   function getRanges1() {
     //the trick is that the graph ranges has to be defined... 
     //replace these with the graph["ranges"]["3m"] variable, ect.. maybe pass that variable in through the function.
-    buttonType = $(this).data("button-type");
-    ranges = rangeHash[buttonType];
+    var buttonType = $(this).data("button-type");
+    var ranges = rangeHash[buttonType];
 
 
     //originally i wanted to change the frequency with which the data arrays are reset, but it doesn't seem to matter.
@@ -152,8 +152,8 @@ $(document).ready(function () {
       chart.series[1].setData(graph["daily_forward_prices"]);
 
       //set the prediction arrays so that today's predictions are rounded forward so that they don't appear to end before the graph does.
-      chart.series[3].setData(graph["daily_my_prediction"]);
       chart.series[2].setData(graph["daily_predictions"]);
+      chart.series[3].setData(graph["daily_my_prediction"]);
     }
 
     chart.yAxis[0].setExtremes(ranges["yMin"], ranges["yMax"]);
