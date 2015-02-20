@@ -5,7 +5,7 @@ function resizeChart() {
 };
 
 //Global variables 
-var graph = {};
+var graph;
 var chart;
 var currentRange;
 var rangeHash = {};
@@ -85,8 +85,8 @@ $(document).ready(function () {
     graph = data
 
     //create prediction arrays where predictions ending that day are rounded to the end of the day to appear nicely on the 1m+ graphs.
-    //graph["daily_predictions"] = DailyPredictions(graph["predictions"], graph["daily_prices"].last()[0]);
-    //graph["daily_my_prediction"] = DailyPredictions(graph["my_prediction"], graph["daily_prices"].last()[0]);
+    graph["daily_predictions"] = DailyPredictions(graph["predictions"], graph["daily_prices"].last()[0]);
+    graph["daily_my_prediction"] = DailyPredictions(graph["my_prediction"], graph["daily_prices"].last()[0]);
 
 
     var graphSettings = {intradayPrices: graph["intraday_prices"], dailyPrices:graph["daily_prices"], predictions:graph["predictions"], myPrediction:graph["my_prediction"]}; //set the graph limits based on predictions and my prediction
