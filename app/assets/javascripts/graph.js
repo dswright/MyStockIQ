@@ -44,7 +44,7 @@ Array.prototype.select = function(closure){
   return new_array;
 }
 
-function DailyPredictions (predictions, min_time) {
+function DailyPredictions (predictions, min_time) { //make this function take an array of shit and transform it into the end times.
   var prediction_array = [];
   for(var i = 0; i < predictions.length; i++ ) {
     if (predictions[i][0] < min_time) {
