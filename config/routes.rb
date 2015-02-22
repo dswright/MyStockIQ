@@ -37,6 +37,7 @@ Rails.application.routes.draw do
 
   post    'predictions'                  =>   'predictions#create'
   get     'predictions/:id'              =>   'predictions#show'
+  get     'predictions/hover/:id'        =>   'predictions#hover'
 
   post    'predictionends'               =>   'predictionends#create'
 

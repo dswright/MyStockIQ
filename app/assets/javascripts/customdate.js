@@ -27,12 +27,14 @@ if (![].includes) {
 }
 
 String.prototype.utcTime = function() { //takes date string format of the manual type "YYYY-MM-DD" or the database type "2015-01-26 21:00:00 UTC".
-  if (this.indexOf('UTC') !== -1) {
-    return new Date(this); 
+  var dateString = this;
+  if (dateString.indexOf(':') === -1) { //if there is no ':', add the minute string.
+    dateString = dateString + " 00:00:00";
   }
-  else {
-    return new Date(this + " UTC"); 
-  }
+  arr = dateString.split(/[- :]/);
+  theDate = new Date(arr[0], arr[1]-1, arr[2], arr[3], arr[4], arr[5]); //returns a date stamp.
+  //return new Date(theDate.getUTCFullYear(), theDate.getUTCMonth(), theDate.getUTCDate(), theDate.getUTCHours(), theDate.getUTCMinutes(), theDate.getUTCSeconds()); //returns a datestamp.
+  return new Date(arr[0], arr[1]-1, arr[2], arr[3], arr[4]-theDate.getTimezoneOffset(), arr[5]);
 }
 
 Date.prototype.utcTimeInt = function() {
@@ -67,6 +69,7 @@ Number.prototype.utcTimeInt = function() {
 String.prototype.validStockTime = function() {
   //standard whole holidays are:
   //new years day, MLK day, Presidents day, Good Friday, Memorial Day, July 4th, Labor Day, Thanksgiving, Christmas
+  
   var holidayArray = [
     "2010-01-01", "2010-01-18", "2010-02-15", "2010-04-02", "2010-05-31", "2010-07-05", "2010-09-06", "2010-11-25", "2010-12-24",
     "2011-01-17", "2011-02-21", "2011-04-22", "2011-05-30", "2011-07-04", "2011-09-05", "2011-11-24", "2011-12-26",
@@ -100,6 +103,9 @@ String.prototype.validStockTime = function() {
   var holidayFormat = utcTime.utcTimeStr(); //converts to YYYY-MM-DD
   var hourFormat = utcTime.utcTimeHour(); //converts to "HH:mm:ss" type.
 
+  //hourformat uses the utcTime... what is this??? this is the string that the function is applied to..
+  //string is of type '2015-03-10 21:00:00 UTC'
+
   if (utcTime.weekDay() == 6 || utcTime.weekDay() == 7) { //if the day is on a weekend, it is not a valid day.
     return false;
   }
@@ -117,5 +123,7 @@ String.prototype.validStockTime = function() {
       return false;
     }
   }
+
+
   return true;
 }

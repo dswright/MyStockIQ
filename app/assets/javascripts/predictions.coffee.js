@@ -51,9 +51,11 @@ $(document).ready(function () {
     }
   ];
 
-  chart1 = new Highcharts.StockChart({
+  chart = new Highcharts.StockChart({
     chart: {
-      renderTo: 'prediction-div'
+      renderTo: 'prediction-div',
+      panning: false,
+      pinchType: false
     },
     rangeSelector : {
       enabled: false
@@ -77,18 +79,21 @@ $(document).ready(function () {
 
 
   var apiUrl = "/predictions/" + gon.prediction_id + ".json";
-  chart1.showLoading('Loading data from server');
+  chart.showLoading('Loading data from server');
   $.getJSON(apiUrl, function (data) {
 
     graph = data
 
-    chart1.series[0].setData(graph["daily_prices"]);
-    chart1.series[1].setData(graph["daily_forward_prices"]);
-    chart1.series[2].setData(graph["prediction"]);
+    graph["daily_forward_prices"] = DailyForwardPrices(graph["daily_prices"].last()[0]);
+    graph["intraday_forward_prices"] = IntradayForwardPrices(graph["intraday_prices"].last()[0]);
+
+    chart.series[0].setData(graph["daily_prices"]);
+    chart.series[1].setData(graph["daily_forward_prices"]);
+    chart.series[2].setData(graph["prediction"]);
     if (graph["predictionend"].length >= 1) { //this will be empty if the prediction end is not present.
-      chart1.series[3].setData(graph["predictionend"]);
+      chart.series[3].setData(graph["predictionend"]);
     }
-    chart1.hideLoading();
+    chart.hideLoading();
 
     //create prediction arrays where predictions ending that day are rounded to the end of the day to appear nicely on the 1m+ graphs.
     //graph["prediction"] = DailyPredictions(graph["my_prediction"], graph["daily_prices"].last()[0]);
@@ -98,13 +103,13 @@ $(document).ready(function () {
     //create the rangeHash to be used by the buttons.
     //note that by adding the my_prediction here, it will fall under the limited array filter.
     //the daily_predictions and daily_my_predictions are used here because the default setting is a monthly graph.
-    graphSettings = {intradayPrices: graph["intraday_prices"], dailyPrices:graph["daily_prices"], predictions:graph["prediction"]};
-    rangeHash = new PredictionGraphButtons(graphSettings);
+    //graphSettings = {intradayPrices: graph["intraday_prices"], dailyPrices:graph["daily_prices"], predictions:graph["prediction"]};
+    //rangeHash = new PredictionGraphButtons(graphSettings);
 
-    chart1.yAxis[0].setExtremes(rangeHash["1m"]["yMin"], rangeHash["1m"]["yMax"]);
-    chart1.xAxis[0].setExtremes(rangeHash["1m"]["xMin"], rangeHash["1m"]["xMax"]);
+    //chart.yAxis[0].setExtremes(rangeHash["1m"]["yMin"], rangeHash["1m"]["yMax"]);
+    //chart.xAxis[0].setExtremes(rangeHash["1m"]["xMin"], rangeHash["1m"]["xMax"]);
 
-    currentRange = {rangeHash:rangeHash["1m"],buttonType:"1m"};
+    //currentRange = {rangeHash:rangeHash["1m"],buttonType:"1m"};
   });
 
 
@@ -117,22 +122,22 @@ $(document).ready(function () {
 
     //originally i wanted to change the frequency with which the data arrays are reset, but it doesn't seem to matter.
     if (buttonType == "1d" || buttonType == "5d") {
-      chart1.series[0].setData(graph["intraday_prices"]);
-      chart1.series[1].setData(graph["intraday_forward_prices"]);
+      chart.series[0].setData(graph["intraday_prices"]);
+      chart.series[1].setData(graph["intraday_forward_prices"]);
 
       //set the prediction arrays to the precise times if the graph is looking at 5d or 1d.
-      chart1.series[2].setData(graph["prediction"]);
+      chart.series[2].setData(graph["prediction"]);
     }
     else { //current range is not one of these, load the daily prices.
-      chart1.series[0].setData(graph["daily_prices"]);
-      chart1.series[1].setData(graph["daily_forward_prices"]);
+      chart.series[0].setData(graph["daily_prices"]);
+      chart.series[1].setData(graph["daily_forward_prices"]);
 
       //set the prediction arrays so that today's predictions are rounded forward so that they don't appear to end before the graph does.
-      chart1.series[2].setData(graph["prediction"]);
+      chart.series[2].setData(graph["prediction"]);
     }
 
-    chart1.yAxis[0].setExtremes(ranges["yMin"], ranges["yMax"]);
-    chart1.xAxis[0].setExtremes(ranges["xMin"], ranges["xMax"]);
+    chart.yAxis[0].setExtremes(ranges["yMin"], ranges["yMax"]);
+    chart.xAxis[0].setExtremes(ranges["xMin"], ranges["xMax"]);
 
     currentRange = {rangeHash:rangeHash[buttonType], buttonType:buttonType};
     
@@ -172,35 +177,35 @@ $(document).ready(function () {
       }
     }*/
 
-    chart1.series[3].setData([[endTime, endPrice]]);
+    chart.series[3].setData([[endTime, endPrice]]);
 
     if (endTime > currentRange["rangeHash"]["xMax"]) { //if the endtime of the prediction is greater than the endtime in the current view, increase the end time.
-      chart1.series[0].setData(graph["daily_prices"]); //update to the daily price history array.
-      chart1.series[1].setData(graph["daily_forward_prices"]); //update to the daily forward price array.
+      chart.series[0].setData(graph["daily_prices"]); //update to the daily price history array.
+      chart.series[1].setData(graph["daily_forward_prices"]); //update to the daily forward price array.
       
-      chart1.xAxis[0].setExtremes(rangeHash["1m"]["xMin"], predictionXMax(endTime)); //set to the 1 month min range by default. This lookback window should be larger for large predictions so that the current stock data doesn't look disproportionately small after the prediction is made.
-      chart1.yAxis[0].setExtremes(rangeHash["1m"]["yMin"], rangeHash["1m"]["yMax"]);
+      chart.xAxis[0].setExtremes(rangeHash["1m"]["xMin"], predictionXMax(endTime)); //set to the 1 month min range by default. This lookback window should be larger for large predictions so that the current stock data doesn't look disproportionately small after the prediction is made.
+      chart.yAxis[0].setExtremes(rangeHash["1m"]["yMin"], rangeHash["1m"]["yMax"]);
       current_range = rangeHash["1m"]
     }
     if (endPrice >= currentRange["rangeHash"]["yMax"]) { //increase the y max if the end price is greater than the current max.
-      chart1.yAxis[0].setExtremes(currentRange["rangeHash"]["yMin"], predictionYMax(endPrice));
+      chart.yAxis[0].setExtremes(currentRange["rangeHash"]["yMin"], predictionYMax(endPrice));
     }
     if (endPrice <= currentRange["rangeHash"]["yMin"]) { //increase the y min if the end price is lower than the current max.
-      chart1.yAxis[0].setExtremes(predictionYMin(endPrice), currentRange["rangeHash"]["yMax"]);
+      chart.yAxis[0].setExtremes(predictionYMin(endPrice), currentRange["rangeHash"]["yMax"]);
     }
 
     updateRanges(endTime, endPrice);
   };
 
   window.removePrediction = function() {
-    chart1.series[3].setData([null, null]);
+    chart.series[3].setData([null, null]);
     //reset the ranges on the buttons to be the original range amounts after the prediction is removed.
     var graphSettings = {intradayPrices: graph["intraday_prices"], dailyPrices:graph["daily_prices"], predictions:graph["predictions"]};
     rangeHash = new StockGraphButtons(graphSettings); //recreate the original ranges based on the data arrays.
     
     var buttonType = currentRange["buttonType"];
-    chart1.yAxis[0].setExtremes(rangeHash[buttonType]["yMin"], rangeHash[buttonType]["yMax"]); //reset the ranges to the new maxes without the prediction.
-    chart1.xAxis[0].setExtremes(rangeHash[buttonType]["xMin"], rangeHash[buttonType]["xMax"]);
+    chart.yAxis[0].setExtremes(rangeHash[buttonType]["yMin"], rangeHash[buttonType]["yMax"]); //reset the ranges to the new maxes without the prediction.
+    chart.xAxis[0].setExtremes(rangeHash[buttonType]["xMin"], rangeHash[buttonType]["xMax"]);
 
     currentRange = {rangeHash:rangeHash[buttonType],buttonType:buttonType}; //reset the current range based on the new range hash.
   };

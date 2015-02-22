@@ -4,6 +4,18 @@ class PredictionsController < ApplicationController
 	require 'popularity'
   require 'graph'
 	
+
+  def hover
+    prediction = Prediction.find(params[:id])
+
+    respond_to do |f|
+      f.html { 
+        render :partial => 'hover', :locals => { :prediction => prediction } #this is working...
+      }
+    end
+
+  end
+
 	def create
 		#Obtain user session information from Session Helper function 'current_user'.
 		@user = current_user
@@ -122,9 +134,7 @@ class PredictionsController < ApplicationController
           :daily_prices => graph.daily_prices,
           :prediction => graph.prediction, #the specific prediction to be displayed on the graph.
           :predictionend => graph.predictionend,
-          :daily_forward_prices => graph.daily_forward_prices,
-          :intraday_prices => graph.intraday_prices,
-          :intraday_forward_prices => graph.intraday_forward_prices
+          :intraday_prices => graph.intraday_prices
         }
       }
     end

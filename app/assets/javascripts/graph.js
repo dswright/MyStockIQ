@@ -81,6 +81,49 @@ function BestRange (endTime, rangeHash) {
   }
 }
 
+//returns an array of time time and price variables.
+//used to look into the future on the graph.
+//intraday forward array currently looks ahead 3 days arbitrarily. The exact ahead time would be 2.5 days.
+//The actual target setting is controlled with the x axis settings.
+function IntradayForwardPrices (startTime) {
+  forwardArray = [];
+  var i=0;
+  var iterations = 390; //5 6.5 hour days of 5 minute itarations. 5 days necessary for the prediction details graph.
+  while (i<=iterations) {
+    timeSpot = startTime + i*5*60*1000;
+    if (timeSpot.utcTimeInt().utcTimeStr().validStockTime()) {
+      forwardArray.push([timeSpot, null]);
+    }
+    else {
+      iterations += 1;
+    }
+    i += 1;
+  }
+  return forwardArray;
+}
+
+
+  //end time is assumed to be an est number.
+  //the graph start time int is the end of the actual data array.
+  //whether that be the daily array or the intraday array, it gets the last day of data..
+function DailyForwardPrices (startTime) {
+  var forwardArray = [];
+  var i = 0;
+  var iterations = 1202; //cut this in half for testing purpses..
+  while (i<=iterations) {
+    timeSpot = startTime + i*24*3600*1000;
+    if (timeSpot.utcTimeInt().utcTimeStr().validStockTime()) {
+      forwardArray.push([timeSpot, null]);
+    }
+    else {
+      iterations += 1;
+    }
+    i += 1;
+  }
+  return forwardArray;
+}
+
+
 //graphSettings passes in: intraday_prices, predictions, daily_prices. For use in the buttonsettings.
 //this function creates the buttons for the graph.
 function StockGraphButtons(graphSettings) {
@@ -102,8 +145,8 @@ function StockGraphButtons(graphSettings) {
 }
 
 function PredictionGraphButtons(graphSettings) {
-  var intradayButton = new IntradayButton(graphSettings["intradayPrices"], graphSettings["predictions"], graphSettings["myPrediction"]); //the 'predictions' can come out of here...
-  var dailyButton = new DailyButton(graphSettings["dailyPrices"], graphSettings["predictions"], graphSettings["myPrediction"]); //the 'predictions' can come out of here... probably.
+  var intradayButton = new IntradayButton(graphSettings["intradayPrices"], graphSettings["predictionend"], graphSettings["myPrediction"]); //the 'endprediction' is input here, hereon refered to as 'predictions'
+  var dailyButton = new DailyButton(graphSettings["dailyPrices"], graphSettings["predictionend"], graphSettings["myPrediction"]);
   var buttons = [{name:"1d", beforeDays:0.5, afterDays:1, settings:intradayButton},
                         {name:"5d", beforeDays:2.5, afterDays:5, settings:intradayButton},
                         {name:"1m", beforeDays:10, afterDays:20, settings:dailyButton},

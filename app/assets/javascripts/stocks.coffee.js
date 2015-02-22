@@ -29,7 +29,7 @@ $(document).ready(function () {
       }
     }, 
     {
-      name : "prediction",
+      name : "predictions",
       lineWidth : 0,
       dataGrouping: {
         enabled: false
@@ -37,7 +37,7 @@ $(document).ready(function () {
       marker : {
         enabled : true,
         radius : 4
-      },
+      }
     },
     {
       name:"myprediction",
@@ -54,12 +54,37 @@ $(document).ready(function () {
 
   chart = new Highcharts.StockChart({
     chart: {
-      renderTo: 'stock-div'
+      renderTo: 'stock-div',
+      panning: false, //disables time frame dragging on desktop
+      pinchType: false //disable time frame dragging on mobile.
     },
     tooltip: {
       shared: false,
       positioner: function (w,h,p) {
         return { x: p.plotX + chart.plotLeft, y: p.plotY + chart.plotTop };
+      },
+      formatter: function() {
+        if(this.series.name == 'predictions') {
+          //this.series.index is the index number of the array point.. this will give me what i need to access the predicition?
+          //next create an array on the backend that can be accessed that has the corresponding prediction ids.
+          //$('#predictiondetailsbox').remove();
+          //get predictionid based on the datapoint index.
+          var arrId = this.series.data.indexOf(this.point);
+          var predictionId = graph["predictions_ids"][arrId];
+
+          $.ajax({
+            url: "/predictions/hover/"+predictionId,
+            context: document.body //this tells the done function to be executed on the dom.
+          }).done(function( data ) {
+            $('#predictiondetailsbox').html(data).fadeIn("slow");
+          })
+
+          console.log(graph["predictions_ids"][arrId]);
+          return false;
+        }       
+        else {
+          return '$' + this.y + ': ' + this.series.name;
+        }
       }
     },
     rangeSelector : {
@@ -78,13 +103,26 @@ $(document).ready(function () {
   });
 
 
+
   var apiUrl = "/stocks/" + gon.ticker_symbol + ".json";
   chart.showLoading('Loading data from server');
-  $.getJSON(apiUrl, function (data) {
-
+  
+  $.ajax({
+    type: 'GET',
+    url: apiUrl,
+    async: true,
+    cache: true,
+    crossDomain: false,
+    contentType: "application/json; charset=utf-8",
+    dataType: 'json',
+    success: function (data, status) {
+    //    });
+  //$.getJSON(apiUrl, function (data) {
     graph = data
 
     //create prediction arrays where predictions ending that day are rounded to the end of the day to appear nicely on the 1m+ graphs.
+    graph["daily_forward_prices"] = DailyForwardPrices(data["daily_prices"].last()[0]);
+    graph["intraday_forward_prices"] = IntradayForwardPrices(data["intraday_prices"].last()[0]);
     graph["daily_predictions"] = DailyPredictions(data["predictions"], data["daily_prices"].last()[0]);
     graph["daily_my_prediction"] = DailyPredictions(data["my_prediction"], data["daily_prices"].last()[0]);
 
@@ -96,7 +134,6 @@ $(document).ready(function () {
       chart.series[0].setData(graph["daily_prices"]);
       chart.series[1].setData(graph["daily_forward_prices"]);
       chart.series[2].setData(graph["daily_predictions"]);
-      chart.hideLoading();
       chart.yAxis[0].setExtremes(rangeHash["1m"]["yMin"], rangeHash["1m"]["yMax"]); //set the ranges to the 1m default.
       chart.xAxis[0].setExtremes(rangeHash["1m"]["xMin"], rangeHash["1m"]["xMax"]);
       currentRange = {rangeHash:rangeHash["1m"],buttonType:"1m"}; //the current range tracks the latest range button that the user has clicked.
@@ -109,26 +146,27 @@ $(document).ready(function () {
         chart.series[1].setData(graph["intraday_forward_prices"]);
         chart.series[2].setData(graph["predictions"]);
         chart.series[3].setData(graph["my_prediction"]);
-        chart.hideLoading();
       }
       else { //otherwise set the array to the daily arrays.
         chart.series[0].setData(graph["daily_prices"]);
         chart.series[1].setData(graph["daily_forward_prices"]);
         chart.series[2].setData(graph["daily_predictions"]);
         chart.series[3].setData(graph["daily_my_prediction"]);
-        chart.hideLoading();
+        
       }
-
       chart.xAxis[0].setExtremes(rangeHash[bestButton]["xMin"], rangeHash[bestButton]["xMax"]); //set the extremes based on the bestButton range
       chart.yAxis[0].setExtremes(rangeHash[bestButton]["yMin"], rangeHash[bestButton]["yMax"]);
       currentRange = {rangeHash:rangeHash[bestButton], buttonType:bestButton};
     }
-    
+    chart.hideLoading();
+
 
     //create the rangeHash to be used by the buttons.
     //note that by adding the my_prediction here, it will fall under the limited array filter. The my prediction and prediction filter should be differentiated.
     //the daily_predictions and daily_my_predictions are used here because the default setting is a monthly graph.
-  });
+  }});
+
+  
 
 
   function getRanges1() {
