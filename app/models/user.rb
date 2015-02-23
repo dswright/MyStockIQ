@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   has_many :comments
   has_many :predictions
   has_many :likes
+  has_many :replies
 
   #Foreign key is the default index that would be used. 
   has_many :active_relationships, class_name: "Relationship",

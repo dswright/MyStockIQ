@@ -6,7 +6,7 @@
   icons[:replies] = stream.streamable.replies.count
 
 	%>
-   <div class = "prediction-post-comment" id="stream-<%= stream.streamable.class.name %>_<%= stream.streamable.id %>">
+   <div class = "prediction-post-comment" id="stream-<%= stream.streamable.class.name %>_<%= stream.streamable.id %>" style = "height: 200px;">
      <div class = "row" style = "margin-left: <%= nest_count * 20 %>px;">
       <% if stream.streamable.class.name == "Comment" %>
           <%= render partial: "streams/stream_comment", locals: {comment: stream.streamable} %>
@@ -21,10 +21,10 @@
           <%= render partial: "streams/stream_predictionend", locals: {predictionend: stream.streamable} %>
       <%end%>
 
-      <%= render partial: "streams/stream_comment_form", locals: {stream_string: "#{stream.streamable.class.name}:#{stream.streamable.id}", stream_obj: stream, nest_count: nest_count} %>
-
-       <%#the stream icons partial closes the top 2 divs %>
+    </br>
       <%= render partial: "streams/stream_icons", locals: {icons: icons, stream: stream} %>
+
+      <%= render partial: "streams/stream_detail_button", locals: {stream: stream}  %>
     </div>
   </div> 
 
