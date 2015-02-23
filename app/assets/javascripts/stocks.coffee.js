@@ -60,27 +60,24 @@ $(document).ready(function () {
     },
     tooltip: {
       shared: false,
-      positioner: function (w,h,p) {
-        return { x: p.plotX + chart.plotLeft, y: p.plotY + chart.plotTop };
-      },
       formatter: function() {
         if(this.series.name == 'predictions') {
           //this.series.index is the index number of the array point.. this will give me what i need to access the predicition?
           //next create an array on the backend that can be accessed that has the corresponding prediction ids.
           //$('#predictiondetailsbox').remove();
           //get predictionid based on the datapoint index.
-          var arrId = this.series.data.indexOf(this.point);
-          var predictionId = graph["predictions_ids"][arrId];
+          var arrId = this.series.data.indexOf(this.point); //get the index point of the current array.
+          var predictionId = graph["live_predictions_ids"][arrId]; //use the live predictions ids array to identify the prediction id based on the array index id.
 
           $.ajax({
-            url: "/predictions/hover/"+predictionId,
+            url: "/predictions/hover/"+predictionId, //pass the prediction id to the prediction hover partial.
             context: document.body //this tells the done function to be executed on the dom.
           }).done(function( data ) {
-            $('#predictiondetailsbox').html(data).fadeIn("slow");
+            $('#predictiondetailsbox').html(data).fadeIn("slow"); //this loads in the html returned from the ajax request.
           })
-
-          console.log(graph["predictions_ids"][arrId]);
-          return false;
+          var niceDate = this.x;
+          niceDate = niceDate.utcTimeInt().utcTimeStr().utcTime().utcTimeStr();
+          return niceDate + ': $' + this.y;
         }       
         else {
           return '$' + this.y + ': ' + this.series.name;
@@ -102,8 +99,6 @@ $(document).ready(function () {
     series: seriesVar
   });
 
-
-
   var apiUrl = "/stocks/" + gon.ticker_symbol + ".json";
   chart.showLoading('Loading data from server');
   
@@ -116,57 +111,78 @@ $(document).ready(function () {
     contentType: "application/json; charset=utf-8",
     dataType: 'json',
     success: function (data, status) {
-    //    });
-  //$.getJSON(apiUrl, function (data) {
-    graph = data
-
-    //create prediction arrays where predictions ending that day are rounded to the end of the day to appear nicely on the 1m+ graphs.
-    graph["daily_forward_prices"] = DailyForwardPrices(data["daily_prices"].last()[0]);
-    graph["intraday_forward_prices"] = IntradayForwardPrices(data["intraday_prices"].last()[0]);
-    graph["daily_predictions"] = DailyPredictions(data["predictions"], data["daily_prices"].last()[0]);
-    graph["daily_my_prediction"] = DailyPredictions(data["my_prediction"], data["daily_prices"].last()[0]);
+      graph = data; //assign the data to the graph var to be used globally. Not available until after all other js is loaded initially
 
 
-    var graphSettings = {intradayPrices: graph["intraday_prices"], dailyPrices:graph["daily_prices"], predictions:graph["predictions"], myPrediction:graph["my_prediction"]}; //set the graph limits based on predictions and my prediction
-    rangeHash = new StockGraphButtons(graphSettings); //this returns all of the ranges for the butons. It is an array with keys: 1d,5d,1m,3m,6m,1yr,5yr
+      console.log(graph);
 
-    if (graph["my_prediction"][0][0] === null) { //if there is no prediction set, default to the monthly settings.
-      chart.series[0].setData(graph["daily_prices"]);
-      chart.series[1].setData(graph["daily_forward_prices"]);
-      chart.series[2].setData(graph["daily_predictions"]);
-      chart.yAxis[0].setExtremes(rangeHash["1m"]["yMin"], rangeHash["1m"]["yMax"]); //set the ranges to the 1m default.
-      chart.xAxis[0].setExtremes(rangeHash["1m"]["xMin"], rangeHash["1m"]["xMax"]);
-      currentRange = {rangeHash:rangeHash["1m"],buttonType:"1m"}; //the current range tracks the latest range button that the user has clicked.
-    }
-    else {
-      var endTime = graph["my_prediction"][0][0];
-      var bestButton = BestRange(endTime, rangeHash);
-      if (bestButton === "1d" || bestButton === "5d") { //if the prediction end time is within range of the 1d or 5d buttons, set the arrays to the intraday arrays.
-        chart.series[0].setData(graph["intraday_prices"]);
-        chart.series[1].setData(graph["intraday_forward_prices"]);
-        chart.series[2].setData(graph["predictions"]);
-        chart.series[3].setData(graph["my_prediction"]);
+
+      var graphSettings = {intradayPrices: graph["intraday_prices"], dailyPrices:graph["daily_prices"], predictions:graph["predictions"], myPrediction:graph["my_prediction"]}; //set the graph limits based on predictions and my prediction
+      rangeHash = new StockGraphButtons(graphSettings); //this returns all of the ranges for the butons. It is an array with keys: 1d,5d
+
+
+      //chartFunctions is based on the graph, the chart, and maybe settings?
+      //settings are defined inside.
+
+      chartFunctions = new ChartFunctions(graph, chart);
+
+
+      graph["daily_forward_prices"] = DailyForwardPrices(graph["daily_prices"].last()[0]); //create this array using js function.
+      graph["intraday_forward_prices"] = IntradayForwardPrices(graph["intraday_prices"].last()[0]); //create this array using js function.
+
+      //create prediction arrays where predictions ending that day are rounded to the end of the day to appear nicely on the 1m+ graphs.
+
+      livePredictions = DailyPredictions(graph["predictions"], graph["predictions_ids"]); //this function returns 2 arrays to be used independently.
+      graph["daily_predictions"] = livePredictions[0]; //this sets the daily predicitons array.
+      graph["live_predictions_ids"] = livePredictions[1]; //this live predictions array is what will be used by the formatter to trigger the prediction to display.
+
+      //how does my prediction work?
+      //whatever day it is, drop the prediction at that time, and replace it with my_prediction.
+      //would be nice not to need abunch of dumb shit for the singlular prediction.
+      //need to be able to very easily reset this value on button clicks...
+      //no fukin bullshit this time.
+      //the kick out action will have to happen upon prediction.
+      //a simple rounding action will have to happen upon button click.
+      //can I break this whole monstrosity up somehow...
+      //for every action there are a number of possible scenarios.
+
+      //graph["daily_my_prediction"] = DailyPredictions(data["my_prediction"], data["daily_prices"].last()[0]);
+
+
+      if (graph["my_prediction"][0][0] === null) { //if there is no prediction set, default to the monthly settings.
+        chartFunctions.startChart();
+        chart.yAxis[0].setExtremes(rangeHash["1m"]["yMin"], rangeHash["1m"]["yMax"]); //set the ranges to the 1m default.
+        chart.xAxis[0].setExtremes(rangeHash["1m"]["xMin"], rangeHash["1m"]["xMax"]);
+        currentRange = {rangeHash:rangeHash["1m"],buttonType:"1m"}; //the current range tracks the latest range button that the user has clicked.
       }
-      else { //otherwise set the array to the daily arrays.
-        chart.series[0].setData(graph["daily_prices"]);
-        chart.series[1].setData(graph["daily_forward_prices"]);
-        chart.series[2].setData(graph["daily_predictions"]);
-        chart.series[3].setData(graph["daily_my_prediction"]);
-        
+      else {
+        var endTime = graph["my_prediction"][0][0];
+        var bestButton = BestRange(endTime, rangeHash);
+        if (bestButton === "1d" || bestButton === "5d") { //if the prediction end time is within range of the 1d or 5d buttons, set the arrays to the intraday arrays.
+          chart.series[0].setData(graph["intraday_prices"]);
+          chart.series[1].setData(graph["intraday_forward_prices"]);
+          chart.series[2].setData(graph["predictions"]);
+          chart.series[3].setData(graph["my_prediction"]);
+        }
+        else { //otherwise set the array to the daily arrays.
+          chart.series[0].setData(graph["daily_prices"]);
+          chart.series[1].setData(graph["daily_forward_prices"]);
+          chart.series[2].setData(graph["daily_predictions"]);
+          //chart.series[3].setData(graph["daily_my_prediction"]);
+          
+        }
+        chart.xAxis[0].setExtremes(rangeHash[bestButton]["xMin"], rangeHash[bestButton]["xMax"]); //set the extremes based on the bestButton range
+        chart.yAxis[0].setExtremes(rangeHash[bestButton]["yMin"], rangeHash[bestButton]["yMax"]);
+        currentRange = {rangeHash:rangeHash[bestButton], buttonType:bestButton};
       }
-      chart.xAxis[0].setExtremes(rangeHash[bestButton]["xMin"], rangeHash[bestButton]["xMax"]); //set the extremes based on the bestButton range
-      chart.yAxis[0].setExtremes(rangeHash[bestButton]["yMin"], rangeHash[bestButton]["yMax"]);
-      currentRange = {rangeHash:rangeHash[bestButton], buttonType:bestButton};
+      chart.hideLoading();
+
+      //create the rangeHash to be used by the buttons.
+      //note that by adding the my_prediction here, it will fall under the limited array filter. The my prediction and prediction filter should be differentiated.
+      //the daily_predictions and daily_my_predictions are used here because the default setting is a monthly graph.
+
     }
-    chart.hideLoading();
-
-
-    //create the rangeHash to be used by the buttons.
-    //note that by adding the my_prediction here, it will fall under the limited array filter. The my prediction and prediction filter should be differentiated.
-    //the daily_predictions and daily_my_predictions are used here because the default setting is a monthly graph.
-  }});
-
-  
+  });
 
 
   function getRanges1() {
@@ -191,7 +207,7 @@ $(document).ready(function () {
 
       //set the prediction arrays so that today's predictions are rounded forward so that they don't appear to end before the graph does.
       chart.series[2].setData(graph["daily_predictions"]);
-      chart.series[3].setData(graph["daily_my_prediction"]);
+      //chart.series[3].setData(graph["daily_my_prediction"]);
     }
 
     chart.yAxis[0].setExtremes(ranges["yMin"], ranges["yMax"]);
@@ -229,7 +245,7 @@ $(document).ready(function () {
     graph["my_prediction"] = ([[endTime, endPrice]]);
 
     //reset the value of daily_my_prediction based on the new my_prediction value.
-    graph["daily_my_prediction"] = DailyPredictions(graph["my_prediction"], graph["daily_prices"].last()[0]);
+    //graph["daily_my_prediction"] = DailyPredictions(graph["my_prediction"], graph["daily_prices"].last()[0]);
 
 
     ranges = rangeHash;

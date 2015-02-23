@@ -38,7 +38,7 @@ String.prototype.utcTime = function() { //takes date string format of the manual
 }
 
 Date.prototype.utcTimeInt = function() {
-  return this.getTime(); //convert a date type into a UTC int.
+  return (this.getTime())/1000; //convert a date type into a UTC int.
 }
 
 Date.prototype.weekDay = function() {

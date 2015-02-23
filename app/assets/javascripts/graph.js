@@ -57,6 +57,32 @@ function DailyPredictions (predictions, min_time) { //make this function take an
   return prediction_array
 }
 
+function DailyPredictions (predictions, predictions_ids) { //the predictions array just has times and prices... these need to be converted?
+  //these will be in order of time... so just check the one before to see if it is the same day as the current one?
+  //If it is the same day... then don't add it. If its a different day, then add it.
+  //Should also set the time of the prediction to the 21:00 mark to align with the forward array...
+  var predictions_array = [];
+  var predictions_ids_array = [];
+  for(var i=0; i < predictions.length; i++ ) {
+    var timeStr = predictions[i][0].utcTimeInt().utcTimeStr(); //convert the graph time into a utc date string.
+    var day = timeStr.utcTime().utcTimeStr(); //convert the date string into string 'yyyy-mm-dd'
+    day = day + " 16:00:00"; //
+    var timeCompare = day.utcTime().utcTimeInt().graphTimeInt(); //convert the string to datestamp, then to utc int, then graphtimeint.
+    
+    if (predictions_array.last() === undefined) {
+      predictions_array.push([timeCompare, predictions[i][1]]);
+      predictions_ids_array.push(predictions_ids[i]);
+    }
+    else if (predictions_array.last()[0] !== timeCompare ) {
+      predictions_array.push([timeCompare, predictions[i][1]]);
+      predictions_ids_array.push(predictions_ids[i]);
+    }
+  }
+  return [predictions_array, predictions_ids_array];
+}
+
+//make a my prediction function that overwrites the DailyPredictions function.
+
 function IntradayButton (prices, predictions, myPrediction) {
   this.timeInterval = 60*5*1000;
   this.timeLength = 6.5*3600*1000;
@@ -171,7 +197,15 @@ function PredictionGraphButtons(graphSettings) {
 //The start and stop times should be used to specify those.. Not too hard..
 
 
-//settings consist of buttonname, 
+function ChartFunctions(graph, chart) {
+  this.startChart = function() {
+    chart.series[0].setData(graph["daily_prices"]);
+    chart.series[1].setData(graph["daily_forward_prices"]);
+    chart.series[2].setData(graph["daily_predictions"]);
+  };
+}
+
+
 function Button(buttonSettings) {
   var beforeDays = buttonSettings["beforeDays"];
   var afterDays = buttonSettings["afterDays"];
