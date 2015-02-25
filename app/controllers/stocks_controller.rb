@@ -70,7 +70,7 @@ require 'scraper'
     respond_to do |format|
       format.html
       format.json {
-        settings = {ticker_symbol: @stock.ticker_symbol, current_user: current_user}
+        settings = {ticker_symbol: @stock.ticker_symbol, current_user: @current_user}
         graph = Graph.new(settings)
         render json: {
           :my_prediction => graph.my_prediction,

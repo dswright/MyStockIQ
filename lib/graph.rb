@@ -42,7 +42,7 @@ class Graph
     if my_prediction.empty?
       my_prediction << [nil, nil]
     end
-    return my_prediction[]
+    return my_prediction
   end
 
   def predictions #predictions for the stock graph.
