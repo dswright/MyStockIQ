@@ -51,9 +51,6 @@ class Graph
       graph_time = prediction.prediction_end_time.utc_time_int.graph_time_int
       predictions_array << [graph_time, prediction.prediction_end_price.round(2)]
     end
-    if predictions_array.empty?
-      predictions_array << [nil, nil]
-    end
     return predictions_array
   end
 
@@ -61,9 +58,6 @@ class Graph
     prediction_ids_array = []
     Prediction.where(stock_id: stock_id, active:true).where('user_id not in (?)',[@current_user.id]).limit(1500).reorder('prediction_end_time desc').reverse.each do |prediction|
       prediction_ids_array << prediction.id
-    end
-    if prediction_ids_array.empty?
-      prediction_ids_array << nil
     end
     return prediction_ids_array
   end
