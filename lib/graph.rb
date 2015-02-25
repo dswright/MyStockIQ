@@ -15,19 +15,6 @@ class Graph
     @current_user = settings[:current_user]
 
     @prediction = settings[:prediction] #this is passed by the prediction details graph.
-
-  end
-
-  def my_prediction
-    my_prediction = []
-    Prediction.where(stock_id: stock_id, active:true, user_id: @current_user.id).each do |prediction|
-      graph_time = prediction.prediction_end_time.utc_time_int.graph_time_int
-      my_prediction << [graph_time, prediction.prediction_end_price.round(2)]
-    end
-    if my_prediction.empty?
-      my_prediction << [nil, nil]
-    end
-    return my_prediction
   end
 
   def prediction #this is used for the predictiondetails graph.
@@ -46,6 +33,17 @@ class Graph
     end
   end
 
+  def my_prediction
+    my_prediction = []
+    Prediction.where(stock_id: stock_id, active:true, user_id: @current_user.id).each do |prediction|
+      graph_time = prediction.prediction_end_time.utc_time_int.graph_time_int
+      my_prediction << [graph_time, prediction.prediction_end_price.round(2)]
+    end
+    if my_prediction.empty?
+      my_prediction << [nil, nil]
+    end
+    return my_prediction[]
+  end
 
   def predictions #predictions for the stock graph.
     predictions_array = []
@@ -53,17 +51,33 @@ class Graph
       graph_time = prediction.prediction_end_time.utc_time_int.graph_time_int
       predictions_array << [graph_time, prediction.prediction_end_price.round(2)]
     end
+    if predictions_array.empty?
+      predictions_array << [nil, nil]
+    end
     return predictions_array
   end
 
-  def predictions_ids
+  def prediction_ids
     predictions_ids_array = []
     Prediction.where(stock_id: stock_id, active:true).where('user_id not in (?)',[@current_user.id]).limit(1500).reorder('prediction_end_time desc').reverse.each do |prediction|
       predictions_ids_array << prediction.id
     end
+    if prediction_ids_array.empty?
+      prediction_ids_array << nil
+    end
     return predictions_ids_array
   end
 
+  def my_prediction_id
+    my_prediction_id_array = []
+    Prediction.where(stock_id: stock_id, active:true, user_id: @current_user.id).each do |prediction|
+      my_prediction_id_array << prediction.id
+    end
+    if my_prediction_id_array.empty?
+      my_prediction_id_array << nil
+    end
+    return my_prediction_id_array
+  end
 
   #Limited to 400 5 minute periods, which is 2000 minutes, just over the 975 minutes in 5 6.5 hour days.
 

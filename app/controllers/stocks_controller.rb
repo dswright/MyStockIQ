@@ -75,7 +75,8 @@ require 'scraper'
         render json: {
           :my_prediction => graph.my_prediction,
           :predictions => graph.predictions,
-          :predictions_ids => graph.predictions_ids,
+          :my_prediction_id => graph.my_prediction_id,
+          :prediction_ids => graph.prediction_ids,
           :daily_prices => graph.daily_prices,
           :intraday_prices => graph.intraday_prices        }
       }
