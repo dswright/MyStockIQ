@@ -58,14 +58,14 @@ class Graph
   end
 
   def prediction_ids
-    predictions_ids_array = []
+    prediction_ids_array = []
     Prediction.where(stock_id: stock_id, active:true).where('user_id not in (?)',[@current_user.id]).limit(1500).reorder('prediction_end_time desc').reverse.each do |prediction|
-      predictions_ids_array << prediction.id
+      prediction_ids_array << prediction.id
     end
     if prediction_ids_array.empty?
       prediction_ids_array << nil
     end
-    return predictions_ids_array
+    return prediction_ids_array
   end
 
   def my_prediction_id
