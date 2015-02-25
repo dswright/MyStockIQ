@@ -1,5 +1,5 @@
 
-window.updatePredictions(<%= j @graph_time.to_s %>, <%= j @prediction.prediction_end_price.to_s %>);
+window.inputPrediction(<%= j @graph_time.to_s %>, <%= j @prediction.prediction_end_price.to_s %>);
 
 $('.stock-page-prediction-box').html("<%= j render @prediction %>").fadeIn("slow");
 

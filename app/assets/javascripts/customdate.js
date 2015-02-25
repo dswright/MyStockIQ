@@ -26,7 +26,7 @@ if (![].includes) {
   };
 }
 
-String.prototype.utcTime = function() { //takes date string format of the manual type "YYYY-MM-DD" or the database type "2015-01-26 21:00:00 UTC".
+String.prototype.utcTime = function() { //takes date string format of the manual type "YYYY-MM-DD" or the database type "2015-01-26 21:00:00 UTC". Creates a date stamp.
   var dateString = this;
   if (dateString.indexOf(':') === -1) { //if there is no ':', add the minute string.
     dateString = dateString + " 00:00:00";
