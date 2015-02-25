@@ -100,7 +100,9 @@ $(document).ready(function () {
           return niceDate + ': $' + this.y;
         }
         else {
-          return '$' + this.y + ': ' + this.series.name;
+          var niceDate = this.x;
+          niceDate = niceDate.utcTimeInt().utcTimeStr();
+          return '$' + this.y + ': ' + niceDate;
         }
       }
     },
