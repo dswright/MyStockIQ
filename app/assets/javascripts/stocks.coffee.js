@@ -96,7 +96,7 @@ $(document).ready(function () {
             $('#predictiondetailsbox').html(data).fadeIn("slow"); //this loads in the html returned from the ajax request.
           })
           var niceDate = this.x;
-          niceDate = niceDate.utcTimeInt().utcTimeStr().utcTime().utcTimeStr();
+          niceDate = niceDate.utcTimeInt().utcTimeStr();
           return niceDate + ': $' + this.y;
         }
         else {
