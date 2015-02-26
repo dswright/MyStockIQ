@@ -219,7 +219,6 @@ function ChartFunctions(graph, chart) {
       if (graph["daily_predictions"][i].indexOf(graph["daily_my_prediction"][0][0]) !== -1) {
         graph["daily_predictions"].splice(i, i); //removes the prediction from the array where it is the same as my_prediction.
         graph["daily_prediction_ids"].splice(i, i);
-        i = i-1
         removedDaily = true;
       }
     }
@@ -227,7 +226,6 @@ function ChartFunctions(graph, chart) {
       if (graph["intraday_predictions"][i].indexOf(graph["intraday_my_prediction"][0][0]) !== -1) {
         graph["intraday_predictions"].splice(i, i); //removes the prediction from the array where it is the same as my_prediction.
         graph["intraday_prediction_ids"].splice(i, i);
-        i = i-1
         removedIntraday = true;
       }
     }
