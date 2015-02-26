@@ -262,7 +262,7 @@ function ChartFunctions(graph, chart) {
   }
 
   function updateMyPrediction (button) {
-    if (button === "1d" || button === "5d") && (currentRange["buttonType"] !== "1d" && currentRange["buttonType"] !== "5d") {
+    if ((button === "1d" || button === "5d") && (currentRange["buttonType"] !== "1d" && currentRange["buttonType"] !== "5d")) {
       chart.series[3].setData(graph["intraday_my_prediction"]);
     }
     if ((button !== "1d" && button !== "5d") && (currentRange["buttonType"] === "1d" || currentRange["buttonType"] === "5d")) {
