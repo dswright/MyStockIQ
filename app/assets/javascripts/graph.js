@@ -132,7 +132,6 @@ function ChartFunctions(graph, chart) {
       var bestButton = BestRange(endTime);
     }
 
-    setMyPrediction(graph["my_prediction"]); //set the daily and intraday my_prediction arrays based on my_prediction.
     setPredictions(); //create the daily and intraday prediction arrays, and the corresponding prediction id arrays.
     removeOverlapping(bestButton);
 
@@ -142,6 +141,8 @@ function ChartFunctions(graph, chart) {
     else {
       currentRange["buttonType"] = "1d";
     }
+    
+    setMyPrediction(graph["my_prediction"]); //set the daily and intraday my_prediction arrays based on my_prediction.
     setSeries(bestButton);
     setRange(bestButton); //always setRange after the setSeries, so the set series can tell if the range has changed. currentRange gets updated in the setRange.
 
