@@ -131,6 +131,7 @@ function ChartFunctions(graph, chart) {
       var endTime = graph["my_prediction"].last()[0]; //use the endTime of the users own prediction to get the best range.
       var bestButton = BestRange(endTime);
     }
+    console.log("bestbutton:" + bestButton);
 
     setPredictions(); //create the daily and intraday prediction arrays, and the corresponding prediction id arrays.
 
