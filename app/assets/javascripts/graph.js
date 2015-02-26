@@ -149,7 +149,6 @@ function ChartFunctions(graph, chart) {
 
   this.buttonClick = function() {
     var buttonType = $(this).data("button-type");
-    console.log(graph["daily_predictions"]);
     setSeries(buttonType); //always set series before range. Resets all series arrays if there is a button type change.
     setRange(buttonType);
   };
@@ -215,7 +214,6 @@ function ChartFunctions(graph, chart) {
     var removedDaily = false;
     var removedIntraday = false;
     for (var i=0; i<graph["daily_predictions"].length;i++) {
-      console.log("loopcount:"+i);
       if (graph["daily_predictions"][i].indexOf(graph["daily_my_prediction"][0][0]) !== -1) {
         graph["daily_predictions"].splice(i, 1); //removes the prediction from the array where it is the same as my_prediction.
         graph["daily_prediction_ids"].splice(i, 1);
