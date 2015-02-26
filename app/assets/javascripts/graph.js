@@ -217,15 +217,15 @@ function ChartFunctions(graph, chart) {
     for (var i=0; i<graph["daily_predictions"].length;i++) {
       console.log("loopcount:"+i);
       if (graph["daily_predictions"][i].indexOf(graph["daily_my_prediction"][0][0]) !== -1) {
-        graph["daily_predictions"].splice(i, i); //removes the prediction from the array where it is the same as my_prediction.
-        graph["daily_prediction_ids"].splice(i, i);
+        graph["daily_predictions"].splice(i, 1); //removes the prediction from the array where it is the same as my_prediction.
+        graph["daily_prediction_ids"].splice(i, 1);
         removedDaily = true;
       }
     }
     for (var i=0; i<graph["intraday_predictions"].length; i++) {
       if (graph["intraday_predictions"][i].indexOf(graph["intraday_my_prediction"][0][0]) !== -1) {
-        graph["intraday_predictions"].splice(i, i); //removes the prediction from the array where it is the same as my_prediction.
-        graph["intraday_prediction_ids"].splice(i, i);
+        graph["intraday_predictions"].splice(i, 1); //removes the prediction from the array where it is the same as my_prediction.
+        graph["intraday_prediction_ids"].splice(i, 1);
         removedIntraday = true;
       }
     }
