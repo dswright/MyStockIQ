@@ -289,7 +289,7 @@ function ChartFunctions(graph, chart) {
         predictionsArray.push([graphTime, predictions[i][1]]);
         predictionIdsArray.push(predictionIds[i]);
       }
-      else if (predictionsArray.last()[0] !== rounded ) {
+      else if (predictionsArray.last()[0] !== graphTime ) {
         predictionsArray.push([graphTime, predictions[i][1]]);
         predictionIdsArray.push(predictionIds[i]);
       }
