@@ -136,7 +136,12 @@ function ChartFunctions(graph, chart) {
     setPredictions(); //create the daily and intraday prediction arrays, and the corresponding prediction id arrays.
     removeOverlapping(bestButton);
 
-    currentRange["buttonType"] = "5d" //set the current range to 5d before so that the setSeries thinks the buttontype is changing.
+    if (bestButton == "1d" || bestButton == "5d") {
+      currentRange["buttonType"] = "1m";
+    }
+    else {
+      currentRange["buttonType"] = "1d";
+    }
     setSeries(bestButton);
     setRange(bestButton); //always setRange after the setSeries, so the set series can tell if the range has changed. currentRange gets updated in the setRange.
 
@@ -251,7 +256,7 @@ function ChartFunctions(graph, chart) {
       chart.series[3].setData(graph["intraday_my_prediction"]); //this may be null
       graph["active_prediction_ids"] = graph["intraday_prediction_ids"]; //updates the active ids array to use in the onhover box change.
     }
-    else if ((button !== "1d" && button !== "5d") && (currentRange["buttonType"] === "1d" || currentRange["buttonType"] === "5d")) { //set daily graph
+    if ((button !== "1d" && button !== "5d") && (currentRange["buttonType"] === "1d" || currentRange["buttonType"] === "5d")) { //set daily graph
       chart.series[0].setData(graph["daily_prices"]);
       chart.series[1].setData(graph["daily_forward_prices"]);
       chart.series[2].setData(graph["daily_predictions"]);
