@@ -141,6 +141,7 @@ function ChartFunctions(graph, chart) {
     else {
       currentRange["buttonType"] = "1d";
     }
+    console.log(currentRange["buttonType"]);
 
     setMyPrediction(graph["my_prediction"]); //set the daily and intraday my_prediction arrays based on my_prediction.
     removeOverlapping(bestButton); //must be used after setMyPrediction.removes predictions overlapping with my_prediction.
