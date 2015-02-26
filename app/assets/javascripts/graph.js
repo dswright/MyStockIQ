@@ -204,7 +204,7 @@ function ChartFunctions(graph, chart) {
     graph["intraday_prediction_ids"] = activeIntradayPredictions[1];
   }
 
-  function setMyPrediction (myPrediction, buttonType) {
+  function setMyPrediction (myPrediction) {
     //update the viewable my_prediction arrays based on the actual my_prediction.
     graph["daily_my_prediction"] = DailyMyPrediction(myPrediction);
     graph["intraday_my_prediction"] = IntradayMyPrediction(myPrediction);
@@ -262,10 +262,10 @@ function ChartFunctions(graph, chart) {
   }
 
   function updateMyPrediction (button) {
-    if (button === "1d" || button === "5d") {
+    if (button === "1d" || button === "5d") && (currentRange["buttonType"] !== "1d" && currentRange["buttonType"] !== "5d") {
       chart.series[3].setData(graph["intraday_my_prediction"]);
     }
-    else {
+    if ((button !== "1d" && button !== "5d") && (currentRange["buttonType"] === "1d" || currentRange["buttonType"] === "5d")) {
       chart.series[3].setData(graph["daily_my_prediction"]);
     }
   }
