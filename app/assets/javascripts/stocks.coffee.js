@@ -77,7 +77,7 @@ $(document).ready(function () {
             $('#predictiondetailsbox').html(data).fadeIn("slow"); //this loads in the html returned from the ajax request.
           })
           var niceDate = this.x;
-          niceDate = niceDate.utcTimeInt().utcTimeStr();
+          niceDate = niceDate.utcTimeInt().utcTimeStr(); //.utcTime().utcTimeStr();
           return niceDate + ': $' + this.y;
 
         }
@@ -148,8 +148,8 @@ $(document).ready(function () {
       //so this button click is being called like a closure? maybe? This thing needs to execute itself...
       $("button[data-button-type]").click(chartFunctions.buttonClick);
 
-      window.inputPrediction = function(endTime, endPrice) {
-        chartFunctions.inputPrediction(endTime, endPrice); //when a prediction is input, this function fires from the predicitoninput ajax call.
+      window.inputPrediction = function(endTime, endPrice, predictionId) {
+        chartFunctions.inputPrediction(endTime, endPrice, predictionId); //when a prediction is input, this function fires from the predicitoninput ajax call.
       }
 
       window.removePrediction = function() {
