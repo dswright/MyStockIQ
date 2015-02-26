@@ -6,7 +6,6 @@ function resizeChart() {
 
 //Global variables 
 var chart;
-var currentRange;
 var rangeHash = {};
 var chartFunctions;
 
@@ -135,9 +134,6 @@ $(document).ready(function () {
     dataType: 'json',
     success: function (data, status) {
       graph = data; //assign the data to the graph var to be used globally. Not available until after all other js is loaded initially
-
-      var graphSettings = {intradayPrices: graph["intraday_prices"], dailyPrices:graph["daily_prices"], predictions:graph["predictions"], myPrediction:graph["my_prediction"]}; //set the graph limits based on predictions and my prediction
-      rangeHash = new StockGraphButtons(graphSettings); //this returns all of the ranges for the butons. It is an array with keys: 1d,5d
 
       chartFunctions = new ChartFunctions(graph, chart);
 
