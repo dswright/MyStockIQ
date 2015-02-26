@@ -8,6 +8,8 @@ function resizeChart() {
 var chart;
 var rangeHash = {};
 var chartFunctions;
+var currentRange = [];
+
 
 $(document).ready(function () {
   resizeChart();

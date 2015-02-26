@@ -115,7 +115,6 @@ function ChartFunctions(graph, chart) {
   //All of these will come from the API.
   var graphSettings = {intradayPrices: graph["intraday_prices"], dailyPrices:graph["daily_prices"], predictions:graph["predictions"], myPrediction:graph["my_prediction"]}; //set the graph limits based on predictions and my prediction
   var rangeHash = new StockGraphButtons(graphSettings); //this returns all of the ranges for the butons. It is an array with keys: 1d,5d
-  var currentRange = [];
   
   this.startChart = function() { //set the initial values when the graph prediction is null.
 
