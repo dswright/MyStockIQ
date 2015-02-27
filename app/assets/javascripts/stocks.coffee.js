@@ -9,6 +9,7 @@ var chart;
 var rangeHash = {};
 var chartFunctions;
 var currentRange = [];
+var graph;
 
 
 $(document).ready(function () {

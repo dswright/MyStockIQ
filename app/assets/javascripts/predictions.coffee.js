@@ -1,4 +1,40 @@
+function IntradayForwardPrices (startTime) {
+  forwardArray = [];
+  var i=0;
+  var iterations = 390; //5 6.5 hour days of 5 minute itarations. 5 days necessary for the prediction details graph.
+  while (i<=iterations) {
+    timeSpot = startTime + i*5*60*1000;
+    if (timeSpot.utcTimeInt().utcTimeStr().validStockTime()) {
+      forwardArray.push([timeSpot, null]);
+    }
+    else {
+      iterations += 1;
+    }
+    i += 1;
+  }
+  return forwardArray;
+}
 
+
+//end time is assumed to be an est number.
+//the graph start time int is the end of the actual data array.
+//whether that be the daily array or the intraday array, it gets the last day of data..
+function DailyForwardPrices (startTime) {
+  var forwardArray = [];
+  var i = 0;
+  var iterations = 1202; //cut this in half for testing purpses..
+  while (i<=iterations) {
+    timeSpot = startTime + i*24*3600*1000;
+    if (timeSpot.utcTimeInt().utcTimeStr().validStockTime()) {
+      forwardArray.push([timeSpot, null]);
+    }
+    else {
+      iterations += 1;
+    }
+    i += 1;
+  }
+  return forwardArray;
+}
 //this could be put in the graph.js and just called later. It definitely should be put over there. Get it working first?
 //the stockgraph container is not longer corrrect I dont think.
 function resizeChart() {
@@ -82,7 +118,9 @@ $(document).ready(function () {
   chart.showLoading('Loading data from server');
   $.getJSON(apiUrl, function (data) {
 
-    graph = data
+    graph = data;
+
+    chartFunctions = ChartFunctions(graph, chart);
 
     graph["daily_forward_prices"] = DailyForwardPrices(graph["daily_prices"].last()[0]);
     graph["intraday_forward_prices"] = IntradayForwardPrices(graph["intraday_prices"].last()[0]);
@@ -103,8 +141,8 @@ $(document).ready(function () {
     //create the rangeHash to be used by the buttons.
     //note that by adding the my_prediction here, it will fall under the limited array filter.
     //the daily_predictions and daily_my_predictions are used here because the default setting is a monthly graph.
-    //graphSettings = {intradayPrices: graph["intraday_prices"], dailyPrices:graph["daily_prices"], predictions:graph["prediction"]};
-    //rangeHash = new PredictionGraphButtons(graphSettings);
+    graphSettings = {intradayPrices: graph["intraday_prices"], dailyPrices:graph["daily_prices"], predictions:graph["prediction"]};
+    rangeHash = new PredictionGraphButtons(graphSettings);
 
     //chart.yAxis[0].setExtremes(rangeHash["1m"]["yMin"], rangeHash["1m"]["yMax"]);
     //chart.xAxis[0].setExtremes(rangeHash["1m"]["xMin"], rangeHash["1m"]["xMax"]);
