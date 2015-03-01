@@ -39,6 +39,7 @@ class PredictionendsController < ApplicationController
         predictionend.end_price_verified = false
         predictionend.popularity_score = 0
         predictionend.save #save the prediction end.
+        @predictionend = predictionend
 
         #build a custom stream string for cancellations, which always have the same stream items.
 

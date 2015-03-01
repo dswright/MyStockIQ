@@ -95,7 +95,7 @@ class PredictionsController < ApplicationController
 		@current_user = current_user
 
 		#Stock's posts, comments, and predictions to be shown in the view
-		streams = Stream.where(target_type: "Prediction", target_id: @stock.id).limit(15)
+		streams = Stream.where(target_type: "Prediction", target_id: @prediction.id).limit(15)
 
     gon.ticker_symbol = @stock.ticker_symbol
 
@@ -110,7 +110,7 @@ class PredictionsController < ApplicationController
     streams = streams.reverse
 
     unless streams == nil
-      @stream_hashes = Stream.stream_maker(streams, 0)
+      @stream_hash_array = Stream.stream_maker(streams, 0)
     end
 
 

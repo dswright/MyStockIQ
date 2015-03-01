@@ -138,7 +138,7 @@ $(document).ready(function () {
     success: function (data, status) {
       graph = data; //assign the data to the graph var to be used globally. Not available until after all other js is loaded initially
 
-      chartFunctions = new ChartFunctions(graph, chart);
+      chartFunctions = new StockGraph(graph, chart);
 
       chartFunctions.startChart(); 
       chart.hideLoading();
