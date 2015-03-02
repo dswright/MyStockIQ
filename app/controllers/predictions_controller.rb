@@ -94,7 +94,7 @@ class PredictionsController < ApplicationController
 
 		@current_user = current_user
 
-    #run updates on the prediction so that its data is most up to date.
+    #if the prediction is active, run updates on the prediction so that its data is most up to date
     if @prediction.active_prediction_exists?
       @prediction.exceeds_end_price #if the stock price exceeds the prediction price, move date and set to active:false, create prediction end and stream items.
       @prediction.exceeds_end_time #if the current time exceeds the prediction end time, set active:false, create prediction ends, and stream items.

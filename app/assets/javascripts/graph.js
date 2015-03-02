@@ -125,11 +125,11 @@ function PredictionDetails(graph, chart) {
 
   graph["intraday_prediction"] = IntradayPredictions(graph["prediction"], undefined)[0]; //the 0 says to return only the first element of the returned value, which is an array of 2 objects.
   graph["daily_prediction"] = DailyPredictions(graph["prediction"], undefined)[0]; //the extra array of 0s is there for the prediction ids processor, which is an array of 2 objects.
-  graph["intraday_predictionend"] = IntradayPredictions(graph["predictionend"], undefined)[0];
+  graph["intraday_predictionend"] = IntradayPredictions(graph["predictionend"], undefined)[0]; //the undefined indicates that these are for the prediction details page. The undefined normally takes the predictionids_string.
   graph["daily_predictionend"] = DailyPredictions(graph["predictionend"], undefined)[0];
 
 
-  var graphSettings = {intradayPrices: graph["intraday_prices"], dailyPrices:graph["daily_prices"], predictions:[[0,0]], myPrediction:graph["prediction"], intradayPrediction:graph["intraday_prediction"], dailyPrediction:graph["daily_prediction"]}; //its possible that the prediction end will need to adjsut the date ranges as well... that needs to be added :/
+  var graphSettings = {intradayPrices: graph["intraday_prices"], dailyPrices:graph["daily_prices"], predictions:[[0,0]], myPrediction:graph["prediction"], intradayPrediction:graph["intraday_prediction"], dailyPrediction:graph["daily_prediction"]};
   var rangeHash = new PredictionGraphButtons(graphSettings);
 
   this.startChart = function() {
@@ -145,7 +145,7 @@ function PredictionDetails(graph, chart) {
       currentRange["buttonType"] = "1m";
     }
     else {
-      currentRange["buttonType"] = "1d";
+      currentRange["buttonType"] = "5d";
     }
 
 
@@ -257,14 +257,12 @@ function StockGraph(graph, chart) {
     else {
       currentRange["buttonType"] = "1d";
     }
-    console.log(currentRange["buttonType"]);
 
     setMyPrediction(graph["my_prediction"]); //set the daily and intraday my_prediction graph arrays based on my_prediction.
     //removeOverlapping(bestButton); //must be used after setMyPrediction.removes predictions overlapping with my_prediction.
 
     setSeries(bestButton, graph);
     setRange(bestButton); //always setRange after the setSeries, so the set series can tell if the range has changed. currentRange gets updated in the setRange.
-    console.log(currentRange);
   };
 
   this.buttonClick = function() {
@@ -556,7 +554,7 @@ function Button(buttonSettings) {
   var beforeDays = buttonSettings["beforeDays"];
   var afterDays = buttonSettings["afterDays"];
   var settings = buttonSettings["settings"]; //contains 6 items: timeInterval, timeLength, startPoint, prices, predictions, myPrediction
-  
+ 
   //intervalDirection is the direction to move from the start point.
   //startpoint is where to start counting from.
   //timeWindow is the total amount of time to look over. 5 days, 1 yr, ect.
@@ -575,7 +573,7 @@ function Button(buttonSettings) {
     return endPoint;
   }
 
-  var startPoint = settings.prices.last()[0];
+  var startPoint = settings.startPoint;
 
   this.xMin = EndPoint(-1, startPoint, beforeDays); //get the xMin from the endpoint function.
   this.xMax = EndPoint(1, startPoint, afterDays);
