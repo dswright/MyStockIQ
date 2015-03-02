@@ -93,8 +93,7 @@ namespace :predictions do
     end
 
     #checks predictionends where the end price is not verified. A prediction end will be created when the prediction is de-activated.
-    predictionends = Predictionend.where(end_price_verified:false)
-    predictionends.each do |predictionend|
+    Predictionend.where(end_price_verified:false).each do
       PredictionendWorker.perform_async(predictionend.id) #updates the predictionend to verified status.
     end
   end

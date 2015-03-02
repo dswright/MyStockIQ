@@ -66,7 +66,6 @@ require 'scraper'
 
         gon.ticker_symbol = @stock.ticker_symbol
       }
-
       format.json {
 
         ticker_symbols = []

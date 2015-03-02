@@ -186,13 +186,13 @@ function PredictionDetails(graph, chart) {
       chart.series[0].setData(graph["daily_prices"]); //all of these need to be set based on the button of best fit.
       chart.series[1].setData(graph["daily_forward_prices"]);
       chart.series[2].setData(graph["daily_prediction"]); //need the daily prediction and intraday predictions
-      chart.series[3].setData(graph["predictionend"]); //same with this. maybe null.
+      chart.series[3].setData(graph["daily_predictionend"]); //same with this. maybe null.
     }
     if ((button === "1d" || button === "5d") && (currentRange["buttonType"] !== "1d" && currentRange["buttonType"] !== "5d")) { //set intraday graph arrays
       chart.series[0].setData(graph["intraday_prices"]); //all of these need to be set based on the button of best fit.
       chart.series[1].setData(graph["intraday_forward_prices"]);
       chart.series[2].setData(graph["intraday_prediction"]); //need the daily prediction and intraday predictions
-      chart.series[3].setData(graph["predictionend"]); //same with this. maybe null.
+      chart.series[3].setData(graph["intraday_predictionend"]); //same with this. maybe null.
     }
     //reset these arrays after using the setdata. not sure why this is necessary.
     graph["intraday_prediction"] = IntradayPredictions(graph["prediction"], undefined)[0]; //the 0 says to return only the first element of the returned value, which is 
