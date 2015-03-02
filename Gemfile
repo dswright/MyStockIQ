@@ -41,7 +41,12 @@ gem 'json', '~> 1.8.1'
 gem 'rabl' #used to build the ajax api for the graph.
 
 # Use jquery as the JavaScript library
-gem 'jquery-rails',         '3.1.2'
+gem 'jquery-rails'
+gem 'jquery-ui-rails'
+gem 'rails4-autocomplete'
+
+gem 'arel', '6.0.0.beta2' #for fixing active record objects problem.
+
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks',           '2.3.0'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder

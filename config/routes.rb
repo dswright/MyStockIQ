@@ -23,6 +23,8 @@ Rails.application.routes.draw do
  
   get     'stocks/:ticker_symbol'        =>   'stocks#show'
 
+  get     'stockprices/:ticker_symbol'   =>   'stockprices#show'
+
   post    'streams'                      =>   'streams#create'
   delete  'streams/:id'                  =>   'streams#destroy'
 

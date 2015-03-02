@@ -123,7 +123,7 @@ $(document).ready(function () {
     series: seriesVar
   });
 
-  var apiUrl = "/stocks/" + gon.ticker_symbol + ".json";
+  var apiUrl = "/stockprices/" + gon.ticker_symbol + ".json";
   chart.showLoading('Loading data from server');
   var getRanges1;
   

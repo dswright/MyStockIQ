@@ -31,6 +31,17 @@ color palette
 #c2c2c2   35% GREY
 */
 
+.ui-autocomplete {
+  display: block;
+  overflow: hidden;
+  background: #FFF;
+  cursor: pointer;
+}
+
+.ui-menu-item:hover {
+  background-color: #000;
+  font: #FFF;
+}
 
 /*Fonts*/
 
