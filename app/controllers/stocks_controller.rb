@@ -15,6 +15,7 @@ require 'scraper'
 
     		@current_user = current_user
 
+
     		#Stock's posts, comments, and predictions to be shown in the view
         #will_paginate in view automatically generates params[:page]
     		@streams = Stream.where(target_type: "Stock", target_id: @stock.id).limit(20)
@@ -45,12 +46,17 @@ require 'scraper'
         end
 
      		#creates prediction variable to be used to set up the prediction creation form (see app/views/shared folder)
-      	@prediction = @current_user.predictions.build(stock_id: @stock.id)	
+      	@prediction = @current_user.predictions.build(stock_id: @stock.id)#this empty form variable will get overwritten if the page exists.
 
       	#If active prediction exists, show active prediction
       	if @prediction.active_prediction_exists?
       		@prediction = Prediction.find_by(user_id: @current_user.id, stock_id: @stock.id, active: true)
-      	end
+      	  
+          #if my_prediction exists, run these updates on the prediction so it is up to date.
+          @prediction.exceeds_end_price #if the stock price exceeds the prediction price, move date and set to active:false, create prediction end and stream items.
+          @prediction.exceeds_end_time #if the current time exceeds the prediction end time, set active:false, create prediction ends, and stream items.
+          @prediction.update_score #run an update of the current score.
+        end
 
         #Determines relationship between current user and target user
         @target = @stock

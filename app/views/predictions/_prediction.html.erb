@@ -14,7 +14,8 @@
         <%= hidden_field_tag :input_page, @prediction_end_input_page %>
         <%= hidden_field_tag :prediction_id, prediction.id %>
         <%= f.submit "Cancel Prediction", class: "btn btn-primary" %>
-      <% end %>
+      <% end %><br/>
+      <%= link_to("prediction details", "/predictions/#{@prediction.id}") %>
 
     </div>
   </div>
