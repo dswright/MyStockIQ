@@ -41,6 +41,8 @@ class PredictionendsController < ApplicationController
         predictionend.save #save the prediction end.
         @predictionend = predictionend
 
+        @graph_time = @predictionend.actual_end_time.utc_time_int.graph_time_int
+
         #build a custom stream string for cancellations, which always have the same stream items.
 
         #target the current user and 
