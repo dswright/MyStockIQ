@@ -5,7 +5,7 @@ class PredictionsController < ApplicationController
   require 'graph'
 	
 
-  def hover
+  def hover    
     prediction = Prediction.find(params[:id])
 
     respond_to do |f|
@@ -88,6 +88,7 @@ class PredictionsController < ApplicationController
 	end
 
 	def show
+  return if user_logged_in? #redirects the user to the login page if they are not logged in.
 
 	@prediction = Prediction.find_by(id:params[:id])
 	@stock = @prediction.stock

@@ -11,15 +11,7 @@ class ApplicationController < ActionController::Base
   include CommentsHelper
   include StreamsHelper
   include PredictionsHelper
+
   
-  private
-
-
-  	#Confirms logged in user. Used in both 'Users' and 'Streams controllers'
-  	def logged_in_user
-  		unless logged_in?
-  			flash[:danger] = "Please log in."
-  			redirect_to login_url
-  		end
-  	end
+  
 end

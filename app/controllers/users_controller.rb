@@ -5,7 +5,8 @@ class UsersController < ApplicationController
   #the Newuser.new creates a new user from the model.
   
   def show
-    
+    return if user_logged_in? #redirects the user to the login page if they are not logged in.
+        
     #Logged in user
     @current_user = current_user
 

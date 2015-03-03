@@ -9,8 +9,12 @@ require 'scraper'
 	#end
 
 	def show
+
     respond_to do |format|
       format.html {
+        return if user_logged_in? #redirects the user to the login page if they are not logged in.
+        
+
         @stock = Stock.find_by(ticker_symbol:params[:ticker_symbol])
 
     		@current_user = current_user
@@ -46,7 +50,7 @@ require 'scraper'
         end
 
      		#creates prediction variable to be used to set up the prediction creation form (see app/views/shared folder)
-      	@prediction = @current_user.predictions.build(stock_id: @stock.id)#this empty form variable will get overwritten if the page exists.
+      	@prediction = @current_user.predictions.build(stock_id: @stock.id) #this empty form variable will get overwritten if the page exists.
 
       	#If active prediction exists, show active prediction
       	if @prediction.active_prediction_exists?
