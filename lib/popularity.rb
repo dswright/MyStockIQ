@@ -1,4 +1,4 @@
-module Popularity
+module PopularityPast
 
 	def likes
     	likes = Like.where(like_type: "like", target_id: self.id, target_type:self.class.name).count

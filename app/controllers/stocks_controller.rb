@@ -32,7 +32,7 @@ require 'scraper'
 
         #this line makes sorts the stream by popularity score.
         @streams = @streams.sort_by {|stream| stream.streamable.popularity_score}
-        #streams = sort_by_popularity(streams)
+        #streams = sort_by_popularity(streams) why is the sort_by_popularity needed twice..?
         @streams = @streams.reverse
 
         unless @streams == nil

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150203205437) do
+ActiveRecord::Schema.define(version: 20150303004352) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "adminpack"
@@ -64,6 +64,16 @@ ActiveRecord::Schema.define(version: 20150203205437) do
   end
 
   add_index "newsarticles", ["google_news_id", "id"], name: "index_newsarticles_on_google_news_id_and_id", using: :btree
+
+  create_table "popularities", force: true do |t|
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.float    "score"
+    t.integer  "popularable_id"
+    t.string   "popularable_type"
+  end
+
+  add_index "popularities", ["popularable_type", "popularable_id"], name: "index_popularities_on_popularable_type_and_popularable_id", using: :btree
 
   create_table "predictionends", force: true do |t|
     t.float    "actual_end_price"

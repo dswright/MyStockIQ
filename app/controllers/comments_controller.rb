@@ -6,7 +6,6 @@ class CommentsController < ApplicationController
 
 		#build the comment for input to the db.
 		comment = @user.comments.build(comment_params)
-		comment.popularity_score = 0
 
 		#process the stream input array using the stream_params_process function from the streams helper.
 		streams = []
@@ -18,6 +17,9 @@ class CommentsController < ApplicationController
 		response_msgs = []
 		if comment.valid?
 			comment.save
+
+			comment.build_popularity(score:0).save #build the popularity score table item.
+
 			streams.each {|stream| stream.save}
 			#create the stream item to load in the ajax.
 			#it doesn't matter which stream item for this comment is loaded, just that one loads.

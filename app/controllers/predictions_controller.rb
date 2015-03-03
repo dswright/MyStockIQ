@@ -29,7 +29,7 @@ class PredictionsController < ApplicationController
 													(params[:minutes].to_i * 60)).closest_start_time
 		
 		prediction = {stock_id: stock.id, prediction_end_time: prediction_end_time, score: 0, active: true, start_price_verified:false, 
-									start_time: prediction_start_time, popularity_score:0 }
+									start_time: prediction_start_time}
 
 		#merge the prediction settings with the params from the prediction form.
 		prediction.merge!(prediction_params)
@@ -69,6 +69,7 @@ class PredictionsController < ApplicationController
       @prediction_end_input_page = "stockspage" #set this variable for the cancel button form on the stockspage.
 			@prediction.save
 			@streams.each {|stream| stream.save}
+      @prediction.build_popularity(score:0).save #build the popularity score item for predictions
 			stream = Stream.where(streamable_type: 'Prediction', streamable_id: @prediction.id).first
 			@stream_hashes = Stream.stream_maker([stream], 0) #gets inserted to top of stream with ajax.
 			response_msgs << "Prediction input!"

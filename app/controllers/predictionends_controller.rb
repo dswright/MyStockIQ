@@ -37,8 +37,9 @@ class PredictionendsController < ApplicationController
         predictionend.actual_end_time = Time.zone.now.utc_time_int.closest_start_time
         predictionend.actual_end_price = prediction.stock.daily_stock_price
         predictionend.end_price_verified = false
-        predictionend.popularity_score = 0
         predictionend.save #save the prediction end.
+
+        predictionend.build_popularity(score:0).save #build the popularity score item for predictions
         @predictionend = predictionend
 
         #build a custom stream string for cancellations, which always have the same stream items.

@@ -2,13 +2,14 @@ class Prediction < ActiveRecord::Base
   require 'customdate'
   require 'action_view'
   include ActionView::Helpers::DateHelper  
-  require 'popularity'
-  include Popularity
+  require 'popularity' #these should no longer be necessary. These methods will now only need to be in the popularity model.
+  include PopularityPast
 
   belongs_to :stock
   belongs_to :user
   has_many :streams, as: :streamable, dependent: :destroy
   has_one :predictionend, dependent: :destroy
+  has_one :popularity, as: :popularable, dependent: :destroy
 
   validates :prediction_end_price, presence: true, numericality: true
   validates :stock_id, presence: true, numericality: true
