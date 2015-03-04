@@ -168,7 +168,7 @@ function PredictionDetails(graph, chart) {
     //probably need to handle situation of overlapaping lines.
     //need to reset the endprediction line 
 
-    graph["predictionend"] = [[graph["my_prediction"][0][0], graph["predictionend"][0][1]],[endTime, endPrice]];
+    graph["predictionend"] = [[graph["my_prediction"][0][0], graph["my_prediction"][0][1]],[endTime, endPrice]];
     graph["intraday_predictionend"] = IntradayPredictions(graph["predictionend"], undefined)[0];
     graph["daily_predictionend"] = DailyPredictions(graph["predictionend"], undefined)[0];
 
