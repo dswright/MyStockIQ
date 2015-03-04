@@ -80,7 +80,8 @@
 
   <div class = "stock-page-aside col-sm-8">
 
-    <%= render partial: "streams/stream", locals: {stream_hash_array: @stream_hash_array} %>
+     <%= render partial: "streams/stream_main", locals: {streams: @streams, nest_count: 0} %>
+    <%= will_paginate @streams %>
       
     <div class = "prediction-post-comment">
       <div class = "row">

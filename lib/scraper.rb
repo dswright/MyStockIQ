@@ -176,6 +176,7 @@ class Scraper
       target_stock = Stock.find_by(ticker_symbol:news_item["ticker_symbol"])
       new_stream = news_object.streams.build(target_type:"Stock", target_id:target_stock.id)
       new_stream.save
+      news_object.build_popularity(score:0).save #build the popularity score item for news
     end
   end
 

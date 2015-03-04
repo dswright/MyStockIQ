@@ -6,7 +6,6 @@ class CommentsController < ApplicationController
 
 		#build the comment for input to the db.
 		comment = @user.comments.build(comment_params)
-		comment.popularity_score = 0
 
 		#process the stream input array using the stream_params_process function from the streams helper.
 		streams = []
@@ -18,17 +17,16 @@ class CommentsController < ApplicationController
 		response_msgs = []
 		if comment.valid?
 			comment.save
+
+			comment.build_popularity(score:0).save #build the popularity score table item.
+
 			streams.each {|stream| stream.save}
 			#create the stream item to load in the ajax.
 			#it doesn't matter which stream item for this comment is loaded, just that one loads.
 			if params[:parent] #what to do when it is a reply.
-				stream = Stream.where(streamable_type: 'Comment', streamable_id: comment.id).first
-				@stream_hash_array = Stream.stream_maker([stream], params[:nest_count].to_i + 1) #gets inserted below the response item, with proper indent.
-				response_msgs << "Comment added!" #gets inserted at top of page with ajax.
-				@parent = params[:parent]
+				#here historically for replies. Now handled by seperate controller.
 			else #what to do when it is a regular comment.
-				stream = Stream.where(streamable_type: 'Comment', streamable_id: comment.id).first
-				@stream_hash_array = Stream.stream_maker([stream], 0) #gets inserted to top of stream with ajax.
+				@streams = [Stream.where(streamable_type: 'Comment', streamable_id: comment.id).first] #get this one stream item.
 				response_msgs << "Comment added!" #gets inserted at top of page with ajax.
 			end
 		else

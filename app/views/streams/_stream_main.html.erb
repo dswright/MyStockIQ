@@ -1,8 +1,8 @@
 <% @streams.each do |stream|
   icons = {}
 
-  icons[:likes] = stream.streamable.likes
-  icons[:dislikes] = stream.streamable.dislikes
+  icons[:likes] = stream.streamable.likes.where(like_type:"like").count
+  icons[:dislikes] = stream.streamable.likes.where(like_type:"dislike").count
   icons[:replies] = stream.streamable.replies.count
 
 	%>

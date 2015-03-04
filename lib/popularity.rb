@@ -1,12 +1,4 @@
-module Popularity
-
-	def likes
-    	likes = Like.where(like_type: "like", target_id: self.id, target_type:self.class.name).count
-  	end
-
-  	def dislikes
-    	dislikes = Like.where(like_type: "dislike", target_id: self.id, target_type:self.class.name).count
-  	end
+module PopularityPast
 
   	def has_replies?
   		count = Stream.where(target_id: self.id, target_type: self.class.name).count

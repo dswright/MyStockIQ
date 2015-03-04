@@ -1,14 +1,16 @@
 class Prediction < ActiveRecord::Base
   require 'customdate'
   require 'action_view'
-  include ActionView::Helpers::DateHelper  
+  include ActionView::Helpers::DateHelper
   require 'popularity'
-  include Popularity
+  include PopularityPast
 
   belongs_to :stock
   belongs_to :user
   has_many :streams, as: :streamable, dependent: :destroy
+  has_many :likes, as: :likable
   has_one :predictionend, dependent: :destroy
+  has_one :popularity, as: :popularable, dependent: :destroy
 
   validates :prediction_end_price, presence: true, numericality: true
   validates :stock_id, presence: true, numericality: true

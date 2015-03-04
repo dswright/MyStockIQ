@@ -1,6 +1,9 @@
 class Newsarticle < ActiveRecord::Base
-  has_many :streams, as: :streamable
   require 'popularity'
-  include Popularity
+  include PopularityPast
+
+  has_many :streams, as: :streamable
+  has_many :likes, as: :likable
+  has_one :popularity, as: :popularable, dependent: :destroy
 
 end

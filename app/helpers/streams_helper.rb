@@ -48,7 +48,7 @@ module StreamsHelper
 
     streams.each do |stream| 
       target = stream.streamable
-      target_rank = { id: stream.id, popularity_score: target.popularity_score }
+      target_rank = { id: stream.id, popularity_score: target.popularity.score }
       popularity_array << target_rank
     end
 

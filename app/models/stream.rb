@@ -41,7 +41,7 @@ class Stream < ActiveRecord::Base
         stream: stream, 
         nest_count: nest_count, 
         sub_hash_array: sub_stream, 
-        popularity_score: stream.streamable.popularity_score
+        popularity_score: stream.streamable.popularity.score
       }
 
       stream_hashes << stream_hash
