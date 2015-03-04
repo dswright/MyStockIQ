@@ -70,8 +70,7 @@ class PredictionsController < ApplicationController
 			@prediction.save
 			@streams.each {|stream| stream.save}
       @prediction.build_popularity(score:0).save #build the popularity score item for predictions
-			stream = Stream.where(streamable_type: 'Prediction', streamable_id: @prediction.id).first
-			@stream_hashes = Stream.stream_maker([stream], 0) #gets inserted to top of stream with ajax.
+			@streams = [Stream.where(streamable_type: 'Prediction', streamable_id: @prediction.id).first]
 			response_msgs << "Prediction input!"
 		end
 
@@ -103,7 +102,7 @@ class PredictionsController < ApplicationController
       @prediction.update_score #run an update of the current score.
     end
 		#Stock's posts, comments, and predictions to be shown in the view
-		streams = Stream.where(target_type: "Prediction", target_id: @prediction.id).limit(15)
+		@streams = Stream.where(target_type: "Prediction", target_id: @prediction.id).limit(15)
 
     gon.ticker_symbol = @stock.ticker_symbol
 
@@ -111,16 +110,12 @@ class PredictionsController < ApplicationController
     #  streams.each {|stream| stream.streamable.update_popularity_score}
     #end
 
-
     #this line makes sorts the stream by popularity score.
     #streams = streams.sort_by {|stream| stream.streamable.popularity_score}
     #streams = sort_by_popularity(streams)
-    streams = streams.reverse
-
-    unless streams == nil
-      @stream_hash_array = Stream.stream_maker(streams, 0)
-    end
-
+    @streams = @streams.reverse
+    
+    @streams = @streams.paginate(page: params[:page], per_page: 10)
 
   	@comment_stream_inputs = "Prediction:#{@prediction.id}"
 

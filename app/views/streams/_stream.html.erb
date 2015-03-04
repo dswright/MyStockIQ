@@ -1,8 +1,8 @@
 <% stream_hash_array.each do |stream_hash|
   icons = {}
-  icons[:likes] = Like.where(like_type:"like", target_type: stream_hash[:stream].streamable_type, target_id: stream_hash[:stream].streamable_id).count
-  icons[:dislikes] = Like.where(like_type:"dislike",target_type: stream_hash[:stream].streamable_type, target_id:stream_hash[:stream].streamable_id).count
-  icons[:replies] = Stream.where(target_type:stream_hash[:stream].streamable_type, target_id: stream_hash[:stream].streamable_id).count
+  icons[:likes] = stream_hash.streamable.likes.where(like_type:"like").count
+  icons[:dislikes] = stream_hash.streamable.likes.where(like_type:"dislike").count
+  icons[:replies] = stream_hash.streamable.replies.count
   %>
 
   <div class = "prediction-post-comment" id="stream-<%= stream_hash[:stream].streamable_type %>_<%= stream_hash[:stream].streamable_id %>">

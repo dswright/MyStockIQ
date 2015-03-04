@@ -5,7 +5,7 @@ console.log(<%= @prediction.id %>);
 
 $('.stock-page-prediction-box').html("<%= j render @prediction %>").fadeIn("slow");
 
-$('.prediction-post-comment:eq(0)').before("<%= j render partial: 'streams/stream', locals: {stream_hash_array: @stream_hashes}  %> ").fadeIn("slow");
+$('.prediction-post-comment:eq(0)').before("<%= j render partial: 'streams/stream_main', locals: {streams: @streams, nest_count: 0}  %> ").fadeIn("slow");
 
 var responses = $.parseHTML("<%= j raw @response %>");
 $('#response-box').html(responses).fadeIn("slow");

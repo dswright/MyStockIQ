@@ -115,9 +115,8 @@
 
 
 <!-- STREAM POSTS -->
-<% unless @stream_hash_array.empty? %>
-  <%= render partial: "streams/stream", locals: {stream_hash_array: @stream_hash_array}  %>
-<% end %>
+     <%= render partial: "streams/stream_main", locals: {streams: @streams, nest_count: 0} %>
+    <%= will_paginate @streams %>
 
     <div class = "prediction-post-comment">
       <div class = "row">
