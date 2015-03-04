@@ -173,10 +173,10 @@ function PredictionDetails(graph, chart) {
     graph["daily_predictionend"] = DailyPredictions(graph["predictionend"], undefined)[0];
 
     if (currentRange["buttonType"] === "1d" || currentRange["buttonType"] === "5d") {
-      chart.series[3].setData(graph["daily_predictionend"]); //instead of resetting all series', just reset this one.
+      chart.series[3].setData(graph["intraday_predictionend"]); //instead of resetting all series', just reset this one.
     }
     else {
-      chart.series[3].setData(graph["intraday_predictionend"]); //instead of resetting all series', just reset this one.
+      chart.series[3].setData(graph["daily_predictionend"]); //instead of resetting all series', just reset this one.
     }
 
   }
