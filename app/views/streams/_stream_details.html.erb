@@ -1,2 +1,12 @@
-<%= render partial: 'streams/stream_reply_form', locals: {stream: stream} %>
-<div class = "stream_details_<%= stream.streamable.id %>", style = "width: 400px; height: 100px;"><p>"Hello"</p></div>
+<%= render partial: 'streams/stream_reply_form', locals: {stream: stream} %></br>
+<div class = "Stream_Details", id = "stream_details_<%= stream.streamable.id %>", style = "width: 500px; height: 100px;">
+	<% unless stream.streamable.replies.empty? == true %>
+		<% stream.streamable.replies.each do |reply| %>
+			<%= render partial: 'streams/stream_reply', locals: {reply: reply} %>
+		<% end %>
+	<% else %>
+		<div class = "No_Replies", id = "no_replies_<%=stream.streamable.id %>">
+			</br><p><%= "No replies have been posted yet" %></p>
+		</div>
+	<% end %>
+</div>

@@ -1,9 +1,10 @@
 
 <%= form_for(Reply.new, remote:true) do |f| %>
   <% #Renders post form error messages using error_messages helper in app/views/shared/ %>
-  <%= f.text_area :content, placeholder: "crappy reply box placeholder", class: "stock-page-reply-field", id: "reply", style: "width:100px; height:70px; float:left;" %>
-  <%= hidden_field_tag :parent_id, "1" %>
-  <%= hidden_field_tag :parent_type, "Comment" %>
+  <%= f.text_area :content, placeholder: "crappy reply box placeholder", class: "stock-page-reply-field", id: "reply", style: "width:300px; height:40px; float:left;" %>
+  <%= hidden_field_tag :parent_id, stream.streamable.id %>
+  <%= hidden_field_tag :parent_type, stream.streamable.class.name %>
+  <%= hidden_field_tag :stream_id, stream.id %>
   <%= f.submit "Reply", class: "btn btn-primary", style: "float:left; width:50px;" %>
 
 <% end %>
