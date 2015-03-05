@@ -3,6 +3,7 @@ class Stream < ActiveRecord::Base
 
   #declares a polymorphic association for the streams table. 
   belongs_to :streamable, polymorphic: true
+  belongs_to :targetable, polymorphic: true
 
   #uses Rails default_scope function to sort the posts such that the most recent one is first.
   default_scope -> {order('created_at DESC')}
