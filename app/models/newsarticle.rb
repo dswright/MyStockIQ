@@ -1,5 +1,5 @@
 class Newsarticle < ActiveRecord::Base
-  require 'popularity'
+  require 'popularity_past'
   include PopularityPast
 
   has_many :streams, as: :streamable

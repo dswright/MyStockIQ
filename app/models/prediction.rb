@@ -1,9 +1,10 @@
 class Prediction < ActiveRecord::Base
+  require 'popularity_past'
+  include PopularityPast
   require 'customdate'
   require 'action_view'
   include ActionView::Helpers::DateHelper
-  require 'popularity'
-  include PopularityPast
+
 
   belongs_to :stock
   belongs_to :user

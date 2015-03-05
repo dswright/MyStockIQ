@@ -1,5 +1,5 @@
 class Predictionend < ActiveRecord::Base
-  require 'popularity'
+  require 'popularity_past'
   include PopularityPast
 
   belongs_to :prediction

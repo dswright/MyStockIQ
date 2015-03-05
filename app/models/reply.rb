@@ -1,7 +1,7 @@
 class Reply < ActiveRecord::Base
 
-	require 'popularity'
-	include Popularity
+	require 'popularity_past'
+	include PopularityPast
 	
 	belongs_to :user
 	has_many :streams, as: :streamable, dependent: :destroy
