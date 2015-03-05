@@ -11,10 +11,16 @@ class Graph
   #It takes ticker, current user, and more settings.
   def initialize(settings = {})
     @ticker_symbol = settings[:ticker_symbol]
-    @stock_id = Stock.find_by(ticker_symbol: @ticker_symbol)
     @current_user = settings[:current_user]
 
     @prediction = settings[:prediction] #this is passed by the prediction details graph.
+
+    #the start point for the different graphs is different because they are anchored in different points in time.
+    if settings[:start_point] == "stocks"
+      @start_point = Stock.find_by(ticker_symbol:settings[:ticker_symbol]).date
+    elsif settings[:start_point] == "predictiondetails"
+      @start_point = @prediction.start_time
+    end
   end
 
   def prediction #this is used for the predictiondetails graph.
@@ -76,8 +82,10 @@ class Graph
   #Limited to 400 5 minute periods, which is 2000 minutes, just over the 975 minutes in 5 6.5 hour days.
 
   def intraday_prices
+    start = @start_point - 60*60*24*9 #minus 9 days from the start_time to get at least 5 days of historical intraday data.
+    finish = @start_point + 60*60*24*6 #add 6 days to get at least 3 days of forward looking data.
     price_array = []
-    Intradayprice.where(ticker_symbol:self.ticker_symbol).limit(400).reorder('date desc').reverse.each do |price|    
+    Intradayprice.where(ticker_symbol:self.ticker_symbol).where("date > ?", start).where("date < ?", finish).reorder('date desc').reverse.each do |price|    
       graph_time = price.date.utc_time_int.graph_time_int
       price_array << [graph_time, price.close_price.round(2)]
     end
@@ -86,8 +94,10 @@ class Graph
 
   #this function forms a full 5 year array. The actual control is done with the x axis settings of the graph.
   def daily_prices
+    start = @start_point - 60*60*24*1825 #minus 5 years from the start_time to get 5 years of historical daily data.
+    finish = @start_point + 60*60*24*950 #add 2.5 years to get 2.5 years of forward looking data.
     price_array = []
-    Stockprice.where(ticker_symbol: self.ticker_symbol).limit(1300).reorder('date desc').each do |price|
+    Stockprice.where(ticker_symbol: self.ticker_symbol).where("date > ?", start).where("date < ?", finish).reorder('date desc').each do |price|
       graph_time = price.date.utc_time_int.graph_time_int #these methods will no longer be available... the database will send a date time stamp over the json api...
       price_array << [graph_time, price.close_price.round(2)]
     end

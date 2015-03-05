@@ -46,7 +46,11 @@
       </div>
     </div>
 
-        <%= render @prediction %>
+    <% if @prediction.active == true %>
+      <%= render @prediction %>
+    <% else %>
+      <%= render @prediction.predictionend %>
+    <% end %>
 
     <%= render 'shared/comment_form' %>
 

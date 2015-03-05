@@ -130,7 +130,7 @@ class PredictionsController < ApplicationController
     respond_to do |format|
       format.html
       format.json {
-        settings = {prediction:@prediction, ticker_symbol:@prediction.stock.ticker_symbol}
+        settings = {prediction:@prediction, ticker_symbol:@prediction.stock.ticker_symbol, start_point:"predictiondetails"}
         graph = Graph.new(settings) #send in the owner of the prediction as the user... still not sure if that is correct.
         #remember these are the ruby functions... that generate the json api.
         render json: {

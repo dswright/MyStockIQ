@@ -136,10 +136,8 @@ function PredictionDetails(graph, chart) {
     graph["daily_forward_prices"] = DailyForwardPrices(graph["daily_prices"].last()[0]);
     graph["intraday_forward_prices"] = IntradayForwardPrices(graph["intraday_prices"].last()[0]);
 
-    
     var endTime = graph["prediction"].last()[0]; //use the endTime of the users own prediction to get the best range.
     var bestButton = BestRange(endTime);
-
 
     if (bestButton === "1d" || bestButton === "5d") {
       currentRange["buttonType"] = "1m";
@@ -178,7 +176,6 @@ function PredictionDetails(graph, chart) {
     else {
       chart.series[3].setData(graph["daily_predictionend"]); //instead of resetting all series', just reset this one.
     }
-
   }
 
   function setSeries(button) {
