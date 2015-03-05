@@ -13,26 +13,29 @@ require 'scraper'
     respond_to do |format|
       format.html {
         return if user_logged_in? #redirects the user to the login page if they are not logged in.
-        
 
         @stock = Stock.find_by(ticker_symbol:params[:ticker_symbol])
 
     		@current_user = current_user
 
-    		#Stock's posts, comments, and predictions to be shown in the view
-        #will_paginate in view automatically generates params[:page]
-    		@streams = Stream.where(target_type: "Stock", target_id: @stock.id).limit(20)
 
-        #unless @streams == nil
-        #  @streams.each {|stream| stream.update_stream_popularity_scores}
-        #end
+    		@streams = Stream.where(target_type: "Stock", target_id: @stock.id).limit(40)
 
-        #this line makes sorts the stream by popularity score.
-        #@streams = @streams.sort_by {|stream| stream.streamable.popularity_score}
-        #streams = sort_by_popularity(streams) why is the sort_by_popularity needed twice..?
-        #@streams = @streams.reverse
 
-        @streams = @streams.paginate(page: params[:page], per_page: 10)
+        unless @streams == nil
+          @streams.each {|stream| stream.update_stream_popularity_scores}
+
+          #this line makes sorts the stream by popularity score.
+          @streams = @streams.sort_by {|stream| stream.streamable.popularity_score}
+
+          #streams = sort_by_popularity(streams)
+          @streams = @streams.reverse
+          
+          #Stock's posts, comments, and predictions to be shown in the view
+          #will_paginate in view automatically generates params[:page]
+          @streams = @streams.paginate(page: params[:page], per_page: 10)
+          @stream_hash_array = Stream.stream_maker(@streams, 0)
+        end
 
         #if a stock gets viewed, update the stocks table so that the stock gets real time stock data.
         if (@stock.viewed == false)
