@@ -97,25 +97,24 @@ namespace :predictions do
       PredictionendWorker.perform_async(predictionend.id) #updates the predictionend to verified status.
     end
   end
+end
 
-  namespace :updates do
-    task :update_popularity => :environment do
-      Newsarticle.all.each do |article|
-        if article.popularity == nil
-          article.build_popularity(score:0).save
-        end
-      end
-    end
-
-    task :update_streams => :environment do
-      Stream.all.each do |stream|
-        stream.targetable_type = stream.target_type
-        stream.targetable_id = stream.target_id
-        stream.save
+namespace :updates do
+  task :update_popularity => :environment do
+    Newsarticle.all.each do |article|
+      if article.popularity == nil
+        article.build_popularity(score:0).save
       end
     end
   end
 
+  task :update_streams => :environment do
+    Stream.all.each do |stream|
+      stream.targetable_type = stream.target_type
+      stream.targetable_id = stream.target_id
+      stream.save
+    end
+  end
 end
 
   #run all of this in the same worker and same rake task...
