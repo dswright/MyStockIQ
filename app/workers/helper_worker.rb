@@ -1,6 +1,6 @@
 #this is a file to write random functions for one time modifications.
 
-class GooglenewsWorker
+class HelperWorker
   include Sidekiq::Worker
   require 'scraper'
 
