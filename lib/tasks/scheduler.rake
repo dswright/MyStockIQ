@@ -101,10 +101,8 @@ end
 
 namespace :updates do
   task :update_popularity => :environment do
-    Newsarticle.all.each do |article|
-      if article.popularity == nil
-        HelperWorker.perform_async(article.id)
-      end
+    Newsarticle.find_by_sql("select id from newsarticles").each do
+      HelperWorker.perform_async(article.id)
     end
   end
 
