@@ -103,7 +103,7 @@ namespace :updates do
   task :update_popularity => :environment do
     Newsarticle.all.each do |article|
       if article.popularity == nil
-        article.build_popularity(score:0).save
+        HelperWorker.perform_async(article.id)
       end
     end
   end
