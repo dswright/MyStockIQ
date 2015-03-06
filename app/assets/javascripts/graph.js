@@ -285,7 +285,7 @@ function StockGraph(stockGraph, chart) {
     graphSettings = {intradayPrices: stockGraph["intraday_prices"], dailyPrices:stockGraph["daily_prices"], predictions:stockGraph["predictions"], myPrediction:stockGraph["my_prediction"]}; //set the graph limits based on predictions and my prediction. Graph is reset based on new prediction range.
     rangeHash = new StockGraphButtons(graphSettings); //this returns all of the ranges for the butons. It is an array with keys: 1d,5d,1m,3m,6m,1yr,5yr
 
-    setSeries(bestButton, graph); //setSeries sets all of the graph arrays based on the graph object. Always comes before setRange.
+    setSeries(bestButton, stockGraph); //setSeries sets all of the graph arrays based on the graph object. Always comes before setRange.
     setRange(bestButton); //setRange utilizes the rangeHash. updates the currentRange.
 
 
