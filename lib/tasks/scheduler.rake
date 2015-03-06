@@ -101,7 +101,12 @@ end
 
 namespace :updates do
   task :update_popularity => :environment do
-    Newsarticle.find_by_sql("select id from newsarticles").each do |article|
+    articles = Newsarticle.find_by_sql("select id from newsarticles")
+    article_ids = articles.map{|n| n.id}
+    popularities = Popularity.find_by_sql("select popularable_id from popularities where popularable_type = 'Newsarticle'")
+    popularity_ids = popularities.map{|n| n.popularable_id}
+    remaining = article_ids - popularity_ids
+    articles.each do |article|
       HelperWorker.perform_async(article.id)
     end
   end

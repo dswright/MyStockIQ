@@ -6,8 +6,6 @@ class HelperWorker
 
   def perform(article_id)
     article = Newsarticle.find(article_id)
-    if article.popularity == nil
-      article.build_popularity(score:0).save
-    end
+    article.build_popularity(score:0).save
   end
 end
