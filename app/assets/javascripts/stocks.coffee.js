@@ -5,14 +5,13 @@ function resizeChart() {
 };
 
 //Global variables 
-var chart;
-var rangeHash = {};
-var chartFunctions;
+var stockChart;
+var stockChartFunctions;
 var currentRange = [];
-var graph;
-
+var stockGraph;
 
 $(document).ready(function () {
+
   resizeChart();
   $(window).bind("orientationchange resize", resizeChart);
 
@@ -54,7 +53,7 @@ $(document).ready(function () {
     }
   ];
 
-  chart = new Highcharts.StockChart({
+  stockChart = new Highcharts.StockChart({
     chart: {
       renderTo: 'stock-div',
       panning: false, //disables time frame dragging on desktop
@@ -63,6 +62,25 @@ $(document).ready(function () {
     plotOptions: {
       spline: {
         turboThreshold: 0
+      },
+      series: {
+        cursor: 'pointer',
+        point: {
+          events: {
+            click: function() {
+              if(this.series.name == 'my_prediction') {
+                var arrId = this.series.data[0].index;
+                var predictionId = stockGraph["my_prediction_id"][arrId];
+                location.href = '/predictions/'+predictionId;  
+              }
+              if(this.series.name == 'predictions') {
+                var arrId = this.series.data[0].index;
+                var predictionId = stockGraph["prediction_ids"][arrId];
+                location.href = '/predictions/'+predictionId;  
+              }
+            }
+          }
+        }
       }
     },
     tooltip: {
@@ -70,7 +88,7 @@ $(document).ready(function () {
       formatter: function() {
         if(this.series.name == 'my_prediction') {
           var arrId = this.series.data.indexOf(this.point);
-          var predictionId = graph["my_prediction_id"][arrId]; //this will always use just the 1 my_prediction_id which will always show on the graph.
+          var predictionId = stockGraph["my_prediction_id"][arrId]; //this will always use just the 1 my_prediction_id which will always show on the graph.
 
           $.ajax({
             url: "/predictions/hover/"+predictionId, //pass the prediction id to the prediction hover partial.
@@ -89,7 +107,7 @@ $(document).ready(function () {
           //$('#predictiondetailsbox').remove();
           //get predictionid based on the datapoint index.
           var arrId = this.series.data.indexOf(this.point); //get the index point of the current array.
-          var predictionId = graph["active_prediction_ids"][arrId]; //use the live predictions ids array to identify the prediction id based on the array index id.
+          var predictionId = stockGraph["active_prediction_ids"][arrId]; //use the live predictions ids array to identify the prediction id based on the array index id.
 
           $.ajax({
             url: "/predictions/hover/"+predictionId, //pass the prediction id to the prediction hover partial.
@@ -124,7 +142,7 @@ $(document).ready(function () {
   });
 
   var apiUrl = "/stockprices/" + gon.ticker_symbol + ".json";
-  chart.showLoading('Loading data from server');
+  stockChart.showLoading('Loading data from server');
   var getRanges1;
   
   $.ajax({
@@ -136,23 +154,23 @@ $(document).ready(function () {
     contentType: "application/json; charset=utf-8",
     dataType: 'json',
     success: function (data, status) {
-      graph = data; //assign the data to the graph var to be used globally. Not available until after all other js is loaded initially
+      stockGraph = data; //assign the data to the graph var to be used globally. Not available until after all other js is loaded initially
 
-      chartFunctions = new StockGraph(graph, chart);
+      stockChartFunctions = new StockGraph(stockGraph, stockChart);
 
-      chartFunctions.startChart(); 
-      chart.hideLoading();
+      stockChartFunctions.startChart(); 
+      stockChart.hideLoading();
 
       //$("body").on('click', 'button[data-button-type]', chartFunctions.buttonClick);
       //so this button click is being called like a closure? maybe? This thing needs to execute itself...
-      $("button[data-button-type]").click(chartFunctions.buttonClick);
+      $("button[data-button-type]").click(stockChartFunctions.buttonClick);
 
       window.inputPrediction = function(endTime, endPrice, predictionId) {
-        chartFunctions.inputPrediction(endTime, endPrice, predictionId); //when a prediction is input, this function fires from the predicitoninput ajax call.
+        stockChartFunctions.inputPrediction(endTime, endPrice, predictionId); //when a prediction is input, this function fires from the predicitoninput ajax call.
       }
 
       window.removePrediction = function() {
-        chartFunctions.removePrediction();
+        stockChartFunctions.removePrediction();
       }
     }
   });

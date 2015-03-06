@@ -216,37 +216,37 @@ function PredictionDetails(graph, chart) {
   }
 }
 
-function StockGraph(graph, chart) {
+function StockGraph(stockGraph, chart) {
   //StockGraphButtons sets the ranges based on 4 settings: intradayprices, dailyprices, predictions, and my_prediction.
   //All of these will come from the API.
-  var graphSettings = {intradayPrices: graph["intraday_prices"], dailyPrices:graph["daily_prices"], predictions:graph["predictions"], myPrediction:graph["my_prediction"]}; //set the graph limits based on predictions and my prediction
+  var graphSettings = {intradayPrices: stockGraph["intraday_prices"], dailyPrices:stockGraph["daily_prices"], predictions:stockGraph["predictions"], myPrediction:stockGraph["my_prediction"]}; //set the graph limits based on predictions and my prediction
   var rangeHash = new StockGraphButtons(graphSettings); //this returns all of the ranges for the butons. It is an array with keys: 1d,5d
 
   this.startChart = function() { //set the initial values when the graph prediction is null.
 
     //create these 2 graph arrays using the graph arrays from the server.
-    graph["daily_forward_prices"] = DailyForwardPrices(graph["daily_prices"].last()[0]); //create this array using js function.
-    graph["intraday_forward_prices"] = IntradayForwardPrices(graph["intraday_prices"].last()[0]); //create this array using js function.
+    stockGraph["daily_forward_prices"] = DailyForwardPrices(stockGraph["daily_prices"].last()[0]); //create this array using js function.
+    stockGraph["intraday_forward_prices"] = IntradayForwardPrices(stockGraph["intraday_prices"].last()[0]); //create this array using js function.
     
-    var activeDailyPredictions = DailyPredictions(graph["predictions"], graph["prediction_ids"]) //Dailypredictions returns just 1 prediction for each day, and the corresponding prediction id array.
-    graph["daily_predictions"] = activeDailyPredictions[0];
-    graph["daily_prediction_ids"] = activeDailyPredictions[1];
+    var activeDailyPredictions = DailyPredictions(stockGraph["predictions"], stockGraph["prediction_ids"]) //Dailypredictions returns just 1 prediction for each day, and the corresponding prediction id array.
+    stockGraph["daily_predictions"] = activeDailyPredictions[0];
+    stockGraph["daily_prediction_ids"] = activeDailyPredictions[1];
 
     //possibly have some intermediate variable here like above.
-    var activeIntradayPredictions = IntradayPredictions(graph["predictions"], graph["prediction_ids"]);
-    graph["intraday_predictions"] = activeIntradayPredictions[0];
-    graph["intraday_prediction_ids"] = activeIntradayPredictions[1];
+    var activeIntradayPredictions = IntradayPredictions(stockGraph["predictions"], stockGraph["prediction_ids"]);
+    stockGraph["intraday_predictions"] = activeIntradayPredictions[0];
+    stockGraph["intraday_prediction_ids"] = activeIntradayPredictions[1];
 
-    if (graph["my_prediction"][0][0] === null) {
+    if (stockGraph["my_prediction"][0][0] === null) {
       var bestButton = "1m"; //sets the x axis ranges to the 1m ranges
     }
     else {
-      var endTime = graph["my_prediction"].last()[0]; //use the endTime of the users own prediction to get the best range.
+      var endTime = stockGraph["my_prediction"].last()[0]; //use the endTime of the users own prediction to get the best range.
       var bestButton = BestRange(endTime);
     }
     console.log("bestbutton:" + bestButton);
 
-    setPredictions(graph); //create the daily and intraday prediction arrays, and the corresponding prediction id arrays.
+    setPredictions(stockGraph); //create the daily and intraday prediction arrays, and the corresponding prediction id arrays.
 
     if (bestButton == "1d" || bestButton == "5d") { //make the current range different from the bestbutton.
       currentRange["buttonType"] = "1m";
@@ -255,34 +255,34 @@ function StockGraph(graph, chart) {
       currentRange["buttonType"] = "1d";
     }
 
-    setMyPrediction(graph["my_prediction"]); //set the daily and intraday my_prediction graph arrays based on my_prediction.
+    setMyPrediction(stockGraph["my_prediction"]); //set the daily and intraday my_prediction graph arrays based on my_prediction.
     //removeOverlapping(bestButton); //must be used after setMyPrediction.removes predictions overlapping with my_prediction.
 
-    setSeries(bestButton, graph);
+    setSeries(bestButton, stockGraph);
     setRange(bestButton); //always setRange after the setSeries, so the set series can tell if the range has changed. currentRange gets updated in the setRange.
   };
 
   this.buttonClick = function() {
     var buttonType = $(this).data("button-type");
-    setSeries(buttonType, graph); //always set series before range. Resets all series arrays if there is a button type change.
+    setSeries(buttonType, stockGraph); //always set series before range. Resets all series arrays if there is a button type change.
     setRange(buttonType);
   };
 
   this.inputPrediction = function(endTime, endPrice, predictionId) {
 
     //reset these two values...
-    graph["my_prediction"] = ([[endTime, endPrice]]); //reset the 'my_prediciton' array in graph. endtTime and endPrice are sent by the prediction input ajax function.
+    stockGraph["my_prediction"] = ([[endTime, endPrice]]); //reset the 'my_prediciton' array in graph. endtTime and endPrice are sent by the prediction input ajax function.
     
-    graph["my_prediction_id"] = [predictionId];
+    stockGraph["my_prediction_id"] = [predictionId];
 
     var bestButton = BestRange(endTime); //find the best button range to use based on the end day of the prediction.
 
-    setMyPrediction(graph["my_prediction"]); //set the intraday_my_prediction, daily_my_prediction.
+    setMyPrediction(stockGraph["my_prediction"]); //set the intraday_my_prediction, daily_my_prediction.
     removeOverlapping() //Nullify overlapping predictions
 
     updateMyPrediction(bestButton); //update just the myprediction on the graph. If there is a change in button type, the setSeries function will still update all of the other arrays.
     
-    graphSettings = {intradayPrices: graph["intraday_prices"], dailyPrices:graph["daily_prices"], predictions:graph["predictions"], myPrediction:graph["my_prediction"]}; //set the graph limits based on predictions and my prediction. Graph is reset based on new prediction range.
+    graphSettings = {intradayPrices: stockGraph["intraday_prices"], dailyPrices:stockGraph["daily_prices"], predictions:stockGraph["predictions"], myPrediction:stockGraph["my_prediction"]}; //set the graph limits based on predictions and my prediction. Graph is reset based on new prediction range.
     rangeHash = new StockGraphButtons(graphSettings); //this returns all of the ranges for the butons. It is an array with keys: 1d,5d,1m,3m,6m,1yr,5yr
 
     setSeries(bestButton, graph); //setSeries sets all of the graph arrays based on the graph object. Always comes before setRange.
@@ -294,51 +294,51 @@ function StockGraph(graph, chart) {
   }
 
   this.removePrediction = function() {
-    graph["my_prediction"] = [[null,null]];
+    stockGraph["my_prediction"] = [[null,null]];
 
-    chart.series[3].setData(graph["my_prediction"]); //instead of resetting all series', just reset this one.
+    chart.series[3].setData(stockGraph["my_prediction"]); //instead of resetting all series', just reset this one.
 
-    var graphSettings = {intradayPrices: graph["intraday_prices"], dailyPrices:graph["daily_prices"], predictions:graph["predictions"], myPrediction:graph["my_prediction"]};
+    var graphSettings = {intradayPrices: stockGraph["intraday_prices"], dailyPrices:stockGraph["daily_prices"], predictions:stockGraph["predictions"], myPrediction:stockGraph["my_prediction"]};
     rangeHash = new StockGraphButtons(graphSettings); //recreate the original ranges based on the data arrays.
     
     var buttonType = currentRange["buttonType"];
     setRange(buttonType); //the buttonType doesnt change, but the ranges of the current range may change.
     //no need to setSeries. The only series update is taken care of.
-    setMyPrediction(graph["my_prediction"]); //set the my prediction arrays based on the new graph["my_prediction"] variable.
+    setMyPrediction(stockGraph["my_prediction"]); //set the my prediction arrays based on the new graph["my_prediction"] variable.
 
   }
 
   function setPredictions(theGraph) { //update the prediction arrays to contain the correctly rounded times and remove same-time predictions.
     var activeDailyPredictions = DailyPredictions(theGraph["predictions"], theGraph["prediction_ids"]) //Dailypredictions returns just 1 prediction for each day, and the corresponding prediction id array.
-    graph["daily_predictions"] = activeDailyPredictions[0];
-    graph["daily_prediction_ids"] = activeDailyPredictions[1];
+    stockGraph["daily_predictions"] = activeDailyPredictions[0];
+    stockGraph["daily_prediction_ids"] = activeDailyPredictions[1];
 
     //possibly have some intermediate variable here like above.
     var activeIntradayPredictions = IntradayPredictions(theGraph["predictions"], theGraph["prediction_ids"]);
-    graph["intraday_predictions"] = activeIntradayPredictions[0];
-    graph["intraday_prediction_ids"] = activeIntradayPredictions[1];
+    stockGraph["intraday_predictions"] = activeIntradayPredictions[0];
+    stockGraph["intraday_prediction_ids"] = activeIntradayPredictions[1];
   }
 
   function setMyPrediction (myPrediction) {
     //update the viewable my_prediction arrays based on the actual my_prediction.
-    graph["daily_my_prediction"] = DailyMyPrediction(myPrediction);
-    graph["intraday_my_prediction"] = IntradayMyPrediction(myPrediction);
+    stockGraph["daily_my_prediction"] = DailyMyPrediction(myPrediction);
+    stockGraph["intraday_my_prediction"] = IntradayMyPrediction(myPrediction);
   }
 
   function removeOverlapping () { //not sure if this is still working.
     // var removedDaily = false;
     // var removedIntraday = false;
-    for (var i=0; i<graph["daily_predictions"].length;i++) {
-      if (graph["daily_predictions"][i].indexOf(graph["daily_my_prediction"][0][0]) !== -1) {
-        graph["daily_predictions"].splice(i, 1); //removes the prediction from the array where it is the same as my_prediction.
-        graph["daily_prediction_ids"].splice(i, 1);
+    for (var i=0; i<stockGraph["daily_predictions"].length;i++) {
+      if (stockGraph["daily_predictions"][i].indexOf(stockGraph["daily_my_prediction"][0][0]) !== -1) {
+        stockGraph["daily_predictions"].splice(i, 1); //removes the prediction from the array where it is the same as my_prediction.
+        stockGraph["daily_prediction_ids"].splice(i, 1);
         //removedDaily = true;
       }
     }
-    for (var i=0; i<graph["intraday_predictions"].length; i++) {
-      if (graph["intraday_predictions"][i].indexOf(graph["intraday_my_prediction"][0][0]) !== -1) {
-        graph["intraday_predictions"].splice(i, 1); //removes the prediction from the array where it is the same as my_prediction.
-        graph["intraday_prediction_ids"].splice(i, 1);
+    for (var i=0; i<stockGraph["intraday_predictions"].length; i++) {
+      if (stockGraph["intraday_predictions"][i].indexOf(stockGraph["intraday_my_prediction"][0][0]) !== -1) {
+        stockGraph["intraday_predictions"].splice(i, 1); //removes the prediction from the array where it is the same as my_prediction.
+        stockGraph["intraday_prediction_ids"].splice(i, 1);
         //removedIntraday = true;
       }
     }
@@ -375,13 +375,11 @@ function StockGraph(graph, chart) {
         //setMyPrediction(graph["my_prediction"]); //set the daily and intraday my_prediction graph arrays based on my_prediction.
       //okokokokok
 
-      console.log(graph["daily_predictions"]);
       chart.series[0].setData(theGraph["intraday_prices"]);
       chart.series[1].setData(theGraph["intraday_forward_prices"]);
       chart.series[2].setData(theGraph["intraday_predictions"]);
-      console.log(graph["daily_predictions"]);
       chart.series[3].setData(theGraph["intraday_my_prediction"]); //this may be null
-      graph["active_prediction_ids"] = theGraph["intraday_prediction_ids"]; //updates the active ids array to use in the onhover box change.
+      stockGraph["active_prediction_ids"] = theGraph["intraday_prediction_ids"]; //updates the active ids array to use in the onhover box change.
       
     }
     if ((button !== "1d" && button !== "5d") && (currentRange["buttonType"] === "1d" || currentRange["buttonType"] === "5d")) { //set daily graph
@@ -390,19 +388,19 @@ function StockGraph(graph, chart) {
       chart.series[1].setData(theGraph["daily_forward_prices"]);
       chart.series[2].setData(theGraph["daily_predictions"]);
       chart.series[3].setData(theGraph["daily_my_prediction"]);
-      graph["active_prediction_ids"] = theGraph["daily_prediction_ids"];
+      stockGraph["active_prediction_ids"] = theGraph["daily_prediction_ids"];
     }
-    setPredictions(graph); //reset the predictions array. They get unset from running these setData functions, not sure why.
-    setMyPrediction(graph["my_prediction"]); //set the daily and intraday my_prediction graph arrays based on my_prediction.
+    setPredictions(stockGraph); //reset the predictions array. They get unset from running these setData functions, not sure why.
+    setMyPrediction(stockGraph["my_prediction"]); //set the daily and intraday my_prediction graph arrays based on my_prediction.
     
   }
 
   function updateMyPrediction (button) {
     if (currentRange["buttonType"] === "1d" || currentRange["buttonType"] === "5d") {
-      chart.series[3].setData(graph["intraday_my_prediction"]);
+      chart.series[3].setData(stockGraph["intraday_my_prediction"]);
     }
     if (currentRange["buttonType"] !== "1d" && currentRange["buttonType"] !== "5d") {
-      chart.series[3].setData(graph["daily_my_prediction"]);
+      chart.series[3].setData(stockGraph["daily_my_prediction"]);
     }
   }
 
