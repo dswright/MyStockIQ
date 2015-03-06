@@ -19,7 +19,7 @@ require 'scraper'
     		@current_user = current_user
 
 
-    		@streams = Stream.where(target_type: "Stock", target_id: @stock.id).limit(40)
+    		@streams = @stock.streams.limit(40)
 
 
         unless @streams == nil

@@ -33,7 +33,7 @@ class Stream < ActiveRecord::Base
       
       #the streamable_type and streamable_id will be the way to find the children of this stream item.
 
-      sub_stream = Stream.where(target_type: stream.streamable_type, target_id: stream.streamable_id)
+      sub_stream = Stream.where(targetable_type: stream.streamable_type, targetable_id: stream.streamable_id)
       unless sub_stream.empty?
         sub_stream = Stream.stream_maker(sub_stream, nest_count+1)
       end

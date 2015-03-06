@@ -105,19 +105,12 @@ namespace :updates do
     article_ids = articles.map{|n| n.id}
     popularities = Popularity.find_by_sql("select popularable_id from popularities where popularable_type = 'Newsarticle'")
     popularity_ids = popularities.map{|n| n.popularable_id}
-    remaining = article_ids - popularity_ids
-    articles.each do |article|
-      HelperWorker.perform_async(article.id)
+    remainings = article_ids - popularity_ids
+    remainings.each do |remainder|
+      HelperWorker.perform_async(remainder)
     end
   end
 
-  task :update_streams => :environment do
-    Stream.all.each do |stream|
-      stream.targetable_type = stream.target_type
-      stream.targetable_id = stream.target_id
-      stream.save
-    end
-  end
 end
 
   #run all of this in the same worker and same rake task...

@@ -101,8 +101,9 @@ class PredictionsController < ApplicationController
       @prediction.exceeds_end_time #if the current time exceeds the prediction end time, set active:false, create prediction ends, and stream items.
       @prediction.update_score #run an update of the current score.
     end
-		#Stock's posts, comments, and predictions to be shown in the view
-		@streams = Stream.where(target_type: "Prediction", target_id: @prediction.id).limit(15)
+		#replies_update. These need to be changed to replies.
+    #stream removed until replies are updated.
+		@streams = Stream.where(targetable_type: "Prediction", targetable_id: @prediction.id).limit(15)
 
     gon.ticker_symbol = @stock.ticker_symbol
 
@@ -113,7 +114,7 @@ class PredictionsController < ApplicationController
     #this line makes sorts the stream by popularity score.
     #streams = streams.sort_by {|stream| stream.streamable.popularity_score}
     #streams = sort_by_popularity(streams)
-    @streams = @streams.reverse
+    #@streams = @streams.reverse
     
     @streams = @streams.paginate(page: params[:page], per_page: 10)
 

@@ -22,7 +22,8 @@ class PredictionendsController < ApplicationController
     end
 
     unless prediction_gone #unless the prediction is already cancelled or ended, do all of this.
-      children = Stream.where(target_type: 'Prediction', target_id: prediction.id) #check to see if there are children already.
+      #replies_update. Needs to be changed to replies when replies are available.
+      children = Stream.where(targetable_type: 'Prediction', targetable_id: prediction.id) #check to see if there are children already.
       prediction_ended = false
       @prediction = current_user.predictions.build(stock_id: prediction.stock.id) #this is built to produce the form again after the prediction is cancelled/ended.
       @prediction_stream_inputs = "Stock:#{prediction.stock.id}"
@@ -46,9 +47,9 @@ class PredictionendsController < ApplicationController
 
         #build a custom stream string for cancellations, which always have the same stream items.
 
-        #target the current user and 
-        predictionend.streams.build(target_type:"Stock", target_id:prediction.stock.id).save
-        predictionend.streams.build(target_type:"User", target_id:current_user.id).save
+        #target the current user and the stock with stream items.
+        predictionend.streams.build(targetable_type:"Stock", targetable_id:prediction.stock.id).save
+        predictionend.streams.build(targetable_type:"User", targetable_id:current_user.id).save
 
         #build stream item to insert to the top of the stream.
         @streams = [Stream.where(streamable_type: 'Prediction', streamable_id: @prediction.id).first]
