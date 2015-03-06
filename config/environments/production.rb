@@ -7,6 +7,20 @@ Rails.application.configure do
   #enable garbagae collector stats
   GC::Profiler.enable
 
+  #SET MAILER CONFIGURATION
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.smtp_settings = {
+  :address              => "smtp.mandrillapp.com",
+  :port                 => 587,
+  :domain               => 'heroku.com',
+  :user_name            => 'dylansamuelwright@gmail.com',
+  :password             => 'Qvh1r0BpRJEKdnP_TYTjMg',
+  :authentication       => 'plain',
+  :enable_starttls_auto => true
+  }
+
   # Eager load code on boot. This eager loads most of Rails and
   # your application in memory, allowing both threaded web servers
   # and those relying on copy on write to perform better.
