@@ -4,8 +4,9 @@ class HelperWorker
   include Sidekiq::Worker
   require 'scraper'
 
-  def perform(article_id)
-    article = Newsarticle.find(article_id)
-    article.build_popularity(score:0).save
+  def perform(stream_id)
+    stream = Stream.find(stream_id)
+    stream.targetable_id = stream.target_id
+    stream.targetable_type = stream.target_type
   end
 end
