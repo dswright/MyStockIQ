@@ -8,5 +8,6 @@ class HelperWorker
     stream = Stream.find(stream_id)
     stream.targetable_id = stream.target_id
     stream.targetable_type = stream.target_type
+    stream.save
   end
 end
