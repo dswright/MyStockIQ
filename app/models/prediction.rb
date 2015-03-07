@@ -10,6 +10,7 @@ class Prediction < ActiveRecord::Base
   belongs_to :user
   has_many :streams, as: :streamable, dependent: :destroy
   has_many :likes, as: :likable
+  has_many :replies, as: :repliable
   has_one :predictionend, dependent: :destroy
   has_one :popularity, as: :popularable, dependent: :destroy
 
