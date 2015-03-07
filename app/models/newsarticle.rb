@@ -4,6 +4,7 @@ class Newsarticle < ActiveRecord::Base
 
   has_many :streams, as: :streamable
   has_many :likes, as: :likable
+  has_many :replies, as: :repliable
   has_one :popularity, as: :popularable, dependent: :destroy
 
 end
