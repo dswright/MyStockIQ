@@ -18,9 +18,11 @@
     <div class = "nav-custom collapse navbar-collapse navHeaderCollapse">
       <ul class = "nav navbar-nav navbar-right">
       <li><a href = "/logout">Logout</a></li>
+      <% unless (defined? @current_user) == nil %> 
         <li><a href = "/users/<%= @current_user.username %>">My Profile</a></li>
+      <% end %>
         <li><a href = "/stocks/AAPL/">AAPL</a></li>
-        <li><a href = "#">My Feed</a></li>
+        <li><a href = "/feed/">My Feed</a></li>
 
         <script>
 $(function() {
