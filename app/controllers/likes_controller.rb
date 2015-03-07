@@ -10,14 +10,10 @@ class LikesController < ApplicationController
     @like = user.likes.build(like)
     @like.save
 
-    @like_type = like[:like_type]
-    @streamable_type = like[:target_type]
-    @streamable_id = like[:target_id]
-
     if @like_type == "like"
-      @updated_likes = params[:streamable_likes].to_i + 1
+      @updated_likes = params[:likes].to_i + 1
     else
-      @updated_likes = params[:streamable_dislikes].to_i + 1
+      @updated_likes = params[:dislikes].to_i + 1
     end
 
 
@@ -27,7 +23,7 @@ class LikesController < ApplicationController
     #def comment_params
     def like_params
       #Permits only certain field types through the URL.
-      params.require(:like).permit(:like_type, :target_type, :target_id)
+      params.require(:like).permit(:like_type, :likable_type, :likable_id)
     end
 
 end

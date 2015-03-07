@@ -19,7 +19,7 @@ require 'scraper'
     		@current_user = current_user
 
 
-    		@streams = Stream.where(target_type: "Stock", target_id: @stock.id).limit(40)
+    		@streams = @stock.streams.limit(40)
 
 
         unless @streams == nil
@@ -79,7 +79,7 @@ require 'scraper'
           ticker_symbols << stock.ticker_symbol
         end
 
-        render json: {
+        render json: { #this is data rendered for the the search bar.
           :ticker_symbols => ticker_symbols       
         }
       }

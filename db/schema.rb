@@ -11,9 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+
 ActiveRecord::Schema.define(version: 20150306063756) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "adminpack"
   enable_extension "plpgsql"
 
   create_table "comments", force: true do |t|
@@ -173,13 +175,12 @@ ActiveRecord::Schema.define(version: 20150306063756) do
     t.datetime "updated_at",      null: false
     t.integer  "streamable_id"
     t.string   "streamable_type"
-    t.string   "target_type"
-    t.string   "target_id"
+    t.integer  "targetable_id"
+    t.string   "targetable_type"
   end
 
   add_index "streams", ["streamable_type", "streamable_id"], name: "index_streams_on_streamable_type_and_streamable_id", using: :btree
-  add_index "streams", ["target_id"], name: "index_streams_on_target_id", using: :btree
-  add_index "streams", ["target_type"], name: "index_streams_on_target_type", using: :btree
+  add_index "streams", ["targetable_type", "targetable_id"], name: "index_streams_on_targetable_type_and_targetable_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "username"

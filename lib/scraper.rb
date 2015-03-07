@@ -174,7 +174,7 @@ class Scraper
     hash_array.each do |news_item|
       news_object = Newsarticle.find_by(google_news_id:news_item["google_news_id"])
       target_stock = Stock.find_by(ticker_symbol:news_item["ticker_symbol"])
-      new_stream = news_object.streams.build(target_type:"Stock", target_id:target_stock.id)
+      new_stream = news_object.streams.build(targetable_type:"Stock", targetable_id:target_stock.id)
       new_stream.save
       news_object.build_popularity(score:0).save #build the popularity score item for news
     end
@@ -374,7 +374,7 @@ class GoogleNews
   def add_one_stream(existing_article, ticker_symbol)
     stock_id_of_ticker_symbol = Stock.find_by(ticker_symbol:ticker_symbol).id
     unless Stream.where(streamable_type:"Newsarticle", streamable_id:existing_article.id).exists?
-      add_stream = existing_article.streams.build(target_type:"Stock", target_id:stock_id_of_ticker_symbol)
+      add_stream = existing_article.streams.build(targetable_type:"Stock", targetable_id:stock_id_of_ticker_symbol)
       add_stream.save
     end
   end

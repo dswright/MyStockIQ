@@ -16,11 +16,6 @@ module PredictionsHelper
 		((new_score - base_score)/base_score*100)
 	end
 
-
-  	def number_of_predictions(object)
-  		Prediction.where(target_id: object.id).count
-  	end
-
 	#Converts seconds to days
 	def to_days(seconds)
 		days = seconds/(60*60*24)

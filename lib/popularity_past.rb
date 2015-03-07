@@ -9,14 +9,13 @@ module PopularityPast
 	end
 
   	def has_replies?
-  		count = Stream.where(target_id: self.id, target_type: self.class.name).count
+  		count = Stream.where(targetable_id: self.id, targetable_type: self.class.name).count
   		if count > 0
   			return true
   		else 
   			return false
   		end
   	end
-
 
 
 end

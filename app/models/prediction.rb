@@ -63,8 +63,8 @@ class Prediction < ActiveRecord::Base
       self.update(active:false)
       self.build_predictionend(actual_end_time: self.stock.date, actual_end_price: self.stock.daily_stock_price, end_price_verified: false).save
       predictionend.build_popularity(score:0).save
-      predictionend.streams.build(target_type:"User", target_id: self.user.id).save
-      predictionend.streams.build(target_type:"Stock", target_id: self.stock.id).save
+      predictionend.streams.build(targetable_type:"User", targetable_id: self.user.id).save
+      predictionend.streams.build(targetable_type:"Stock", targetable_id: self.stock.id).save
     end
   end
 
@@ -74,8 +74,8 @@ class Prediction < ActiveRecord::Base
       self.update(active:false)
       self.build_predictionend(actual_end_time: self.prediction_end_time, actual_end_price: self.stock.daily_stock_price, end_price_verified: false).save
       predictionend.build_popularity(score:0).save
-      predictionend.streams.build(target_type:"User", target_id: self.user.id).save
-      predictionend.streams.build(target_type:"Stock", target_id: self.stock.id).save
+      predictionend.streams.build(targetable_type:"User", targetable_id: self.user.id).save
+      predictionend.streams.build(targetable_type:"Stock", targetable_id: self.stock.id).save
     end
   end
 

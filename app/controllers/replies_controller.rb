@@ -13,7 +13,7 @@ class RepliesController < ApplicationController
 		parent = {id: params[:parent_id], type: params[:parent_type]}
 
 		#build the stream object for input to the db.
-		stream = @reply.streams.build( streamable_type: @reply.class.name, streamable_id: @reply.id, target_type: parent[:type], target_id: parent[:id])
+		stream = @reply.streams.build( streamable_type: @reply.class.name, streamable_id: @reply.id, targetable_type: parent[:type], targetable_id: parent[:id])
 
 		response_msgs = []
 

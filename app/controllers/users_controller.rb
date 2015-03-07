@@ -17,7 +17,7 @@ class UsersController < ApplicationController
     @predictions = Prediction.where(active: 1, user_id: @user.id)
 
     #All streams about target user
-    @streams = Stream.where(target_type: @user.class.name, target_id: @user.id)
+    @streams = @user.streams
     @streams = @streams.paginate(page: params[:page], per_page: 10)
 
     #Determines relationship between current user and target user
