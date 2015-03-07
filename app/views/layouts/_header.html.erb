@@ -18,37 +18,12 @@
     <div class = "nav-custom collapse navbar-collapse navHeaderCollapse">
       <ul class = "nav navbar-nav navbar-right">
       <li><a href = "/logout">Logout</a></li>
-        <li><a href = "#">How It Works</a></li>
+        <li><a href = "/users/<%= @current_user.username %>">My Profile</a></li>
         <li><a href = "/stocks/AAPL/">AAPL</a></li>
-        <li><a href = "#">Explore</a></li>
+        <li><a href = "#">My Feed</a></li>
 
         <script>
 $(function() {
-
-  var availableTags = [
-    "ActionScript",
-    "AppleScript",
-    "Asp",
-    "BASIC",
-    "C",
-    "C++",
-    "Clojure",
-    "COBOL",
-    "ColdFusion",
-    "Erlang",
-    "Fortran",
-    "Groovy",
-    "Haskell",
-    "Java",
-    "JavaScript",
-    "Lisp",
-    "Perl",
-    "PHP",
-    "Python",
-    "Ruby",
-    "Scala",
-    "Scheme"
-  ];
   $("#username").autocomplete({
     delay: 500,
     minLength:2,
