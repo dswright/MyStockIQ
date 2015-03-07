@@ -23,9 +23,7 @@ Rails.application.routes.draw do
  
   get     'stocks/:ticker_symbol'        =>   'stocks#show'
 
-  post    'streams'                      =>   'streams#create'
-  delete  'streams/:id'                  =>   'streams#destroy'
-
+  get     'stockprices/:ticker_symbol'   =>   'stockprices#show'
 
   post    'streams'                      =>   'streams#create'
   delete  'streams/:id'                  =>   'streams#destroy'
@@ -39,11 +37,16 @@ Rails.application.routes.draw do
   get     'predictions/:id'              =>   'predictions#show'
   get     'predictions/hover/:id'        =>   'predictions#hover'
 
+  post    'replies'                      =>   'replies#create'
+  get     'replies/:id'                  =>   'replies#show'
+
   post    'predictionends'               =>   'predictionends#create'
 
   get     'graphimages'                  =>   'graphimages#show'
 
+  get     'feed'                         =>   'feeds#show'
 
+  resources :streams
   resources :relationships
 
   #post      'relationships'              =>   'relationships#create'

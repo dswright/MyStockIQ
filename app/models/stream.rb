@@ -3,6 +3,7 @@ class Stream < ActiveRecord::Base
 
   #declares a polymorphic association for the streams table. 
   belongs_to :streamable, polymorphic: true
+  belongs_to :targetable, polymorphic: true
 
   #uses Rails default_scope function to sort the posts such that the most recent one is first.
   default_scope -> {order('created_at DESC')}
@@ -32,7 +33,7 @@ class Stream < ActiveRecord::Base
       
       #the streamable_type and streamable_id will be the way to find the children of this stream item.
 
-      sub_stream = Stream.where(target_type: stream.streamable_type, target_id: stream.streamable_id)
+      sub_stream = Stream.where(targetable_type: stream.streamable_type, targetable_id: stream.streamable_id)
       unless sub_stream.empty?
         sub_stream = Stream.stream_maker(sub_stream, nest_count+1)
       end
@@ -41,7 +42,7 @@ class Stream < ActiveRecord::Base
         stream: stream, 
         nest_count: nest_count, 
         sub_hash_array: sub_stream, 
-        popularity_score: stream.streamable.popularity_score
+        popularity_score: stream.streamable.popularity.score
       }
 
       stream_hashes << stream_hash

@@ -1,3 +1,4 @@
-        <p>final score: <%= prediction.user.username %></p>
+        <p>username: <%= prediction.user.username %> <%= link_to("prediction details", "/predictions/#{prediction.id}") %></p>
     <p>prediction end price: <%= prediction.prediction_end_price %></p>
     <p>actual end time: <%= prediction.prediction_end_time %></p>
+

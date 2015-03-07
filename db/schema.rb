@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150203205437) do
+ActiveRecord::Schema.define(version: 20150306063756) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "adminpack"
@@ -19,10 +19,9 @@ ActiveRecord::Schema.define(version: 20150203205437) do
 
   create_table "comments", force: true do |t|
     t.text     "content"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer  "user_id"
-    t.float    "popularity_score"
   end
 
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
@@ -41,14 +40,14 @@ ActiveRecord::Schema.define(version: 20150203205437) do
 
   create_table "likes", force: true do |t|
     t.string   "like_type"
-    t.string   "target_type"
-    t.integer  "target_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
     t.integer  "user_id"
+    t.integer  "likable_id"
+    t.string   "likable_type"
   end
 
-  add_index "likes", ["target_type", "target_id", "like_type"], name: "index_likes_on_target_type_and_target_id_and_like_type", using: :btree
+  add_index "likes", ["likable_type", "likable_id"], name: "index_likes_on_likable_type_and_likable_id", using: :btree
   add_index "likes", ["user_id"], name: "index_likes_on_user_id", using: :btree
 
   create_table "newsarticles", force: true do |t|
@@ -57,13 +56,22 @@ ActiveRecord::Schema.define(version: 20150203205437) do
     t.string   "url"
     t.string   "summary"
     t.datetime "date"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.string   "source"
-    t.float    "popularity_score"
   end
 
   add_index "newsarticles", ["google_news_id", "id"], name: "index_newsarticles_on_google_news_id_and_id", using: :btree
+
+  create_table "popularities", force: true do |t|
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.float    "score"
+    t.integer  "popularable_id"
+    t.string   "popularable_type"
+  end
+
+  add_index "popularities", ["popularable_type", "popularable_id"], name: "index_popularities_on_popularable_type_and_popularable_id", using: :btree
 
   create_table "predictionends", force: true do |t|
     t.float    "actual_end_price"
@@ -72,7 +80,6 @@ ActiveRecord::Schema.define(version: 20150203205437) do
     t.integer  "prediction_id"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
-    t.float    "popularity_score"
   end
 
   add_index "predictionends", ["prediction_id"], name: "index_predictionends_on_prediction_id", using: :btree
@@ -90,7 +97,6 @@ ActiveRecord::Schema.define(version: 20150203205437) do
     t.float    "start_price"
     t.datetime "prediction_end_time"
     t.float    "prediction_end_price"
-    t.float    "popularity_score"
   end
 
   add_index "predictions", ["stock_id"], name: "index_predictions_on_stock_id", using: :btree
@@ -108,6 +114,20 @@ ActiveRecord::Schema.define(version: 20150203205437) do
   add_index "relationships", ["followed_id"], name: "index_relationships_on_followed_id", using: :btree
   add_index "relationships", ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true, using: :btree
   add_index "relationships", ["follower_id"], name: "index_relationships_on_follower_id", using: :btree
+
+  create_table "replies", force: true do |t|
+    t.text     "content"
+    t.float    "popularity_score"
+    t.integer  "user_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.integer  "repliable_id"
+    t.string   "repliable_type"
+  end
+
+  add_index "replies", ["repliable_type", "repliable_id"], name: "index_replies_on_repliable_type_and_repliable_id", using: :btree
+  add_index "replies", ["user_id", "created_at"], name: "index_replies_on_user_id_and_created_at", using: :btree
+  add_index "replies", ["user_id"], name: "index_replies_on_user_id", using: :btree
 
   create_table "stockprices", force: true do |t|
     t.string   "ticker_symbol"
@@ -154,13 +174,12 @@ ActiveRecord::Schema.define(version: 20150203205437) do
     t.datetime "updated_at",      null: false
     t.integer  "streamable_id"
     t.string   "streamable_type"
-    t.string   "target_type"
-    t.string   "target_id"
+    t.integer  "targetable_id"
+    t.string   "targetable_type"
   end
 
   add_index "streams", ["streamable_type", "streamable_id"], name: "index_streams_on_streamable_type_and_streamable_id", using: :btree
-  add_index "streams", ["target_id"], name: "index_streams_on_target_id", using: :btree
-  add_index "streams", ["target_type"], name: "index_streams_on_target_type", using: :btree
+  add_index "streams", ["targetable_type", "targetable_id"], name: "index_streams_on_targetable_type_and_targetable_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "username"

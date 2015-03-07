@@ -10,8 +10,10 @@ class PredictionendWorker
     times_ahead = minute_array.select {|minute| minute["date"] >= predictionend.actual_end_time}
     unless times_ahead.empty? 
       min_minute = times_ahead.min_by {|item| item["date"]}
-      predictionend.update(actual_end_time:min_minute["date"], actual_end_price:min_minute["close_price"].round(2), end_price_verified:true)    
+      predictionend.update(actual_end_time:min_minute["date"], actual_end_price:min_minute["close_price"].round(2), end_price_verified:true)
+      predictionend.prediction.final_update_score #calculates the final score for the prediction.
+      PredictionendMailer.predictioncomplete(predictionend.id).deliver_now #send confirmation email of prediction complete.
     end
-    return predictionend
+    return predictionend #its returned for testing purposes.
   end
 end

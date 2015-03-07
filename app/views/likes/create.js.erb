@@ -1,6 +1,6 @@
-$('#<%= j @like_type %>_<%= j @streamable_type %>_<%= j @streamable_id %>').html("<%= j @updated_likes.to_s %>");
+$('#<%= j @like.like_type.to_s %>_<%= j @like.likable_type.to_s %>_<%= j @like.likable_id.to_s %>').html("<%= j @updated_likes.to_s %>");
 //('html item to replace').html()
 //this html item is named "like_Prediction_34"
-$('#response-box_<%= j @streamable_type %>_<%= j @streamable_id %>').html("<%= j @like.like_type %>d!");
+$('#response-box_<%= j @like.likable_type.to_s %>_<%= j @like.likable_id.to_s %>').html("<%= j @like.like_type.to_s %>d!");
 
 

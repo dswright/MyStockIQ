@@ -1,9 +1,10 @@
 
-window.updatePredictions(<%= j @graph_time.to_s %>, <%= j @prediction.prediction_end_price.to_s %>);
+window.inputPrediction(<%= j @graph_time.to_s %>, <%= j @prediction.prediction_end_price.to_s %>, <%= j @prediction.id.to_s %>);
+
 
 $('.stock-page-prediction-box').html("<%= j render @prediction %>").fadeIn("slow");
 
-$('.prediction-post-comment:eq(0)').before("<%= j render partial: 'streams/stream', locals: {stream_hash_array: @stream_hashes}  %> ").fadeIn("slow");
+$('.prediction-post-comment:eq(0)').before("<%= j render partial: 'streams/stream_main', locals: {streams: @streams, nest_count: 0}  %> ").fadeIn("slow");
 
 var responses = $.parseHTML("<%= j raw @response %>");
 $('#response-box').html(responses).fadeIn("slow");

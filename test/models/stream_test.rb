@@ -8,8 +8,8 @@ class StreamTest < ActiveSupport::TestCase
   	@comment_stream = Streams.new(
                                             streamable_id: 1
                                             streamable_type: "Comment"
-                                            target_type: "Stock", 
-                                            target_id: 1),
+                                            targetable_type: "Stock", 
+                                            targetable_id: 1),
 
   end
 

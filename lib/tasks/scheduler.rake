@@ -93,17 +93,22 @@ namespace :predictions do
     end
 
     #checks predictionends where the end price is not verified. A prediction end will be created when the prediction is de-activated.
-    predictionends = Predictionend.where(end_price_verified:false)
-    predictionends.each do |predictionend|
+    Predictionend.where(end_price_verified:false).each do |predictionend|
       PredictionendWorker.perform_async(predictionend.id) #updates the predictionend to verified status.
-      
-      if predictionend.end_price_verified
-        predictionend.prediction.final_update_score #calculates the final score for the prediction.
-        PredictionendMailer.predictioncomplete(predictionend.id).deliver_now #send confirmation email of prediction complete.
-      end
     end
+  end
+end
 
-    #update all active prediction scores.
+namespace :updates do
+  task :update_popularity => :environment do
+    articles = Newsarticle.find_by_sql("select id from newsarticles")
+    article_ids = articles.map{|n| n.id}
+    popularities = Popularity.find_by_sql("select popularable_id from popularities where popularable_type = 'Newsarticle'")
+    popularity_ids = popularities.map{|n| n.popularable_id}
+    remainings = article_ids - popularity_ids
+    remainings.each do |remainder|
+      HelperWorker.perform_async(remainder)
+    end
   end
 
 end

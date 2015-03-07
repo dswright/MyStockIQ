@@ -46,6 +46,13 @@ module SessionsHelper
     !current_user.nil?
   end
 
+  def user_logged_in?
+    unless logged_in?
+      redirect_to login_url
+      return true
+    end
+  end
+
   def log_out
     #forget the current user by deleting their cookies and setting the remember_digest to nil.
     forget(current_user)

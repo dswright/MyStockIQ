@@ -46,7 +46,11 @@
       </div>
     </div>
 
-        <%= render @prediction %>
+    <% if @prediction.active == true %>
+      <%= render @prediction %>
+    <% else %>
+      <%= render @prediction.predictionend %>
+    <% end %>
 
     <%= render 'shared/comment_form' %>
 
@@ -115,13 +119,8 @@
 
 
 <!-- STREAM POSTS -->
-<% unless @stream_hashes.empty? %>
-  <%= render partial: "streams/stream", locals: {stream_hash_array: @stream_hash_array}  %>
-<% end %>
-
-  
-
-
+     <%= render partial: "streams/stream_main", locals: {streams: @streams, nest_count: 0} %>
+    <%= will_paginate @streams %>
 
     <div class = "prediction-post-comment">
       <div class = "row">

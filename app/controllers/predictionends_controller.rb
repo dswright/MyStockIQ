@@ -22,7 +22,8 @@ class PredictionendsController < ApplicationController
     end
 
     unless prediction_gone #unless the prediction is already cancelled or ended, do all of this.
-      children = Stream.where(target_type: 'Prediction', target_id: prediction.id) #check to see if there are children already.
+      #replies_update. Needs to be changed to replies when replies are available.
+      children = Stream.where(targetable_type: 'Prediction', targetable_id: prediction.id) #check to see if there are children already.
       prediction_ended = false
       @prediction = current_user.predictions.build(stock_id: prediction.stock.id) #this is built to produce the form again after the prediction is cancelled/ended.
       @prediction_stream_inputs = "Stock:#{prediction.stock.id}"
@@ -37,19 +38,22 @@ class PredictionendsController < ApplicationController
         predictionend.actual_end_time = Time.zone.now.utc_time_int.closest_start_time
         predictionend.actual_end_price = prediction.stock.daily_stock_price
         predictionend.end_price_verified = false
-        predictionend.popularity_score = 0
         predictionend.save #save the prediction end.
+
+        predictionend.build_popularity(score:0).save #build the popularity score item for predictions
+        @predictionend = predictionend
+
+        @graph_time = @predictionend.actual_end_time.utc_time_int.graph_time_int
 
         #build a custom stream string for cancellations, which always have the same stream items.
 
-        #target the current user and 
-        predictionend.streams.build(target_type:"Stock", target_id:prediction.stock.id).save
-        predictionend.streams.build(target_type:"User", target_id:current_user.id).save
+        #target the current user and the stock with stream items.
+        predictionend.streams.build(targetable_type:"Stock", targetable_id:prediction.stock.id).save
+        predictionend.streams.build(targetable_type:"User", targetable_id:current_user.id).save
 
         #build stream item to insert to the top of the stream.
-        stream = Stream.where(streamable_type:"Predictionend", streamable_id:predictionend.id).first
-        @stream_hashes = Stream.stream_maker([stream], 0) #gets inserted to top of stream with ajax.
-
+        @streams = [Stream.where(streamable_type: 'Prediction', streamable_id: @prediction.id).first]
+        
         response_msgs << "prediction ended."
       else #if there are no children, and the prediction has not started, cancel the prediction.
         @prediction_css_id = "Prediction_#{params[:prediction_id]}" #this is used to eliminate the stream item from the page when cancelled.

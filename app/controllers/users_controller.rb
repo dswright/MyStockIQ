@@ -5,7 +5,8 @@ class UsersController < ApplicationController
   #the Newuser.new creates a new user from the model.
   
   def show
-    
+    return if user_logged_in? #redirects the user to the login page if they are not logged in.
+        
     #Logged in user
     @current_user = current_user
 
@@ -16,10 +17,8 @@ class UsersController < ApplicationController
     @predictions = Prediction.where(active: 1, user_id: @user.id)
 
     #All streams about target user
-    streams = Stream.where(target_type: @user.class.name, target_id: @user.id)
-
-    #Run every new stream through the streammaker recursively..
-    @stream_hash_array = Stream.stream_maker(streams, 0)
+    @streams = @user.streams
+    @streams = @streams.paginate(page: params[:page], per_page: 10)
 
     #Determines relationship between current user and target user
     @target = @user

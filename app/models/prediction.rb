@@ -1,14 +1,18 @@
 class Prediction < ActiveRecord::Base
+  require 'popularity_past'
+  include PopularityPast
   require 'customdate'
   require 'action_view'
-  include ActionView::Helpers::DateHelper  
-  require 'popularity'
-  include Popularity
+  include ActionView::Helpers::DateHelper
+
 
   belongs_to :stock
   belongs_to :user
   has_many :streams, as: :streamable, dependent: :destroy
+  has_many :likes, as: :likable
+  has_many :replies, as: :repliable
   has_one :predictionend, dependent: :destroy
+  has_one :popularity, as: :popularable, dependent: :destroy
 
   validates :prediction_end_price, presence: true, numericality: true
   validates :stock_id, presence: true, numericality: true
@@ -57,9 +61,10 @@ class Prediction < ActiveRecord::Base
     #If actual price has surpassed prediction, end the prediction. It also has to be in the correct direction....
     if actual_percentage.abs > prediction_percentage.abs && same_sign?(prediction_percentage, actual_percentage)
       self.update(active:false)
-      self.build_predictionend(actual_end_time: self.stock.date, actual_end_price: self.stock.daily_stock_price, end_price_verified: false, popularity_score:0).save
-      predictionend.streams.build(target_type:"User", target_id: self.user.id).save
-      predictionend.streams.build(target_type:"Stock", target_id: self.stock.id).save
+      self.build_predictionend(actual_end_time: self.stock.date, actual_end_price: self.stock.daily_stock_price, end_price_verified: false).save
+      predictionend.build_popularity(score:0).save
+      predictionend.streams.build(targetable_type:"User", targetable_id: self.user.id).save
+      predictionend.streams.build(targetable_type:"Stock", targetable_id: self.stock.id).save
     end
   end
 
@@ -67,9 +72,10 @@ class Prediction < ActiveRecord::Base
   def exceeds_end_time
     if self.stock.date >= self.prediction_end_time
       self.update(active:false)
-      self.build_predictionend(actual_end_time: self.prediction_end_time, actual_end_price: self.stock.daily_stock_price, end_price_verified: false, popularity_score: 0).save
-      predictionend.streams.build(target_type:"User", target_id: self.user.id).save
-      predictionend.streams.build(target_type:"Stock", target_id: self.stock.id).save
+      self.build_predictionend(actual_end_time: self.prediction_end_time, actual_end_price: self.stock.daily_stock_price, end_price_verified: false).save
+      predictionend.build_popularity(score:0).save
+      predictionend.streams.build(targetable_type:"User", targetable_id: self.user.id).save
+      predictionend.streams.build(targetable_type:"Stock", targetable_id: self.stock.id).save
     end
   end
 

@@ -7,7 +7,7 @@ module StreamsHelper
     stream_input_array.each do |stream_item|
       #Must add validation of these parameters against existing stock/user ids to prevent hacking.
       stream_elements = stream_item.split(":")
-      processed_stream_array << {target_type: stream_elements[0], target_id: stream_elements[1]}
+      processed_stream_array << {targetable_type: stream_elements[0], targetable_id: stream_elements[1]}
     end
     return processed_stream_array
   end
@@ -48,7 +48,7 @@ module StreamsHelper
 
     streams.each do |stream| 
       target = stream.streamable
-      target_rank = { id: stream.id, popularity_score: target.popularity_score }
+      target_rank = { id: stream.id, popularity_score: target.popularity.score }
       popularity_array << target_rank
     end
 

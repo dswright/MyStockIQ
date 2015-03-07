@@ -1,0 +1,2 @@
+$("#no_replies_<%= j @parent_stream.streamable.id.to_s%>").remove();
+$("#stream_details_<%= j @parent_stream.streamable.id.to_s%>").prepend("<%= j render partial: 'streams/stream_reply', locals: {reply: @reply} %> ").fadeIn("slow");
