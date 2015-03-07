@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails
-ruby '2.0.0'
+ruby '2.2.0'
 gem 'rails',                '4.2.0.beta4'
 gem 'unicorn'
 #gem 'unicorn-worker-killer'
@@ -59,6 +59,8 @@ gem 'whenever', '0.9.4'
 gem 'sidekiq'
 gem 'sinatra', require: false
 gem 'slim'
+
+gem 'arel', '6.0.0.beta2'
 
 gem 'pg',             '0.17.1'
 gem 'rails_12factor', '0.0.2'
