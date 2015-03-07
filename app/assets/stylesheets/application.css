@@ -31,6 +31,281 @@ color palette
 #c2c2c2   35% GREY
 */
 
+
+
+/* NEW GLOBAL 5/7 ------------------------------------------*/
+
+
+
+
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 900;
+
+  src: url('lato-black.eot');
+  src: url('lato-black.eot?#iefix') format('embedded-opentype'), 
+       url('lato-black.woff') format('woff'), 
+       url('lato-black.ttf') format('truetype'), 
+       url('lato-black.svg#latoblack') format('svg');
+}
+
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: bold;
+
+  src: url('lato-bold.eot');
+  src: url('lato-bold.eot?#iefix') format('embedded-opentype'), 
+       url('lato-bold.woff') format('woff'), 
+       url('lato-bold.ttf') format('truetype'), 
+       url('lato-bold.svg#latobold') format('svg');
+}
+
+@font-face {
+  font-family: 'Lato';
+  font-style: italic;
+  font-weight: bold;
+
+  src: url('lato-bolditalic.eot');
+  src: url('lato-bolditalic.eot?#iefix') format('embedded-opentype'), 
+       url('lato-bolditalic.woff') format('woff'), 
+       url('lato-bolditalic.ttf') format('truetype'), 
+       url('lato-bolditalic.svg#latobold-italic') format('svg');
+}
+
+/* this one */
+@font-face {
+  font-family: 'Lato';
+  font-style: italic;
+  font-weight: normal;
+
+  src: url('lato-italic.eot');
+  src: url('lato-italic.eot?#iefix') format('embedded-opentype'), 
+       url('lato-italic.woff') format('woff'), 
+       url('lato-italic.ttf') format('truetype'), 
+       url('lato-italic.svg#latoitalic') format('svg');
+}
+
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 300;
+
+  src: url('lato-light.eot');
+  src: url('lato-light.eot?#iefix') format('embedded-opentype'), 
+       url('lato-light.woff') format('woff'), 
+       url('lato-light.ttf') format('truetype'), 
+       url('lato-light.svg#latolight') format('svg');
+}
+
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: normal;
+
+  src: url('lato-regular.eot');
+  src: url('lato-regular.eot?#iefix') format('embedded-opentype'), 
+       url('lato-regular.woff') format('woff'), 
+       url('lato-regular.ttf') format('truetype'), 
+       url('lato-regular.svg#latoregular') format('svg');
+}
+
+
+.clearfix {
+  clear: both;
+}
+
+a {
+  color: rgba(255,255,255,.85);
+  font-family: 'Lato', sans-serif;
+  -webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+
+}
+
+a:hover {
+  color: rgba(255,255,255,1);
+  cursor: pointer;
+  text-decoration: none
+}
+
+a:focus {
+  color: rgba(255,255,255,.85);
+  text-decoration: none;
+  outline: none;
+  outline: 0px auto -webkit-focus-ring-color;
+  outline-offset: 0px;
+}
+
+.nav-singed-in a {
+  color: #808080;
+
+  -webkit-transition: 300ms ease-in;
+  -moz-transition: 300ms ease-in;
+  -o-transition: 300ms ease-in;
+  transition: 300ms ease-in;
+
+}
+
+.nav-singed-in a:hover {
+  color: #4D4D4D;
+  cursor: pointer;
+  text-decoration: none
+}
+
+.nav-singed-in a:focus {
+  color: #808080;
+  text-decoration: none;
+}
+
+.nav-singed-in a:focus {
+  outline: none;
+  outline: 0px auto -webkit-focus-ring-color;
+  outline-offset: 0px;
+}
+
+.text-on-white {
+  color: #808080;
+  font-size: 11px;
+}
+
+.text-on-dark {
+  color: #E6E6E6;
+  font-size: 11px;
+}
+
+.red-gradient {
+ background: rgb(99,1,13); /* Old browsers */
+/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzYzMDEwZCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjQ0JSIgc3RvcC1jb2xvcj0iIzViMDEwMyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiM0NDAwMGIiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+background: -moz-linear-gradient(left,  rgba(99,1,13,1) 0%, rgba(91,1,3,1) 44%, rgba(68,0,11,1) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(99,1,13,1)), color-stop(44%,rgba(91,1,3,1)), color-stop(100%,rgba(68,0,11,1))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(left,  rgba(99,1,13,1) 0%,rgba(91,1,3,1) 44%,rgba(68,0,11,1) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(left,  rgba(99,1,13,1) 0%,rgba(91,1,3,1) 44%,rgba(68,0,11,1) 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(left,  rgba(99,1,13,1) 0%,rgba(91,1,3,1) 44%,rgba(68,0,11,1) 100%); /* IE10+ */
+background: linear-gradient(to right,  rgba(99,1,13,1) 0%,rgba(91,1,3,1) 44%,rgba(68,0,11,1) 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#63010d', endColorstr='#44000b',GradientType=1 ); /* IE6-8 */
+}
+
+.black-gradient {
+background: #2d2b29;
+background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIxMDAlIiB5Mj0iMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzJkMmIyOSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjM4JSIgc3RvcC1jb2xvcj0iIzJkMmQyZCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9Ijg5JSIgc3RvcC1jb2xvcj0iIzIxMjEyMSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiMwZjBmMGYiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+background: -moz-linear-gradient(left,  #2d2b29 0%, #2d2d2d 38%, #212121 89%, #0f0f0f 100%);
+background: -webkit-gradient(linear, left top, right top, color-stop(0%,#2d2b29), color-stop(38%,#2d2d2d), color-stop(89%,#212121), color-stop(100%,#0f0f0f));
+background: -webkit-linear-gradient(left,  #2d2b29 0%,#2d2d2d 38%,#212121 89%,#0f0f0f 100%);
+background: -o-linear-gradient(left,  #2d2b29 0%,#2d2d2d 38%,#212121 89%,#0f0f0f 100%);
+background: -ms-linear-gradient(left,  #2d2b29 0%,#2d2d2d 38%,#212121 89%,#0f0f0f 100%);
+background: linear-gradient(to right,  #2d2b29 0%,#2d2d2d 38%,#212121 89%,#0f0f0f 100%);
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2d2b29', endColorstr='#0f0f0f',GradientType=1 );
+}
+
+.constrainer {
+  margin: auto;
+  max-width: 390px;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-family: 'Lato', sans-serif;
+}
+
+.nav-constrainer {
+  margin: auto;
+  max-width: 390px;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-family: 'Lato', sans-serif;
+}
+
+
+@media (min-width: 480px) {
+
+.constrainer {
+  margin: auto;
+  max-width: 460px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.nav-constrainer {
+  margin: auto;
+  max-width: 460px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+}
+
+
+
+@media (min-width: 768px) {
+
+.constrainer {
+  margin: auto;
+  max-width: 690px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+
+.nav-constrainer {
+  margin: auto;
+  max-width: 690px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+}
+
+
+@media (min-width: 991px) {
+
+.constrainer {
+  margin: auto;
+  max-width: 930px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.nav-constrainer {
+  margin: auto;
+  max-width: 930px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+}
+
+
+@media (min-width: 1050px) {
+
+.constrainer {
+  margin: auto;
+  max-width: 1000px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.nav-constrainer {
+  margin: auto;
+  max-width: 1000px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+}
+
+
+
+
+
+
+/* OLD GLOBAL ------------------------------------------*/
+
+
+
+
 .ui-autocomplete {
   display: block;
   overflow: hidden;
@@ -47,23 +322,23 @@ color palette
 
 @font-face {
 font-family: 'Clarendon';
-src: url('../fonts/Clarendon.ttf'),
-     url('../fonts/Clarendon.eot'),
-     url('../fonts/Clarendon.woff')
+src: url('fonts/Clarendon.ttf'),
+     url('fonts/Clarendon.eot'),
+     url('fonts/Clarendon.woff')
 }
 
 @font-face {
 font-family: 'ClarendonLt';
-src: url('../fonts/ClarendonLt.ttf'),
-     url('../fonts/ClarendonLt.eot'),
-     url('../fonts/ClarendonLt.woff')
+src: url('fonts/ClarendonLt.ttf'),
+     url('fonts/ClarendonLt.eot'),
+     url('fonts/ClarendonLt.woff')
 }
 
 @font-face {
 font-family: 'EngraversGothic';
-src: url('../fonts/EngraversGothic.ttf'),
-     url('../fonts/EngraversGothic.eot'),
-     url('../fonts/EngraversGothic.woff')
+src: url('fonts/EngraversGothic.ttf'),
+     url('fonts/EngraversGothic.eot'),
+     url('fonts/EngraversGothic.woff')
 }
 
 
