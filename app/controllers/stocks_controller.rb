@@ -79,7 +79,7 @@ require 'scraper'
           ticker_symbols << stock.ticker_symbol
         end
 
-        render json: {
+        render json: { #this is data rendered for the the search bar.
           :ticker_symbols => ticker_symbols       
         }
       }

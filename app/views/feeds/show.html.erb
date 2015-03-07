@@ -1,0 +1,163 @@
+<div class = "constrainer">
+  <div class = "main-aside col-sm-4">
+    
+    <div class = "user-page-info-container">
+      <div class = "row user-info-header">
+        <div class = "col-xs-6">
+          <h2><%= @current_user.username %></h2>
+        </div>
+        <div class = "col-xs-6">
+          <!-- <a href = "#" class = "btn user-follow-btn">Follow</a> -->
+        </div>
+      </div>
+      <div class = "row">
+        <div class = "col-xs-4 user-page-mug-column">
+          <img src="http://stocktators.com/assets/images/user.png" />
+        </div>
+        <div class = "col-xs-6">
+          <p class = "user-info-stats">Total Score: 95<br /></p>
+          <p class = "user-info-stats">Level: 96<br /></p>
+          <p class = "user-info_stats">Followers: <%= @current_user.followers.count %><br /></p>
+          <p class = "user-info_stats">Following: <%= @current_user.followings.count %></p>
+              </div>
+      </div>
+    </div>
+
+
+    <div class = "user-page-current-predictions">
+      <div class = "user-page-current-predictions-header">
+        <h2><%= @current_user.username %>'s Open Predictions</h2>
+      </div>
+      <% unless @predictions == nil %>
+        <% @predictions.each do |prediction| %>
+          <a href = "/predictions/<%= prediction.id %>/">
+            <div class = "row">
+              <div class = "col-xs-6">
+                <div class = "user-page-current-predictions-info">
+                  <p>  days remaining </p>
+                  <p> <%= "#{prediction.stock.ticker_symbol}" %> </p>
+                </div>
+              </div>
+              <div class = "user-page-current-predictions-btn col-xs-6">
+                <p> <%= "#{prediction.score} points" %> </p>
+              </div>
+            </div>
+          </a>
+        <% end %>
+        <% else %>
+        <div class = "row">
+          <div class = "col-x6-6">
+            <p><%= "#{@user.username} has no open predictions" %></p>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+     <div class = "user-page-current-predictions">
+      <div class = "user-page-current-predictions-header">
+        <h2><%= @current_user.username %>'s Best Predictions</h2>
+      </div>
+      <% unless @historical_predictions == nil %>
+        <% @historical_predictions.each do |prediction| %>
+          <a href = "/predictions/<%= prediction.id %>/">
+            <div class = "row">
+              <div class = "col-xs-6">
+                <div class = "user-page-current-predictions-info">
+                  <p>  days remaining </p>
+                  <p> <%= "#{prediction.stock.ticker_symbol}" %> </p>
+                </div>
+              </div>
+              <div class = "user-page-current-predictions-btn col-xs-6">
+                <p> <%= "#{prediction.score} points" %> </p>
+              </div>
+            </div>
+          </a>
+        <% end %>
+        <% else %>
+        <div class = "row">
+          <div class = "col-x6-6">
+            <p><%= "#{@user.username} has no historical predictions" %></p>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+
+    <div class = "stock-page-top-analysts">
+      <p class = "stock-page-top-analysts-header">
+        Top Analysts
+      </p>
+        <a href = "/user/Dw/">
+          <div class = "row">
+            <div class = "col-sm-3">
+              <div class = "top-analysts-mug-container">
+                <img src= "http://stocktators.com/assets/images/user.png">
+              </div>
+            </div>
+            <div class = "top-analysts-txt-container col-xs-9">
+              <p class = "top-analysts-handle">Dw</p>
+              <p class = "top-analysts-points">45 points</p>
+            </div>
+          </div>
+        </a>
+    </div>
+  
+  </div>
+
+  <div class = "stock-page-aside col-sm-8">
+
+     <%= render partial: "streams/stream_main", locals: {streams: @streams, nest_count: 0} %>
+    <%= will_paginate @streams %>
+      
+    <div class = "prediction-post-comment">
+      <div class = "row">
+        <div class = "col-xs-3 col-sm-2 col-md-2">
+          <div class = "prediction-post-mug-container">
+            <img src="http://stocktators.com/assets/images/user.png">
+          </div>
+        </div>
+        <div class = "prediction-post-txt-container col-xs-9">
+          <p class = "handle">
+            <a href = "#"> Dw</a> &nbsp;&bull;&nbsp; 29th dec.
+          </p>
+          <p class = "comment-txt">these are default comment in show.html</p>
+          <div class = "prediction-post-txt-icons">
+            <i class="fa fa-reply fa-lg">&nbsp;&nbsp; 100</i>
+            <i class="fa fa-thumbs-o-down fa-lg">&nbsp;&nbsp;50</i>
+            <i class="fa fa-thumbs-o-up fa-lg">&nbsp;&nbsp;50</i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class = "prediction-post">
+      <div class = "row">
+        <div class = "col-xs-3 col-sm-2 col-md-2">
+          <div class = "prediction-post-mug-container">
+            <img src= "http://stocktators.com/assets/images/user.png">
+          </div>
+        </div>
+        <div class = "prediction-post-txt-container col-xs-9">
+
+          <p class = "handle"><a href="/user/blah/">Dw</a>&nbsp;&bull;&nbsp;50</p>
+          <p class = "prediction-txt"><a href="#">&#36; AAPL &#58;&nbsp;
+          $100 in 100 days</a>
+            <span>&ndash; 100 </span></p>
+          <p class = "comment-txt">default comment in show.html</p>
+
+          <div class = "prediction-post-txt-icons">
+            <i class="fa fa-reply fa-lg">&nbsp;&nbsp; 100 </i>
+            <i class="fa fa-thumbs-o-down fa-lg">&nbsp;&nbsp; 15</i>
+            <i class="fa fa-thumbs-o-up fa-lg">&nbsp;&nbsp; 90 </i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+  </div>
+</div>

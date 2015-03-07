@@ -44,6 +44,8 @@ Rails.application.routes.draw do
 
   get     'graphimages'                  =>   'graphimages#show'
 
+  get     'feed'                         =>   'feeds#show'
+
   resources :streams
   resources :relationships
 
