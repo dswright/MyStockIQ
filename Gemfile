@@ -65,8 +65,6 @@ gem 'sidekiq'
 gem 'sinatra', require: false
 gem 'slim'
 
-gem 'arel', '6.0.0.beta2'
-
 gem 'pg',             '0.17.1'
 gem 'rails_12factor', '0.0.2'
 gem 'rack-mini-profiler'
