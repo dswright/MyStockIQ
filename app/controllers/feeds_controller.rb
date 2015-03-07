@@ -14,7 +14,7 @@ class FeedsController < ApplicationController
     @predictions = @current_user.predictions.where(active:true)
 
     #sets @predictions for the view, and for making stream.
-    @historical_predictions = @current_user.predictions.where(active:false).order("score DESC")
+    @historical_predictions = @current_user.predictions.where(active:false).order("score")
 
 
     #this is the tricky line. The stream needs to be build well.
