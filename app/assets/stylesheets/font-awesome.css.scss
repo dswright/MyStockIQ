@@ -9,11 +9,11 @@
 
 @font-face {
   font-family: 'FontAwesome';
-  src: url('myfont-webfont.eot'),
-  url('fontawesome.eot') format('embedded-opentype'),
-  url('fontawesome.woff2') format('woff2'),
-  url('fontawesome.woff') format('woff'),
-  url('fontawesome.ttf')  format('truetype'),
+  src: asset-url('myfont-webfont.eot'),
+  asset-url('fontawesome.eot') format('embedded-opentype'),
+  asset-url('fontawesome.woff2') format('woff2'),
+  asset-url('fontawesome.woff') format('woff'),
+  asset-url('fontawesome.ttf')  format('truetype'),
   url('fontawesome.svg') format('svg');
 }
 
