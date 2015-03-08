@@ -1,5 +1,14 @@
 
 
+<%= javascript_include_tag "stocks.coffee.js" %>
+<%= include_gon(:init => true) %>
+
+
+
+<% content_for :title do %>
+  <title><%= @stock[:ticker_symbol] %> Stock Predictions - StockHero.com</title>
+<% end %>
+
 <div class="constrainer">
 
   <div class="col-xs-12 col-sm-9 stockpage-body">
@@ -28,16 +37,25 @@
         </div>
       </div>
 
-      <div class="stockpage-graph">         
-        <%= image_tag "graph.png" %>
+      <div class="stockpage-graph">
+
+        <div id="stock-div"></div>
       </div>
+
       <div class="timeframes-mobile">
-        <div class="timeframes-item pull-right"><a>1D</a></div>
-        <div class="timeframes-item pull-right"><a>5D</a></div>
-        <div class="timeframes-item pull-right"><a>1M</a></div>
-        <div class="timeframes-item pull-right"><a>1Y</a></div>
-        <div class="timeframes-item pull-right"><a>5Y</a></div>
+        <% @graph_buttons.each do |button| %>
+          <div class="timeframes-item pull-right" id="button" data-button-type=<%= button %>
+          >
+            <a><%= button %></a>
+          </div>
+        <% end %>
       </div>
+
+<div class = "graph-buttons" style="width:450px">
+        
+        
+      </div>
+
       <div class="stockpage-mobile-predict-button-div">
         <a class="btn">PREDICT APPL</a>
       </div>
@@ -136,323 +154,33 @@
 
 
 
+<% #
+   #</div>
+   #   render 'shared/follow_form'
+  #</div>
+#</div>
+
+#
+#<div class = "stock-page-prediction-box">
+#   if @prediction.active_prediction_exists? 
+#     render @prediction 
+#   else 
+#     render 'shared/prediction_form' 
+#   end 
+#</div>
+#
+#  <%= render 'shared/comment_form'
+
+#<!-- STREAM POSTS -->
+# <%= render partial: "streams/stream_main", locals: {streams: @streams, nest_count: 0}
+#  <%= will_paginate @streams
+%>
 
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<%= javascript_include_tag "stocks.coffee.js" %>
-<%= include_gon(:init => true) %>
-
-
-<% content_for :title do %>
-  <title><%= @stock[:ticker_symbol] %> Stock Predictions - StockHero.com</title>
-<% end %>
-
-<div class = "constrainer">
-  <div class = "main-aside col-sm-4">
-    <div class = "stock-container">
-      <div class = "row">
-        <div class = "col-xs-4">
-          <p class = "stock-ticker"><%= @stock[:ticker_symbol] %></p>
-        </div>
-        <div class = "col-xs-6">
-          <p class = "stock-ticker-price"><%= @stock[:daily_stock_price] %></p>
-          <p class = "stock-ticker-price">
-              <font color="green" > +1.34 </font>
-          </p>
-        </div>
-      </div>
-      <div class = "row">
-        <div class = "col-xs-4">
-          <p class = "stock-ticker-detail-header">Predictions</p>
-          <p class = "stock-ticker-detail-number"><%= @stock.predictions.count %></p>
-        </div>
-        <div class = "col-xs-4">
-          <p class = "stock-ticker-detail-header">Comments</p>
-          <p class = "stock-ticker-detail-number">38</p>
-        </div>
-      </div>
-      <div class = "row">
-        <div class = "col-xs-4">
-          <p class = "stock-ticker-detail-header">P/E</p>
-          <p class = "stock-ticker-detail-number">62.37M<br>64.13M</p>
-        </div>
-        <div class = "col-xs-4">
-          <p class = "stock-ticker-detail-header">52wk</p>
-          <p class = "stock-ticker-detail-number">67.77<br>103.74</p>
-        </div>
-        <div class = "col-xs-4">
-          <p class = "stock-ticker-detail-header">Vol/ Avg</p>
-          <p class = "stock-ticker-detail-number">28</p>
-        </div>
-      </div>
-      <div class = "row">
-        <div class = "col-xs-4">
-          <p class = "stock-ticker-detail-header">Followers</p>
-          <p class = "stock-ticker-detail-number" id = "followers"><%= @stock.followers.count %></p>
-        </div>
-          <%= render 'shared/follow_form'%>
-      </div>
-    </div>
-
-<!-- PREDICTION FORM -->
-    <div class = "stock-page-prediction-box">
-      <% if @prediction.active_prediction_exists? %>
-        <%= render @prediction %>
-      <% else %>
-        <%= render 'shared/prediction_form' %>
-      <% end %>
-    </div>
-
-    <%= render 'shared/comment_form' %>
-
-    <div class = "stock-page-top-analysts">
-
-    
-      <p class = "stock-page-top-analysts-header">
-        Top <%= @stock[:ticker_symbol] %> Analysts
-      </p>
-
-      <a href = "#">
-        <div class = "row">
-          <div class = "col-sm-3">
-            <div class = "top-analysts-mug-container">
-              <img src="images/mug2.png">
-            </div>
-          </div>
-          <div class = "top-analysts-txt-container col-xs-9">
-            <p class = "top-analysts-handle">USER-NAME</p>
-            <p class = "top-analysts-points">100 points</p>
-          </div>
-        </div>
-      </a>
-
-    </div>
-
-  </div>
-
-
-<!-- STOCK GRAPH -->
-
-  <div class = "stock-page-aside col-sm-8">
-    <div class = "graph-container">
-
-    <div id="predictiondetailsbox" style="height:50px; width:auto;">
-    </div>
-
-    <div style="color:red">
-      <ul id="response-box">
-      </ul>
-    </div>
-
-      <div class = "graph-buttons" style="width:450px">
-        <% @graph_buttons.each do |button| %>
-          <button id="button"
-              data-button-type=<%= button %>
-              >
-            <%= button %>
-          </button>
-
-        <% end %>
-        
-      </div>
-      
-
-      <div id="stock-div" style="min-width:50px;"></div>
-    </div>
-
-    <div class = "prediction-buttons-container">
-      <div class = "row">
-        <div class = "col-xs-6">
-          <input type="submit" class="btn prediction-btn-stock-page" value="Make a Prediction">
-        </div>
-        <div class = "col-xs-6">
-          <input type="submit" class="btn prediction-btn-stock-page" value="Make a Comment">
-        </div>
-      </div>
-    </div>
-
-
-
-<!-- STREAM POSTS -->
-  <%= render partial: "streams/stream_main", locals: {streams: @streams, nest_count: 0} %>
-  <%= will_paginate @streams %>
-
-
-
-
-    <div class = "prediction-post-comment">
-      <div class = "row">
-        <div class = "col-xs-3 col-sm-2 col-md-2">
-          <div class = "prediction-post-mug-container">
-            <img src="images/dillshmill.png">
-          </div>
-        </div>
-        <div class = "prediction-post-txt-container col-xs-9">
-          <p class = "handle">@dillshmill&nbsp;&bull;&nbsp;2hr</p>
-          <p class = "comment-txt">Lorem $APPL ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          <div class = "prediction-post-txt-icons">
-            <i class="fa fa-reply fa-lg">&nbsp;&nbsp;1</i>
-            <i class="fa fa-thumbs-o-down fa-lg">&nbsp;&nbsp;2</i>
-            <i class="fa fa-thumbs-o-up fa-lg">&nbsp;&nbsp;3</i>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-
-
-
-
-    <div class = "prediction-post">
-      <div class = "row">
-        <div class = "col-xs-3 col-sm-2 col-md-2">
-          <div class = "prediction-post-mug-container">
-            <img src="images/mug2.png">
-          </div>
-        </div>
-        <div class = "prediction-post-txt-container col-xs-9">
-          <p class = "handle">Username &nbsp;&bull;&nbsp;1hr</p>
-          <p class = "prediction-txt">&#36;AAPL&#58;&nbsp;&#43;50 days remaining&nbsp;
-            <span>&ndash;4</span></p>
-          <p class = "comment-txt">Lorem $APPL ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          <div class = "prediction-post-txt-icons">
-            <i class="fa fa-reply fa-lg">&nbsp;&nbsp;1</i>
-            <i class="fa fa-thumbs-o-down fa-lg">&nbsp;&nbsp;2</i>
-            <i class="fa fa-thumbs-o-up fa-lg">&nbsp;&nbsp;3</i>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class = "prediction-post">
-      <div class = "row">
-        <div class = "col-xs-3 col-sm-2 col-md-2">
-          <div class = "prediction-post-mug-container">
-            <img src="images/mug2.png">
-          </div>
-        </div>
-        <div class = "prediction-post-txt-container col-xs-9">
-          <p class = "handle">@gngrdev&nbsp;&bull;&nbsp;1hr</p>
-          <p class = "prediction-txt">&#36;AAPL&#58;&nbsp;&#43;50 days remaining&nbsp;
-            <span>&ndash;4</span></p>
-          <p class = "comment-txt">Lorem $APPL ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          <div class = "prediction-post-txt-icons">
-            <i class="fa fa-reply fa-lg">&nbsp;&nbsp;1</i>
-            <i class="fa fa-thumbs-o-down fa-lg">&nbsp;&nbsp;2</i>
-            <i class="fa fa-thumbs-o-up fa-lg">&nbsp;&nbsp;3</i>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-    <div class = "prediction-post-reply">
-      <div class = "row">
-        <div class = "col-xs-3 col-sm-2 col-md-2">
-          <div class = "prediction-post-mug-container">
-            <img src="images/dillshmill.png">
-          </div>
-        </div>
-        <div class = "prediction-post-txt-container col-xs-9">
-          <p class = "handle">@dillshmill&nbsp;&bull;&nbsp;2hr</p>
-          <p class = "prediction-txt">&#36;AAPL&#58;&nbsp;&#43;50 days remaining&nbsp;
-            <span>&ndash;4</span></p>
-          <p class = "comment-txt">@gngrdev Lorem $APPL ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          <div class = "prediction-post-txt-icons">
-            <i class="fa fa-reply fa-lg">&nbsp;&nbsp;1</i>
-            <i class="fa fa-thumbs-o-down fa-lg">&nbsp;&nbsp;2</i>
-            <i class="fa fa-thumbs-o-up fa-lg">&nbsp;&nbsp;3</i>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class = "prediction-post-agree">
-      <div class = "row">
-        <div class = "col-xs-3 col-sm-2 col-md-2">
-          <div class = "prediction-post-mug-container">
-            <div class = "agree-thumb-box">
-              <i class="fa fa-thumbs-o-up fa-lg"></i>
-            </div>
-            <img src="images/dillshmill.png">
-          </div>
-        </div>
-        <div class = "prediction-post-txt-container col-xs-9">
-          <p class = "agree-txt">@gngrdev agrees
-          <p class = "handle">@dillshmill&nbsp;&bull;&nbsp;2hr</p>
-          <p class = "comment-txt">@gngrdev Lorem $APPL ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          <div class = "prediction-post-txt-icons">
-            <i class="fa fa-reply fa-lg">&nbsp;&nbsp;1</i>
-            <i class="fa fa-thumbs-o-down fa-lg">&nbsp;&nbsp;2</i>
-            <i class="fa fa-thumbs-o-up fa-lg">&nbsp;&nbsp;3</i>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class = "prediction-post-disagree">
-      <div class = "row">
-        <div class = "col-xs-3 col-sm-2 col-md-2">
-          <div class = "prediction-post-mug-container">
-            <div class = "disagree-thumb-box">
-              <i class="fa fa-thumbs-o-down fa-lg"></i>
-            </div>
-            <img src="images/dillshmill.png">
-          </div>
-        </div>
-        <div class = "prediction-post-txt-container col-xs-9">
-          <p class = "disagree-txt">@gngrdev disagrees
-          <p class = "handle">@dillshmill&nbsp;&bull;&nbsp;2hr</p>
-          <p class = "comment-txt">@gngrdev Lorem $APPL ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          <div class = "prediction-post-txt-icons">
-            <i class="fa fa-reply fa-lg">&nbsp;&nbsp;1</i>
-            <i class="fa fa-thumbs-o-down fa-lg">&nbsp;&nbsp;2</i>
-            <i class="fa fa-thumbs-o-up fa-lg">&nbsp;&nbsp;3</i>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class = "prediction-post-comment">
-      <div class = "row">
-        <div class = "col-xs-3 col-sm-2 col-md-2">
-          <div class = "prediction-post-mug-container">
-            <img src="images/dillshmill.png">
-          </div>
-        </div>
-        <div class = "prediction-post-txt-container col-xs-9">
-          <p class = "handle">@dillshmill&nbsp;&bull;&nbsp;2hr</p>
-          <p class = "comment-txt">Lorem $APPL ipsum dolor sit amet, consectetur adipiscing elit.</p>
-          <div class = "prediction-post-txt-icons">
-            <i class="fa fa-reply fa-lg">&nbsp;&nbsp;1</i>
-            <i class="fa fa-thumbs-o-down fa-lg">&nbsp;&nbsp;2</i>
-            <i class="fa fa-thumbs-o-up fa-lg">&nbsp;&nbsp;3</i>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 
 
 

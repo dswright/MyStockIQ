@@ -1,7 +1,7 @@
 function resizeChart() {
   var height = $("#stock-div").width()/3+30;
   $("#stock-div").css("height", height);
-  $(".stockgraph-container1").css("height", height+10);
+  $(".stockpage-graph").css("height", height+10);
 };
 
 //Global variables 
@@ -18,6 +18,7 @@ $(document).ready(function () {
   seriesVar = [
     {
       name : gon.ticker_symbol,
+      lineWidth: 3,
       dataGrouping: {
         enabled: false
       }
@@ -55,9 +56,13 @@ $(document).ready(function () {
 
   stockChart = new Highcharts.StockChart({
     chart: {
+      backgroundColor:'transparent',
       renderTo: 'stock-div',
       panning: false, //disables time frame dragging on desktop
       pinchType: false //disable time frame dragging on mobile.
+    },
+    exporting: {
+      enabled: false
     },
     plotOptions: {
       spline: {
@@ -142,7 +147,6 @@ $(document).ready(function () {
   });
 
   var apiUrl = "/stockprices/" + gon.ticker_symbol + ".json";
-  stockChart.showLoading('Loading data from server');
   var getRanges1;
   
   $.ajax({
@@ -163,7 +167,7 @@ $(document).ready(function () {
 
       //$("body").on('click', 'button[data-button-type]', chartFunctions.buttonClick);
       //so this button click is being called like a closure? maybe? This thing needs to execute itself...
-      $("button[data-button-type]").click(stockChartFunctions.buttonClick);
+      $("div[data-button-type]").click(stockChartFunctions.buttonClick);
 
       window.inputPrediction = function(endTime, endPrice, predictionId) {
         stockChartFunctions.inputPrediction(endTime, endPrice, predictionId); //when a prediction is input, this function fires from the predicitoninput ajax call.
