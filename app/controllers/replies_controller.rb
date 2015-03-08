@@ -4,22 +4,20 @@ class RepliesController < ApplicationController
 		#Obtain user session information from Session Helper function 'current_user'.
 		@user = current_user
 		@parent_stream = Stream.find(params[:stream_id])
+		#Obtain parent information from stream_reply_form
+		repliable = {id: params[:parent_id], type: params[:parent_type]}
 
 		#build the reply object for input to the db.
 		@reply = @user.replies.build(reply_params)
-		@reply.popularity_score = 0.0
-
-		#Obtain parent information from stream_reply_form
-		parent = {id: params[:parent_id], type: params[:parent_type]}
-
-		#build the stream object for input to the db.
-		stream = @reply.streams.build( streamable_type: @reply.class.name, streamable_id: @reply.id, targetable_type: parent[:type], targetable_id: parent[:id])
+		@reply.repliable_id = repliable[:id]
+		@reply.repliable_type = repliable[:type]
 
 		response_msgs = []
 
 		if @reply.valid?
 			@reply.save
-			stream.save
+			@reply.build_popularity(score: 0).save
+
 			response_msgs << "Posted reply!"
 		else 
 			response_msgs << "Invalid post"

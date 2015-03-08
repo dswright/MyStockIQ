@@ -4,6 +4,7 @@ class Predictionend < ActiveRecord::Base
 
   belongs_to :prediction
   has_many :streams, as: :streamable, dependent: :destroy
+  has_many :streams, as: :targetable, dependent: :destroy
   has_many :likes, as: :likable
   has_one :popularity, as: :popularable, dependent: :destroy
   has_many :replies, as: :repliable
