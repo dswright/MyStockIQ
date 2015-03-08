@@ -1,0 +1,59 @@
+
+.user-page-banner {
+  display: none;
+}
+
+.user-page-banner-overlay {
+  display: none;
+}
+
+@media (min-width: 768px) {
+
+.user-page-banner {
+	display: block;
+	height: 160px;
+}
+
+.user-page-banner-overlay {
+	display: block;
+	position: relative;
+	height: 33px;
+	background: rgba(0,0,0,0.7);
+	margin-top: -33px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 6px;
+}
+
+.user-page-banner-overlay ul {
+	display: inline;
+}
+
+.user-page-banner-overlay ul li:first-child {
+	font-size: 11px;
+	color: #E6E6E6;
+}
+
+.user-page-banner-overlay ul li {
+	display: inline;
+
+}
+
+.user-page-banner-overlay ul li a {
+	margin-left: 15px;
+	color: #E6E6E6;
+	font-size: 11px;
+	text-decoration: underline;
+
+	-webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+
+}
+
+.user-page-banner-overlay ul li a:hover {
+	color: #fff;
+}
+
+}
