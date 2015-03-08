@@ -41,12 +41,12 @@
 
 <section id="nav-dropdown">
   <div class="constrainer">
-    <a class="nav-dropdown-item clearfix">
+    <a href = "/feed/" class="nav-dropdown-item clearfix">
       <div class="nav-dropdown-icon pull-left">
         <i class="fa fa-list"></i>
       </div>
       <div class="nav-dropdown-label pull-left">
-        <p>Feed</p>
+        <p>My Feed</a></p>
       </div>
     </a>
     <a class="nav-dropdown-item clearfix">
@@ -93,7 +93,7 @@
 </section>
 
 
-
+<!-- 
 
 <div class = "navbar navbar-inverse navbar-static-top">
   <div class = "nav-container">
@@ -112,9 +112,9 @@
     <div class = "nav-custom collapse navbar-collapse navHeaderCollapse">
       <ul class = "nav navbar-nav navbar-right">
       <li><a href = "/logout">Logout</a></li>
-      <% unless (defined? @current_user) == nil %> 
+      <% #unless (defined? @current_user) == nil %> 
         <li><a href = "/users/<%= @current_user.username %>">My Profile</a></li>
-      <% end %>
+      <% #end %>
         <li><a href = "/stocks/AAPL/">AAPL</a></li>
         <li><a href = "/feed/">My Feed</a></li>
 
@@ -175,45 +175,7 @@ $(function() {
     </div>
   </div>
 </div>
-
-<div class="modal fade" id = "basicModal" role = "dialog">
-  <div class="modal-dialog">
-    <div class = "modal-content">
-
-      <div class = "modal-header">
-        <div class = "col-xs-9">
-          <h2>Make A Prediction</h2>
-        </div>
-        <div class = "col-xs-3">
-          <a class = "btn btn-default modal-close-btn" data-dismiss = "modal">Close</a>
-        </div>
-      </div>
-
-      <div class = "modal-body">
-
-
-        <div id='signup_form'>
-
-          <form method='post' name='process'>
-
-              <input type='text' name='ticker' placeholder='' class="modal-prediction-field" id='ticker'/> <br>
-
-              <input type='text' name='target-price' placeholder='target price' class="modal-prediction-field" id='target-price'/> <br>
-
-              <input type='text' name='target-date' placeholder='target date' class="modal-prediction-field" id='target-price'/> <br>
-
-              <textarea name='comment' placeholder='comment (optional)' class="modal-comment-field" id='comment'/></textarea>
-
-          </form>
-
-          <input type="submit" class="btn modal-submit-btn" value="Submit">
-
-        </div>
-
-      </div>
-    </div>
-  </div>
-</div>
+ -->
 
 
 

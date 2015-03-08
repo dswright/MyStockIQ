@@ -1,3 +1,163 @@
+
+
+<div class="constrainer">
+
+  <div class="col-xs-12 col-sm-9 stockpage-body">
+
+    <div class="stockpage-graph-module black-gradient clearfix">
+      <div class="pull-left stockpage-ticker">
+        <p>APPL (Apple Inc.)</p>
+      </div>
+
+      <div class="graph-point-hover">
+        <div class="pull-right graph-hover-stat-item">
+          <p class="graph-hover-figure">+3</p>
+          <p class="graph-hover-title">POINTS</p>
+        </div>  
+        <div class="pull-right graph-hover-stat-item">
+          <p class="graph-hover-figure">$170</p>
+          <p class="graph-hover-title">TARGET</p>
+        </div>
+        <div class="pull-right graph-hover-stat-item">
+          <p class="graph-hover-figure">1D</p>
+          <p class="graph-hover-title">TIME LEFT</p>
+        </div>
+        <div class="pull-right graph-hover-stat-item">
+          <%= image_tag "del.jpg" %>
+          <p class="graph-hover-title">delmnstr12</p>
+        </div>
+      </div>
+
+      <div class="stockpage-graph">         
+        <%= image_tag "graph.png" %>
+      </div>
+      <div class="timeframes-mobile">
+        <div class="timeframes-item pull-right"><a>1D</a></div>
+        <div class="timeframes-item pull-right"><a>5D</a></div>
+        <div class="timeframes-item pull-right"><a>1M</a></div>
+        <div class="timeframes-item pull-right"><a>1Y</a></div>
+        <div class="timeframes-item pull-right"><a>5Y</a></div>
+      </div>
+      <div class="stockpage-mobile-predict-button-div">
+        <a class="btn">PREDICT APPL</a>
+      </div>
+
+      <div class="open-prediction">
+        <div class="open-prediction-col col-xs-4">
+          <p class="open-prediction-figure">1 DAY</p>
+          <p class="open-prediction-title">TIME LEFT</p>
+        </div>
+        <div class="open-prediction-col col-xs-4">
+          <p class="open-prediction-figure">$170</p>
+          <p class="open-prediction-title">TARGET PRICE</p>
+        </div>
+        <div class="open-prediction-col col-xs-4">
+          <p class="open-prediction-figure">+3</p>
+          <p class="open-prediction-title">POINTS</p>
+        </div>
+      </div>    
+      <div class="close-prediction-button-mobile">
+        <a class="btn">CLOSE PREDICTION</a>
+      </div>
+
+
+      <div class="stats-header">
+        <p>Stats</p>
+      </div>
+      <div class="stats-content">
+        <div class="stats-content-col-left col-xs-6">
+          <div class="stats-content-item">
+            <span class="stats-content-label">PRICE</span><span class="pull-right">$99.76</span>
+          </div>
+          <div class="stats-content-item">
+            <span class="stats-content-label">MKTCAP</span><span class="pull-right">624.4B</span>
+          </div>
+          <div class="stats-content-item">
+            <span class="stats-content-label">P/E RATIO</span><span class="pull-right">17</span>
+          </div>
+          <div class="stats-content-item">
+            <span class="stats-content-label">AVG VOL</span><span class="pull-right">50.9M</span>
+          </div>
+        </div>
+        <div class="stats-content-col-right col-xs-6">
+          <div class="stats-content-item">
+            <span class="stats-content-label">CHANGE</span><span class="pull-right">+2.6%</span>  
+          </div>
+          <div class="stats-content-item">
+            <span class="stats-content-label">52 WK HIGH</span><span class="pull-right">102.3</span>
+          </div>
+          <div class="stats-content-item">
+            <span class="stats-content-label">52 WK LOW</span><span class="pull-right">87.5</span>
+          </div>
+          <div class="stats-content-item">
+            <span class="stats-content-label">VOLUME</span><span class="pull-right">55.3</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-3 stockpage-sidebar">
+
+    <div class="stockpage-sidebar-prediction">
+      <div class="stockpage-sidebar-prediction-header black-gradient">
+        <div class="stockpage-sidebar-prediction-header-txt pull-left">
+          Predict APPL
+        </div>
+        <div class="stockpage-sidebar-prediction-points pull-right">
+          <i class="fa fa-line-chart"></i>
+        </div>
+      </div>
+      <div class="stockpage-sidebar-prediction-box">
+        <div class="stockpage-sidebar-prediction-form">
+          <span class="pull-left">AAPL will be</span>
+          <input class="prediction-form-price" placeholder="$"><br>
+          <span class="pull-left">in</span>
+          <input class="prediction-form-days" placeholder="days">
+          <input class="prediction-form-hrs" placeholder="hrs">
+          <input class="prediction-form-mins" placeholder="mins">
+        </div>
+        <div class="stockpage-sidebar-prediction-comment">
+          <textarea class="prediction-form-comment" placeholder="Comment on APPL"></textarea>
+          <div class="checkbox">
+            <input class="comment-only" type="checkbox" name="" value=""><span class="check-box-span">Comment only</span>
+          </div>
+        </div>
+        <div class="submit-button-div">
+          <a class="btn">SUBMIT</a>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <%= javascript_include_tag "stocks.coffee.js" %>
 <%= include_gon(:init => true) %>
 
