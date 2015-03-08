@@ -2,7 +2,7 @@ class Stream < ActiveRecord::Base
 
 
   #declares a polymorphic association for the streams table. 
-  belongs_to :streamable, polymorphic: true
+  belongs_to :streamable, polymorphic: true 
   belongs_to :targetable, polymorphic: true
 
   #uses Rails default_scope function to sort the posts such that the most recent one is first.
@@ -58,7 +58,7 @@ class Stream < ActiveRecord::Base
 
   def update_stream_popularity_scores
       #Update stream item's popularity score
-      self.streamable.update_popularity_score
+      self.streamable.popularity.update_score
 
       #Find replies associated with stream item
       replies = self.streamable.replies
@@ -67,7 +67,7 @@ class Stream < ActiveRecord::Base
         replies.each do |reply|
 
           #Update reply's popularity score
-          reply.update_popularity_score
+          reply.popularity.update_score
 
           #Add reply's replies to the array of replies such that its popularity score gets updated later on in the loop
           reply.replies.each {|reply| replies << reply}

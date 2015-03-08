@@ -95,4 +95,15 @@ class User < ActiveRecord::Base
   def followers
     Relationship.where(followed_id: self.id)
   end
+
+  def likes_this?(object)
+    like_type = object.likes.where(user_id: self.id).first.like_type
+    
+    if like_type == "like"
+      return true
+    else 
+      return false
+    end
+  end
+
 end

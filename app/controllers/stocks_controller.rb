@@ -23,13 +23,13 @@ require 'scraper'
 
 
         unless @streams == nil
-          #@streams.each {|stream| stream.update_stream_popularity_scores}
+          @streams.each {|stream| stream.update_stream_popularity_scores}
 
           #this line makes sorts the stream by popularity score.
-          #@streams = @streams.sort_by {|stream| stream.streamable.popularity_score}
+          @streams = @streams.sort_by {|stream| stream.streamable.popularity.score}
 
           #streams = sort_by_popularity(streams)
-          #@streams = @streams.reverse
+          @streams = @streams.reverse
           
           #Stock's posts, comments, and predictions to be shown in the view
           #will_paginate in view automatically generates params[:page]

@@ -1,0 +1,9 @@
+<div class = "likes_message", id = "likes_message_#{stream.streamable.id}">
+	<% if current_user.likes_this?(stream.streamable) %>
+		<p><%= "You and " + pluralize(stream.streamable.likes_count, "other") + " liked this" %></p>
+		<p><%= pluralize(stream.streamable.dislikes_count, "person") + " disliked this" %>
+	<% else %>
+		<p><%= "You and " + pluralize(stream.streamable.likes_count, "other") + " liked this" %></p>
+		<p><%= pluralize(stream.streamable.dislikes_count, "person") + " disliked this" %>
+	<% end %>
+</div>

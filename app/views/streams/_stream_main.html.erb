@@ -22,7 +22,12 @@
       <%end%>
 
     </br>
-      <%= render partial: "streams/stream_icons", locals: {icons: icons, stream: stream} %>
+
+    <% unless stream.streamable.likes.where(user_id: current_user.id).exists? %>
+        <%= render partial: "streams/stream_icons", locals: {icons: icons, stream: stream} %>
+    <% else %>
+        <%= render partial: "likes/message", locals: {stream: stream} %>
+    <% end %>
 
       <%= render partial: "streams/stream_detail_button", locals: {stream: stream}  %>
     </div>

@@ -28,6 +28,8 @@ module StreamsHelper
     return html
   end
 
+ 
+
   def sort_by_popularity(streams)
 
     #Build an array of comments and prediction id/popularity_score hashes
