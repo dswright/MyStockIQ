@@ -1,0 +1,193 @@
+
+
+.stockpage-sidebar-prediction-header {
+	height: 33px;
+	margin-top: 15px;
+	color: #E6E6E6;
+	font-size: 11px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 10px;
+}
+
+.stockpage-sidebar-prediction-box {
+	border: 1px solid rgba(0,0,0,0.07);
+	font-size: 11px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 20px;
+	padding-bottom: 15px;
+}
+
+.stockpage-sidebar-prediction-form span {
+	display: block;
+	color: #808080;
+	margin-right: 10px;
+}
+
+.prediction-form-price {
+	border-left: 0px;
+	border-right: 0px;
+	border-top: 0px;
+	border-bottom: 1px solid rgba(0,0,0,0.07);
+	outline: none;
+	width: 41%;
+	margin-bottom: 20px;
+}
+
+.prediction-form-days {
+	border-left: 0px;
+	border-right: 0px;
+	border-top: 0px;
+	border-bottom: 1px solid rgba(0,0,0,0.07);
+	outline: none;
+	width: 21%;
+	margin-right: 10px;
+}
+
+.prediction-form-hrs {
+	border-left: 0px;
+	border-right: 0px;
+	border-top: 0px;
+	border-bottom: 1px solid rgba(0,0,0,0.07);
+	outline: none;
+	width: 21%;
+	margin-right: 10px;
+}
+
+.prediction-form-mins {
+	border-left: 0px;
+	border-right: 0px;
+	border-top: 0px;
+	border-bottom: 1px solid rgba(0,0,0,0.07);
+	outline: none;
+	width: 21%;
+}
+
+.stockpage-sidebar-prediction-comment {
+	overflow: hidden;
+}
+
+.stockpage-sidebar-prediction-comment span {
+	display: block;
+	color: #808080;
+	margin-right: 10px;
+}
+
+.prediction-form-comment {
+	border-left: 0px;
+	border-right: 0px;
+	border-top: 0px;
+	border-bottom: 0px;
+	padding-top: 5px;
+	padding-left: 10px;
+	padding-right: 10px;
+	background-color: rgba(0,0,0,0.07);
+	color: #808080;
+	outline: none;
+	width: 100%;
+	resize: none;
+	height: 50px;
+	margin-top: 20px;
+
+	-webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+
+}
+
+
+
+
+
+
+
+
+
+.comment-only-checkbox {
+	margin-top: 10px;
+}
+
+input[type="checkbox"] {
+  -moz-appearance: none;
+  background-color: red !important;
+  color: white;
+}
+
+.checkbox {
+	display: block;
+	min-height: 20px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	padding-left: 20px;
+}
+
+.checkbox input[type=checkbox]:not(checked)::before {
+	background-color: #E6E6E6;
+	color: #E6E6E6;
+	content: '\f00c';
+	border: thin solid #E6E6E6;
+	letter-spacing: 8px;
+	text-align: center;
+	position: relative;
+}
+
+.checkbox input[type=checkbox]:checked::before {
+	background-color: #E6E6E6;
+	color: #808080;
+	content: '\f00c';
+	font-family: FontAwesome;
+	font-size: 12px;
+	text-align: center;
+	letter-spacing: 0px;
+	position: relative;
+}
+
+.check-box-span {
+	padding-top: 3px;
+	margin-left: 5px;
+}
+
+.submit-button-div {
+	margin-top: 20px;
+}
+
+.submit-button-div a {
+	border: solid 1px #B3B3B3;
+	border-radius: 0px;
+	padding-bottom: 9px;
+	padding-top: 9px;
+	color: #B3B3B3;
+	font-size: 11px;
+	width: 100%;
+
+-webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+}
+
+.submit-button-div a:hover {
+	border: solid 1px #808080;
+	color: #808080;
+}
+
+
+<<<<<<< HEAD:app/assets/stylesheets/_stockpage-sidebar-prediction.css.scss 
+=======
+@media (min-width: 991px) {
+
+
+
+}
+
+@media (min-width: 1050px) {
+
+
+
+}
+>>>>>>> ae22774d68a83c08601cb4cdc189e1050d7fa977:app/assets/stylesheets/_stockpage-sidebar-prediction.css.scss
+
+
+
