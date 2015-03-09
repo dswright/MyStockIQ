@@ -10,32 +10,34 @@ require 'scraper'
 
 	def show
 
+    return if user_logged_in? #redirects the user to the login page if they are not logged in.
+
     respond_to do |format|
-      format.html {
-        return if user_logged_in? #redirects the user to the login page if they are not logged in.
 
         @stock = Stock.find_by(ticker_symbol:params[:ticker_symbol])
 
-    		@current_user = current_user
+        @current_user = current_user
+
+        @streams = @stock.streams.by_popularity_score.paginate(page: params[:page], per_page: 5)
 
 
-    		@streams = @stock.streams.limit(40)
+        # unless @streams == nil
+        #   @streams.each {|stream| stream.update_stream_popularity_scores}
 
+        #   #this line makes sorts the stream by popularity score.
+        #   @streams = @streams.sort_by {|stream| stream.streamable.popularity.score}
 
-        unless @streams == nil
-          @streams.each {|stream| stream.update_stream_popularity_scores}
-
-          #this line makes sorts the stream by popularity score.
-          @streams = @streams.sort_by {|stream| stream.streamable.popularity.score}
-
-          #streams = sort_by_popularity(streams)
-          @streams = @streams.reverse
+        #   #streams = sort_by_popularity(streams)
+        #   @streams = @streams.reverse
           
-          #Stock's posts, comments, and predictions to be shown in the view
-          #will_paginate in view automatically generates params[:page]
-          @streams = @streams.paginate(page: params[:page], per_page: 10)
-          #@stream_hash_array = Stream.stream_maker(@streams, 0)
-        end
+        #   #Stock's posts, comments, and predictions to be shown in the view
+        #   #will_paginate in view automatically generates params[:page]
+        #   @streams = @streams.paginate(page: params[:page], per_page: 5)
+        #   #@stream_hash_array = Stream.stream_maker(@streams, 0)
+        # end
+
+      format.html {
+        
 
         #if a stock gets viewed, update the stocks table so that the stock gets real time stock data.
         if (@stock.viewed == false)
@@ -84,6 +86,9 @@ require 'scraper'
         }
       }
 
+      format.js {
+
+      }
     end
 
 	end

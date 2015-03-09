@@ -1,0 +1,7 @@
+$(".stream").append('<%= j render partial: "streams/stream_main", locals: {streams: @streams, nest_count: 0} %>');
+<% if @streams.next_page %>
+  $('.pagination').replaceWith('<%= j will_paginate @streams %>');
+<% else %>
+  $(window).off('scroll');
+  $('.pagination').remove();
+<% end %>
