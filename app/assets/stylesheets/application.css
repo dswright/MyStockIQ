@@ -116,6 +116,14 @@ html, body, div, section, article, aside, header, hgroup, footer, nav, h1, h2, h
   font: inherit;
 }
 
+html {
+  background-color: #FAFAFA;
+}
+
+body {
+  background-color: #FAFAFA;
+}
+
 
 .clearfix {
   clear: both;
