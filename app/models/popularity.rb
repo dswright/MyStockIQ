@@ -2,6 +2,8 @@ class Popularity < ActiveRecord::Base
   #declares a polymorphic association for the streams table. 
   belongs_to :popularable, polymorphic: true
 
+  scope :by_score, lambda { order("popularities.score DESC")}
+
   validates :score, presence: :true, numericality: :true
 
   	def update_score

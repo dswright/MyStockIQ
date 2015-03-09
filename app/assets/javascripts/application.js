@@ -19,4 +19,5 @@
 //= require moment
 //= require customdate
 //= require graph
-
+//= require bootstrap
+//= require pagination

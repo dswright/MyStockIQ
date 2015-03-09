@@ -8,16 +8,13 @@ class Stream < ActiveRecord::Base
   #uses Rails default_scope function to sort the posts such that the most recent one is first.
   default_scope -> {order('created_at DESC')}
 
+  scope :by_popularity_score, lambda { self.joins("join popularities on popularities.popularable_id = streams.streamable_id and popularities.popularable_type = streams.streamable_type").reorder("popularities.score DESC")}
+
+
   ######### STREAM MODEL VALIDATIONS ##########
 
   #Stream.valid? returns TRUE when:
-
-  	#user_id exists
-  	#validates :user_id, presence: true
-
-  	#content exists and has a max length of 140 characters
-  	#validates :content, presence: true, length: {maximum: 140}
-
+  
 
 
   def self.stream_maker(streams, nest_count)
