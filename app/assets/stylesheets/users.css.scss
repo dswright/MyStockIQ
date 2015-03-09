@@ -3,6 +3,61 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 
+/* NEW USERPAGE STYLES ------------------------------------------------*/
+
+.user-page-body {
+  padding-left: 0px;
+  padding-right: 0px;
+  margin-top: 5px;
+}
+
+.user-sidebar-image-username {
+  color: #E6E6E6;
+  font-size: 11px;
+}
+
+.user-sidebar-image-points {
+  color: #E6E6E6;
+  font-size: 11px;
+}
+
+.user-sidebar-bio {
+  border: 1px solid rgba(0,0,0,.07);
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 10px;
+  font-size: 11px;
+}
+
+
+@media (min-width: 768px) {
+
+.user-page-body {
+  padding-right: 10px;
+}
+
+.user-page-sidebar {
+  display: block;
+  margin-top: -90px;
+  height: 500px;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 /* Sign Up styles --------------------------------*/
 
 

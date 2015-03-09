@@ -1,0 +1,51 @@
+
+
+.stockpage-side-analysts-box {
+	border: 1px solid rgba(0,0,0,.07);
+	background-color: #fff;
+	font-size: 11px;
+}
+
+.stockpage-side-analysts-header {
+	height: 33px;
+	margin-top: 15px;
+	color: #E6E6E6;
+	font-size: 11px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 10px;
+}
+
+.stockpage-side-analysts-img img {
+	width: 21px;
+	border-radius: 90px;
+}
+
+.stockpage-side-analysts-label {
+	margin-top: 3px;
+	margin-left: 10px;
+}
+
+.stockpage-side-analysts-number {
+	margin-top: 3px;
+}
+
+.stockpage-side-analysts-box a {
+	display: block;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	color: #808080;
+	font-size: 11px;
+
+	-webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+
+}
+
+.stockpage-side-analysts-box a:hover {
+	background-color: rgba(0,0,0,.07);
+}

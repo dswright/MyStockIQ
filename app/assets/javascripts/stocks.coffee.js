@@ -1,7 +1,7 @@
 function resizeChart() {
   var height = $("#stock-div").width()/3+30;
   $("#stock-div").css("height", height);
-  $(".stockgraph-container1").css("height", height+10);
+  $(".stockpage-graph").css("height", height+10);
 };
 
 //Global variables 
@@ -18,8 +18,12 @@ $(document).ready(function () {
   seriesVar = [
     {
       name : gon.ticker_symbol,
+      lineWidth: 1,
       dataGrouping: {
         enabled: false
+      },
+      line: {
+        enabled:false
       }
     },
     {
@@ -55,9 +59,13 @@ $(document).ready(function () {
 
   stockChart = new Highcharts.StockChart({
     chart: {
+      backgroundColor:'transparent',
       renderTo: 'stock-div',
       panning: false, //disables time frame dragging on desktop
       pinchType: false //disable time frame dragging on mobile.
+    },
+    exporting: {
+      enabled: false
     },
     plotOptions: {
       spline: {
@@ -84,8 +92,10 @@ $(document).ready(function () {
       }
     },
     tooltip: {
+      crosshairs: null,
       shared: false,
-      formatter: function() {
+      enabled: false
+           /*formatter: function() {
         if(this.series.name == 'my_prediction') {
           var arrId = this.series.data.indexOf(this.point);
           var predictionId = stockGraph["my_prediction_id"][arrId]; //this will always use just the 1 my_prediction_id which will always show on the graph.
@@ -124,7 +134,7 @@ $(document).ready(function () {
           niceDate = niceDate.utcTimeInt().utcTimeStr();
           return '$' + this.y + ': ' + niceDate;
         }
-      }
+      }*/
     },
     rangeSelector : {
       enabled: false
@@ -135,14 +145,25 @@ $(document).ready(function () {
     navigator: {
       enabled: false
     },
-    xAxis: {
-      minRange: 3600 * 1000
+    yAxis: {
+      gridLineColor: 'rgba(255, 255, 255, 0.2)',
+      gridLineWidth: 1
     },
+    xAxis: {
+      minRange: 3600 * 1000,
+      labels: {
+        enabled: false
+      },
+      minorTickLength: 0,
+      tickLength: 0,
+      lineColor: 'rgba(255, 255, 255, 0.2)',
+      lineWidth: 0
+    },
+
     series: seriesVar
   });
 
   var apiUrl = "/stockprices/" + gon.ticker_symbol + ".json";
-  stockChart.showLoading('Loading data from server');
   var getRanges1;
   
   $.ajax({
@@ -163,7 +184,7 @@ $(document).ready(function () {
 
       //$("body").on('click', 'button[data-button-type]', chartFunctions.buttonClick);
       //so this button click is being called like a closure? maybe? This thing needs to execute itself...
-      $("button[data-button-type]").click(stockChartFunctions.buttonClick);
+      $("div[data-button-type]").click(stockChartFunctions.buttonClick);
 
       window.inputPrediction = function(endTime, endPrice, predictionId) {
         stockChartFunctions.inputPrediction(endTime, endPrice, predictionId); //when a prediction is input, this function fires from the predicitoninput ajax call.
@@ -179,8 +200,4 @@ $(document).ready(function () {
 
 
 });
-
-
-
-
 

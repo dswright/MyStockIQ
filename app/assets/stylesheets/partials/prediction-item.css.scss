@@ -1,0 +1,372 @@
+
+.toggle {
+	display: none;
+}
+
+.comment-toggle {
+	display: none;
+}
+
+.nested-toggle-1 {
+	display: none;
+}
+
+.filler {
+	display: none;
+}
+
+.prediction-item-anchor {
+	display: block;
+	margin-top: 10px;
+	overflow: hidden;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	color: rgba(255,255,255,.85);
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 17px;
+	opacity: .90;
+
+	-webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+}
+
+.prediction-item-anchor:focus {
+	color: rgba(255,255,255,.85);
+  text-decoration: none;
+	outline: 0px auto -webkit-focus-ring-color;
+  outline-offset: 0px;
+}
+
+.prediction-item-anchor:hover {
+	opacity: 1;
+	color: rgba(255,255,255,1);
+}
+
+.prediction-item-img {
+	padding-left: 10px;
+	padding-right: 10px;
+	width: 53px;
+}
+
+.prediction-item-img img {
+	width: 33px;
+	border-radius: 90px
+}
+
+.prediction-item-username {
+	font-size: 11px;
+	margin-top: 0px;
+	margin-bottom: 1px;
+}
+
+.prediction-item-txt {
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+.prediction-item-main-txt {
+	margin-top: 0px;
+	margin-bottom: 0px;
+	font-size: 15px;
+}
+
+.prediction-item-points {
+	font-size: 42px;
+	padding-right: 10px;
+}
+
+.prediction-item-points p {
+	margin-top: -5px;
+	margin-bottom: 0px;
+	height: 36px;
+	width: 60px;
+	font-size: 36px;
+}
+
+.prediction-expanded {
+	margin-top: 0px;
+	overflow: hidden;
+	padding-left: 10px;
+	padding-right: 10px;
+	opacity: .90;
+	padding-bottom: 15px;	
+}
+
+.prediction-expanded p {
+	margin-top: 10px;
+	color: rgba(255,255,255,.85);
+}
+
+.prediction-item-comment a {
+	text-decoration: underline;
+}
+
+.prediction-graph img {
+	margin-top: 15px;
+	width: 100%;
+}
+
+.prediction-buttons {
+	margin-top: 20px;
+}
+
+.prediction-buttons-item {
+	position: relative;
+}
+
+.prediction-buttons-item a:hover {
+	color: rgba(255,255,255,1);;
+}
+
+.prediction-buttons-item-upvote {
+	border: solid 1px rgba(255,255,255,.85);;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	font-size: 11px
+}
+
+.prediction-buttons-item-upvote a {
+	display: block;
+	position: relative;
+	color: rgba(255,255,255,.85);;
+	text-decoration: none;
+	margin: auto;
+	padding-left: 12px;
+	padding-right: 12px;
+
+	-webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+}
+
+.prediction-buttons-item-upvote a i {
+	padding-right: 3px;
+	font-size: 11px
+}
+
+.prediction-buttons-item-downvote {
+	border: solid 1px rgba(255,255,255,.85);;
+	border-left: 0px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	font-size: 11px
+}
+
+.prediction-buttons-item-downvote a {
+	display: block;
+	position: relative;
+	color: rgba(255,255,255,.85);;
+	text-decoration: none;
+	margin: auto;
+	padding-left: 12px;
+	padding-right: 12px;
+
+	-webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+
+}
+
+.prediction-buttons-item-downvote a i {
+	padding-right: 3px;
+	font-size: 11px;
+}
+
+
+
+.prediction-buttons-item-comment {
+	border: solid 1px rgba(255,255,255,.85);;
+	margin-left: 15px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	font-size: 11px
+}
+
+.prediction-buttons-item-comment a {
+	display: block;
+	position: relative;
+	color: rgba(255,255,255,.85);
+	text-decoration: none;
+	margin: auto;
+	padding-left: 12px;
+	padding-right: 12px;
+
+	-webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+}
+
+.prediction-buttons-item-comment a i {
+	font-size: 11px
+}
+
+.prediction-buttons-item-icon a {
+	color: rgba(255,255,255,.85);;
+	text-decoration: none;
+	margin-left: 25px;
+
+	-webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+
+}
+
+.prediction-comments {
+	margin-top: 5px;
+	color: rgba(255,255,255,.85);
+}
+
+.prediction-comment-header {
+	font-size: 11px;
+	padding-bottom: 5px;
+	margin-top: 20px;
+	border-bottom: solid 1px rgba(255,255,255,.85); 
+}
+
+.prediction-comment-header p {
+	margin-bottom: 0px;
+	color: rgba(255,255,255,.85);
+}
+
+.prediction-comment-buttons {
+	margin-top: 10px;
+}
+
+.prediction-comments-txt textarea {
+	background-color: transparent;
+	border: solid 1px rgba(255,255,255,.85); 
+	resize: none;
+	outline: none;
+	width: 100%;
+	margin-top: 3px;
+	font-size: 11px;
+	color: rgba(255,255,255,.85);
+	padding-left: 7px;
+	padding-right: 5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.prediction-comments-txt textarea:focus {
+	border: solid 1px rgba(255,255,255,1); 
+}
+
+.prediction-comment-item {
+	margin-top: 15px;
+	overflow: hidden;
+}
+
+.prediction-comments-img {
+	width: 10%;
+	padding-top: 3px;
+	padding-right: 10px;
+}
+
+.prediction-comments-img img {
+	width: 100%;
+	max-width: 33px;
+	border-radius: 90px;
+}
+
+.prediction-comments-txt {
+	margin-left: 0px;
+	width: 85%;
+}
+
+.prediction-comments-txt-username {
+	margin-bottom: 3px;
+}
+
+.prediction-comments-txt p {
+	font-size: 11px;
+	margin-top: 0px;
+}
+
+
+@media (min-width: 480px) {
+
+
+}
+
+@media (min-width: 768px) {
+
+.filler {
+	display: inline;
+}
+
+.prediction-item-img {
+	padding-left: 10px;
+	padding-right: 10px;
+	width: 60px;
+}
+
+.prediction-item-img img {
+	width: 40px;
+	border-radius: 90px
+}
+
+.prediction-item-username {
+	font-size: 12px;
+	margin-top: 0px;
+	margin-bottom: 2px;
+}
+
+.prediction-item-txt {
+	padding-left: 0px;
+}
+
+.prediction-item-main-txt {
+	margin-top: 0px;
+	margin-bottom: 0px;
+	max-width: 600px;
+}
+
+.prediction-expanded {
+	padding-left: 60px;
+	padding-right: 69px;
+	opacity: .90;
+}
+
+.prediction-item-comment {
+	margin-top: 10px;
+}
+
+.prediction-item-points {
+	font-size: 45px;
+	padding-right: 10px;
+}
+
+.prediction-item-points p {
+	margin-top: -10px;
+	margin-bottom: 0px;
+	height: 30px;
+	width: 76px;
+	font-size: 43px;
+}
+
+}
+
+
+
+@media (min-width: 991px) {
+
+.prediction-comments-img {
+	padding-right: 0px;
+	width: 8%;
+}
+
+
+}
+
+@media (min-width: 1050px) {
+
+
+
+}
