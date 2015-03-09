@@ -43,7 +43,7 @@
 }
 
 
-.sidebar-close-button a {
+.sidebar-close-button input {
 	margin-top: 20px;
 	border: solid 1px #B3B3B3;
 	border-radius: 0px;
@@ -52,6 +52,7 @@
 	color: #B3B3B3;
 	font-size: 11px;
 	width: 100%;
+	background-color: #FFF;
 
 	-webkit-transition: 150ms ease-in;
   -moz-transition: 150ms ease-in;
@@ -59,7 +60,7 @@
   transition: 150ms ease-in;
 }
 
-.sidebar-close-button a:hover {
+.sidebar-close-button input:hover {
 	border: solid 1px #808080;
 	color: #808080;
 }

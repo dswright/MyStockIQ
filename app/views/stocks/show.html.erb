@@ -132,36 +132,11 @@
   </div>
   <div class="col-sm-3 stockpage-sidebar">
 
-    <div class="stockpage-sidebar-prediction">
-      <div class="stockpage-sidebar-prediction-header black-gradient">
-        <div class="stockpage-sidebar-prediction-header-txt pull-left">
-          Predict APPL
-        </div>
-        <div class="stockpage-sidebar-prediction-points pull-right">
-          <i class="fa fa-line-chart"></i>
-        </div>
-      </div>
-      <div class="stockpage-sidebar-prediction-box">
-        <div class="stockpage-sidebar-prediction-form">
-          <span class="pull-left">AAPL will be</span>
-          <input class="prediction-form-price" placeholder="$"><br>
-          <span class="pull-left">in</span>
-          <input class="prediction-form-days" placeholder="days">
-          <input class="prediction-form-hrs" placeholder="hrs">
-          <input class="prediction-form-mins" placeholder="mins">
-        </div>
-        <div class="stockpage-sidebar-prediction-comment">
-          <textarea class="prediction-form-comment" placeholder="Comment on APPL"></textarea>
-          <div class="checkbox">
-            <input class="comment-only" type="checkbox" name="" value=""><span class="check-box-span">Comment only</span>
-          </div>
-        </div>
-        <div class="submit-button-div">
-          <a class="btn">SUBMIT</a>
-        </div>
-      </div>
-    </div>
-
+  <% if @prediction.active %> 
+    <%= render @prediction %>
+  <% else %>
+    <%= render 'shared/prediction_form' %>
+  <% end %>
     <div class="stockpage-sidebar-open">
       <div class="stockpage-sidebar-open-header black-gradient">
         <div class="stockpage-sidebar-open-header-txt pull-left">

@@ -18,7 +18,7 @@ $(document).ready(function () {
   seriesVar = [
     {
       name : gon.ticker_symbol,
-      lineWidth: 3,
+      lineWidth: 1,
       dataGrouping: {
         enabled: false
       },

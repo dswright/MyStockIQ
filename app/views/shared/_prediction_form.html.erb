@@ -1,13 +1,36 @@
-<%= form_for(@prediction, remote:true) do |f| %>
 
-	<div class = "field">
-		<%= f.text_area :prediction_end_price, placeholder: "Future stock price will be... (eg. 100)", class: "stock-page-prediction-field" %>
-		days: <%= text_field_tag :days %>
-		hours: <%= text_field_tag :hours %>
-		minutes: <%= text_field_tag :minutes %>
-		<%= f.text_area :prediction_comment, placeholder: "Add a comment... (optional)", class: "stock-page-comment-field" %>
-		<%= f.hidden_field :stock_id %>
-		<%= hidden_field_tag :stream_string, @prediction_stream_inputs %>
+
+<%= form_for(@prediction, remote:true) do |f| %>
+	<div class="stockpage-sidebar-prediction">
+	  <div class="stockpage-sidebar-prediction-header black-gradient">
+	    <div class="stockpage-sidebar-prediction-header-txt pull-left">
+	      Predict <%= @stock.ticker_symbol %>
+	    </div>
+	    <div class="stockpage-sidebar-prediction-points pull-right">
+	      <i class="fa fa-line-chart"></i>
+	    </div>
+	  </div>
+	  <div class="stockpage-sidebar-prediction-box">
+	    <div class="stockpage-sidebar-prediction-form">
+	      <span class="pull-left"><%= @stock.ticker_symbol %> will be</span>
+	      <%= f.text_field :prediction_end_price, placeholder: "$",:class => "prediction-form-price" %><br>
+	      <span class="pull-left">in</span>
+	      <%= text_field_tag 'days', nil, class: "prediction-form-days", placeholder:"days"  %>
+	      <%= text_field_tag 'hours', nil, class: "prediction-form-hrs", placeholder:"hours" %>
+	      <%= text_field_tag 'minutes', nil, class: "prediction-form-mins", placeholder:"minutes" %>
+	    </div>
+	    <div class="stockpage-sidebar-prediction-comment">
+	      <%= f.text_area :prediction_comment, placeholder: "Comment on #{@stock.ticker_symbol}", class: "prediction-form-comment" %>
+	      <div class="checkbox">
+	        <%= check_box_tag :comment_only, class: "comment-only" %><span class="check-box-span">Comment only</span>
+	      </div>
+	    </div>
+	    <%= f.hidden_field :stock_id %>
+			<%= hidden_field_tag :stream_string, @prediction_stream_inputs %>
+	    <div class="submit-button-div">
+	    	<%= f.submit "SUBMIT", class: "btn"%>
+	    </div>
+	  </div>
 	</div>
-	<%= f.submit "Make Prediction", class: "btn btn-primary" %>
 <% end %>
+
