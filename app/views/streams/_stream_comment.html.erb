@@ -1,12 +1,22 @@
-    <div class = "col-xs-3 col-sm-2 col-md-2">
-      <div class = "prediction-post-mug-container">
-        <img src="http://stocktators.com/assets/images/user.png">
-      </div>
+
+
+    <div class="prediction-item">
+      <a class="prediction-item-anchor red-gradient expand">
+        <div class="col-xs-2 prediction-item-img">
+          <%= image_tag "del.jpg" %>
+        </div>
+        <div class="pull-left prediction-item-txt">
+          <p class="prediction-item-username"><%= comment.user.username %>&nbsp;&middot;&nbsp;2hr</p> 
+          <p class="prediction-item-main-txt"><%= comment.content %></p> 
+        </div>
+        <div class="prediction-item-points pull-right">
+          <p>+20</p>
+        </div>
+      </a>
     </div>
-    <div class = "prediction-post-txt-container col-xs-9" style="width:400px;">
-      <p class = "handle">
-        <a href = "#"><%= link_to comment.user.username, "/users/#{comment.user.username}/" %></a> &nbsp;&bull;&nbsp; <%= time_ago_in_words(comment.created_at) %>
-      </p>
-      <p class = "comment-txt"><%= comment.content %></p>
-    </div>
-  
+
+    <% #<a href = "#"><%= link_to comment.user.username, "/users/#{comment.user.username}/" 
+    #</a> &nbsp;&bull;&nbsp; time_ago_in_words(comment.created_at)
+     # </p>
+     # <p class = "comment-txt"><%= comment.content</p>
+  %>

@@ -66,7 +66,7 @@ class ScraperPublic
     encoded_url = URI.encode(url)
     if stock_hash_array = Scraper.process_csv_file(encoded_url, QuandlAllstocks.new, nil, false)
       unless stock_hash_array.empty?
-        Scraper.new.save_to_db(stock_hash_array, QuandlAllstocks.new)
+        Scraper.new.save_to_db(stock_hash_array, QuandlAllstocks.new)        
       end
     end
   end

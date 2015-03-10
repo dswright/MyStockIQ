@@ -15,7 +15,7 @@
 
     <div class="stockpage-graph-module black-gradient clearfix">
       <div class="pull-left stockpage-ticker">
-        <p>APPL (Apple Inc.)</p>
+        <p><%= @stock.ticker_symbol %> - <%= @stock.stock %></p>
       </div>
 
       <div class="graph-point-hover">
@@ -129,41 +129,19 @@
       </a>
     </div>
 
+    <!-- STREAM POSTS -->
+    <%= render partial: "streams/stream_main", locals: {streams: @streams, nest_count: 0} %>
+    <%= will_paginate @streams %>
+
   </div>
   <div class="col-sm-3 stockpage-sidebar">
 
   <% if @prediction.active %> 
-    <%= render @prediction %>
+    <%= render partial: 'predictions/prediction', locals: {prediction: @prediction} %>
   <% else %>
     <%= render 'shared/prediction_form' %>
   <% end %>
-    <div class="stockpage-sidebar-open">
-      <div class="stockpage-sidebar-open-header black-gradient">
-        <div class="stockpage-sidebar-open-header-txt pull-left">
-          Open Prediction
-        </div>
-        <div class="stockpage-sidebar-open-points pull-right">
-          <i class="fa fa-line-chart"></i>
-        </div>
-      </div>
-      <div class="stockpage-sidebar-open-box">
-        <div class="sidebar-open-item col-md-4">
-          <p class="sidebar-open-figure">1D</p>
-          <p class="sidebar-open-title">TIME LEFT</p>
-        </div>
-        <div class="sidebar-open-item col-md-4">
-          <p class="sidebar-open-figure">$170</p>
-          <p class="sidebar-open-title">TARGET</p>
-        </div>
-        <div class="sidebar-open-item col-md-4">
-          <p class="sidebar-open-figure">+3</p>
-          <p class="sidebar-open-title">POINTS</p>
-        </div>  
-        <div class="sidebar-close-button">
-          <a class="btn">CLOSE PREDICTION</a>
-        </div>
-      </div>
-    </div>
+   
 
     <div class="stockpage-side-analysts-header black-gradient">
       <div class="user-sidebar-similar-header-txt">
@@ -254,9 +232,7 @@
 #
 #  <%= render 'shared/comment_form'
 
-#<!-- STREAM POSTS -->
-# <%= render partial: "streams/stream_main", locals: {streams: @streams, nest_count: 0}
-#  <%= will_paginate @streams
+
 %>
 
 

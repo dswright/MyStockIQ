@@ -1,6 +1,6 @@
 window.removePrediction(); //remove the prediction from the graph.
 
-$('.stock-page-prediction-box').html("<%= j render 'shared/prediction_form' %>"); //replace the prediction with the prediction form.
+$('.stockpage-sidebar-open').html("<%= j render 'shared/prediction_form' %>"); //replace the prediction with the prediction form.
 
 $('#stream-<%= @prediction_css_id %>').remove(); //remove the stream item from the stream.
 
