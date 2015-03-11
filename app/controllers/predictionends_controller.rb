@@ -52,22 +52,18 @@ class PredictionendsController < ApplicationController
         predictionend.streams.build(targetable_type:"User", targetable_id:current_user.id).save
 
         #build stream item to insert to the top of the stream.
-        @streams = [Stream.where(streamable_type: 'Prediction', streamable_id: @prediction.id).first]
+        @streams = [Stream.where(streamable_type: 'Predictionend', streamable_id: @predictionend.id).first]
         
         response_msgs << "prediction ended."
       else #if there are no children, and the prediction has not started, cancel the prediction.
         @prediction_css_id = "Prediction_#{params[:prediction_id]}" #this is used to eliminate the stream item from the page when cancelled.
         @prediction_stream_inputs = "Stock:#{prediction.stock.id},User:#{current_user.id}" #this is used to define the target stream items for the new prediction input form.
         response_msgs << "prediction removed."
-        
         prediction.destroy
       end
-
     end
 
-
     @response = response_maker(response_msgs)
-
     respond_to do |f|
       f.js {
         if params[:input_page] == "stockspage"

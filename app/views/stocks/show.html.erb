@@ -129,9 +129,14 @@
       </a>
     </div>
 
-    <!-- STREAM POSTS -->
+    <div class = "stream" >
     <%= render partial: "streams/stream_main", locals: {streams: @streams, nest_count: 0} %>
+    </div>
+    <div id = "infinite-scrolling" >
     <%= will_paginate @streams %>
+    </div>
+
+    <!-- STREAM POSTS -->
 
   </div>
   <div class="col-sm-3 stockpage-sidebar">
@@ -202,12 +207,7 @@
 
 
     <!-- 
-    <div class = "stream" >
-      <%= #render partial: "streams/stream_main", locals: {streams: @streams, nest_count: 0} %>
-    </div>
-    <div id = "infinite-scrolling" >
-      <%= #will_paginate @streams %>
-    </div>
+    
     
   </div>
 </div>

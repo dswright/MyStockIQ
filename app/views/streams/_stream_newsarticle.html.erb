@@ -1,17 +1,27 @@
-    <div class = "col-xs-3 col-sm-2 col-md-2">
-      <div class = "prediction-post-mug-container">
-        <img src= "http://stocktators.com/assets/images/user.png">
-      </div>
-    </div>
-    <div class = "prediction-post-txt-container col-xs-9" style="width:400px;">
 
-      <p class = "handle">
-        <%= link_to newsarticle.title, newsarticle.url%>&nbsp;&bull;&nbsp;<%= time_ago_in_words(newsarticle.date) %> ago
-      </p>
 
-      <p class = "prediction-txt">
-        <%= newsarticle.summary %>
-      </p>
+<div class="stream-news black-gradient clearfix">
+  <a class="stream-news-anchor expand">
+    <div class="col-xs-2 prediction-item-img">
+      <i class="fa fa-newspaper-o fa-2x"></i>
     </div>
+
+    <div class="pull-left prediction-item-txt">
+      <p class="stream-news-source"><%= newsarticle.title %></p>
+      <p class="stream-news-date"><%= time_ago_in_words(newsarticle.date) %> ago</p>
+    </div>
+
+  </a>
+  <div class="stream-news-summary"><%= newsarticle.summary %></div>
+  
+  <div class="stream-response-box">
+    <div class="stream-thumbs-box">
+      <i class="stream-thumb-up fa fa-thumbs-o-up fa-lg" id="e">&nbsp;&nbsp;20</i>
+      <i class="stream-thumb-down fa fa-thumbs-o-up fa-lg" id="e">&nbsp;&nbsp;19</i>
+    </div>
+  </div>
+  <div class="stream-comment-line">11 Comments</div>
+
+</div>
 
 
