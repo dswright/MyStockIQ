@@ -130,10 +130,10 @@
     </div>
 
     <div class = "stream" >
-    <%= render partial: "streams/stream_main", locals: {streams: @streams, nest_count: 0} %>
+      <%= render partial: "streams/stream_main", locals: {streams: @streams, nest_count: 0} %>
     </div>
     <div id = "infinite-scrolling" >
-    <%= will_paginate @streams %>
+      <%= will_paginate @streams %>
     </div>
 
     <!-- STREAM POSTS -->

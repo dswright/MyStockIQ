@@ -311,22 +311,3 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2d2b29', end
 
 
 
-/* OLD GLOBAL ------------------------------------------*/
-
-
-
-
-.ui-autocomplete {
-  display: block;
-  overflow: hidden;
-  background: #FFF;
-  cursor: pointer;
-}
-
-.ui-menu-item:hover {
-  background-color: #000;
-  font: #FFF;
-}
-
-
-

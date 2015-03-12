@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   
   def show
     return if user_logged_in? #redirects the user to the login page if they are not logged in.
-        
+    
     #Logged in user
     @current_user = current_user
 
@@ -36,11 +36,16 @@ class UsersController < ApplicationController
     @like = Like.new
 
     #@comment = current_user.comments.build  #this assumes an association between comments and current user. Which does not exist.
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def new
-  	@user = User.new
-  	#why create a new empty user here? To be passed into the user creation form for setting the params.
+  	@user = User.new #create an empty user to be passed into the user creation form.
+    @disable_nav = true
   end
 
   def create
@@ -49,14 +54,12 @@ class UsersController < ApplicationController
     #this saves the new user to the database.
   	if @user.save 
       log_in @user
-      flash[:success] = "Welcome to the Stock Hero"
 
       #redirect to user profile page
-  		redirect_to "/users/#{@user.username}"
+  		redirect_to "/users/#{@user.username}/"
 
   	else
-      flash.now[:danger] = 'Invalid Form'
-  		render 'sessions/new'
+  		redirect_to '/signup'
   	end
 	end
 

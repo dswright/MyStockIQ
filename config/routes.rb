@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   
   #this sends /newuser to the newuser index function in the controller this has to be plural,
   #to fit with Ruby conventions.
-  get     'users'                        =>   'users#new' 
+  get     'signup'                       =>   'users#new' 
   post    'users'                        =>   'users#create'
   get     'users/:username'              =>   'users#show'                                              
 

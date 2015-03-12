@@ -1,7 +1,5 @@
-
 <body>
-
-<section class="nav-singed-in">
+<section class="nav-signed-in">
   <div class="nav-constrainer">
     <div class="nav-logo pull-left">
       StockIQ
@@ -49,6 +47,7 @@
         <p>My Feed</a></p>
       </div>
     </a>
+    
     <a class="nav-dropdown-item clearfix">
       <div class="nav-dropdown-img pull-left">
         <img src="img/del.jpg">
@@ -93,7 +92,72 @@
 </section>
 
 
+<!-- 
+    <div class = "nav-custom collapse navbar-collapse navHeaderCollapse">
+      <ul class = "nav navbar-nav navbar-right">
+      <li><>Logout</a></li>
+      
+        <li><a href = "/stocks/AAPL/">AAPL</a></li>
+        <li><a href = "/feed/">My Feed</a></li>
 
+        <script>
+$(function() {
+  $("#username").autocomplete({
+    delay: 500,
+    minLength:2,
+    source: function(request, response) {
+      $.getJSON("/stocks/"+request.term+".json",
+      function(data) {
+        var array = data.ticker_symbols.map(function(m) {
+          return {
+            label: m,
+            url: "/stocks/" + m + "/"
+          }
+        });
+        response(array);
+      });
+    },
+    focus: function(event, ui) {
+      // prevent autocomplete from updating the textbox
+      event.preventDefault();
+    },
+    select: function(event, ui) {
+      // prevent autocomplete from updating the textbox
+      event.preventDefault();
+      // navigate to the selected item's url
+      window.open(ui.item.url);
+    }
+  });
+
+  $(".ui-autocomplete").insertAfter($('.autocomplete3'));
+
+
+});
+        </script>
+
+        <li class="autocomplete3"><input type='text' name='search' class="search-field" id='username' placeholder="Search"/></li>
+        <li>
+          <div class = "prediction-btn-container">
+            <a href ="#" class="btn nav-prediction-btn" data-toggle="modal" data-target="#basicModal">Make a Prediction</a>
+          </div>
+        </li>
+        <li class="dropdown">
+          <a href = "#" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="fa fa-cog fa-lg"></i><span>Settings</span>
+
+            <ul class ="dropdown-menu">
+              <li><a href = "#">placeholder</a></li>
+              <li><a href = "#">placeholder</a></li>
+              <li><a href = "#">Manage My Account</a></li>
+              <li><a href = "#">Setings</a></li>
+            </ul>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+ -->
 
 
 

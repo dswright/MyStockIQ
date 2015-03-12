@@ -3,7 +3,7 @@
 <section class="signin-nav clearfix">
   <div class="nav-constrainer">
     <div class="signin-nav-logo pull-left">
-      tockIQ
+      StockIQ
     </div>
     <div class="signin-nav-link pull-right">
       <p>Sign In</p>
@@ -11,76 +11,31 @@
   </div>
 </section>
 
-<div class="constrainer">
-  <div class="signin-form-div">
-    <div class="signin-form-header red-gradient">
-      <div class="signin-form-header-txt">
-        Sign In
+
+<%= form_for(:session, url: login_path) do |f| %>
+  <div class="constrainer">
+    <div class="signin-form-div">
+      <div class="signin-form-header red-gradient">
+        <div class="signin-form-header-txt">
+          Sign In
+        </div>
       </div>
-    </div>
-    <div class="signin-form-box">
-      <p class="signin-signin-link">Don't have and account? <a href="#">Sign up here.</a></p>
-      <div class="signin-form-fields">
-        <input class="signin-email-field" id="signin-form-field" placeholder="Email address OR Username">
-        <input class="signin-email-field" type="password" id="signin-form-field" placeholder="Password">
-      </div>
-      <div class="signin-submit-button-div">
-        <a class="btn">SIGN IN</a>
+      <div class="signin-form-box">
+        <p class="signin-signin-link">Don't have and account?
+        <%= link_to "Sign up here.", signup_path %></p>
+        <div class="signin-form-fields">
+          <%= f.text_field :email, :placeholder => "Email Address or Username", :class => "signin-email-field", :id => "signin-form-field" %>
+          <%= f.password_field :password, :placeholder => "Password", :class => "signin-email-field", :id => "password" %>
+        </div>
+        <div class="signin-submit-button-div">
+          <%= f.submit "SIGN IN", :class => "btn" %>
+        </div>
       </div>
     </div>
   </div>
-</div>
+<% end %>
 
 <br>
 <br>
 <br>
 
-
-<div class="login-main">
-
-    <div class="logo-and-tabs">
-        <div class="login-logo">
-            <img name="stockhero" role="title" src="" >
-        </div>
-        <div id="login">
-            <p><%= link_to "Login", login_path %></p>
-        </div>
-        <div id="create-account">
-            <p><%= link_to "Create Account", users_path %></p>
-        </div>
-    </div>
-
-    <div class="formbox">
-
-        <h1>Log in to StockHero</h1>
-
-    <div id='login_form'>
-
-      <%= form_for(:session, url: login_path) do |f| %>
-
-        <h2>Username</h2>
-        <%= f.text_field :email, :placeholder => "Enter username or email", :class => "field", :id => "username" %> <br>
-
-        <h2>Password</h2>
-        <%= f.password_field :password, :placeholder => "Enter password", :class => "field", :id => "password" %> <br>
-
-        <%= f.submit "Login", :class => "btn login-btn" %>
-
-      <% end %>
-
-    </form>
-
-        <div id="formbox-login-tips">
-            <h2>Don't have an account?</h2>
-            <%= link_to "Sign up now!", users_path %>
-            <h2 class="pwd">Forget your password?</h2>
-            <a href="#">Recover it here.</a>
-        </div>
-
-    </div><br>
-
-    <footer>
-        <p>© 2013 StockHero, All Rights Reserved.</p>
-    </footer>
-
-</div>

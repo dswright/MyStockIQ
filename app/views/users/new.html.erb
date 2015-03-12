@@ -1,38 +1,36 @@
 
-<section class="signup-nav clearfix">
-  <div class="nav-constrainer">
-    <div class="signup-nav-logo pull-left">
-      StockIQ
-    </div>
-    <div class="signup-nav-link pull-right">
-      <p>Sign Up</p>
-    </div>
-  </div>
-</section>
 
-<div class="constrainer">
-  <p class="signup-title">What's your Stock IQ?</p>
-  <p class="signup-subtitle">Find out how good you <i>really</i> are at predicting the market. Follow experts, compete with friends, and raise your Stock IQ.</p>
-  <div class="signup-form-div">
-    <div class="signup-form-header red-gradient">
-      <div class="signup-form-header-txt">
-        Sign Up
+<%= form_for(:user, url: users_path) do |f| %>
+  <div class="constrainer">
+    <p class="signup-title">What's your Stock IQ?</p>
+    <p class="signup-subtitle">Find out how good you <i>really</i> are at predicting the market. Follow experts, compete with friends, and raise your Stock IQ.</p>
+    <div class="signup-form-div">
+      <div class="signup-form-header red-gradient">
+        <div class="signup-form-header-txt">
+          Sign Up
+        </div>
       </div>
-    </div>
-    <div class="signup-form-box">
-      <p class="signup-signin-link">Already have and account? <a href="#">Sign in here.</a></p>
-      <div class="signup-form-fields">
-        <input class="signup-email-field" id="signup-form-field" placeholder="Email address">
-        <input class="signup-email-field" id="signup-form-field" placeholder="Username">
-        <input class="signup-email-field" id="signup-form-field" placeholder="Password">
-        <input class="signup-email-field" id="signup-form-field" placeholder="Confirm Password">
-      </div>
-      <div class="signup-submit-button-div">
-        <a class="btn">CREATE ACCOUNT</a>
+      <div class="signup-form-box">
+        <p class="signup-signin-link">Already have and account? <%= link_to "Sign in here.", login_path %></p>
+        <div class="signup-form-fields">
+
+
+          <%= f.text_field :username, class: "signup-email-field", id: "signup-form-field", placeholder: "Username" %>
+
+          <%= f.text_field :email, class: "signup-form-field", id: "signup-form-field", placeholder: "Email address" %>
+          
+          <%= f.password_field :password, class: "signup-email-field", id: "signup-form-field", placeholder: "Password" %>
+
+          <%= f.password_field :password_confirmation, class: "signup-email-field", id: "signup-form-field", placeholder: "Confirm Password" %>
+
+        </div>
+        <div class="signup-submit-button-div">
+          <%= f.submit "CREATE ACCOUNT", :class => "btn" %>
+        </div>
       </div>
     </div>
   </div>
-</div>
+<% end %>
 
 <br>
 <br>
@@ -40,54 +38,3 @@
 
 
 
-<div class="login-main">
-    <div class="logo-and-tabs">
-        <div class="login-logo">
-            <img name="stockhero" role="title" src="">
-        </div>
-        <div id="login">
-            <p><%= link_to "Login", login_path %></p>
-        </div>
-        <div id="create-account">
-            <p><%= link_to "Create Account", users_path %></p>
-        </div>
-    </div>
-
-    <div class="formbox">
-
-        <h1>Sign Up for StockHero</h1>
-
-        <div id='signup_form'>
-
-            <%= form_for(:user, url: users_path) do |f| %>
-
-                <h2>Username</h2>
-                <%= f.text_field :username, :class => "field", :id => "username" %><br>
-
-                <h2>Email address</h2>
-                <%= f.text_field :email, :class => "field", :id => "email" %><br>
-
-                <h2>Password</h2>
-                <%= f.password_field :password, :class => "field", :id => "password" %>
-
-                <h2>Confirm Password</h2>
-                <%= f.password_field :password_confirmation, :class => "field", :id => "password" %>
-
-                <%= f.submit "Sign Up", :class => "btn login-btn" %>
-
-            <% end %>
-
-        </div>
-
-        <div id="formbox-signup-tips">
-            <h2>Already have an account?</h2>
-            <%= link_to "Login", login_path %>
-        </div>
-
-    </div><br>
-
-    <footer>
-        <p>© 2013 StockHero, All Rights Reserved.</p>
-    </footer>
-
-</div>

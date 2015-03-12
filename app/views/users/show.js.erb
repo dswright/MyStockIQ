@@ -1,5 +1,3 @@
-//this allows for the infinte scroll on the stocks page.
-
 $(".stream").append('<%= j render partial: "streams/stream_main", locals: {streams: @streams, nest_count: 0} %>');
 <% if @streams.next_page %>
   $('.pagination').replaceWith('<%= j will_paginate @streams %>');
