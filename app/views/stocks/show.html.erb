@@ -114,20 +114,94 @@
       </div>
     </div>
 
+
+
+
+
     <div class="prediction-item">
-      <a class="prediction-item-anchor red-gradient expand">
-        <div class="col-xs-2 prediction-item-img">
-          <%= image_tag "del.jpg" %>
+      <div class="vote-count-container clearfix">
+        <div class="prediction-item-body col-xs-11 clearfix">
+          <div class="col-xs-2 prediction-item-img">
+            <img src="img/del.jpg">
+          </div>
+          <div class="prediction-item-txt">
+            <p class="prediction-item-username">delmnstr12</p>
+            <p class="prediction-item-main-txt"><span class="filler">Predicts</span> APPL will be +30 <span class="filler">points</span> in 2 weeks</p> 
+          </div>
+          <div class="prediction-item-tweet">
+            <p>Do ennui laboris, meditation dolor occaecat organic eu Truffaut master cleanse <a href="#">$APPL</a> anim pickled ad quis Portland. <a href="#">@dillshmill</a> deep v anim id, fixie adipisicing dolor eiusmod non PBR Brooklyn Portland esse Thundercats <a href="#">#drake</a><a href="#">#6god</a> <a href="#">#ohveeohhh</a></p>
+          </div>
+          <div class="prediction-footer">
+            <i class="fa fa-clock-o">&nbsp;2 hrs</i><span>+20 points</span>
+          </div>
         </div>
-        <div class="pull-left prediction-item-txt">
-          <p class="prediction-item-username">delmnstr12&nbsp;&middot;&nbsp;2hr</p> 
-          <p class="prediction-item-main-txt"><span class="filler">Predicts</span> APPL will be +30 <span class="filler">points</span> in 2 weeks</p> 
+        <div class="prediction-item-vote-count col-xs-1">
+          <a class="vote-count-up" href="#"><i class="fa fa-angle-up"></i></a>
+          <p>10</p>
+          <a class="vote-count-down" href="#"><i class="fa fa-angle-down"></i></a>
         </div>
-        <div class="prediction-item-points pull-right">
-          <p>+20</p>
+      </div>
+      <div class="prediction-item-comments">
+        <div class="prediction-comment-header">
+          <p>2 Comments</p>
         </div>
-      </a>
+        <div class="prediction-comment-item">
+          <div class="prediction-comment-col col-xs-11">
+            <div class="prediction-comments-img pull-left">
+              <img src="img/sean.png">
+            </div>
+            <div class="prediction-comments-txt pull-left">
+              <p>
+                <span class="prediction-comments-txt-username">seanjuan:&nbsp;</span>Kale chips cornhole ugh enim.
+              </p>
+              <div class="prediction-comments-txt-footer clearfix">
+                <i class="fa fa-clock-o">&nbsp;2 hrs</i>
+              </div>
+            </div>
+          </div>
+          <div class="prediction-comment-vote-col col-xs-1">
+            <a class="prediction-comment-vote-count-up" href="#"><i class="fa fa-angle-up"></i></a>
+            <p>10</p>
+            <a class="prediction-comment-vote-count-down" href="#"><i class="fa fa-angle-down"></i></a>
+          </div>
+        </div>
+        <div class="prediction-comment-item">
+          <div class="prediction-comment-col col-xs-11">
+            <div class="prediction-comments-img pull-left">
+              <img src="img/sean.png">
+            </div>
+            <div class="prediction-comments-txt pull-left">
+              <p>
+                <span class="prediction-comments-txt-username">seanjuan:&nbsp;</span>Kale chips cornhole ugh tattooed esse enim chips cornhole ugh tattooed esse enim chips cornhole ugh tattooed esse enim chips cornhole ugh tattooed esse enim.
+              </p>
+              <div class="prediction-comments-txt-footer clearfix">
+                <i class="fa fa-clock-o">&nbsp;2 hrs</i>
+              </div>
+            </div>
+          </div>
+          <div class="prediction-comment-vote-col col-xs-1">
+            <a class="prediction-comment-vote-count-up" href="#"><i class="fa fa-angle-up"></i></a>
+            <p>10</p>
+            <a class="prediction-comment-vote-count-down" href="#"><i class="fa fa-angle-down"></i></a>
+          </div>
+        </div>
+        <div class="prediction-comment-input">
+          <div class="prediction-comments-img pull-left">
+            <img src="img/sean.png">
+          </div>
+          <div class="prediction-comments-txt pull-left">
+            <input placeholder="Leave a reply..">
+          </div>
+        </div>
+      </div>
     </div>
+
+
+
+
+
+
+
 
     <div class = "stream" >
       <%= render partial: "streams/stream_main", locals: {streams: @streams, nest_count: 0} %>
