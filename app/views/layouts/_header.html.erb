@@ -1,5 +1,5 @@
-<body>
-<section class="nav-signed-in">
+
+<section class="nav-singed-in">
   <div class="nav-constrainer">
     <div class="nav-logo pull-left">
       StockIQ
@@ -26,7 +26,7 @@
       </div>
       <div class="nav-items-user pull-right">
         <a href="#">
-          <img src="img/del.jpg">
+          <%= image_tag "del.jpg" %>
           <p>delmnstr6</p>
         </a>
       </div>
@@ -39,15 +39,14 @@
 
 <section id="nav-dropdown">
   <div class="constrainer">
-    <a href = "/feed/" class="nav-dropdown-item clearfix">
+    <a class="nav-dropdown-item clearfix">
       <div class="nav-dropdown-icon pull-left">
         <i class="fa fa-list"></i>
       </div>
       <div class="nav-dropdown-label pull-left">
-        <p>My Feed</a></p>
+        <p>Feed</p>
       </div>
     </a>
-    
     <a class="nav-dropdown-item clearfix">
       <div class="nav-dropdown-img pull-left">
         <img src="img/del.jpg">

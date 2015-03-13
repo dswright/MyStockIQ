@@ -1,13 +1,18 @@
 
-/* Nav styles ------------------------------------*/
-
-
 
 .nav-items {
   display: none;
 }
 
-.nav-signed-in {
+.nav-items-user {
+  font-weight: 300;
+}
+
+.nav-items-feed {
+  font-weight: 300;
+}
+
+.nav-singed-in {
   height: 49px;
   border-bottom: 1px solid rgba(0,0,0,.07);
   background-color: #fff;
@@ -21,6 +26,8 @@
 .nav-mobile-button {
   padding-top: 14px;
 }
+
+
 
 .nav-mobile-button-anchor i {
   font-size: 18px;
@@ -59,11 +66,6 @@
 }
 
 
-@media (min-width: 480px) {
-
-
-}
-
 
 @media (min-width: 768px) {
 
@@ -78,6 +80,7 @@
 
 .nav-items-feed {
 }
+
 
 .nav-items-feed a {
   display: block;
@@ -96,6 +99,36 @@
 .nav-items-feed a:hover {
   border-bottom: 1px solid #44000b;
 }
+
+
+
+.nav-singed-in a {
+  color: #808080;
+
+  -webkit-transition: 300ms ease-in;
+  -moz-transition: 300ms ease-in;
+  -o-transition: 300ms ease-in;
+  transition: 300ms ease-in;
+}
+
+.nav-singed-in a:hover {
+  color: #4D4D4D;
+  cursor: pointer;
+  text-decoration: none
+}
+
+.nav-singed-in a:focus {
+  color: #808080;
+  text-decoration: none;
+}
+
+.nav-singed-in a:focus {
+  outline: none;
+  outline: 0px auto -webkit-focus-ring-color;
+  outline-offset: 0px;
+}
+
+
 
 
 .nav-items-user {
@@ -154,28 +187,4 @@
   border-bottom: 1px solid #44000b;
 }
 
-@media (min-width: 991px) {
-
-
 }
-
-@media (min-width: 1050px) {
-
-
-}
-
-}
-
-//nav styles for the auto complete.
-.ui-autocomplete {
-  display: block;
-  overflow: hidden;
-  background: #FFF;
-  cursor: pointer;
-}
-
-.ui-menu-item:hover {
-  background-color: #000;
-  font: #FFF;
-}
-
