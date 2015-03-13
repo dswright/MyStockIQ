@@ -170,9 +170,13 @@
 	margin-top: 5px;
 }
 
+.stats-header span {
+	font-size:10px;
+}
+
 .stats-header p {
 	color: rgba(255, 255, 255, 0.85);
-	padding-bottom: 3px;
+	padding-bottom: 0px;
 	border-bottom: solid 1px rgba(255, 255, 255, 0.85);
 	font-weight: 300;
 	font-size: 21px;
@@ -268,7 +272,7 @@
 
 
 .timeframes-mobile {
-	margin-top: 15px;
+	margin-top: 0px;
 	width: 100%;
 	overflow: hidden;
 }
@@ -286,7 +290,7 @@
 @media (min-width: 991px) {
 
 .timeframes-mobile {
-	margin-top: 15px;
+	margin-top: 0px;
 	width: 100%;
 	overflow: hidden;
 }
