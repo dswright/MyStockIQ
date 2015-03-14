@@ -1,23 +1,88 @@
-<div class = "col-xs-3 col-sm-2 col-md-2">
-  <div class = "prediction-post-mug-container">
-    <img src= "http://stocktators.com/assets/images/user.png">
+
+<div class="prediction-item">
+  
+  <div class="vote-count-container clearfix">
+    <div class="prediction-item-body col-xs-11 clearfix">
+      <div class="col-xs-2 prediction-item-img">
+        <%= image_tag "del.jpg" %>
+      </div>
+      <div class="prediction-item-txt">
+        <p class="prediction-item-username"><%= prediction.user.username %></p>
+        <p class="prediction-item-main-txt"><span class="filler"><%= prediction.stock.ticker_symbol %></span> will be +<%= prediction.prediction_end_price %> <span class="filler">points</span> in 2 weeks</p> 
+      </div>
+      <div class="prediction-item-tweet">
+        <p>Do ennui laboris, meditation dolor occaecat organic eu Truffaut master cleanse <a href="#">$APPL</a> anim pickled ad quis Portland. <a href="#">@dillshmill</a> deep v anim id, fixie adipisicing dolor eiusmod non PBR Brooklyn Portland esse Thundercats <a href="#">#drake</a><a href="#">#6god</a> <a href="#">#ohveeohhh</a></p>
+      </div>
+      <div class="prediction-footer">
+        <i class="fa fa-clock-o">&nbsp;2 hrs</i><span>+20 points</span>
+      </div>
+    </div>
+    <div class="prediction-item-vote-count col-xs-1">
+      <a class="vote-count-up" href="#"><i class="fa fa-angle-up"></i></a>
+      <p>10</p>
+      <a class="vote-count-down" href="#"><i class="fa fa-angle-down"></i></a>
+    </div>
+  </div>
+  
+  <div class="stream-item-comments">
+    
+    <!-- load this only if there are replies -->
+    <div class="prediction-comment-header">
+      <p>2 Replies</p>
+    </div>
+
+    <!-- load partials for each reply -->
+    <div class="stream-comment-item">
+      <div class="stream-comment-col col-xs-11">
+        <div class="stream-comments-img pull-left">
+          <%= image_tag "sean.png" %>
+        </div>
+        <div class="stream-comments-txt pull-left">
+          <p>
+            <span class="stream-comments-txt-username">seanjuan:&nbsp;</span>Kale chips cornhole ugh enim.
+          </p>
+          <div class="stream-comments-txt-footer clearfix">
+            <i class="fa fa-clock-o">&nbsp;2 hrs</i>
+          </div>
+        </div>
+      </div>
+      <div class="stream-comment-vote-col col-xs-1">
+        <a class="stream-comment-vote-count-up" href="#"><i class="fa fa-angle-up"></i></a>
+        <p>10</p>
+        <a class="stream-comment-vote-count-down" href="#"><i class="fa fa-angle-down"></i></a>
+      </div>
+    </div>
+    
+    <div class="stream-comment-item">
+      <div class="stream-comment-col col-xs-11">
+        <div class="stream-comments-img pull-left">
+          <%= image_tag "sean.png" %>
+        </div>
+        <div class="stream-comments-txt pull-left">
+          <p>
+            <span class="stream-comments-txt-username">seanjuan:&nbsp;</span>Kale chips cornhole ugh tattooed esse enim chips cornhole ugh tattooed esse enim chips cornhole ugh tattooed esse enim chips cornhole ugh tattooed esse enim.
+          </p>
+          <div class="stream-comments-txt-footer clearfix">
+            <i class="fa fa-clock-o">&nbsp;2 hrs</i>
+          </div>
+        </div>
+      </div>
+      <div class="stream-comment-vote-col col-xs-1">
+        <a class="stream-comment-vote-count-up" href="#"><i class="fa fa-angle-up"></i></a>
+        <p>10</p>
+        <a class="stream-comment-vote-count-down" href="#"><i class="fa fa-angle-down"></i></a>
+      </div>
+    </div>
+    
+    <!-- load this reply option every time -->
+    <div class="stream-comment-input">
+      <div class="stream-comments-img pull-left">
+        <%= image_tag "sean.png" %>
+      </div>
+      <div class="stream-comments-txt pull-left">
+        <input placeholder="Leave a reply..">
+      </div>
+    </div>
+
   </div>
 </div>
-<div class = "prediction-post-txt-container col-xs-9" style="width:400px;">
-
-  <p class = "handle">
-    <%= link_to prediction.user.username, "/users/#{prediction.user.username}/" %>&nbsp;&bull;&nbsp;<%= time_ago_in_words(prediction.created_at) %> ago
-  </p>
-
-  <p class = "prediction-txt">
-  <p><%= link_to "prediction start", "/predictions/#{prediction.id}/" %></p>
-    <p>score: <%= prediction.score %></p>
-    <p>start price: <%= prediction.start_price %></p>
-    <p>prediction end price: <%= prediction.prediction_end_price %></p>
-    <p>start time: <%= prediction.start_time %></p>
-    <p>prediction end time: <%= prediction.prediction_end_time %></p>
-  </p>
-
-  <p class = "comment-txt"><%= prediction.prediction_comment %></p>
-</div>
-
