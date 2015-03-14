@@ -99,14 +99,98 @@
       </div>
     </div>
 
-
-
     <div class = "stream" >
       <%= render partial: "streams/stream_main", locals: {streams: @streams, nest_count: 0} %>
     </div>
     <div id = "infinite-scrolling" >
       <%= will_paginate @streams %>
     </div>
+
+
+    <!-- NEWS ITEM -->
+
+
+    <div class="news-item">
+      <div class="news-vote-count-container clearfix">
+        <div class="news-item-body col-xs-11 clearfix">
+          <div class="col-xs-2 news-item-img">
+            <%= image_tag ("news-icon.png") %>
+          </div>
+          <div class="news-item-txt">
+            <p class="news-item-username">YAHOO NEWS</p>
+            <p class="news-item-main-txt">Do ennui laboris, meditation dolor occaecat organic eu Truffaut master cleanse $APPL anim pickled ad quis Portland.  Deep v anim id, fixie adipisicing dolor eiusmod non PBR Brooklyn Portland esse Thundercats&nbsp;&nbsp;<a href="#">..more&nbsp;&#8594;</a></p>
+          </div>
+          <div class="prediction-footer">
+            <i class="fa fa-clock-o">&nbsp;2 hrs</i>
+          </div>
+        </div>
+        <div class="news-item-vote-count col-xs-1">
+          <a class="news-vote-count-up" href="#"><i class="fa fa-angle-up"></i></a>
+          <p>10</p>
+          <a class="news-vote-count-down" href="#"><i class="fa fa-angle-down"></i></a>
+        </div>
+      </div>
+      <div class="stream-item-comments">
+        <div class="stream-comment-header">
+          <p>2 Replies</p>
+        </div>
+        <div class="stream-comment-item">
+          <div class="stream-comment-col col-xs-11">
+            <div class="stream-comments-img pull-left">
+            <%= image_tag ("sean.png") %>
+            </div>
+            <div class="stream-comments-txt pull-left">
+              <p>
+                <span class="stream-comments-txt-username">seanjuan:&nbsp;</span>Kale chips cornhole ugh enim.
+              </p>
+              <div class="stream-comments-txt-footer clearfix">
+                <i class="fa fa-clock-o">&nbsp;2 hrs</i>
+              </div>
+            </div>
+          </div>
+          <div class="stream-comment-vote-col col-xs-1">
+            <a class="stream-comment-vote-count-up" href="#"><i class="fa fa-angle-up"></i></a>
+            <p>10</p>
+            <a class="stream-comment-vote-count-down" href="#"><i class="fa fa-angle-down"></i></a>
+          </div>
+        </div>
+        <div class="stream-comment-item">
+          <div class="stream-comment-col col-xs-11">
+            <div class="stream-comments-img pull-left">
+            <%= image_tag ("sean.png") %>
+            </div>
+            <div class="stream-comments-txt pull-left">
+              <p>
+                <span class="stream-comments-txt-username">seanjuan:&nbsp;</span>Kale chips cornhole ugh tattooed esse enim chips cornhole ugh tattooed esse enim chips cornhole ugh tattooed esse enim chips cornhole ugh tattooed esse enim.
+              </p>
+              <div class="stream-comments-txt-footer clearfix">
+                <i class="fa fa-clock-o">&nbsp;2 hrs</i>
+              </div>
+            </div>
+          </div>
+          <div class="stream-comment-vote-col col-xs-1">
+            <a class="stream-comment-vote-count-up" href="#"><i class="fa fa-angle-up"></i></a>
+            <p>10</p>
+            <a class="stream-comment-vote-count-down" href="#"><i class="fa fa-angle-down"></i></a>
+          </div>
+        </div>
+        <div class="stream-comment-input">
+          <div class="stream-comments-img pull-left">
+            <%= image_tag ("sean.png") %>
+          </div>
+          <div class="stream-comments-txt pull-left">
+            <input placeholder="Leave a reply..">
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
 
     <!-- STREAM POSTS -->
 

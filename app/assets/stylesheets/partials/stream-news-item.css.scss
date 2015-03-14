@@ -1,0 +1,149 @@
+
+.filler {
+	display: none;
+}
+
+.news-item {
+	display: block;
+	margin-top: 20px;
+	overflow: hidden;
+	padding-top: 15px;
+	padding-bottom: 10px;
+	padding-right: 10px;
+	background-color: #fff;
+	border: solid 1px rgba(0,0,0,.07);;
+	color: #919191;
+	text-decoration: none;
+}
+
+.news-item-body {
+	padding-left: 0px;
+	padding-right: 10px
+}
+
+
+.news-item-img {
+	padding-left: 10px;
+	padding-right: 10px;
+	width: 53px;
+}
+
+.news-item-img img {
+	width: 33px;
+	border-radius: 90px
+}
+
+
+
+.news-item-username {
+	font-size: 11px;
+	font-weight: 300;
+	margin-top: 0px;
+	margin-bottom: 1px;
+	text-transform: uppercase;
+	color: #C7C7C7;
+}
+
+.news-item-txt {
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+.news-item-main-txt {
+	padding-left: 53px;
+	margin-top: 5px;
+	margin-bottom: 0px;
+	font-size: 13px;
+	font-weight: 300;
+	color: #919191;
+	line-height: 18px;
+	letter-spacing: 1px;
+}
+
+.news-item-txt a {
+	color: #63010d;
+	padding-bottom: 2px;
+
+  -webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+}
+
+.news-item-txt a:hover {
+	border-bottom: 1px solid #63010d;
+}
+
+.news-footer {
+	margin-top: 5px;
+	padding-left: 53px;
+	font-size: 12px;
+	font-weight: 300;
+	color: #C7C7C7;
+}
+
+.news-footer span {
+	display: inline-block;
+	margin-left: 20px;
+	padding: 2px 4px 2px 4px;
+	background-color: #63010D;
+	color: #fff;
+}
+
+
+.news-item-vote-count {
+  vertical-align: middle;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.news-item-vote-count a {
+	display: block;
+	margin: auto;
+	text-align: center;
+	color: #C7C7C7;
+	font-size: 24px;
+
+  -webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+}
+
+.news-item-vote-count a:hover {
+	color: #63010D;
+}
+
+.news-item-vote-count p {
+	text-align: center;
+	font-size: 15;
+	font-weight: 300;
+	margin-bottom: 0px;
+}
+
+
+
+
+@media (min-width: 768px) {
+
+
+
+.news-item-img {
+	padding-left: 10px;
+	padding-right: 10px;
+	width: 60px;
+}
+
+.news-item-img img {
+	width: 40px;
+	border-radius: 90px
+}
+
+.news-item-main-txt {
+	padding-left: 60px;
+}
+
+}
+
+
+
