@@ -4,8 +4,8 @@ class ReplyTest < ActiveSupport::TestCase
 
 # For some reason the test won't recognize user id 
   def setup
-    @user = user[:dylan]
-  	@reply = @user.reply.build(repliable_type: "Comment", repliable_id: 1, content: "This is a reply")
+    @user = users(:sean)
+  	@reply = @user.replies.build(repliable_type: "Comment", repliable_id: 1, content: "This is a reply")
   end
 
 
@@ -23,6 +23,11 @@ class ReplyTest < ActiveSupport::TestCase
     assert_not @reply.valid?
   end
 
+  test "repliable id should be numerical" do
+    @reply.repliable_id = "Not a number"
+    assert_not @reply.valid?
+  end
+
   test "repliable type should be present" do
     @reply.repliable_type = nil
     assert_not @reply.valid?
@@ -33,8 +38,8 @@ class ReplyTest < ActiveSupport::TestCase
   	assert_not @reply.valid?
   end
 
-  test "content should be at most 1000 characters" do
-  	@reply.content = "a" * 1001
+  test "content should be at most 5000 characters" do
+  	@reply.content = "a" * 5001
   	assert_not @reply.valid?
   end
 

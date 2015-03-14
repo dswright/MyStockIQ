@@ -2,8 +2,7 @@
 
 one:
   content: MyText
-  popularity_score: 1.5
 
 two:
   content: MyText
-  popularity_score: 1.5
+

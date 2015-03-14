@@ -1,7 +1,10 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  content: MyText
+typical:
+  id: 1
+  user_id: 2
+  content: "Bon Bon"
 
-two:
-  content: MyText
+
+
+

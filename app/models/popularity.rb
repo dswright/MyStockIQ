@@ -4,7 +4,11 @@ class Popularity < ActiveRecord::Base
 
   scope :by_score, lambda { order("popularities.score DESC")}
 
+  validates :popularable_id, presence: true, numericality: true
+  validates :popularable_type, presence: true
   validates :score, presence: :true, numericality: :true
+
+
 
   	def update_score
 

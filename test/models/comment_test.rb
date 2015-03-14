@@ -4,8 +4,7 @@ class CommentTest < ActiveSupport::TestCase
 
 	def setup
 		@user = users(:dylan)
-		@post = Stream.new(user_id: @user.id, stock_id: 1, stream_type: "comment")
-		@comment = Comment.new(stream_id: @post.id, content: "Loren Ipsum")
+		@comment = @user.comments.build(content: "This is the best thing I've ever seen in my life")
 	end
 
 	test "should be valid" do
@@ -17,8 +16,18 @@ class CommentTest < ActiveSupport::TestCase
 		assert_not @comment.valid?
 	end
 
-	test "content should be at most 140 characters" do
-		@comment.content = "a" * 141
+	test "content should be at most 5000 characters" do
+		@comment.content = "a" * 5001
+		assert_not @comment.valid?
+	end
+
+	test "user id should be present" do
+		@comment.user_id = nil
+		assert_not @comment.valid?
+	end
+
+	test "user id should be numerical" do
+		@comment.user_id = "Not a number"
 		assert_not @comment.valid?
 	end
 end

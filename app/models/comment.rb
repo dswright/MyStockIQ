@@ -8,7 +8,8 @@ class Comment < ActiveRecord::Base
   	has_many :likes, as: :likable
   	has_many :replies, as: :repliable
 
-	validates :content, presence: true, length: { maximum: 140}
+	validates :content, presence: true, length: { maximum: 5000}
+	validates :user_id, presence: true, numericality: true
 	default_scope -> { order(created_at: :desc) }
 
 

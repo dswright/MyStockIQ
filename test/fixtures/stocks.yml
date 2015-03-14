@@ -5,6 +5,7 @@
 # below each fixture, per the syntax in the comments below
 #
 AAPL:
+  id: 2
   stock: "Apple Inc"
   ticker_symbol: "AAPL"
   exchange: nil
@@ -12,6 +13,7 @@ AAPL:
   stock_industry: nil
 
 BNNY:
+  id: 3
   stock: "Annies Inc"
   ticker_symbol: "BNNY"
   stock_industry: nil

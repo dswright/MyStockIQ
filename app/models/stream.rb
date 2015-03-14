@@ -14,7 +14,10 @@ class Stream < ActiveRecord::Base
   ######### STREAM MODEL VALIDATIONS ##########
 
   #Stream.valid? returns TRUE when:
-  
+  validates :streamable_id, presence: true
+  validates :streamable_type, presence: true
+  validates :targetable_id, presence: true
+  validates :targetable_type, presence: true
 
 
   def self.stream_maker(streams, nest_count)

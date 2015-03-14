@@ -8,9 +8,12 @@ class Reply < ActiveRecord::Base
 	has_many :streams, as: :streamable, dependent: :destroy
 	has_many :likes, as: :likable
 	has_one :popularity, as: :popularable, dependent: :destroy
-	#FOR SOME REASON THE REPLY TEST DOESN"T RECOGNIZE USER ID AS A REPLY ATTRIBUTE
+
+
 	validates :user_id, presence: true, numericality: true
-	validates :content, presence: true, length: { maximum: 1000 }
+	validates :repliable_id, presence: true, numericality: true
+	validates :repliable_type, presence: true
+	validates :content, presence: true, length: { maximum: 5000 }
 
 
 	def replies

@@ -11,7 +11,6 @@ Predictionend1:
   actual_end_time: "2015-01-12 15:00:00" #this will be overwritten to a more recent date by the worker.
   end_price_verified: false #this will be updated to true.
   prediction_id: 6
-  popularity_score: 0
 
 #used for the final score test.
 Predictionend2:
@@ -19,4 +18,3 @@ Predictionend2:
   actual_end_time: "2015-01-12 15:00:00" #this is the final end time.
   end_price_verified: true 
   prediction_id: 7
-  popularity_score: 0
