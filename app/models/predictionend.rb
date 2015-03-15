@@ -3,9 +3,8 @@ class Predictionend < ActiveRecord::Base
   include PopularityPast
 
   belongs_to :prediction
-  has_many :streams, as: :streamable, dependent: :destroy
-  has_many :streams, as: :targetable, dependent: :destroy
   has_many :likes, as: :likable
+  has_many :streams, as: :streamable, dependent: :destroy
   has_one :popularity, as: :popularable, dependent: :destroy
   has_many :replies, as: :repliable
 

@@ -4,8 +4,7 @@ class Reply < ActiveRecord::Base
 	include PopularityPast
 	
 	belongs_to :user
-	belongs_to :repliable, polymorphic: :true
-	has_many :streams, as: :streamable, dependent: :destroy
+	belongs_to :repliable, polymorphic: :true #Comment, newsarticle, prediction, predictionend are all repliable types.
 	has_many :likes, as: :likable
 	has_one :popularity, as: :popularable, dependent: :destroy
 

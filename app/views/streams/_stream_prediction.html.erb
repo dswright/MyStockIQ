@@ -1,5 +1,5 @@
 
-<div class="prediction-item">
+<div class="prediction-item" id="stream_<%= stream.id %>">
   
   <div class="vote-count-container clearfix">
     <div class="prediction-item-body col-xs-11 clearfix">
@@ -7,8 +7,8 @@
         <%= image_tag "del.jpg" %>
       </div>
       <div class="prediction-item-txt">
-        <p class="prediction-item-username"><%= prediction.user.username %></p>
-        <p class="prediction-item-main-txt"><span class="filler"><%= prediction.stock.ticker_symbol %></span> will be +<%= prediction.prediction_end_price %> <span class="filler">points</span> in 2 weeks</p> 
+        <p class="prediction-item-username"><%= stream.streamable.user.username %></p>
+        <p class="prediction-item-main-txt"><span class="filler"><%= stream.streamable.stock.ticker_symbol %></span> will be +<%= stream.streamable.prediction_end_price %> <span class="filler">points</span> in 2 weeks</p> 
       </div>
       <div class="prediction-item-tweet">
         <p>Do ennui laboris, meditation dolor occaecat organic eu Truffaut master cleanse <a href="#">$APPL</a> anim pickled ad quis Portland. <a href="#">@dillshmill</a> deep v anim id, fixie adipisicing dolor eiusmod non PBR Brooklyn Portland esse Thundercats <a href="#">#drake</a><a href="#">#6god</a> <a href="#">#ohveeohhh</a></p>
@@ -32,57 +32,12 @@
     </div>
 
     <!-- load partials for each reply -->
-    <div class="stream-comment-item">
-      <div class="stream-comment-col col-xs-11">
-        <div class="stream-comments-img pull-left">
-          <%= image_tag "sean.png" %>
-        </div>
-        <div class="stream-comments-txt pull-left">
-          <p>
-            <span class="stream-comments-txt-username">seanjuan:&nbsp;</span>Kale chips cornhole ugh enim.
-          </p>
-          <div class="stream-comments-txt-footer clearfix">
-            <i class="fa fa-clock-o">&nbsp;2 hrs</i>
-          </div>
-        </div>
-      </div>
-      <div class="stream-comment-vote-col col-xs-1">
-        <a class="stream-comment-vote-count-up" href="#"><i class="fa fa-angle-up"></i></a>
-        <p>10</p>
-        <a class="stream-comment-vote-count-down" href="#"><i class="fa fa-angle-down"></i></a>
-      </div>
-    </div>
+    <% stream.streamable.replies.each do |reply| %>
+      <%= render partial: "streams/stream_reply", locals: {reply: reply}  %>
+    <% end %>
     
-    <div class="stream-comment-item">
-      <div class="stream-comment-col col-xs-11">
-        <div class="stream-comments-img pull-left">
-          <%= image_tag "sean.png" %>
-        </div>
-        <div class="stream-comments-txt pull-left">
-          <p>
-            <span class="stream-comments-txt-username">seanjuan:&nbsp;</span>Kale chips cornhole ugh tattooed esse enim chips cornhole ugh tattooed esse enim chips cornhole ugh tattooed esse enim chips cornhole ugh tattooed esse enim.
-          </p>
-          <div class="stream-comments-txt-footer clearfix">
-            <i class="fa fa-clock-o">&nbsp;2 hrs</i>
-          </div>
-        </div>
-      </div>
-      <div class="stream-comment-vote-col col-xs-1">
-        <a class="stream-comment-vote-count-up" href="#"><i class="fa fa-angle-up"></i></a>
-        <p>10</p>
-        <a class="stream-comment-vote-count-down" href="#"><i class="fa fa-angle-down"></i></a>
-      </div>
-    </div>
-    
-    <!-- load this reply option every time -->
-    <div class="stream-comment-input">
-      <div class="stream-comments-img pull-left">
-        <%= image_tag "sean.png" %>
-      </div>
-      <div class="stream-comments-txt pull-left">
-        <input placeholder="Leave a reply..">
-      </div>
-    </div>
+    <!-- load this reply input everytime -->
+    <%= render partial: "streams/stream_reply_form", locals: {stream: stream}  %>
 
   </div>
 </div>

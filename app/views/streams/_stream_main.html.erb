@@ -7,18 +7,17 @@
 
 	%>
       <% if stream.streamable.class.name == "Comment" %>
-          <%= render partial: "streams/stream_comment", locals: {comment: stream.streamable} %>
+          <%= render partial: "streams/stream_comment", locals: {stream: stream} %>
 
       <% elsif stream.streamable.class.name == "Prediction" %>
-          <%= render partial: "streams/stream_prediction", locals: {prediction: stream.streamable} %>
+          <%= render partial: "streams/stream_prediction", locals: {stream: stream} %>
       <% end %>
       <% #elsif stream.streamable.class.name == "Newsarticle" %>
           <% #render partial: "streams/stream_newsarticle", locals: {newsarticle: stream.streamable} %>
 
       <% #elsif stream.streamable.class.name == "Predictionend" %>
-          <% #render partial: "streams/stream_predictionend", locals: {predictionend: stream.streamable} %>
+      <% #render partial: "streams/stream_predictionend", locals: {predictionend: stream.streamable} %>
       
-
     </br>
 
     <% #unless stream.streamable.likes.where(user_id: current_user.id).exists? %>

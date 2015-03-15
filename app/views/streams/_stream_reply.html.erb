@@ -1,3 +1,21 @@
-<div class = "stream_reply", id = "stream_reply_<%=reply.id%>">
-	<p><%= reply.content %></p>
+
+<div class="stream-comment-item">
+  <div class="stream-comment-col col-xs-11">
+    <div class="stream-comments-img pull-left">
+      <%= image_tag "sean.png" %>
+    </div>
+    <div class="stream-comments-txt pull-left">
+      <p>
+        <span class="stream-comments-txt-username"><%= reply.user.username %>:&nbsp;</span><%= reply.content %>
+      </p>
+      <div class="stream-comments-txt-footer clearfix">
+        <i class="fa fa-clock-o">&nbsp;2 hrs</i>
+      </div>
+    </div>
+  </div>
+  <div class="stream-comment-vote-col col-xs-1">
+    <a class="stream-comment-vote-count-up" href="#"><i class="fa fa-angle-up"></i></a>
+    <p>10</p>
+    <a class="stream-comment-vote-count-down" href="#"><i class="fa fa-angle-down"></i></a>
+  </div>
 </div>
