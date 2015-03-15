@@ -1,5 +1,4 @@
 
-
 .stockpage-sidebar-open-header {
 	height: 33px;
 	margin-top: 15px;
@@ -12,7 +11,7 @@
 
 .stockpage-sidebar-open-box {
 	border: 1px solid rgba(0,0,0,.07);
-  	background-color: #fff;
+	background-color: #fff;
 	font-size: 11px;
 	padding-left: 10px;
 	padding-right: 10px;
@@ -44,30 +43,36 @@
 }
 
 
-.sidebar-close-button input {
-	margin-top: 20px;
-	border: solid 1px #B3B3B3;
-	border-radius: 0px;
-	padding-bottom: 9px;
-	padding-top: 9px;
-	color: #B3B3B3;
-	font-size: 11px;
+.close-comment-textarea {
+	border-left: 0px;
+	border-right: 0px;
+	border-top: 0px;
+	border-bottom: 0px;
+	padding-top: 5px;
+	padding-left: 10px;
+	padding-right: 10px;
+	background-color: #FAFAFA;
+	color: #919191;
+	outline: none;
 	width: 100%;
-	background-color: #FFF;
-
-	-webkit-transition: 150ms ease-in;
-  -moz-transition: 150ms ease-in;
-  -o-transition: 150ms ease-in;
-  transition: 150ms ease-in;
+	resize: none;
+	height: 50px;
+	margin-top: 20px;
 }
 
-.sidebar-close-button input:hover {
-	border: solid 1px #808080;
-	color: #808080;
+.close-comment-textarea:focus {
+	border: 1px solid rgba(0,0,0,.07);
 }
+
+.sidebar-open-close-comment-div span {
+	display: block;
+	color: #919191;
+	margin-right: 10px;
+}
+
 
 .sidebar-close-button a {
-	margin-top: 20px;
+	margin-top: 10px;
 	border: solid 1px #B3B3B3;
 	border-radius: 0px;
 	padding-bottom: 9px;
@@ -75,7 +80,6 @@
 	color: #B3B3B3;
 	font-size: 11px;
 	width: 100%;
-	background-color: #FFF;
 
 	-webkit-transition: 150ms ease-in;
   -moz-transition: 150ms ease-in;
@@ -87,3 +91,78 @@
 	border: solid 1px #808080;
 	color: #808080;
 }
+
+
+
+
+.stockpage-sidebar-comment-header {
+	height: 33px;
+	margin-top: 15px;
+	color: #E6E6E6;
+	font-size: 11px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 10px;
+}
+
+.stockpage-sidebar-comment-box {
+	border: 1px solid rgba(0,0,0,.07);
+	background-color: #fff;
+	font-size: 11px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 0px;
+	padding-bottom: 15px;
+}
+
+.stockpage-sidebar-comment-div {
+	overflow: hidden;
+}
+
+.comment-form-textarea {
+	border-left: 0px;
+	border-right: 0px;
+	border-top: 0px;
+	border-bottom: 0px;
+	padding-top: 5px;
+	padding-left: 10px;
+	padding-right: 10px;
+	background-color: #FAFAFA;
+	color: #FAFAFA;
+	outline: none;
+	width: 100%;
+	resize: none;
+	height: 50px;
+	margin-top: 20px;
+
+}
+
+.comment-form-textarea:focus {
+	border: 1px solid rgba(0,0,0,.07);
+}
+
+
+.comment-submit-button-div {
+	margin-top: 10px;
+}
+
+.comment-submit-button-div a {
+	border: solid 1px #B3B3B3;
+	border-radius: 0px;
+	padding-bottom: 9px;
+	padding-top: 9px;
+	color: #B3B3B3;
+	font-size: 11px;
+	width: 100%;
+
+	-webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+}
+
+.comment-submit-button-div a:hover {
+	border: solid 1px #808080;
+	color: #808080;
+}
+
