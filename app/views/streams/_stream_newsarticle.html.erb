@@ -1,27 +1,83 @@
 
 
-<div class="stream-news black-gradient clearfix">
-  <a class="stream-news-anchor expand">
-    <div class="col-xs-2 prediction-item-img">
-      <i class="fa fa-newspaper-o fa-2x"></i>
+
+    <!-- NEWS ITEM -->
+
+    <div class="news-item">
+      <div class="news-vote-count-container clearfix">
+        <div class="news-item-body col-xs-11 clearfix">
+          <div class="col-xs-2 news-item-img">
+            <%= image_tag ("news-icon.png") %>
+          </div>
+          <div class="news-item-txt">
+            <p class="news-item-username"><%= stream.streamable.source %></p>
+            <p class="news-item-main-txt"><%= stream.streamable.summary %>&nbsp;&nbsp;<a href="#">..more&nbsp;&#8594;</a></p>
+          </div>
+          <div class="prediction-footer">
+            <i class="fa fa-clock-o">&nbsp;2 hrs</i>
+          </div>
+        </div>
+        <div class="news-item-vote-count col-xs-1">
+          <a class="news-vote-count-up" href="#"><i class="fa fa-angle-up"></i></a>
+          <p>10</p>
+          <a class="news-vote-count-down" href="#"><i class="fa fa-angle-down"></i></a>
+        </div>
+      </div>
+      <div class="stream-item-comments">
+        <div class="stream-comment-header">
+          <p>2 Replies</p>
+        </div>
+        <div class="stream-comment-item">
+          <div class="stream-comment-col col-xs-11">
+            <div class="stream-comments-img pull-left">
+            <%= image_tag ("sean.png") %>
+            </div>
+            <div class="stream-comments-txt pull-left">
+              <p>
+                <span class="stream-comments-txt-username">seanjuan:&nbsp;</span>Kale chips cornhole ugh enim.
+              </p>
+              <div class="stream-comments-txt-footer clearfix">
+                <i class="fa fa-clock-o">&nbsp;2 hrs</i>
+              </div>
+            </div>
+          </div>
+          <div class="stream-comment-vote-col col-xs-1">
+            <a class="stream-comment-vote-count-up" href="#"><i class="fa fa-angle-up"></i></a>
+            <p>10</p>
+            <a class="stream-comment-vote-count-down" href="#"><i class="fa fa-angle-down"></i></a>
+          </div>
+        </div>
+        <div class="stream-comment-item">
+          <div class="stream-comment-col col-xs-11">
+            <div class="stream-comments-img pull-left">
+            <%= image_tag ("sean.png") %>
+            </div>
+            <div class="stream-comments-txt pull-left">
+              <p>
+                <span class="stream-comments-txt-username">seanjuan:&nbsp;</span>Kale chips cornhole ugh tattooed esse enim chips cornhole ugh tattooed esse enim chips cornhole ugh tattooed esse enim chips cornhole ugh tattooed esse enim.
+              </p>
+              <div class="stream-comments-txt-footer clearfix">
+                <i class="fa fa-clock-o">&nbsp;2 hrs</i>
+              </div>
+            </div>
+          </div>
+          <div class="stream-comment-vote-col col-xs-1">
+            <a class="stream-comment-vote-count-up" href="#"><i class="fa fa-angle-up"></i></a>
+            <p>10</p>
+            <a class="stream-comment-vote-count-down" href="#"><i class="fa fa-angle-down"></i></a>
+          </div>
+        </div>
+        <div class="stream-comment-input">
+          <div class="stream-comments-img pull-left">
+            <%= image_tag ("sean.png") %>
+          </div>
+          <div class="stream-comments-txt pull-left">
+            <input placeholder="Leave a reply..">
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="pull-left prediction-item-txt">
-      <p class="stream-news-source"><%= newsarticle.title %></p>
-      <p class="stream-news-date"><%= time_ago_in_words(newsarticle.date) %> ago</p>
-    </div>
 
-  </a>
-  <div class="stream-news-summary"><%= newsarticle.summary %></div>
-  
-  <div class="stream-response-box">
-    <div class="stream-thumbs-box">
-      <i class="stream-thumb-up fa fa-thumbs-o-up fa-lg" id="e">&nbsp;&nbsp;20</i>
-      <i class="stream-thumb-down fa fa-thumbs-o-up fa-lg" id="e">&nbsp;&nbsp;19</i>
-    </div>
-  </div>
-  <div class="stream-comment-line">11 Comments</div>
-
-</div>
 
 
