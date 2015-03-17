@@ -20,7 +20,6 @@ require 'scraper'
 
         @streams = @stock.streams.by_popularity_score.paginate(page: params[:page], per_page: 10)
 
-
         # unless @streams == nil
         #   @streams.each {|stream| stream.update_stream_popularity_scores}
 

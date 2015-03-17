@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   #sets an association that the User will have many comments and predictions associated to it
   has_many :comments
   has_many :predictions
+  has_many :stocks, through: :predictions
   has_many :likes
   has_many :replies
   has_many :streams, as: :targetable, dependent: :destroy
@@ -81,10 +82,8 @@ class User < ActiveRecord::Base
 
   #Unfollows a user
   def unfollow(object)
-    
     #Destroy relationship
     active_relationships.find_by(followed_id: object.id, followed_type: object.class.name).destroy
-
   end
 
   #Returns true if the current user is following the other user
@@ -105,5 +104,22 @@ class User < ActiveRecord::Base
       return false
     end
   end
+
+  def total_score(stock=nil)
+
+    if stock == nil
+      score = self.predictions.sum(:score)
+    else
+      score = self.predictions.where(stock_id: stock.id).sum(:score)
+    end
+
+    #If total score is negative, set total score to zero
+    if score < 0
+      score = 0
+    end
+
+    return score
+  end
+
 
 end
