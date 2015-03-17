@@ -11,9 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150316033456) do
+ActiveRecord::Schema.define(version: 20150312015518) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "adminpack"
   enable_extension "plpgsql"
 
   create_table "comments", force: true do |t|
@@ -84,21 +85,20 @@ ActiveRecord::Schema.define(version: 20150316033456) do
   add_index "predictionends", ["prediction_id"], name: "index_predictionends_on_prediction_id", using: :btree
 
   create_table "predictions", force: true do |t|
+    t.integer  "user_id"
     t.float    "score"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
     t.string   "prediction_comment"
+    t.integer  "stock_id"
     t.datetime "start_time"
     t.boolean  "start_price_verified"
     t.boolean  "active"
     t.float    "start_price"
     t.datetime "prediction_end_time"
     t.float    "prediction_end_price"
-    t.integer  "user_id"
-    t.integer  "stock_id"
   end
 
-  add_index "predictions", ["stock_id", "created_at"], name: "index_predictions_on_stock_id_and_created_at", using: :btree
   add_index "predictions", ["stock_id"], name: "index_predictions_on_stock_id", using: :btree
   add_index "predictions", ["user_id", "created_at"], name: "index_predictions_on_user_id_and_created_at", using: :btree
   add_index "predictions", ["user_id"], name: "index_predictions_on_user_id", using: :btree

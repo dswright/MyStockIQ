@@ -5,7 +5,7 @@ window.inputPrediction(<%= j @graph_time.to_s %>, <%= j @prediction.prediction_e
 $('.stockpage-sidebar-prediction').html("<%= j render partial: 'predictions/prediction', locals: {prediction: @prediction} %>").fadeIn("slow");
 
 
-$('.stream').prepend("<%= j render partial: 'streams/stream_main', locals: {streams: @streams}  %> ").fadeIn("slow");
+$('.stream').prepend("<%= j render partial: 'streams/stream_main', locals: {streams: @streams}  %> ");
 
 var responses = $.parseHTML("<%= j raw @response %>");
 $('#response-box').html(responses).fadeIn("slow");
