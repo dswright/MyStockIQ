@@ -188,56 +188,16 @@
 
 
 
+
     <div class="stockpage-side-analysts-header black-gradient">
       <div class="user-sidebar-similar-header-txt">
         Top analysts for APPL
       </div>
     </div>
     <div class="stockpage-side-analysts-box">
-      <a class="stockpage-side-analysts-anchor clearfix" href="#">
-        <div class="stockpage-side-analysts-img pull-left">
-          <%= image_tag "del.jpg" %>
-        </div>
-        <div class="stockpage-side-analysts-label pull-left">
-          delmnstr12
-        </div>
-        <div class="stockpage-side-analysts-number pull-right">
-          400
-        </div>
-      </a>
-      <a class="stockpage-side-analysts-anchor clearfix" href="#">
-        <div class="stockpage-side-analysts-img pull-left">
-          <%= image_tag "dyl.png" %>
-        </div>
-        <div class="stockpage-side-analysts-label pull-left">
-          dyl$hmil
-        </div>
-        <div class="stockpage-side-analysts-number pull-right">
-          60k
-        </div>
-      </a>
-      <a class="stockpage-side-analysts-anchor clearfix" href="#">
-        <div class="stockpage-side-analysts-img pull-left">
-          <%= image_tag "elmer.png" %>
-        </div>
-        <div class="stockpage-side-analysts-label pull-left">
-          fuddmnstr7
-        </div>
-        <div class="stockpage-side-analysts-number pull-right">
-          163
-        </div>
-      </a>
-      <a class="stockpage-side-analysts-anchor clearfix" href="#">
-        <div class="stockpage-side-analysts-img pull-left">
-          <%= image_tag "sean.png" %>
-        </div>
-        <div class="stockpage-side-analysts-label pull-left">
-          seanjuan
-        </div>
-        <div class="stockpage-side-analysts-number pull-right">
-          90k
-        </div>
-      </a>
+    <% @stock.top_analysts(5).each do |analyst| %>
+      <%= render partial: 'stocks/ranking', locals: {analyst: analyst, stock: @stock} %>
+    <% end %>
     </div>
     
   </div>
