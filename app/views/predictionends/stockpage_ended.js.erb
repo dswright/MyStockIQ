@@ -2,7 +2,7 @@ window.removePrediction(); //remove the prediction from the graph.
 
 $('.stockpage-sidebar-open').html("<%= j render 'shared/prediction_form' %>"); //replace the prediction with the prediction form.
 
-$('.prediction-post-comment:eq(0)').before("<%= j render partial: 'streams/stream', locals: {streams: @streams, nest_count: 0}  %> ").fadeIn("slow");
+$('.prediction-post-comment:eq(0)').before("<%= j render partial: 'streams/stream', locals: {streams: @streams}  %> ").fadeIn("slow");
 
 var responses = $.parseHTML("<%= j raw @response %>");  //show the response messages.
 $('#response-box').html(responses).fadeIn("slow"); 

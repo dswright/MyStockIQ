@@ -14,13 +14,11 @@
         <p>Do ennui laboris, meditation dolor occaecat organic eu Truffaut master cleanse <a href="#">$APPL</a> anim pickled ad quis Portland. <a href="#">@dillshmill</a> deep v anim id, fixie adipisicing dolor eiusmod non PBR Brooklyn Portland esse Thundercats <a href="#">#drake</a><a href="#">#6god</a> <a href="#">#ohveeohhh</a></p>
       </div>
       <div class="prediction-footer">
-        <i class="fa fa-clock-o">&nbsp;2 hrs</i><span>+20 points</span>
+        <i class="fa fa-clock-o">&nbsp;<%= distance_of_time_in_words(stream.streamable.created_at, Time.now) %> ago</i><span>+20 points</span>
       </div>
     </div>
-    <div class="prediction-item-vote-count col-xs-1">
-      <a class="vote-count-up" href="#"><i class="fa fa-angle-up"></i></a>
-      <p>10</p>
-      <a class="vote-count-down" href="#"><i class="fa fa-angle-down"></i></a>
+    <div class="prediction-item-vote-count col-xs-1" id="likes-Prediction-<%= stream.streamable.id %>">
+      <%= render partial: "streams/stream_like", locals: {likable_type:stream.streamable.class.name, likable_id:stream.streamable.id} %>
     </div>
   </div>
   

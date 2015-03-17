@@ -9,13 +9,12 @@
         <span class="stream-comments-txt-username"><%= reply.user.username %>:&nbsp;</span><%= reply.content %>
       </p>
       <div class="stream-comments-txt-footer clearfix">
-        <i class="fa fa-clock-o">&nbsp;2 hrs</i>
+        <i class="fa fa-clock-o">&nbsp;<%= distance_of_time_in_words(reply.created_at, Time.now) %> ago</i>
       </div>
     </div>
   </div>
-  <div class="stream-comment-vote-col col-xs-1">
-    <a class="stream-comment-vote-count-up" href="#"><i class="fa fa-angle-up"></i></a>
-    <p>10</p>
-    <a class="stream-comment-vote-count-down" href="#"><i class="fa fa-angle-down"></i></a>
+
+  <div class="stream-comment-vote-col col-xs-1" id="likes-Reply-<%= reply.id %>">
+    <%= render partial: "streams/stream_like", locals: {likable_type:"Reply", likable_id:reply.id} %>
   </div>
 </div>

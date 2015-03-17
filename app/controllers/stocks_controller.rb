@@ -18,7 +18,7 @@ require 'scraper'
 
         @current_user = current_user
 
-        @streams = @stock.streams.by_popularity_score.paginate(page: params[:page], per_page: 5)
+        @streams = @stock.streams.by_popularity_score.paginate(page: params[:page], per_page: 10)
 
 
         # unless @streams == nil

@@ -1,3 +1,0 @@
-
-$("#stream-<%= j @stream.streamable.class.name%>_<%= j @stream.streamable.id.to_s%>").append("<%= j render partial: 'streams/stream_details', locals: {stream: @stream} %> ").fadeIn("slow");
-$("#stream_detail_button_<%= j @stream.streamable.id.to_s %>").remove();

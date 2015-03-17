@@ -3,19 +3,36 @@ class LikesController < ApplicationController
   respond_to :html, :js
 
   def create
-
     user = current_user
 
-    like = like_params
-    @like = user.likes.build(like)
-    @like.save
-
-    if @like_type == "like"
-      @updated_likes = params[:likes].to_i + 1
-    else
-      @updated_likes = params[:dislikes].to_i + 1
+    #if there is an existing like, it will be of the opposite type, destroy it.
+    existing_like = Like.find_by(likable_type:params[:likable_type], likable_id:params[:likable_id], user_id:user.id)
+    if existing_like
+      existing_like.destroy
     end
 
+
+    like = user.likes.build(like_params)
+    like.save
+
+    @likable_type = params[:likable_type]
+    @likable_id = params[:likable_id]
+
+    
+    
+  end
+
+  def destroy
+    user = current_user
+    like = Like.find_by(likable_type:params[:likable_type], likable_id:params[:likable_id], user_id:user.id, like_type:params[:like_type])
+    like.destroy
+
+    @likable_type = params[:likable_type]
+    @likable_id = params[:likable_id]
+
+    respond_to do |format|
+      format.js { render 'likes/create.js.erb' }
+    end
 
   end
 
@@ -23,7 +40,7 @@ class LikesController < ApplicationController
     #def comment_params
     def like_params
       #Permits only certain field types through the URL.
-      params.require(:like).permit(:like_type, :likable_type, :likable_id)
+      params.permit(:like_type, :likable_type, :likable_id)
     end
 
 end

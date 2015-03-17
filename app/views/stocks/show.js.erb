@@ -1,8 +1,9 @@
 //this allows for the infinte scroll on the stocks page.
 
-$(".stream").append('<%= j render partial: "streams/stream_main", locals: {streams: @streams, nest_count: 0} %>');
+$(".stream").append('<%= j render partial: "streams/stream_main", locals: {streams: @streams} %>');
 <% if @streams.next_page %>
   $('.pagination').replaceWith('<%= j will_paginate @streams %>');
+  $('.stream > div:last').remove(); //this removes the last div loaded in each stream because it was duplicate.
 <% else %>
   $(window).off('scroll');
   $('.pagination').remove();
