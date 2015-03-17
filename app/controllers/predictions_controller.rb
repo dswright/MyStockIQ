@@ -19,6 +19,7 @@ class PredictionsController < ApplicationController
 	def create
 		#Obtain user session information from Session Helper function 'current_user'.
 		@user = current_user
+    puts "stockid: #{prediction_params[:stock_id]}"
 		stock = Stock.find(prediction_params[:stock_id])
 
 		#Create the prediction settings.
@@ -39,19 +40,15 @@ class PredictionsController < ApplicationController
 		@graph_time = prediction_end_time.utc_time_int.graph_time_int
 
 
-		#Create the stream inserts for the prediction.
-		@streams = []
-		stream_params_array = stream_params_process(params[:stream_string])
-		stream_params_array.each do |stream_item|
-			@streams << @prediction.streams.build(stream_item)
-		end
-
 		#Create the proper response to the prediciton input.
 		response_msgs = []
 
 		invalid_start = false
 		if @prediction.invalid?
-			response_msgs << "Prediction invalid. Please refresh page and try again."
+			@prediction.errors.full_messages.each do |message|
+        response_msgs << message
+      end
+      response_msgs << "invalid prediction"
 			invalid_start = true
 		end
 
@@ -68,7 +65,14 @@ class PredictionsController < ApplicationController
 		unless invalid_start
       @prediction_end_input_page = "stockspage" #set this variable for the cancel button form on the stockspage.
 			@prediction.save
-			@streams.each {|stream| stream.save}
+      
+      #Create the stream inserts for the prediction.
+      @streams = []
+      stream_params_array = stream_params_process(params[:stream_string])
+      stream_params_array.each do |stream_item|
+        @prediction.streams.create(stream_item)
+      end
+
       @prediction.build_popularity(score:0).save #build the popularity score item for predictions
 			@streams = [Stream.where(streamable_type: 'Prediction', streamable_id: @prediction.id).first]
 			response_msgs << "Prediction input!"

@@ -1,2 +1,2 @@
 
-$("#stream_<%= j @parent_stream.id.to_s%> > .stream-item-comments > .stream-comment-item").last().after("<%= j render partial: 'streams/stream_reply', locals: {reply: @reply} %> ").fadeIn("slow");
+$("<%= j render partial: 'streams/stream_reply', locals: {reply: @reply} %> ").insertBefore("#stream_<%= j @parent_stream.id.to_s%> > .stream-item-comments > .new_reply")

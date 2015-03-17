@@ -5,7 +5,7 @@ class Stock < ActiveRecord::Base
   has_many :streams, as: :targetable, dependent: :destroy
   has_many :predictions
   
-  validates :stock,         presence: true
+  validates :stock, presence: true
 
   validates :ticker_symbol, presence: true,
             uniqueness: {case_sensitive: false}
