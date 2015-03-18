@@ -177,6 +177,35 @@ body {
 }
 
 
+
+.signup-privacy {
+  margin-top: 0px;
+  margin-bottom: 15px;
+  color: #808080;
+  font-size: 12px;
+  font-weight: 300;
+  letter-spacing: .04em;
+  line-height: 18px;
+}
+
+.signup-privacy a {
+  color: #63010d;
+  text-decoration: none;
+
+  -webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+}
+
+.signup-privacy a:hover {
+  color: #4b0009;
+  border-bottom: 1px solid #63010d;
+}
+
+
+
+
 .signup-submit-button-div input {
   border: solid 1px #B3B3B3;
   border-radius: 0px;
