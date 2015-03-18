@@ -111,7 +111,7 @@
   <div class="col-sm-3 stockpage-sidebar">
 
   <% if @prediction.active %> 
-    <%= render partial: 'predictions/prediction_end', locals: {prediction: @prediction} %>
+    <%= render partial: 'shared/prediction_open', locals: {prediction: @prediction} %>
   <% else %>
     <%= render 'shared/prediction_form' %>
   <% end %>

@@ -71,7 +71,6 @@ class PredictionsController < ApplicationController
       stream_params_array.each do |stream_item|
         @prediction.streams.create(stream_item)
       end
-      @predictionend = @prediction.build_predictionend() #create this to use in the ajax form.
 
       @prediction.build_popularity(score:0).save #build the popularity score item for predictions
 			@streams = [Stream.where(streamable_type: 'Prediction', streamable_id: @prediction.id).first]
