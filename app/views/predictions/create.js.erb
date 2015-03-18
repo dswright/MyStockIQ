@@ -2,7 +2,7 @@
 window.inputPrediction(<%= j @graph_time.to_s %>, <%= j @prediction.prediction_end_price.to_s %>, <%= j @prediction.id.to_s %>);
 
 
-$('.stockpage-sidebar-prediction').html("<%= j render partial: 'predictions/prediction', locals: {prediction: @prediction} %>").fadeIn("slow");
+$('.stockpage-sidebar-prediction').first().html("<%= j render partial: 'predictions/prediction_end', locals: {prediction: @prediction} %>");
 
 
 $('.stream').prepend("<%= j render partial: 'streams/stream_main', locals: {streams: @streams}  %> ");

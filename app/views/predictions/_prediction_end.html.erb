@@ -19,17 +19,13 @@
     <div class="sidebar-open-item col-md-4">
       <p class="sidebar-open-figure"><%= prediction.score %></p>
       <p class="sidebar-open-title">POINTS</p>
-    </div>  
+    </div>
 
-    <% if prediction.user.id == current_user.id #only show cancel button if the creator of the prediction is looking at the form. %>
-      
-
-      <div class="sidebar-close-button">
-      <% #for some reason a ruby form variable does not work here. %>
-        <%= link_to "CLOSE PREDICTION", "/predictionends?input_page=#{@prediction_end_input_page}&prediction_id=#{prediction.id}", remote:true, class: "btn" %>
-      </div>
+    <% if prediction.user.id == current_user.id %>
+          <%= render partial: "predictionends/predictionend_form", locals: {prediction:prediction} %>
     <% end %>
 
   </div>
 </div>
+
 

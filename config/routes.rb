@@ -42,7 +42,6 @@ Rails.application.routes.draw do
   get     'replies/:id'                  =>   'replies#show'
 
   post    'predictionends'               =>   'predictionends#create'
-  get     'predictionends'               =>   'predictionends#create'
 
   get     'graphimages'                  =>   'graphimages#show'
 

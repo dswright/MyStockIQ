@@ -56,6 +56,10 @@ require 'scraper'
           @prediction.exceeds_end_price #if the stock price exceeds the prediction price, move date and set to active:false, create prediction end and stream items.
           @prediction.exceeds_end_time #if the current time exceeds the prediction end time, set active:false, create prediction ends, and stream items.
           @prediction.update_score #run an update of the current score.
+
+          @predictionend = @prediction.build_predictionend()
+          @prediction_end_input_page = "stockspage" #for the prediction details box, set the input page for the prediction cancel button.
+
         end
 
         #Determines relationship between current user and target user
@@ -64,7 +68,6 @@ require 'scraper'
       	@comment_stream_inputs = "Stock:#{@stock.id}"
       	@prediction_stream_inputs = "Stock:#{@stock.id}"
 
-        @prediction_end_input_page = "stockspage" #for the prediction details box, set the input page for the prediction cancel button.
 
         
         @graph_buttons = ["1d", "5d", "1m", "3m", "6m", "1yr", "5yr"]

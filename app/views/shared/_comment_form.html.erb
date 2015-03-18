@@ -1,16 +1,21 @@
 <!-- Comment Form -->
-<% if logged_in? %>
-  <div class = "stock-page-comment-box">
-    <p class = "stock-page-prediction-header">
-      <%= @comment_header %>
-    </p>
-
-    <%= form_for(Comment.new, remote:true) do |f| %>
-
-      <%= f.text_area :content, placeholder: "Enter comment", class: "stock-page-comment-field", id: "comment" %>
-      <%= hidden_field_tag :stream_string, @comment_stream_inputs %>
-      <%= f.submit "Post", class: "btn btn-primary" %>
-    <% end %>
-
+<div class="stockpage-sidebar-open">
+    
+  <div class="stockpage-sidebar-comment-header red-gradient">
+    <div class="stockpage-sidebar-comment-header-txt pull-left">
+      Comment on APPL
+    </div>
+    <div class="stockpage-sidebar-comment-points pull-right">
+      <i class="fa fa-comment"></i>
+    </div>
   </div>
-<% end %>	
+  <div class="stockpage-sidebar-comment-box">
+    <div class="stockpage-sidebar-comment-div">
+      <textarea class="comment-form-textarea" placeholder="Comment on APPL"></textarea>
+    </div>
+    <div class="comment-submit-button-div">
+      <a class="btn">SUBMIT</a>
+    </div>
+  </div>
+
+</div>

@@ -99,13 +99,6 @@
       </div>
     </div>
 
-   
-
-
-
-
-
-
     <!-- STREAM POSTS -->
     <div class = "stream" >
       <%= render partial: "streams/stream_main", locals: {streams: @streams, nest_count: 0} %>
@@ -118,76 +111,12 @@
   <div class="col-sm-3 stockpage-sidebar">
 
   <% if @prediction.active %> 
-    <%= render partial: 'predictions/prediction', locals: {prediction: @prediction} %>
+    <%= render partial: 'predictions/prediction_end', locals: {prediction: @prediction} %>
   <% else %>
     <%= render 'shared/prediction_form' %>
   <% end %>
-   
 
-
-
-    <div class="stockpage-sidebar-open">
-      <div class="stockpage-sidebar-open-header red-gradient">
-        <div class="stockpage-sidebar-open-header-txt pull-left">
-          Open Prediction
-        </div>
-        <div class="stockpage-sidebar-open-points pull-right">
-          <i class="fa fa-line-chart"></i>
-        </div>
-      </div>
-      <div class="stockpage-sidebar-open-box">
-        <div class="sidebar-open-item col-md-4">
-          <p class="sidebar-open-figure">1D</p>
-          <p class="sidebar-open-title">TIME LEFT</p>
-        </div>
-        <div class="sidebar-open-item col-md-4">
-          <p class="sidebar-open-figure">$170</p>
-          <p class="sidebar-open-title">TARGET</p>
-        </div>
-        <div class="sidebar-open-item col-md-4">
-          <p class="sidebar-open-figure">+3</p>
-          <p class="sidebar-open-title">POINTS</p>
-        </div>  
-        <div class="sidebar-open-close-comment-div">
-          <textarea class="close-comment-textarea" placeholder="Why are you closing this prediction?"></textarea>
-          <div class="checkbox">
-            <input class="comment-only" type="checkbox" name="" value=""><span class="check-box-span">No comment</span>
-          </div>
-        </div>
-        <div class="sidebar-close-button">
-          <a class="btn">CLOSE PREDICTION</a>
-        </div>
-      </div>
-
-      <div class="stockpage-sidebar-comment-header red-gradient">
-        <div class="stockpage-sidebar-comment-header-txt pull-left">
-          Comment on APPL
-        </div>
-        <div class="stockpage-sidebar-comment-points pull-right">
-          <i class="fa fa-comment"></i>
-        </div>
-      </div>
-      <div class="stockpage-sidebar-comment-box">
-        <div class="stockpage-sidebar-comment-div">
-          <textarea class="comment-form-textarea" placeholder="Comment on APPL"></textarea>
-        </div>
-        <div class="comment-submit-button-div">
-          <a class="btn">SUBMIT</a>
-        </div>
-      </div>
-
-    </div>
-
-
-
-
-
-
-
-
-
-
-
+    <%= render partial: 'shared/comment_form' %>
 
     <div class="stockpage-side-analysts-header black-gradient">
       <div class="user-sidebar-similar-header-txt">
@@ -204,45 +133,8 @@
 
 </div>
 
-
-
-    <!-- 
-    
-    
-  </div>
-</div>
-    -->
-  <%
-   #  <div class = "stream" >
-   #   <%= #render partial: "streams/stream_main", locals: {streams: @streams, nest_count: 0} 
-   # </div>
-   # <div id = "infinite-scrolling" >
-   #   <%= #will_paginate @streams 
-   # </div>
-  %>
-
   
 
-
-
-<% #
-   #</div>
-   #   render 'shared/follow_form'
-  #</div>
-#</div>
-
-#
-#<div class = "stock-page-prediction-box">
-#   if @prediction.active_prediction_exists? 
-#     render @prediction 
-#   else 
-#     render 'shared/prediction_form' 
-#   end 
-#</div>
-#
-#  <%= render 'shared/comment_form'
-
-%>
 
 
 
