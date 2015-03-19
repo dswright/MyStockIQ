@@ -3,13 +3,11 @@ class RepliesController < ApplicationController
 	def create
 		#Obtain user session information from Session Helper function 'current_user'.
 		@user = current_user
-		@parent_stream = Stream.find(params[:stream_id]) #this is probably no longer necessary with the stream setup to be direct replies...
-		#Obtain parent information from stream_reply_form
 
 		#build the reply object for input to the db.
 		@reply = @user.replies.build(reply_params)
-		@reply.repliable_id = @parent_stream.streamable.id
-		@reply.repliable_type = @parent_stream.streamable.class.name
+		@reply.repliable_id = params[:repliable_id]
+		@reply.repliable_type = params[:repliable_type]
 
 		response_msgs = []
 

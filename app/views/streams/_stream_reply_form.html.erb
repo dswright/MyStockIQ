@@ -7,7 +7,8 @@
     </div>
     <div class="stream-comments-txt pull-left">
       <%= f.text_field :content, placeholder: "Leave a reply..", id:"reply" %>
-      <%= hidden_field_tag :stream_id, stream.id %>
+      <%= hidden_field_tag :repliable_type, repliable_type %>
+      <%= hidden_field_tag :repliable_id, repliable_id %>
       <%= f.submit "Reply", class: "btn btn-primary", style: "float:left; width:50px;" %>
 
     </div>
