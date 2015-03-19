@@ -116,7 +116,7 @@
     <%= render 'shared/prediction_form' %>
   <% end %>
 
-    <%= render partial: 'shared/comment_form' %>
+    <%= render partial: 'shared/comment_form', locals: {stock: @stock} %>
 
     <div class="stockpage-side-analysts-header black-gradient">
       <div class="user-sidebar-similar-header-txt">

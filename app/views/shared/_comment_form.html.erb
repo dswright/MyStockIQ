@@ -10,12 +10,14 @@
     </div>
   </div>
   <div class="stockpage-sidebar-comment-box">
-    <div class="stockpage-sidebar-comment-div">
-      <textarea class="comment-form-textarea" placeholder="Comment on APPL"></textarea>
-    </div>
-    <div class="comment-submit-button-div">
-      <a class="btn">SUBMIT</a>
-    </div>
+    <%= form_for(Comment.new, remote:true) do |f| %>
+      <div class="stockpage-sidebar-comment-div">
+        <%= f.text_area :content, placeholder:"Comment on #{@stock.ticker_symbol}", class: "comment-form-textarea" %>
+      </div>
+      <%= hidden_field_tag :stream_string, @comment_stream_inputs %>
+      <div class="comment-submit-button-div">
+        <%= f.submit "SUBMIT", class: "btn" %>
+      </div>
+    <% end %>  
   </div>
-
 </div>
