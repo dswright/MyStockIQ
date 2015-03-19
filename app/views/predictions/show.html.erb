@@ -1,8 +1,6 @@
 <%= javascript_include_tag "predictions.coffee.js" %>
 <%= include_gon(:init => true) %>
 
-
-
 <% content_for :title do %>
   <title><%= @stock[:ticker_symbol] %> Stock Predictions - StockHero.com</title>
 <% end %>
@@ -42,15 +40,13 @@
 
       <div class="timeframes-mobile">
         <% @graph_buttons.each do |button| %>
-          <div class="timeframes-item pull-right" id="button" data-button-type=<%= button %>
-          >
+          <div class="timeframes-item pull-right" id="button" data-button-type=<%= button %>>
             <a><%= button %></a>
           </div>
         <% end %>
       </div>
 
       <div class = "graph-buttons" style="width:450px">
-        
         
       </div>
 
@@ -112,38 +108,32 @@
       </div>
     </div>
 
-    <div class="prediction-item">
-      <a class="prediction-item-anchor red-gradient expand">
-        <div class="col-xs-2 prediction-item-img">
-          <%= image_tag "del.jpg" %>
-        </div>
-        <div class="pull-left prediction-item-txt">
-          <p class="prediction-item-username">delmnstr12&nbsp;&middot;&nbsp;2hr</p> 
-          <p class="prediction-item-main-txt"><span class="filler">Predicts</span> APPL will be +30 <span class="filler">points</span> in 2 weeks</p> 
-        </div>
-        <div class="prediction-item-points pull-right">
-          <p>+20</p>
-        </div>
-      </a>
-    </div>
 
     <div class = "stream" >
-    <%= render partial: "streams/stream_main", locals: {streams: @streams, nest_count: 0} %>
-    </div>
-    <div id = "infinite-scrolling" >
-    <%= will_paginate @streams %>
-    </div>
+      <div class="prediction-item" id="stream_Prediction_<%= @prediction.id %>">
+        <div class="stream-item-comments">
+    
+          <!-- load this only if there are replies -->
+          <div class="stream-comment-header">
+            <p><%= @prediction.replies.count %> Replies</p>
+          </div>
 
-    <!-- STREAM POSTS -->
+          <!-- load partials for each reply -->
+          <% @prediction.replies.each do |reply| %>
+            <%= render partial: "streams/stream_reply", locals: {reply: reply}  %>
+          <% end %>
+          
+          <!-- load this reply input everytime -->
+          <%= render partial: "streams/stream_reply_form", locals: {repliable_type:"Prediction", repliable_id:@prediction.id}  %>
+        </div> 
+      </div>
+    </div>
+  
 
   </div>
   <div class="col-sm-3 stockpage-sidebar">
 
-  <% if @prediction.active %> 
-    <%= render partial: 'predictions/prediction', locals: {prediction: @prediction} %>
-  <% else %>
-    <% #render a completed prediction box here. %>
-  <% end %>
+    <%= render partial: 'shared/prediction_open', locals: {prediction: @prediction} %>
    
 
     <div class="stockpage-side-analysts-header black-gradient">

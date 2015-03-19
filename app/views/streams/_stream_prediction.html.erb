@@ -1,5 +1,5 @@
 
-<div class="prediction-item" id="stream_<%= stream.id %>">
+<div class="prediction-item" id="stream_<%= stream.streamable.class.name %>_<%= stream.streamable.id %>">
   
   <div class="vote-count-container clearfix">
     <div class="prediction-item-body col-xs-11 clearfix">
@@ -35,7 +35,7 @@
     <% end %>
     
     <!-- load this reply input everytime -->
-    <%= render partial: "streams/stream_reply_form", locals: {stream: stream}  %>
+    <%= render partial: "streams/stream_reply_form", locals: {repliable_type: stream.streamable.class.name, repliable_id: stream.streamable.id}  %>
 
   </div>
 </div>
