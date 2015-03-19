@@ -47,6 +47,9 @@ Rails.application.routes.draw do
 
   get     'feed'                         =>   'feeds#show'
 
+  get     'settings'                     =>   'user_settings#show'
+  post    'settings'                     =>   'user_settings#update'
+
   resources :streams
   resources :relationships
 
