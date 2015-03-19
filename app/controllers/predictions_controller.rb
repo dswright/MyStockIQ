@@ -19,7 +19,6 @@ class PredictionsController < ApplicationController
 	def create
 		#Obtain user session information from Session Helper function 'current_user'.
 		@user = current_user
-    puts "stockid: #{prediction_params[:stock_id]}"
 		stock = Stock.find(prediction_params[:stock_id])
 
 		#Create the prediction settings.
@@ -85,7 +84,7 @@ class PredictionsController < ApplicationController
         if invalid_start
          render 'shared/_error_messages.js.erb'
         else 
-          render "create.js.erb"
+          render "predictions/create.js.erb"
         end 
       }
     end

@@ -1,6 +1,6 @@
 
 
-<%= form_for(@prediction, remote:true) do |f| %>
+
 	<div class="stockpage-sidebar-prediction">
 	  <div class="stockpage-sidebar-prediction-header black-gradient">
 	    <div class="stockpage-sidebar-prediction-header-txt pull-left">
@@ -10,24 +10,26 @@
 	      <i class="fa fa-line-chart"></i>
 	    </div>
 	  </div>
-	  <div class="stockpage-sidebar-prediction-box">
-	    <div class="stockpage-sidebar-prediction-form">
-	      <span class="pull-left"><%= @prediction.stock.ticker_symbol %> will be</span>
-	      <%= f.text_field :prediction_end_price, placeholder: "$",:class => "prediction-form-price" %><br>
-	      <span class="pull-left">in</span>
-	      <%= text_field_tag 'days', nil, class: "prediction-form-days", placeholder:"days"  %>
-	      <%= text_field_tag 'hours', nil, class: "prediction-form-hrs", placeholder:"hours" %>
-	      <%= text_field_tag 'minutes', nil, class: "prediction-form-mins", placeholder:"minutes" %>
-	    </div>
-	    <div class="stockpage-sidebar-prediction-comment">
-	      <%= f.text_area :prediction_comment, placeholder: "Comment on #{@prediction.stock.ticker_symbol}", class: "prediction-form-comment" %>
-	    </div>
-	    <%= f.hidden_field :stock_id %>
-			<%= hidden_field_tag :stream_string, @prediction_stream_inputs %>
-	    <div class="submit-button-div">
-	    	<%= f.submit "SUBMIT", class: "btn"%>
-	    </div>
-	  </div>
+	  <%= form_for(@prediction, remote:true) do |f| %>
+		  <div class="stockpage-sidebar-prediction-box">
+		    <div class="stockpage-sidebar-prediction-form">
+		      <span class="pull-left"><%= @prediction.stock.ticker_symbol %> will be</span>
+		      <%= f.text_field :prediction_end_price, placeholder: "$",:class => "prediction-form-price" %><br>
+		      <span class="pull-left">in</span>
+		      <%= text_field_tag 'days', nil, class: "prediction-form-days", placeholder:"days"  %>
+		      <%= text_field_tag 'hours', nil, class: "prediction-form-hrs", placeholder:"hours" %>
+		      <%= text_field_tag 'minutes', nil, class: "prediction-form-mins", placeholder:"minutes" %>
+			  </div>
+		    <div class="stockpage-sidebar-prediction-comment">
+		      <%= f.text_area :prediction_comment, placeholder: "Comment on #{@prediction.stock.ticker_symbol}", class: "prediction-form-comment" %>
+		    </div>
+		    <%= f.hidden_field :stock_id %>
+				<%= hidden_field_tag :stream_string, @prediction_stream_inputs %>
+		    <div class="submit-button-div">
+		    	<%= f.submit "SUBMIT", class: "btn" %>
+		    </div>
+  		</div>
+	  <% end %>
 	</div>
-<% end %>
+
 

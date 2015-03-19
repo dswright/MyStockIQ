@@ -71,7 +71,7 @@
 }
 
 
-.sidebar-close-button a {
+.sidebar-close-button input {
 	margin-top: 10px;
 	border: solid 1px #B3B3B3;
 	border-radius: 0px;
@@ -80,6 +80,7 @@
 	color: #B3B3B3;
 	font-size: 11px;
 	width: 100%;
+	background-color:#FFF;
 
 	-webkit-transition: 150ms ease-in;
   -moz-transition: 150ms ease-in;
@@ -87,7 +88,7 @@
   transition: 150ms ease-in;
 }
 
-.sidebar-close-button a:hover {
+.sidebar-close-button input:hover {
 	border: solid 1px #808080;
 	color: #808080;
 }
@@ -128,7 +129,7 @@
 	padding-left: 10px;
 	padding-right: 10px;
 	background-color: #FAFAFA;
-	color: #FAFAFA;
+	color: #808080;
 	outline: none;
 	width: 100%;
 	resize: none;
@@ -146,7 +147,7 @@
 	margin-top: 10px;
 }
 
-.comment-submit-button-div a {
+.comment-submit-button-div input {
 	border: solid 1px #B3B3B3;
 	border-radius: 0px;
 	padding-bottom: 9px;
@@ -154,6 +155,7 @@
 	color: #B3B3B3;
 	font-size: 11px;
 	width: 100%;
+	background-color:#FFF;
 
 	-webkit-transition: 150ms ease-in;
   -moz-transition: 150ms ease-in;
@@ -161,7 +163,7 @@
   transition: 150ms ease-in;
 }
 
-.comment-submit-button-div a:hover {
+.comment-submit-button-div input:hover {
 	border: solid 1px #808080;
 	color: #808080;
 }
