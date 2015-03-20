@@ -150,6 +150,19 @@ body {
 }
 
 
+.blue-blur {
+  background-image: url("blue-blur33.png");
+  background-size: cover;
+  max-width: 100%;
+  clear: both;
+  padding-top: 1px;
+  overflow: hidden;
+  margin-bottom: 1.5em;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+
 .red-gradient {
  background: rgb(99,1,13); /* Old browsers */
 /* IE9 SVG, needs conditional override of 'filter' to 'none' */

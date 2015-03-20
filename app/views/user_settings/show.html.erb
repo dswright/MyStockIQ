@@ -1,1 +1,80 @@
-Simple users page. Put users page html here.
+
+
+<section class="settings-page-banner blue-blur">
+</section>
+<section class="settings-page-banner-overlay">
+	<div class="constrainer">
+		<div class="change-banner-div">
+			<a class="btn">Change Banner</a>
+		</div>
+	</div>
+</section>
+
+<div class="constrainer">
+
+	<div class="col-xs-12 settings-top-box">
+		<div class="col-xs-4 settings-top-box-img">
+      <%= image_tag "del.jpg" %>
+			<div class="settings-top-box-overlay">
+				<a class="btn">Change Image</a>
+			</div>
+		</div>
+
+		<div class="col-xs-8 settings-top-box-form">
+			<div class="settings-top-box-bio">
+				<p class="update-bio-header">Update Bio</p>
+				<textarea>Vero tempor PBR excepteur proident. Literally street art Banksy wolf, aute cronut mollit twee typewriter. Tofu nulla listicle, viral Austin.</textarea>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-xs-12 col-sm-9 settings-page-body">
+
+		<div class="settings-form-div clearfix">
+
+			<p class="update-profile-header">Update Profile</p>
+      <div class="settings-update-form-fields">
+        <input class="update-first-field pull-left" placeholder="Dana">
+        <input class="update-last-field pull-right" placeholder="Wright">
+        <input class="update-username-field" id="signup-form-field" placeholder="dmnstr12">
+        <input class="update-email-field" id="signup-form-field" placeholder="danajwright@gmail.com">
+      </div>
+      <p class="settings-update-privacy">StockIQ will never share your information with third parties. See our <a href="#">Privacy Policy</a> for further details.</p>
+
+      <p class="settings-notifications-header">Notifications</p>
+      <div class="row">
+        <div class="settings-notification-question pull-left">
+          Receive email alerts from StockIQ
+        </div>
+        <div class="switch pull-right">
+          <input id="cmn-toggle-4" class="cmn-toggle cmn-toggle-round-flat" type="checkbox">
+          <label for="cmn-toggle-4"></label>
+        </div>
+      </div>
+
+      <div class="save-changes-button-div">
+        <a class="btn">SAVE CHANGES</a>
+      </div>
+			
+		</div>
+
+	</div>
+
+
+	<div class="col-sm-3 settings-page-sidebar">
+		<div class="settings-page-sidebar-image">
+      <%= image_tag "del.jpg" %>
+		</div>
+		<div class="settings-page-sidebar-image-overlay">
+			<div class="settings-sidebar-change-img pull-right">
+				<a class="btn">Change Image</a>
+			</div>
+		</div>
+		<div class="settings-sidebar-bio">
+			<p class="settings-sidebar-bio-header">Update Bio</p>
+			<textarea>Vero tempor PBR excepteur proident. Literally street art Banksy wolf, aute cronut mollit twee typewriter. Tofu nulla listicle, viral Austin.</textarea>
+		</div>
+
+	</div>
+
+</div>
