@@ -9,95 +9,88 @@
   <title><%= @stock[:ticker_symbol] %> Stock Predictions - StockHero.com</title>
 <% end %>
 
+
+<!-- FULL WIDTH GRAPH -->
+
+<section class="stockpage-graph-full blue-blur">
+  <div class="constrainer">
+    <div class="col-sm-12 col-md-9 stockpage-graph-col">
+      <div class="ticker-name">
+        <p><span class="tkr">Appl</span> (Apple Inc.)
+      </div>
+      
+      <div class="graph-background-div">
+        <p class="graph-background-date-time">MAR 23, 2015 - 00:00</p>
+        <p class="graph-background-price">109.76 (+2.3%)</p>
+      </div>
+      
+      <div class="stockpage-graph-full-img">
+        <!-- PUT GRAPH HERE -->
+      </div>
+      <div class="graph-full-timeframes">
+        <div class="timeframe-item pull-left"><a>1D</a></div>
+        <div class="timeframe-item pull-left"><a>5D</a></div>
+        <div class="timeframe-item pull-left"><a>1M</a></div>
+        <div class="timeframe-item pull-left"><a>1Y</a></div>
+        <div class="timeframe-item pull-left"><a>5Y</a></div>
+      </div>
+    </div>
+
+    <div class="graph-mobile-predict-button-div">
+      <a class="btn">PREDICT APPL</a>
+    </div>
+
+    <div class="graph-mobile-open-prediction">
+      <div class="graph-mobile-open-prediction-col col-xs-4">
+        <p class="graph-mobile-open-prediction-figure">1 DAY</p>
+        <p class="graph-mobile-open-prediction-title">TIME LEFT</p>
+      </div>
+      <div class="graph-mobile-open-prediction-col col-xs-4">
+        <p class="graph-mobile-open-prediction-figure">$170</p>
+        <p class="graph-mobile-open-prediction-title">TARGET PRICE</p>
+      </div>
+      <div class="graph-mobile-open-prediction-col col-xs-4">
+        <p class="graph-mobile-open-prediction-figure">+3</p>
+        <p class="graph-mobile-open-prediction-title">POINTS</p>
+      </div>
+    </div>
+    <div class="graph-mobile-close-prediction-button-mobile">
+      <a class="btn">CLOSE PREDICTION</a>
+    </div>
+
+    <div class="col-sm-3 stockpage-graph-stats-col">
+
+      <div class="graph-stats-header">
+        <p>Latest Prediction</p>
+      </div>
+      <div class="graph-stats-content">
+        <div class="graph-stats-content-item clearfix">
+          <p class="graph-stats-content-label pull-left">dmnstr12</p><img class="pull-right" src="img/del.jpg">
+        </div>
+        <div class="graph-stats-content-item">
+          <span class="graph-stats-content-label">TIME LEFT</span><span class="pull-right">624.4B</span>
+        </div>
+        <div class="graph-stats-content-item">
+          <span class="graph-stats-content-label">TARGET</span><span class="pull-right">17</span>
+        </div>
+        <div class="graph-stats-content-item">
+          <span class="graph-stats-content-label">POINTS</span><span class="pull-right">50.9M</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- END FULL WIDTH GRAPH -->
+
+
+
+
 <div class="constrainer">
 
   <div class="col-xs-12 col-sm-9 stockpage-body">
-
-    <div class="stockpage-graph-module black-gradient clearfix">
-      <div class="pull-left stockpage-ticker">
-        <p><%= @stock.ticker_symbol %> - <%= @stock.stock %></p>
-      </div>
-
-      <div class="graph-point-hover">
-        <div class="pull-right graph-hover-stat-item">
-          <p class="graph-hover-figure">+3</p>
-          <p class="graph-hover-title">POINTS</p>
-        </div>  
-        <div class="pull-right graph-hover-stat-item">
-          <p class="graph-hover-figure">$170</p>
-          <p class="graph-hover-title">TARGET</p>
-        </div>
-        <div class="pull-right graph-hover-stat-item">
-          <p class="graph-hover-figure">1D</p>
-          <p class="graph-hover-title">TIME LEFT</p>
-        </div>
-        <div class="pull-right graph-hover-stat-item">
-          <%= image_tag "del.jpg" %>
-          <p class="graph-hover-title">delmnstr12</p>
-        </div>
-      </div>
-
-      <div class="stockpage-graph">
-
-        <div id="stock-div"></div>
-      </div>
-
-      <div class="timeframes-mobile">
-        <% @graph_buttons.each do |button| %>
-          <div class="timeframes-item pull-right" id="button" data-button-type=<%= button %>
-          >
-            <a><%= button %></a>
-          </div>
-        <% end %>
-      </div>
-
-      <div class = "graph-buttons" style="width:450px">
-        
-        
-      </div>
-
-      <div class="stockpage-mobile-predict-button-div">
-        <a class="btn">PREDICT APPL</a>
-      </div>
-
-      <div class="open-prediction">
-        <div class="open-prediction-col col-xs-4">
-          <p class="open-prediction-figure">1 DAY</p>
-          <p class="open-prediction-title">TIME LEFT</p>
-        </div>
-        <div class="open-prediction-col col-xs-4">
-          <p class="open-prediction-figure">$170</p>
-          <p class="open-prediction-title">TARGET PRICE</p>
-        </div>
-        <div class="open-prediction-col col-xs-4">
-          <p class="open-prediction-figure">+3</p>
-          <p class="open-prediction-title">POINTS</p>
-        </div>
-      </div>    
-      <div class="close-prediction-button-mobile">
-        <a class="btn">CLOSE PREDICTION</a>
-      </div>
-
-
-      <div class="stats-header">
-        <p>Mar 12th, 2015</p>
-
-      </div>
-      <div class="stats-content">
-        <div class="stats-content-col-left col-xs-6">
-          <div class="stats-content-item">
-            <span class="stats-content-label">PRICE</span><span class="pull-right">$99.76</span>
-          </div>
-          
-        </div>
-        <div class="stats-content-col-right col-xs-6">
-          <div class="stats-content-item">
-            <span class="stats-content-label">CHANGE</span><span class="pull-right">+2.6%</span>  
-          </div>
-          
-        </div>
-      </div>
-    </div>
 
     <!-- STREAM POSTS -->
     <div class = "stream" >
@@ -106,6 +99,7 @@
     <div id = "infinite-scrolling" >
       <%= will_paginate @streams %>
     </div>
+
   </div>
 
   <div class="col-sm-3 stockpage-sidebar">
