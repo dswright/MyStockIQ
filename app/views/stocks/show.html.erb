@@ -94,7 +94,7 @@
 
     <!-- STREAM POSTS -->
     <div class = "stream" >
-      <%= render partial: "streams/stream_main", locals: {streams: @streams, nest_count: 0} %>
+      <%= render partial: "streams/stream_main", locals: {streams: @streams} %>
     </div>
     <div id = "infinite-scrolling" >
       <%= will_paginate @streams %>
