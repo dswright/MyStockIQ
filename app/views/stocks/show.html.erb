@@ -117,17 +117,8 @@
     <% end %>
 
     <%= render partial: 'shared/comment_form', locals: {stock: @stock} %>
-
-    <div class="stockpage-side-analysts-header black-gradient">
-      <div class="user-sidebar-similar-header-txt">
-        Top analysts for APPL
-      </div>
-    </div>
-    <div class="stockpage-side-analysts-box">
-    <% @stock.top_analysts(5).each do |analyst| %>
-      <%= render partial: 'stocks/ranking', locals: {analyst: analyst, stock: @stock} %>
-    <% end %>
-    </div>
+    
+    <%= render partial: 'stocks/ranking', locals: {stock: @stock} %>
     
   </div>
 

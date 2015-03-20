@@ -1,7 +1,13 @@
+<div class="stockpage-side-analysts-header black-gradient">
+  <div class="user-sidebar-similar-header-txt">
+    Top analysts for <%= stock.ticker_symbol %>
+  </div>
+</div>
 
+<div class="stockpage-side-analysts-box">
+ <% stock.top_analysts(5).each do |analyst| %>
     <div class="stockpage-side-analysts-box">
-
-      <a class="stockpage-side-analysts-anchor clearfix" href="#">
+      <%= link_to "/users/#{analyst.username}/", class: "stockpage-side-analysts-anchor clearfix" do %>
         <div class="stockpage-side-analysts-img pull-left">
           <%= image_tag "del.jpg" %>
         </div>
@@ -9,8 +15,10 @@
           <%= analyst.username %>
         </div>
         <div class="stockpage-side-analysts-number pull-right">
-          <%= analyst.total_score(stock) %>
+          <%= analyst.total_score(stock) %> pts
         </div>
+        <% end %>
       </a>
-
     </div>
+  <% end %>
+</div>
