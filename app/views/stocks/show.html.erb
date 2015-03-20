@@ -16,7 +16,7 @@
   <div class="constrainer">
     <div class="col-sm-12 col-md-9 stockpage-graph-col">
       <div class="ticker-name">
-        <p><span class="tkr">Appl</span> (Apple Inc.)
+        <p><span class="tkr">Appl</span> (Apple Inc.)</p>
       </div>
       
       <div class="graph-background-div">
@@ -28,14 +28,14 @@
         <div id="stock-div"></div>
       </div>
       <div class="graph-full-timeframes">
-        <div class="timeframe-item pull-left"><a>1D</a></div>
-        <div class="timeframe-item pull-left"><a>5D</a></div>
-        <div class="timeframe-item pull-left"><a>1M</a></div>
-        <div class="timeframe-item pull-left"><a>1Y</a></div>
-        <div class="timeframe-item pull-left"><a>5Y</a></div>
+        <% @graph_buttons.each do |button| %>
+          <div class="timeframe-item pull-left" id="button" data-button-type=<%= button %>
+          >
+            <a><%= button %></a>
+          </div>
+        <% end %>
       </div>
     </div>
-
     <div class="graph-mobile-predict-button-div">
       <a class="btn">PREDICT APPL</a>
     </div>
