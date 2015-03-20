@@ -147,7 +147,7 @@ $(document).ready(function () {
     },
     yAxis: {
       gridLineColor: 'rgba(255, 255, 255, 0.2)',
-      gridLineWidth: 1
+      gridLineWidth: 0
     },
     xAxis: {
       minRange: 3600 * 1000,
