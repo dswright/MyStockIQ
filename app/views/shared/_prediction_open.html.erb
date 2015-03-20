@@ -26,7 +26,7 @@
       <%= form_for(Predictionend.new, remote:true) do |f| %>
         <div class="sidebar-open-close-comment-div">
          <%= text_area_tag 'comment', nil, placeholder: "Make a closing comment", class: "close-comment-textarea" %>
-        </div> 
+        </div>
 
         <%= hidden_field_tag :input_page, @prediction_end_input_page %>
         <%= hidden_field_tag :prediction_id, prediction.id %>
