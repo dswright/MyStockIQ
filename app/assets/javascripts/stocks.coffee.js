@@ -146,8 +146,16 @@ $(document).ready(function () {
       enabled: false
     },
     yAxis: {
-      gridLineColor: 'rgba(255, 255, 255, 0.2)',
-      gridLineWidth: 0
+      gridLineColor: 'rgba(255, 255, 255, 0.39)',
+      gridLineWidth: 0,
+      lineWidth: 1,
+      lineColor: 'rgba(255, 255, 255, 0.39)',
+      tickLength: 25,
+      tickWidth: 1,
+      tickPosition: "inside",
+      labels: {
+        style: {"color":"rgba(255, 255, 255, 0.39)", "font-size": "11px", "font-family":"Lato", "font-weight": "300"}
+      }
     },
     xAxis: {
       minRange: 3600 * 1000,
@@ -156,8 +164,8 @@ $(document).ready(function () {
       },
       minorTickLength: 0,
       tickLength: 0,
-      lineColor: 'rgba(255, 255, 255, 0.2)',
-      lineWidth: 0
+      lineColor: 'rgba(255, 255, 255, 0.39)',
+      lineWidth: 1
     },
 
     series: seriesVar
