@@ -62,7 +62,9 @@ $(document).ready(function () {
       backgroundColor:'transparent',
       renderTo: 'stock-div',
       panning: false, //disables time frame dragging on desktop
-      pinchType: false //disable time frame dragging on mobile.
+      pinchType: false, //disable time frame dragging on mobile.
+      spacingLeft: 0,
+      spacingRight: 1
     },
     exporting: {
       enabled: false
@@ -150,12 +152,19 @@ $(document).ready(function () {
       gridLineWidth: 0,
       lineWidth: 1,
       lineColor: 'rgba(255, 255, 255, 0.39)',
+      tickColor: 'rgba(255, 255, 255, 0.39)',
       tickLength: 25,
-      tickWidth: 1,
+      tickWidth: 0,
       tickPosition: "inside",
+      showFirstLabel: false,
       labels: {
-        style: {"color":"rgba(255, 255, 255, 0.39)", "font-size": "11px", "font-family":"Lato", "font-weight": "300"}
+        useHTML: true,
+        style: {"padding-right":"3px","padding-left":"1px","border-bottom": "1px solid rgba(255, 255, 255, 0.39)", color:"rgba(255, 255, 255, 0.39)", "font-size": "11px", "font-family":"Lato", "font-weight": "300"},
+        formatter: function() {
+          return "$" + this.value;
+        }
       }
+
     },
     xAxis: {
       minRange: 3600 * 1000,
@@ -165,7 +174,7 @@ $(document).ready(function () {
       minorTickLength: 0,
       tickLength: 0,
       lineColor: 'rgba(255, 255, 255, 0.39)',
-      lineWidth: 1
+      lineWidth: 1,
     },
 
     series: seriesVar
