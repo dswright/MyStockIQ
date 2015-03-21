@@ -44,23 +44,16 @@
 }
 
 .graph-background-div p {
-	font-size: 69px;
-	font-weight: 600;
-	color: rgba(255, 255, 255, .1);
+	font-size: 30px;
+	font-weight: 900;
+	color: rgba(255, 255, 255, .09);
 	margin-top: 0px;
 	margin-bottom: 0px;
-	line-height: 69px;
+	line-height: 33px;
 }
 
-
-
-.stockpage-graph-full-img {
-	margin-top: -150px;
-	margin-bottom: 20px;
-}
-
-.stockpage-graph-full-img img {
-	width: 100%;
+#stock-div {
+	margin-top: -89px;
 }
 
 .graph-full-timeframes {
@@ -210,24 +203,19 @@
 	padding-right: 15px;
 }
 
-.graph-hover-stat-item {
-	margin-left: 10px;
+
+
+.graph-background-div p {
+	font-size: 53px;
+	font-weight: 700;
+	color: rgba(255, 255, 255, .08);
+	margin-top: 0px;
+	margin-bottom: 0px;
+	line-height: 56px;
 }
 
-.graph-hover-stat-item img {
-	display: block;
-	margin-top: 2px;
-	margin-bottom: 3px;
-	margin-left: auto;
-	margin-right: auto;
-	width: 16px;
-	border-radius: 90px;
-	border: solid 1px rgba(255, 255, 255, 0.85);
-}
-
-.graph-hover-stat-item p {
-	text-align: center;
-	text-transform: uppercase;
+#stock-div {
+	margin-top: -139px;
 }
 
 
