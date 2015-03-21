@@ -30,6 +30,35 @@
 	color: rgba(255, 255, 255, 1);
 }
 
+.stockpage-follow-btn {
+	margin-left: 10px;
+	margin-top: 3px;
+}
+
+.stockpage-follow-btn a {
+	border: solid 1px rgba(255,255,255,.85);
+	border-radius: 2px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	font-size: 10px;
+	font-family: 'Lato';
+	color: rgba(255,255,255,.85);
+	text-decoration: none;
+	margin: auto;
+	padding-left: 11px;
+	padding-right: 11px;
+
+	-webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+}
+
+.stockpage-follow-btn a:hover {
+	border: solid 1px rgba(255,255,255,1);
+	color: rgba(255,255,255,1);
+}
+
 .graph-background-div {
 	margin-top: 15px;
 	margin-bottom: 20px;
