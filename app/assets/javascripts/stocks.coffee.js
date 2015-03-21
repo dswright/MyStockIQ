@@ -153,19 +153,21 @@ $(document).ready(function () {
       lineWidth: 1,
       lineColor: 'rgba(255, 255, 255, 0.39)',
       tickColor: 'rgba(255, 255, 255, 0.39)',
-      tickLength: 25,
-      tickWidth: 0,
+      tickLength: 5,
+      tickWidth: 1,
       tickPosition: "inside",
       showFirstLabel: false,
-
+      showLastLabel: false,
+      startOnTick: true,
+      endOnTick: true,
       labels: {
-        useHTML: true,
-        style: {"padding-bottom":"3px","padding-right":"3px","padding-left":"2px","border-bottom": "1px solid rgba(255, 255, 255, 0.39)", color:"rgba(255, 255, 255, 0.39)", "font-size": "11px", "font-family":"Lato", "font-weight": "300"},
+        style: {color:"rgba(255, 255, 255, 0.39)", "font-size": "11px", "font-family":"Lato", "font-weight": "300"},
         formatter: function() {
           return "$" + this.value;
-        }
+        },
+        x: -10,
+        y: 5
       }
-
     },
     xAxis: {
       minRange: 3600 * 1000,
