@@ -16,6 +16,10 @@
 	display: none;
 }
 
+.add-timeframes {
+	display: none
+}
+
 .stockpage-graph-full {
 }
 
@@ -190,14 +194,13 @@
 	display: none;
 }
 
+.add-timeframes {
+	display: inline;
+}
 
 
 /*************** STOCKPAGE FULL WIDTH ***********************/
 
-
-.stockpage-stat-col {
-	display: none;
-}
 
 .stockpage-body {
 	padding-right: 15px;

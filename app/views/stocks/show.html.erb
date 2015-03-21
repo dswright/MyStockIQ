@@ -3,8 +3,6 @@
 <%= javascript_include_tag "stocks.coffee.js" %>
 <%= include_gon(:init => true) %>
 
-
-
 <% content_for :title do %>
   <title><%= @stock[:ticker_symbol] %> Stock Predictions - StockHero.com</title>
 <% end %>
