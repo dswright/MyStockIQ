@@ -238,7 +238,7 @@ function StockGraph(stockGraph, chart) {
     stockGraph["intraday_prediction_ids"] = activeIntradayPredictions[1];
 
     if (stockGraph["my_prediction"][0][0] === null) {
-      var bestButton = "1m"; //sets the x axis ranges to the 1m ranges
+      var bestButton = "1M"; //sets the x axis ranges to the 1m ranges
     }
     else {
       var endTime = stockGraph["my_prediction"].last()[0]; //use the endTime of the users own prediction to get the best range.
