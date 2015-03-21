@@ -59,7 +59,17 @@
 }
 
 .comment-only-item-txt a {
-	color: #63010d;
+	color: #7cb5ec;
+	text-decoration: none;
+
+  -webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+}
+
+.comment-only-item-txt a:hover {
+	border-bottom: 1px solid #7cb5ec;
 }
 
 .comment-only-footer {
