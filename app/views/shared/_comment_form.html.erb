@@ -1,15 +1,15 @@
 <!-- Comment Form -->
 <div class="stockpage-sidebar-open">
-    
-  <div class="stockpage-sidebar-comment-header red-gradient">
-    <div class="stockpage-sidebar-comment-header-txt pull-left">
-      Comment on APPL
-    </div>
-    <div class="stockpage-sidebar-comment-points pull-right">
-      <i class="fa fa-comment"></i>
-    </div>
-  </div>
+
   <div class="stockpage-sidebar-comment-box">
+    <div class="stockpage-sidebar-comment-header">
+      <div class="stockpage-sidebar-comment-header-txt pull-left">
+        Comment on APPL
+      </div>
+      <div class="stockpage-sidebar-comment-points pull-right">
+        <i class="fa fa-comment"></i>
+      </div>
+    </div>
     <%= form_for(Comment.new, remote:true) do |f| %>
       <div class="stockpage-sidebar-comment-div">
         <%= f.text_area :content, placeholder:"Comment on #{@stock.ticker_symbol}", class: "comment-form-textarea" %>
@@ -18,6 +18,6 @@
       <div class="comment-submit-button-div">
         <%= f.submit "SUBMIT", class: "btn" %>
       </div>
-    <% end %>  
+    <% end %>
   </div>
 </div>
