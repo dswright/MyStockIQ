@@ -1,6 +1,7 @@
 
 	<div class="stockpage-sidebar-prediction">
-	  <div class="stockpage-sidebar-prediction-header black-gradient">
+	<div class="stockpage-sidebar-prediction-box">
+	  <div class="stockpage-sidebar-prediction-header">
 	    <div class="stockpage-sidebar-prediction-header-txt pull-left">
 	      Predict <%= @prediction.stock.ticker_symbol %>
 	    </div>
@@ -9,7 +10,6 @@
 	    </div>
 	  </div>
 	  <%= form_for(@prediction, remote:true) do |f| %>
-		  <div class="stockpage-sidebar-prediction-box">
 		    <div class="stockpage-sidebar-prediction-form">
 		      <span class="pull-left"><%= @prediction.stock.ticker_symbol %> will be</span>
 		      <%= f.text_field :prediction_end_price, placeholder: "$",:class => "prediction-form-price" %><br>

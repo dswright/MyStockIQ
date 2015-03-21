@@ -1,23 +1,27 @@
 
 
 .stockpage-sidebar-prediction-header {
-	height: 33px;
-	margin-top: 15px;
-	color: #E6E6E6;
+	height: 39px;
+	color: #7cb5ec;
 	font-size: 11px;
-	padding-left: 10px;
-	padding-right: 10px;
-	padding-top: 10px;
+	padding-left: 0px;
+	padding-right: 0px;
+	padding-top: 13px;
+	border-bottom: 1px solid rgba(0,0,0,.07);
 }
 
 .stockpage-sidebar-prediction-box {
 	border: 1px solid rgba(0,0,0,0.07);
   	background-color: #fff;
 	font-size: 11px;
+	margin-top: 20px;
 	padding-left: 10px;
 	padding-right: 10px;
-	padding-top: 20px;
 	padding-bottom: 15px;
+}
+
+.stockpage-sidebar-prediction-form {
+	margin-top: 20px;
 }
 
 .stockpage-sidebar-prediction-form span {
