@@ -28,10 +28,17 @@
       </div>
       <div class="graph-full-timeframes">
         <% @graph_buttons.each do |button| %>
-          <div class="timeframe-item pull-left" id="button" data-button-type=<%= button %>
-          >
-            <a><%= button %></a>
-          </div>
+          <% if button == "3M" || button == "6M" %>
+            <span class="add-timeframes">
+              <div class="timeframe-item pull-left" id="button" data-button-type=<%= button %>>
+                <a><%= button %></a>
+              </div>
+            </span>
+          <% else %> 
+            <div class="timeframe-item pull-left" id="button" data-button-type=<%= button %>>
+              <a><%= button %></a>
+            </div>
+          <% end %>
         <% end %>
       </div>
     </div>
