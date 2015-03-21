@@ -158,7 +158,6 @@ $(document).ready(function () {
       tickPosition: "inside",
       showFirstLabel: false,
       labels: {
-        useHTML: true,
         style: {"padding-right":"3px","padding-left":"1px","border-bottom": "1px solid rgba(255, 255, 255, 0.39)", color:"rgba(255, 255, 255, 0.39)", "font-size": "11px", "font-family":"Lato", "font-weight": "300"},
         formatter: function() {
           return "$" + this.value;

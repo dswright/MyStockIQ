@@ -70,7 +70,7 @@ require 'scraper'
 
 
         
-        @graph_buttons = ["1d", "5d", "1m", "3m", "6m", "1yr", "5yr"]
+        @graph_buttons = ["1D", "5D", "1M", "3M", "6M", "1Yr", "5Yr"]
         #used by the view to generate the html buttons
 
         gon.ticker_symbol = @stock.ticker_symbol
