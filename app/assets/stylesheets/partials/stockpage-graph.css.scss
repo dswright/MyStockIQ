@@ -63,14 +63,21 @@
 }
 
 .timeframe-item a {
+	cursor: pointer;
 	display: block;
 	text-align: center;
+	text-decoration: none;
 	padding-left: 3px;
 	padding-right: 3px;
-	padding-bottom: 6px;
+	padding-bottom: 12px;
 	font-size: 11px;
 	font-weight: 300;
 	color: rgba(255, 255, 255, 0.39);
+
+  -webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
 }
 
 .timeframe-item a:hover {
