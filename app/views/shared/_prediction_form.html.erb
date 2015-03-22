@@ -22,7 +22,7 @@
 		      <%= f.text_area :prediction_comment, placeholder: "Comment on #{@prediction.stock.ticker_symbol}", class: "prediction-form-comment" %>
 		    </div>
 		    <%= f.hidden_field :stock_id %>
-				<%= hidden_field_tag :stream_string, @prediction_stream_inputs %>
+				<%= hidden_field_tag :stream_string, @prediction_stream_string %>
 		    <div class="submit-button-div">
 		    	<%= f.submit "SUBMIT", class: "btn" %>
 		    </div>

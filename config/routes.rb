@@ -50,6 +50,8 @@ Rails.application.routes.draw do
   get     'settings'                     =>   'user_settings#show'
   post    'settings'                     =>   'user_settings#update'
 
+  
+
   resources :streams
   resources :relationships
 
