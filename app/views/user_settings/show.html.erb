@@ -54,11 +54,22 @@
 
       <div class="save-changes-button-div">
         <a class="btn">SAVE CHANGES</a>
+
       </div>
-			
+
 		</div>
 
-	</div>
+    Simple Image Upload <br /><br /><br /><br />
+    <%= form_tag url_for(controller:"/user_settings", action:"update"), :multipart => true do %>
+      <%= text_field_tag :email, current_user.email, placeholder:"enter email address" %>
+      <%= text_area_tag :bio, current_user.bio, placeholder:"Enter a short bio here" %>
+      <%= file_field_tag :image %>
+      <%= submit_tag("SAVE") %>
+      <%= image_tag current_user.image_url.to_s, size: "20%", alt: "Edit Entry" %>
+
+    <% end %>
+
+  </div>
 
 
 	<div class="col-sm-3 settings-page-sidebar">
@@ -75,6 +86,12 @@
 			<textarea>Vero tempor PBR excepteur proident. Literally street art Banksy wolf, aute cronut mollit twee typewriter. Tofu nulla listicle, viral Austin.</textarea>
 		</div>
 
+
+
 	</div>
 
+
+
 </div>
+
+

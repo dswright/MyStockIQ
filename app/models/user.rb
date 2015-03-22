@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
-	#this class has many built in methods like .new which would create a new user without any methods in here.
-	
+
+  mount_uploader :image, ImageUploader
+
   #sets an association that the User will have many comments and predictions associated to it
   has_many :comments
   has_many :predictions
@@ -34,7 +35,7 @@ class User < ActiveRecord::Base
   #confirm that password is encrypted. This triggers a ruby gem called bcrypt.
   has_secure_password
 
-  validates :password, length: { minimum: 6 }
+  validates :password, length: { minimum: 6 }, allow_blank: true
 
 	# Returns the hash digest of the given string.
   def User.digest(string)
