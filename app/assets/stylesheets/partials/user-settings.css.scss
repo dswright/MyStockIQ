@@ -310,7 +310,7 @@ input.cmn-toggle-round-flat:checked + label:after {
 /******** SAVE CHANGES BUTTON ***********************/
 
 
-.save-changes-button-div a {
+.save-changes-button-div input {
 	display: block;
 	border: solid 1px #B3B3B3;
 	border-radius: 0px;
@@ -321,6 +321,7 @@ input.cmn-toggle-round-flat:checked + label:after {
 	color: #B3B3B3;
 	font-size: 12px;
 	width: 100%;
+  background-color: transparent;
 
   -webkit-transition: 150ms ease-in;
   -moz-transition: 150ms ease-in;
@@ -328,7 +329,7 @@ input.cmn-toggle-round-flat:checked + label:after {
   transition: 150ms ease-in;
 }
 
-.save-changes-button-div a:hover {
+.save-changes-button-div input:hover {
 	border: solid 1px #808080;
 	color: #808080;
 }
