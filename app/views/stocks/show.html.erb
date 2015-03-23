@@ -12,6 +12,7 @@
 
 <section class="stockpage-graph-full blue-blur">
   <div class="constrainer">
+
     <div class="ticker-name clearfix">
       <p>
         <span>Apple Inc.</span>
@@ -134,6 +135,49 @@
     
     <%= render partial: 'stocks/ranking', locals: {stock: @stock} %>
     
+
+    <div class="stockpage-sidebar-stocks">
+      <div class="stockpage-sidebar-stocks-box">
+        <div class="stockpage-sidebar-stocks-header">
+          <div class="stockpage-sidebar-stocks-header-txt pull-left">
+            Stocks Similar to AAPL
+          </div>
+        </div>
+
+        <a class="stockpage-sidebar-stocks-item clearfix" href="#">
+          <div class="stockpage-sidebar-stocks-label pull-left">
+            TWTR<span>&nbsp;&nbsp;&nbsp;(TECH)</span>
+          </div>
+          <div class="stockpage-sidebar-stocks-number pull-right">
+            <i class="fa fa-users"></i>163
+          </div>
+        </a>
+        <a class="stockpage-sidebar-stocks-item clearfix" href="#">
+          <div class="stockpage-sidebar-stocks-label pull-left">
+            AMZN<span>&nbsp;&nbsp;&nbsp;(TECH)</span>
+          </div>
+          <div class="stockpage-sidebar-stocks-number pull-right">
+            <i class="fa fa-users"></i>63
+          </div>
+        </a>
+        <a class="stockpage-sidebar-stocks-item clearfix" href="#">
+          <div class="stockpage-sidebar-stocks-label pull-left">
+            GOOG<span>&nbsp;&nbsp;&nbsp;(TECH)</span>
+          </div>
+          <div class="stockpage-sidebar-stocks-number pull-right">
+            <i class="fa fa-users"></i>390
+          </div>
+        </a>
+        <a class="stockpage-sidebar-stocks-item clearfix" href="#">
+          <div class="stockpage-sidebar-stocks-label pull-left">
+            FB<span>&nbsp;&nbsp;&nbsp;(TECH)</span>
+          </div>
+          <div class="stockpage-sidebar-stocks-number pull-right">
+            <i class="fa fa-users"></i>21k
+          </div>
+        </a>
+      </div>
+    </div>
     
     
   </div>
