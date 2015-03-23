@@ -12,23 +12,29 @@
 
 <section class="stockpage-graph-full blue-blur">
   <div class="constrainer">
-    <div class="col-sm-12 col-md-9 stockpage-graph-col">
-      <div class="ticker-name clearfix">
-        <p class="pull-left"><span class="tkr">Appl</span> (Apple Inc.)</p>
-        <div class="stockpage-follow-btn pull-left">
-          <a class="btn">Follow</a>
-        </div>
-      </div>
-      
+    <div class="ticker-name clearfix">
+      <p>
+        <span class="">(Apple Inc.)</span>
+        <a class="stockpage-follow-btn btn">Follow</a>
+      </p>
+    </div>
+
+    <div class="prediction-name clearfix">
+      <p>
+        <%= image_tag "del.jpg" %>
+        <span class="prediction-name-title">dmnstr12 Prediction</span>
+      </p>
+    </div>
+
+    <div class="col-xs-12 col-sm-9 stockpage-graph-col">
       <div class="graph-background-div">
-        <p class="graph-background-date-time">MAR 23, 2015 - 00:00</p>
-        <p class="graph-background-price">109.76 (+2.3%)</p>
+        <p class="tkr">APPL</p>
       </div>
       
-      <div class="stockpage-graph-full-img">
-        <!-- GRAPH GOES HERE -->
+      <div>
         <div id="stock-div"></div>
       </div>
+
       <div class="graph-full-timeframes">
         <% @graph_buttons.each do |button| %>
           <% if button == "3M" || button == "6M" %>
@@ -45,55 +51,60 @@
         <% end %>
       </div>
     </div>
-    <div class="graph-mobile-predict-button-div">
-      <a class="btn">PREDICT APPL</a>
-    </div>
-
-    <div class="graph-mobile-open-prediction">
-      <div class="graph-mobile-open-prediction-col col-xs-4">
-        <p class="graph-mobile-open-prediction-figure">1 DAY</p>
-        <p class="graph-mobile-open-prediction-title">TIME LEFT</p>
-      </div>
-      <div class="graph-mobile-open-prediction-col col-xs-4">
-        <p class="graph-mobile-open-prediction-figure">$170</p>
-        <p class="graph-mobile-open-prediction-title">TARGET PRICE</p>
-      </div>
-      <div class="graph-mobile-open-prediction-col col-xs-4">
-        <p class="graph-mobile-open-prediction-figure">+3</p>
-        <p class="graph-mobile-open-prediction-title">POINTS</p>
-      </div>
-    </div>
-    <div class="graph-mobile-close-prediction-button-mobile">
-      <a class="btn">CLOSE PREDICTION</a>
-    </div>
 
     <div class="col-sm-3 stockpage-graph-stats-col">
 
-      <div class="graph-stats-header">
-        <p>Latest Prediction</p>
+      <div class="graph-stock-stats">
+        <div class="graph-stats-date-price">
+          <p class="graph-price">$170</p>
+          <p class="graph-label">MAY 9, 2015 - 02:20:30</p>
+        </div>
       </div>
-      <div class="graph-stats-content">
-        <div class="graph-stats-content-item clearfix">
-          <p class="graph-stats-content-label pull-left">dmnstr12</p><img class="pull-right" src="img/del.jpg">
+
+      <div class="graph-prediction-stats clearfix">
+        <div class="graph-stats-date-price col-xs-6 col-sm-12">
+          <p class="graph-price">$170</p>
+          <p class="graph-label">MAY 9, 2015 - 02:20:30</p>
         </div>
-        <div class="graph-stats-content-item">
-          <span class="graph-stats-content-label">TIME LEFT</span><span class="pull-right">624.4B</span>
-        </div>
-        <div class="graph-stats-content-item">
-          <span class="graph-stats-content-label">TARGET</span><span class="pull-right">17</span>
-        </div>
-        <div class="graph-stats-content-item">
-          <span class="graph-stats-content-label">POINTS</span><span class="pull-right">50.9M</span>
+        <div class="graph-prediction-stats graph-prediction-stats-2 col-xs-6 col-sm-12">
+          <p class="graph-price">+3.4</p>
+          <p class="graph-label">POINTS</p>
         </div>
       </div>
 
     </div>
+
+    <div class="col-sm-12 col-md-9 stockpage-mobile-buttoms-col">
+
+      <div class="graph-mobile-predict-button-div">
+        <a class="btn">PREDICT APPL</a>
+      </div>
+
+      <div class="graph-mobile-open-prediction">
+        <div class="graph-mobile-open-prediction-col col-xs-4">
+          <p class="graph-mobile-open-prediction-figure">1 DAY</p>
+          <p class="graph-mobile-open-prediction-title">TIME LEFT</p>
+        </div>
+        <div class="graph-mobile-open-prediction-col col-xs-4">
+          <p class="graph-mobile-open-prediction-figure">$170</p>
+          <p class="graph-mobile-open-prediction-title">TARGET PRICE</p>
+        </div>
+        <div class="graph-mobile-open-prediction-col col-xs-4">
+          <p class="graph-mobile-open-prediction-figure">+3</p>
+          <p class="graph-mobile-open-prediction-title">POINTS</p>
+        </div>
+      </div>
+      <div class="graph-mobile-close-prediction-button-mobile">
+        <a class="btn">CLOSE PREDICTION</a>
+      </div>
+
+    </div>
+
   </div>
 </section>
 
 
 <!-- END FULL WIDTH GRAPH -->
-
 
 
 

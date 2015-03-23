@@ -24,7 +24,7 @@
 @media (min-width: 768px) {
 
 .stockpage-body {
-	padding-right: 30px;
+	padding-right: 15px;
 }
 
 .stockpage-sidebar {
@@ -35,6 +35,14 @@
 
 }
 
+
+@media (min-width: 991px) {
+
+.stockpage-body {
+	padding-right: 30px;
+}
+
+}
 
 
 

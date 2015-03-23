@@ -1,41 +1,39 @@
 
 
-.stockpage-graph-stats-col {
-	display: none;
-}
-
 .add-timeframes {
 	display: none
 }
 
 .stockpage-graph-full {
+	margin-bottom: 10px;
 }
 
 .stockpage-graph-col {
+	margin-top: 20px;
 	padding-left: 0px;
 	padding-right: 0px;
 }
 
-.ticker-name {
-	margin-top: 20px;
-}
 
-.tkr {
-	text-transform: uppercase;
+
+/*-------- TICKER NAME TITLE -----------*/
+
+
+.ticker-name {
+	margin: auto;
+	// display: none;
 }
 
 .ticker-name p {
+	margin-top: 27px;
 	font-size: 39px;
+	text-align: center;
 	font-weight: 300;
 	color: rgba(255, 255, 255, 1);
 }
 
-.stockpage-follow-btn {
-	margin-left: 10px;
-	margin-top: 3px;
-}
 
-.stockpage-follow-btn a {
+.stockpage-follow-btn {
 	border: solid 1px rgba(255,255,255,.85);
 	border-radius: 2px;
 	padding-top: 2px;
@@ -44,7 +42,8 @@
 	font-family: 'Lato';
 	color: rgba(255,255,255,.85);
 	text-decoration: none;
-	margin: auto;
+	margin-top: 0px;
+	margin-bottom: 21px;
 	padding-left: 11px;
 	padding-right: 11px;
 
@@ -54,28 +53,67 @@
   transition: 150ms ease-in;
 }
 
-.stockpage-follow-btn a:hover {
+.stockpage-follow-btn:hover {
 	border: solid 1px rgba(255,255,255,1);
 	color: rgba(255,255,255,1);
 }
 
-.graph-background-div {
-	margin-top: 15px;
-	margin-bottom: 20px;
+
+/*-------- PREDICTION NAME TITLE -----------*/
+
+
+.prediction-name {
+	margin: auto;
+	display: none;
 }
 
-.graph-background-div p {
-	font-size: 30px;
-	font-weight: 900;
-	color: rgba(255, 255, 255, .09);
+.prediction-name img {
+	width: 30px;
+	margin-right: 3px;
+	position: relative;
+	border-radius: 90px;
+	border: 3px solid rgba(255, 255, 255, 1);
+}
+
+.prediction-name p {
+	margin-top: 30px;
+	font-size: 29px;
+	text-align: center;
+	font-weight: 300;
+	color: rgba(255, 255, 255, 1);
+}
+
+.prediction-name-title {
+	display: inline;
+	vertical-align: 12%;
+}
+
+
+/*----------------- GRAPH ----------------*/
+
+
+.graph-background-div {
 	margin-top: 0px;
+}
+
+.tkr {
+	font-size: 69px;
+	line-height: 21px;
+	font-weight: 600;
+	color: rgba(255, 255, 255, .09);
+	margin-top: 20px;
 	margin-bottom: 0px;
-	line-height: 33px;
+	text-transform: uppercase;
 }
 
 #stock-div {
-	margin-top: -89px;
+	margin-top: -45px;
 }
+
+
+
+/*-------- GRAPH TIMEFRAMES -----------*/
+
 
 .graph-full-timeframes {
 	margin-top: 15px;
@@ -120,8 +158,63 @@
 }
 
 
+
+/*------------ GRAPH STATS ASIDE-------------*/
+
+
+.graph-stock-stats {
+	// display: none;
+}
+
+.stockpage-graph-stats-col {
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+.stockpage-graph-col {
+	padding-left: 0px;
+}
+
+.graph-stats-date-price {
+	text-align: center;
+	margin-top: 0px;
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+.graph-prediction-stats {
+	display: none;
+	text-align: center;
+	margin-top: 0px;
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+.graph-price {
+	font-size: 49px;
+	color: #fff;
+}
+
+.graph-label {
+	font-size: 12px;
+	color: rgba(255, 255, 255, 0.39);
+	text-transform: uppercase;
+	margin-top: 5px
+}
+
+
+
+/*-------------- MOBILE BUTTONS--------------*/
+
+
+.stockpage-mobile-buttoms-col {
+	margin-top: 0px;
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
 .graph-mobile-predict-button-div {
-	margin-top: 10px;
+	margin-top: 30px;
 }
 
 .graph-mobile-predict-button-div a {
@@ -146,11 +239,14 @@
 
 
 
+/*--------- MOBILE PREDICTION OPEN-----------*/
+
+
 .graph-mobile-open-prediction {
 	overflow: hidden;
-	margin-top: 20px;
-	padding-top: 18px;
-	padding-bottom: 20px;
+	margin-top: 30px;
+	padding-top: 30px;
+	padding-bottom: 30px;
 	border-top: solid 1px rgba(255, 255, 255, 0.2);
 }
 
@@ -166,14 +262,13 @@
 }
 
 .graph-mobile-open-prediction-title {
-	color: rgba(255, 255, 255, 0.2);
+	color: rgba(255, 255, 255, 0.39);
 	font-size: 11px;
 	margin-bottom: 0px;
 }
 
-
 .graph-mobile-close-prediction-button-mobile {
-	padding-bottom: 20px;
+	padding-bottom: 30px;
 	border-bottom: solid 1px rgba(255, 255, 255, 0.2);
 }
 
@@ -223,23 +318,53 @@
 }
 
 
-/*************** STOCKPAGE FULL WIDTH ***********************/
+/*-------- TICKER NAME TITLE -----------*/
+
+.tkr {
+	font-size: 90px;
+	font-weight: 500;
+}
 
 
+/*-------- PREDICTION NAME TITLE -----------*/
 
-.graph-background-div p {
-	font-size: 53px;
-	font-weight: 700;
-	color: rgba(255, 255, 255, .08);
-	margin-top: 0px;
-	margin-bottom: 0px;
-	line-height: 56px;
+.prediction-name p {
+	margin-top: 27px;
+	font-size: 33px;
+	text-align: center;
+	font-weight: 300;
+	color: rgba(255, 255, 255, 1);
+}
+
+.prediction-name img {
+	width: 33px;
+	margin-right: 3px;
+}
+
+.prediction-name-title {
+	display: inline;
+	vertical-align: 15%;
+}
+
+
+/*----------------- GRAPH ----------------*/
+
+.stockpage-graph-col {
+	margin-top: 30px;
+	padding-left: 0px;
+	padding-right: 15px;
+}
+
+.graph-background-div {
+	margin-top: 33px;
 }
 
 #stock-div {
-	margin-top: -139px;
+	margin-top: -60px;
 }
 
+
+/*------------ GRAPH TIMEFRAMES -----------*/
 
 .graph-full-timeframes {
 	margin-top: 15px;
@@ -254,65 +379,118 @@
 	height: 22px;
 }
 
+
+/*------------ GRAPH STATS ASIDE -----------*/
+
+.stockpage-graph-stats-col {
+	margin-top: 30px;
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+.stockpage-graph-col {
+	padding-left: 0px;
+}
+
+.graph-prediction-stats {
+	text-align: center;
+	margin-top: 0px;
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+.graph-price {
+	font-size: 39px;
+	color: #fff;
+}
+
+.graph-label {
+	font-size: 12px;
+	color: rgba(255, 255, 255, 0.39);
+	text-transform: uppercase;
+	margin-top: 5px
+}
+
+.graph-prediction-stats-2 {
+	margin-top: 20px;
+}
+
+
+
+
+
 }
 
 
 @media (min-width: 991px) {
-
 
 .stockpage-graph-col {
 	padding-left: 0px;
 	padding-right: 30px;
 }
 
+.prediction-name img {
+	width: 36px;
+	margin-right: 3px;
+	position: relative;
+	border-radius: 90px;
+	border: 3px solid rgba(255, 255, 255, 1);
+}
+
+.prediction-name p {
+	margin-top: 30px;
+	font-size: 39px;
+	text-align: center;
+	font-weight: 300;
+	color: rgba(255, 255, 255, 1);
+}
+
+.prediction-name-title {
+	display: inline;
+	vertical-align: 12%;
+}
+
+.graph-background-div {
+	margin-top: 50px;
+}
+
+.tkr {
+	font-size: 130px;
+	font-weight: 500;
+}
+
+#stock-div {
+	margin-top: -66px;
+}
+
+
+
+/*------------ GRAPH STATS ASIDE -----------*/
+
+
 .stockpage-graph-stats-col {
-	display: block;
-	padding-right: 0px;
 	padding-left: 0px;
+	padding-right: 0px;
 }
 
-.graph-stats-header {
-	margin-top: 80px;
+.graph-stats-date-price {
+	text-align: center;
 }
 
-.graph-stats-header p {
-	color: rgba(255, 255, 255, 0.85);
-	padding-bottom: 3px;
-	margin-bottom: 0px;
-	border-bottom: solid 1px rgba(255, 255, 255, 0.85);
-	font-weight: 300;
-	font-size: 21px;
+.graph-price {
+	font-size: 60px;
+	color: #fff;
 }
 
-.graph-stats-content-item {
-	display: block;
-	color: rgba(255, 255, 255, 0.85);
-	font-size: 11px;
-	font-weight: 300;
-	padding-top: 16px;
-	padding-bottom: 16px;
-	border-bottom: solid 1px rgba(255, 255, 255, 0.39);
-	width: 100%;
-}
-
-.graph-stats-content-label {
+.graph-label {
+	font-size: 15px;
 	color: rgba(255, 255, 255, 0.39);
 	text-transform: uppercase;
-	width: 100px;
-	margin-bottom: 0px;
-	margin-top: 5px;
+	margin-top: 3px
 }
 
-.graph-stats-content-col-left {
-	padding-left: 0px;
-	padding-right: 10px;
-}
 
-.graph-stats-content-item img {
-	width: 24px;
-	border-radius: 90px;
-	border: 2px solid rgba(255, 255, 255, 1);
-}
+
 
 
 .graph-full-timeframes {
