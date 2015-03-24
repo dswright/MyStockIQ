@@ -56,7 +56,7 @@ class UsersController < ApplicationController
       log_in @user
 
       #redirect to user profile page
-  		redirect_to "/users/#{@user.username}/"
+  		redirect_to "/welcome"
 
   	else
   		redirect_to '/signup'
@@ -73,7 +73,7 @@ class UsersController < ApplicationController
 	  	#instead we use this very fancy line below that also permits only specific form fields.
 	  	#user is the object created by passing the @user variable into the Ruby form.
 	    params.require(:user).permit(:username, :email, :password,
-	                                 :password_confirmation)
+	                                 :password_confirmation, :image)
 	  end
 
 

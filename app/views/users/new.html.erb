@@ -10,7 +10,7 @@
   </div>
 </section>
 
-<%= form_for(:user, url: users_path) do |f| %>
+<%= form_for(:user, url: users_path, :multipart => true) do |f| %>
   <div class="constrainer">
     <p class="signup-title">What's your Stock IQ?</p>
     <p class="signup-subtitle">Find out how good you <i>really</i> are at predicting the market. Follow experts, compete with friends, and raise your Stock IQ.</p>
@@ -35,6 +35,8 @@
           <div class="password-col2 col-sm-6">
             <%= f.password_field :password_confirmation, class: "signup-email-field", id: "signup-form-field", placeholder: "Confirm Password" %>
           </div>
+
+          <%= f.file_field :image %>
 
         </div>
 
