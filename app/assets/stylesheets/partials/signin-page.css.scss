@@ -1,9 +1,6 @@
-// Place all the styles related to the Sessions controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
 
 
-/* STOCKIQ login page styles --------------------------------*/
+/*-----------------SIGNIN PAGE----------------*/
 
 body {
   background-color: #FAFAFA;
@@ -23,37 +20,36 @@ body {
 
 .signin-nav-link p {
   display: block;
-  color: #63010d;
-  font-size: 11px;
+  color: #7cb5ec;
+  font-size: 16px;
   height: 49px;
-  padding-top: 20px;
+  padding-top: 15px;
   padding-left: 5px;
   padding-right: 5px;
-  border-bottom: 1px solid #63010d;
+  border-bottom: 1px solid #7cb5ec;
 
   -webkit-transition: 150ms ease-in;
-    -moz-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
   -o-transition: 150ms ease-in;
   transition: 150ms ease-in;
 }
 
 
 .signin-form-div {
-  margin-top: 39px;
+  margin-top: 30px;
   margin-left: auto;
   margin-right: auto;
   border-radius: 3px;
-  max-width: 440px;
+  max-width: 530px;
 }
 
-
 .signin-form-header {
-  height: 39px;
-  color: #E6E6E6;
+  color: #919191;
   font-size: 15px;
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-top: 9px;
+  font-weight: 300;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid rgba(0,0,0,.07);
 }
 
 .signin-form-header-txt {
@@ -61,26 +57,30 @@ body {
 }
 
 .signin-form-box {
-  border: 1px solid rgba(0,0,0,0.07);
+  border: 1px solid rgba(0,0,0,.07);
+  border-radius: 7px;
   background-color: #fff;  
   font-size: 11px;
-  padding-left: 15px;
-  padding-right: 15px;
-  padding-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 0px;
   padding-bottom: 20px;
   margin-bottom: 30px;
 }
 
 .signin-signin-link {
-  margin-top: 0px;
+  margin-top: 20px;
   margin-bottom: 15px;
-  color: #808080;
+  color: #919191;
   font-size: 12px;
+  font-weight: 300;
 }
 
 .signin-signin-link a {
-  color: #63010d;
+  color: #7cb5ec;
   margin-left: 5px;
+  text-decoration: none;
+  padding-bottom: 2px;
 
   -webkit-transition: 150ms ease-in;
   -moz-transition: 150ms ease-in;
@@ -89,8 +89,10 @@ body {
 }
 
 .signin-signin-link a:hover {
-  color: #4b0009;
+  color: #7cb5ec;
+  border-bottom: 1px solid #7cb5ec;
 }
+
 
 .signin-form-fields input {
   width: 100%;
@@ -100,7 +102,8 @@ body {
   background-color: #FAFAFA;
   border: 0px;
   outline: none;
-  color: #808080;
+  color: #919191;
+  border-radius: 3px;
 }
 
 .signin-form-fields input:focus {
@@ -128,10 +131,14 @@ body {
   color: #808080;
 }
 
-@media (min-width: 991px) {
+
+
+@media (min-width: 768px) {
+
+.signin-nav-link p {
+  padding-top: 20px;
+  font-size: 12px;
+}
 
 }
 
-@media (min-width: 1050px) {
-
-}
