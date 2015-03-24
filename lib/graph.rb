@@ -20,6 +20,7 @@ class Graph
     elsif settings[:start_point] == "predictiondetails"
       @start_point = @prediction.start_time
     end
+    @last_daily_date = daily_prices[-2][0] #get the last id from the dailyprices array..
   end
 
   def prediction #this is used for the predictiondetails graph.
@@ -78,6 +79,23 @@ class Graph
     return my_prediction_id_array
   end
 
+  def daily_price_ids #last_date is in graphtime.
+    daily_price_id_array = []
+    start = @start_point - 60*60*24*1825 #minus 5 years from the start_time to get 5 years of historical daily data.
+    finish = @start_point + 60*60*24*950 #add 2.5 years to get 2.5 years of forward looking data.
+    Stockprice.where(ticker_symbol: @ticker_symbol).where("date > ?", start).where("date < ?", finish).reorder('date desc').each do |price|
+      daily_price_id_array << price.id
+    end
+    daily_price_id_array.reverse!
+
+    stock = Stock.find_by(ticker_symbol: @ticker_symbol)
+    if @last_daily_date < stock.date.utc_time_int.graph_time_int
+      daily_price_id_array << @ticker_symbol
+    end
+    return daily_price_id_array
+  end
+
+
   #Limited to 400 5 minute periods, which is 2000 minutes, just over the 975 minutes in 5 6.5 hour days.
 
   def intraday_prices
@@ -104,7 +122,7 @@ class Graph
 
     stock = Stock.find_by(ticker_symbol: @ticker_symbol)
     extra_day = stock.date.utc_time_int.graph_time_int
-    if extra_day > price_array.last[0]
+    if price_array.last[0] < extra_day
       extra_day = extra_day.utc_time_int.utc_time.beginning_of_day.strftime("%Y-%m-%d 21:00:00").utc_time.utc_time_int.graph_time_int
       price_array << [extra_day, stock.daily_stock_price.round(2)]
     end

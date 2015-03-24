@@ -380,7 +380,8 @@ function StockGraph(stockGraph, chart) {
       chart.series[2].setData(theGraph["intraday_predictions"]);
       chart.series[3].setData(theGraph["intraday_my_prediction"]); //this may be null
       stockGraph["active_prediction_ids"] = theGraph["intraday_prediction_ids"]; //updates the active ids array to use in the onhover box change.
-      
+      stockGraph["active_price_ids"] = theGraph["intraday_price_ids"]
+
     }
     if ((button !== "1D" && button !== "5D") && (currentRange["buttonType"] === "1D" || currentRange["buttonType"] === "5D")) { //set daily graph
     //if (button !== "1d" && button !== "5d") {
@@ -389,6 +390,7 @@ function StockGraph(stockGraph, chart) {
       chart.series[2].setData(theGraph["daily_predictions"]);
       chart.series[3].setData(theGraph["daily_my_prediction"]);
       stockGraph["active_prediction_ids"] = theGraph["daily_prediction_ids"];
+      stockGraph["active_price_ids"] = theGraph["daily_price_ids"]
     }
     setPredictions(stockGraph); //reset the predictions array. They get unset from running these setData functions, not sure why.
     setMyPrediction(stockGraph["my_prediction"]); //set the daily and intraday my_prediction graph arrays based on my_prediction.

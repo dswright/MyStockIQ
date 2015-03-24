@@ -17,7 +17,7 @@ $(document).ready(function () {
 
   seriesVar = [
     {
-      name : gon.ticker_symbol,
+      name : "prices",
       lineWidth: 1,
       dataGrouping: {
         enabled: false
@@ -96,23 +96,21 @@ $(document).ready(function () {
     tooltip: {
       crosshairs: null,
       shared: false,
-      enabled: false
-           /*formatter: function() {
-        if(this.series.name == 'my_prediction') {
+      formatter: function() {
+        if(this.series.name == 'prices') {
           var arrId = this.series.data.indexOf(this.point);
-          var predictionId = stockGraph["my_prediction_id"][arrId]; //this will always use just the 1 my_prediction_id which will always show on the graph.
+          var priceId = stockGraph["daily_price_ids"][arrId]; //this will always use just the 1 my_prediction_id which will always show on the graph.
 
           $.ajax({
-            url: "/predictions/hover/"+predictionId, //pass the prediction id to the prediction hover partial.
+            url: "/stockprices/hover/"+priceId, //pass the prediction id to the prediction hover partial.
             context: document.body //this tells the done function to be executed on the dom.
           }).done(function( data ) {
-            $('#predictiondetailsbox').html(data).fadeIn("slow"); //this loads in the html returned from the ajax request.
+            $('#graph-replace-box').html(data).fadeIn("slow"); //this loads in the html returned from the ajax request.
           })
-          var niceDate = this.x;
-          niceDate = niceDate.utcTimeInt().utcTimeStr(); //.utcTime().utcTimeStr();
-          return niceDate + ': $' + this.y;
-
         }
+        return false;
+      }
+        /*
         else if(this.series.name == 'predictions') {
           //this.series.index is the index number of the array point.. this will give me what i need to access the predicition?
           //next create an array on the backend that can be accessed that has the corresponding prediction ids.
