@@ -1,27 +1,40 @@
 
+<section class="signup-nav clearfix">
+  <div class="nav-constrainer">
+    <div class="signup-nav-logo pull-left">
+      StockIQ
+    </div>
+    <div class="signup-nav-link pull-right">
+      <p>Sign Up</p>
+    </div>
+  </div>
+</section>
 
 <%= form_for(:user, url: users_path) do |f| %>
   <div class="constrainer">
     <p class="signup-title">What's your Stock IQ?</p>
     <p class="signup-subtitle">Find out how good you <i>really</i> are at predicting the market. Follow experts, compete with friends, and raise your Stock IQ.</p>
     <div class="signup-form-div">
-      <div class="signup-form-header red-gradient">
-        <div class="signup-form-header-txt">
-          Sign Up
-        </div>
-      </div>
       <div class="signup-form-box">
+        <div class="signup-form-header">
+          <div class="signup-form-header-txt">
+            Sign Up
+          </div>
+        </div>
         <p class="signup-signin-link">Already have and account? <%= link_to "Sign in here.", login_path %></p>
         <div class="signup-form-fields">
-
 
           <%= f.text_field :username, class: "signup-email-field", id: "signup-form-field", placeholder: "Username" %>
 
           <%= f.text_field :email, class: "signup-form-field", id: "signup-form-field", placeholder: "Email address" %>
-          
-          <%= f.password_field :password, class: "signup-email-field", id: "signup-form-field", placeholder: "Password" %>
 
-          <%= f.password_field :password_confirmation, class: "signup-email-field", id: "signup-form-field", placeholder: "Confirm Password" %>
+          <div class="password-col1 col-sm-6">
+            <%= f.password_field :password, class: "signup-email-field", id: "signup-form-field", placeholder: "Password" %>
+          </div>
+
+          <div class="password-col2 col-sm-6">
+            <%= f.password_field :password_confirmation, class: "signup-email-field", id: "signup-form-field", placeholder: "Confirm Password" %>
+          </div>
 
         </div>
 
