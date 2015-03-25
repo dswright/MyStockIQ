@@ -125,44 +125,10 @@ body {
   clear: both;
 }
 
-.nav-singed-in a {
-  color: #808080;
-
-  -webkit-transition: 300ms ease-in;
-  -moz-transition: 300ms ease-in;
-  -o-transition: 300ms ease-in;
-  transition: 300ms ease-in;
-
-}
-
-.nav-singed-in a:hover {
-  color: #4D4D4D;
-  cursor: pointer;
-  text-decoration: none
-}
-
-.nav-singed-in a:focus {
-  color: #808080;
-  text-decoration: none;
-  outline: none;
-  outline: 0px auto -webkit-focus-ring-color;
-  outline-offset: 0px;
-}
-
 
 .blue-blur-tile {
-  background-image: url("blue-blur33.png");
-  clear: both;
-  padding-top: 1px;
-  overflow: hidden;
-  background-repeat: no-repeat;
-  background-position: center;
-  opacity: .95;
-
-  -webkit-transition: 200ms ease-in;
-  -moz-transition: 200ms ease-in;
-  -o-transition: 200ms ease-in;
-  transition: 200ms ease-in;
+  background: #7cb5ec;
+  opacity: .9;
 }
 
 .blue-blur-tile:hover {

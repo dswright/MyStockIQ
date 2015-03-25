@@ -1,3 +1,6 @@
+
+/* Toggles mobile nav div */
+
 $(document).ready(function() {
 
   $('#drop-nav-expand').click(function(e) {
@@ -5,20 +8,26 @@ $(document).ready(function() {
     e.preventDefault();
   });
 
-	if (matchMedia) {
-		var mq = window.matchMedia("(min-width: 768px)");
-		mq.addListener(WidthChange);
-		WidthChange(mq);
-	}
-
-	function WidthChange(mq) {
-
-		if (mq.matches) {
-			$('.nav-dropdown').style.display="none";
-		}
-		else {
-			// window width is less than 768px
-		}
-	}
-
 });
+
+
+/* Hides mobile nav menu on viewport wider than 768px */
+
+if (matchMedia) {
+	var mq = window.matchMedia("(min-width: 768px)");
+	mq.addListener(WidthChange);
+	WidthChange(mq);
+}
+
+// media query change
+function WidthChange(mq) {
+
+	if (mq.matches) {
+		$('#nav-dropdown').hide();
+	}
+	else {
+		// window width is less than 500px
+	}
+
+}
+

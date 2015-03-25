@@ -22,3 +22,4 @@
 //= require bootstrap
 //= require pagination
 //= require signup
+//= require nav
