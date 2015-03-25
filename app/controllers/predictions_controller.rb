@@ -5,15 +5,35 @@ class PredictionsController < ApplicationController
   require 'graph'
 	
 
-  def hover    
+  def hover_daily
+    prediction_data = {}
+
     prediction = Prediction.find(params[:id])
+    prediction_data[:price] = prediction.prediction_end_price
+    prediction_data[:date] = prediction.prediction_end_time
+    prediction_data[:score] = prediction.score
 
     respond_to do |f|
-      f.html { 
-        render :partial => 'hover', :locals => { :prediction => prediction } #this is working...
+      f.html {
+        render :partial => 'shared/graph/daily_prediction', :locals => { :prediction => prediction_data } #this is working...
       }
     end
+  end
+  
 
+  def hover_intraday
+    prediction_data = {}
+
+    prediction = Prediction.find(params[:id])
+    prediction_data[:price] = prediction.prediction_end_price
+    prediction_data[:date] = prediction.prediction_end_time
+    prediction_data[:score] = prediction.score
+
+    respond_to do |f|
+      f.html {
+        render :partial => 'shared/graph/intraday_prediction', :locals => { :prediction => prediction_data } #this is working...
+      }
+    end
   end
 
 	def create

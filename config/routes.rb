@@ -38,6 +38,8 @@ Rails.application.routes.draw do
 
   post    'predictions'                  =>   'predictions#create'
   get     'predictions/:id'              =>   'predictions#show'
+  get     'predictions/hover_daily/:id'  =>   'predictions#hover_daily'
+  get     'predictions/hover_intraday/:id' => 'predictions#hover_intraday'
 
   post    'replies'                      =>   'replies#create'
   get     'replies/:id'                  =>   'replies#show'

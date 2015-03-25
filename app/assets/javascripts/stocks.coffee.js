@@ -142,7 +142,29 @@ $(document).ready(function () {
               $('#graph-replace-box').html(data).fadeIn("slow"); //this loads in the html returned from the ajax request.
             })
           }
+        }
 
+        if(this.series.name == 'my_prediction') {
+          if (currentRange["buttonType"] == "1D" || currentRange["buttonType"] == "5D") {
+            var arrId = this.series.data.indexOf(this.point);
+            var priceId = stockGraph["my_prediction_id"][arrId]; //this will always use just the 1 my_prediction_id which will always show on the graph.
+            $.ajax({
+              url: "/predictions/hover_intraday/"+priceId, //pass the prediction id to the prediction hover partial.
+              context: document.body //this tells the done function to be executed on the dom.
+            }).done(function( data ) {
+              $('#graph-replace-box').html(data).fadeIn("slow"); //this loads in the html returned from the ajax request.
+            })
+          }
+          else {
+            var arrId = this.series.data.indexOf(this.point);
+            var priceId = stockGraph["my_prediction_id"][arrId]; //this will always use just the 1 my_prediction_id which will always show on the graph.
+            $.ajax({
+              url: "/predictions/hover_daily/"+priceId, //pass the prediction id to the prediction hover partial.
+              context: document.body //this tells the done function to be executed on the dom.
+            }).done(function( data ) {
+              $('#graph-replace-box').html(data).fadeIn("slow"); //this loads in the html returned from the ajax request.
+            })
+          }
         }
 
         return false;

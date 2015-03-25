@@ -1,10 +1,10 @@
 <div class="graph-prediction-stats clearfix">
   <div class="graph-stats-date-price col-xs-6 col-sm-12">
-    <p class="graph-price">$170</p>
-    <p class="graph-label">MAY 9, 2015 - 02:20:30</p>
+    <p class="graph-price">$<%= prediction[:price].round(2) %></p>
+    <p class="graph-label"><%= (prediction[:date] + Time.zone_offset("EST")).strftime("%b %d, %Y") %></p>
   </div>
   <div class="graph-prediction-stats graph-prediction-stats-2 col-xs-6 col-sm-12">
-    <p class="graph-price">+3.4</p>
+    <p class="graph-price"><%= prediction[:score].round(2) %></p>
     <p class="graph-label">POINTS</p>
   </div>
 </div>
