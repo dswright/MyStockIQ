@@ -134,24 +134,66 @@ body {
 
 
 
-#file {
-  display:none;
+.btn-file {
+  position: relative;
+  overflow: hidden;
 }
 
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background: white;
+  cursor: inherit;
+  display: block;
+  color: #7cb5ec;
+  font-weight: 300;
+  border: 1px solid #7cb5ec;
+  border-radius: 3px;
+}
 
-#file button {
-  background-color: transparent;
+.btn-file input {
+  background-color: #fff;
   border: none;
   color: #7cb5ec;
   font-weight: 300;
-  padding: 5px 10px;
   border: 1px solid #7cb5ec;
   border-radius: 3px;
-  z-index: 0;
 }
 
+.btn-custom {
+  padding: 5px 30px;
+  color: #B3B3B3;
+  font-size: 11px;
+  font-weight: 300px;
+  background-color: #fff;
+  border: solid 1px #C7C7C7;
+  border-radius: 3px;
 
+  -webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+}
 
+.btn-custom:hover {
+  color: #7cb5ec;
+  border: solid 1px #7cb5ec;
+}
+
+.btn-custom input:active {
+  filter: alpha(opacity=0);
+  border-top: 0px;
+  box-shadow: 0px;
+
+}
 
 
 .password-col1 {
@@ -194,12 +236,12 @@ body {
 
 .signup-submit-button-div input {
   margin-top: 15px;
-  border: solid 1px #B3B3B3;
+  border: solid 1px #C7C7C7;
   border-radius: 3px;
   padding-bottom: 12px;
   padding-top: 12px;
   color: #B3B3B3;
-  font-size: 15px;
+  font-size: 13px;
   width: 100%;
   background-color: #FFF;
 
@@ -210,8 +252,8 @@ body {
 }
 
 .signup-submit-button-div input:hover {
-  border: solid 1px #919191;
-  color: #919191;
+  color: #7cb5ec;
+  border: solid 1px #7cb5ec;
 }
 
 

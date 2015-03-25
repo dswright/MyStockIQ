@@ -1,17 +1,18 @@
 
 
+
+// For "Select Profile Image" hides defalt chose file 
+// button and applies styled one
+
 $(document).ready(function() {
 
-	var wrapper = $('<div/>').css({height:0,width:0,'overflow':'hidden'});
-	var fileInput = $(':file').wrap(wrapper);
+	$(document).on('change', '.btn-file :file', function() {
+	    var input = $(this);
+	    input.trigger('fileselect');
+	});
 
-	fileInput.change(function(){
-	    $this = $(this);
-	    $('#file').text($this.val());
-	})
-
-	$('#file').click(function(){
-	    fileInput.click();
-	}).show();
+    $('.btn-file :file').on('fileselect') {
+        $('input').html();
+    });
 
 });
