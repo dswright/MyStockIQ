@@ -14,7 +14,9 @@
   <div class="constrainer">
     
     <!-- title of the stock graph -->
-    <%= render partial: "shared/graph/stock_title", locals: {stock: @stock} %>
+    <div id = "title-replace-box">
+      <%= render partial: "shared/graph/stock_title", locals: {stock: @stock} %>
+    </div>
     
     <div class="col-xs-12 col-sm-9 stockpage-graph-col">
       <div class="graph-background-div">

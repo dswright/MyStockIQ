@@ -9,13 +9,11 @@ class PredictionsController < ApplicationController
     prediction_data = {}
 
     prediction = Prediction.find(params[:id])
-    prediction_data[:price] = prediction.prediction_end_price
-    prediction_data[:date] = prediction.prediction_end_time
-    prediction_data[:score] = prediction.score
 
     respond_to do |f|
       f.html {
-        render :partial => 'shared/graph/daily_prediction', :locals => { :prediction => prediction_data } #this is working...
+        render :partial => 'predictions/hover_daily.js.erb', :locals => { :prediction => prediction } #this is working...
+        #render :partial => 'shared/graph/daily_prediction', :locals => { :prediction => prediction_data } #this is working...
       }
     end
   end
@@ -25,13 +23,10 @@ class PredictionsController < ApplicationController
     prediction_data = {}
 
     prediction = Prediction.find(params[:id])
-    prediction_data[:price] = prediction.prediction_end_price
-    prediction_data[:date] = prediction.prediction_end_time
-    prediction_data[:score] = prediction.score
 
     respond_to do |f|
       f.html {
-        render :partial => 'shared/graph/intraday_prediction', :locals => { :prediction => prediction_data } #this is working...
+        render :partial => 'predictions/hover_intraday.js.erb', :locals => { :prediction => prediction } #this is working...
       }
     end
   end

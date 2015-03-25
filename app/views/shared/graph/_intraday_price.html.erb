@@ -1,6 +1,6 @@
 <div class="graph-stock-stats">
   <div class="graph-stats-date-price">
-    <p class="graph-price">$<%= price[:price].round(2) %></p>
-    <p class="graph-label"><%= (price[:date] + Time.zone_offset("EST")).strftime("%b %d, %Y - %I:%M %p") %></p>
+    <p class="graph-price">$<%= price.close_price.round(2) %></p>
+    <p class="graph-label"><%= (price.date + Time.zone_offset("EST")).strftime("%b %d, %Y - %I:%M %p") %></p>
   </div>
 </div>
