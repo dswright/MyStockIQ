@@ -192,9 +192,14 @@ body {
   filter: alpha(opacity=0);
   border-top: 0px;
   box-shadow: 0px;
-
 }
 
+#signup-label {
+  font-size: 12px;
+  font-weight: 300;
+  margin-left: 15px;
+  color: #7cb5ec;
+}
 
 .password-col1 {
   padding-left: 0px;
