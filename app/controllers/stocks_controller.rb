@@ -74,6 +74,7 @@ require 'scraper'
         #used by the view to generate the html buttons
 
         gon.ticker_symbol = @stock.ticker_symbol
+        @price_point = {price:@stock.daily_stock_price,date:@stock.date}
       }
       format.json {
 

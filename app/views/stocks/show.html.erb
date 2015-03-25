@@ -12,24 +12,13 @@
 
 <section class="stockpage-graph-full blue-blur">
   <div class="constrainer">
-
-    <div class="ticker-name clearfix">
-      <p>
-        <span>Apple Inc.</span>
-        <a class="stockpage-follow-btn btn">Follow</a>
-      </p>
-    </div>
-
-    <div class="prediction-name clearfix">
-      <p>
-        <%= image_tag "del.jpg" %>
-        <span class="prediction-name-title">dmnstr12 Prediction</span>
-      </p>
-    </div>
-
+    
+    <!-- title of the stock graph -->
+    <%= render partial: "shared/graph/stock_title", locals: {stock: @stock} %>
+    
     <div class="col-xs-12 col-sm-9 stockpage-graph-col">
       <div class="graph-background-div">
-        <p class="tkr">APPL</p>
+        <p class="tkr"><%= @stock.ticker_symbol %></p>
       </div>
       
       <div>
@@ -55,24 +44,9 @@
 
     <div class="col-sm-3 stockpage-graph-stats-col">
 
-      <div class="graph-stock-stats">
-        <div class="graph-stats-date-price">
-          <p class="graph-price">$170</p>
-          <p class="graph-label">MAY 9, 2015 - 02:20:30</p>
-        </div>
+      <div id ="graph-replace-box">
+        <%= render partial: "shared/graph/daily_price.html.erb", locals: {price:@price_point} %>
       </div>
-
-      <div class="graph-prediction-stats clearfix">
-        <div class="graph-stats-date-price col-xs-6 col-sm-12">
-          <p class="graph-price">$170</p>
-          <p class="graph-label">MAY 9, 2015 - 02:20:30</p>
-        </div>
-        <div class="graph-prediction-stats graph-prediction-stats-2 col-xs-6 col-sm-12">
-          <p class="graph-price">+3.4</p>
-          <p class="graph-label">POINTS</p>
-        </div>
-      </div>
-
     </div>
 
     <div class="col-sm-12 col-md-9 stockpage-mobile-buttoms-col">

@@ -24,6 +24,8 @@ Rails.application.routes.draw do
   get     'stocks/:ticker_symbol'        =>   'stocks#show'
 
   get     'stockprices/:ticker_symbol'   =>   'stockprices#show'
+  get     'stockprices/hover_daily/:id'  =>   'stockprices#hover_daily'
+  get     'stockprices/hover_intraday/:id' => 'stockprices#hover_intraday'
 
   post    'streams'                      =>   'streams#create'
   delete  'streams/:id'                  =>   'streams#destroy'
@@ -36,7 +38,8 @@ Rails.application.routes.draw do
 
   post    'predictions'                  =>   'predictions#create'
   get     'predictions/:id'              =>   'predictions#show'
-  get     'predictions/hover/:id'        =>   'predictions#hover'
+  get     'predictions/hover_daily/:id'  =>   'predictions#hover_daily'
+  get     'predictions/hover_intraday/:id' => 'predictions#hover_intraday'
 
   post    'replies'                      =>   'replies#create'
   get     'replies/:id'                  =>   'replies#show'
@@ -52,7 +55,6 @@ Rails.application.routes.draw do
 
   get     'welcome'                      =>   'welcome#show'
 
-  
 
   resources :streams
   resources :relationships
