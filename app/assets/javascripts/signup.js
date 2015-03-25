@@ -12,7 +12,7 @@ $(document).ready(function() {
 	});
 
     $('.btn-file :file').on('fileselect') {
-        $('input').html();
+        $('input').html(contentString);
     });
 
 });
