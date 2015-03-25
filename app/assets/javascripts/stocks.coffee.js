@@ -98,18 +98,55 @@ $(document).ready(function () {
       shared: false,
       formatter: function() {
         if(this.series.name == 'prices') {
-          var arrId = this.series.data.indexOf(this.point);
-          var priceId = stockGraph["daily_price_ids"][arrId]; //this will always use just the 1 my_prediction_id which will always show on the graph.
+          if (currentRange["buttonType"] == "1D" || currentRange["buttonType"] == "5D") {
+            var arrId = this.series.data.indexOf(this.point);
+            var priceId = stockGraph["intraday_price_ids"][arrId]; //this will always use just the 1 my_prediction_id which will always show on the graph.
+            $.ajax({
+              url: "/stockprices/hover_intraday/"+priceId, //pass the prediction id to the prediction hover partial.
+              context: document.body //this tells the done function to be executed on the dom.
+            }).done(function( data ) {
+              $('#graph-replace-box').html(data).fadeIn("slow"); //this loads in the html returned from the ajax request.
+            })
+          }
+          else {
+            var arrId = this.series.data.indexOf(this.point);
+            var priceId = stockGraph["daily_price_ids"][arrId]; //this will always use just the 1 my_prediction_id which will always show on the graph.
+            $.ajax({
+              url: "/stockprices/hover_daily/"+priceId, //pass the prediction id to the prediction hover partial.
+              context: document.body //this tells the done function to be executed on the dom.
+            }).done(function( data ) {
+              $('#graph-replace-box').html(data).fadeIn("slow"); //this loads in the html returned from the ajax request.
+            })
+          }
 
-          $.ajax({
-            url: "/stockprices/hover/"+priceId, //pass the prediction id to the prediction hover partial.
-            context: document.body //this tells the done function to be executed on the dom.
-          }).done(function( data ) {
-            $('#graph-replace-box').html(data).fadeIn("slow"); //this loads in the html returned from the ajax request.
-          })
         }
+
+        if(this.series.name == 'predictions') {
+          if (currentRange["buttonType"] == "1D" || currentRange["buttonType"] == "5D") {
+            var arrId = this.series.data.indexOf(this.point);
+            var priceId = stockGraph["intraday_prediction_ids"][arrId]; //this will always use just the 1 my_prediction_id which will always show on the graph.
+            $.ajax({
+              url: "/predictions/hover_intraday/"+priceId, //pass the prediction id to the prediction hover partial.
+              context: document.body //this tells the done function to be executed on the dom.
+            }).done(function( data ) {
+              $('#graph-replace-box').html(data).fadeIn("slow"); //this loads in the html returned from the ajax request.
+            })
+          }
+          else {
+            var arrId = this.series.data.indexOf(this.point);
+            var priceId = stockGraph["daily_prediction_ids"][arrId]; //this will always use just the 1 my_prediction_id which will always show on the graph.
+            $.ajax({
+              url: "/predictions/hover_daily/"+priceId, //pass the prediction id to the prediction hover partial.
+              context: document.body //this tells the done function to be executed on the dom.
+            }).done(function( data ) {
+              $('#graph-replace-box').html(data).fadeIn("slow"); //this loads in the html returned from the ajax request.
+            })
+          }
+
+        }
+
         return false;
-      }
+      }  
         /*
         else if(this.series.name == 'predictions') {
           //this.series.index is the index number of the array point.. this will give me what i need to access the predicition?

@@ -1,7 +1,7 @@
 class StockpricesController < ApplicationController
 require 'graph'
   
-  def hover
+  def hover_daily
 
     the_id = params[:id].to_s =~ /\A[-+]?\d*\.?\d+\z/  #checks to see if the id is number or string. Returns 0 or nil.
     price_data = {}
@@ -18,10 +18,25 @@ require 'graph'
 
     respond_to do |f|
       f.html {
-        render :partial => 'shared/graph/stock_price', :locals => { :price => price_data } #this is working...
+        render :partial => 'shared/graph/daily_price', :locals => { :price => price_data } #this is working...
       }
     end
 
+  end
+
+   def hover_intraday
+
+    price_data = {}
+    price = Intradayprice.find(params[:id])
+    price_data[:price] = price.close_price
+    price_data[:date] = price.date
+
+
+    respond_to do |f|
+      f.html {
+        render :partial => 'shared/graph/intraday_price', :locals => { :price => price_data } #this is working...
+      }
+    end
   end
 
 
@@ -42,6 +57,7 @@ require 'graph'
           :prediction_ids => graph.prediction_ids,
           :daily_prices => graph.daily_prices,
           :daily_price_ids => graph.daily_price_ids,
+          :intraday_price_ids => graph.intraday_price_ids,
           :intraday_prices => graph.intraday_prices 
         }
       }

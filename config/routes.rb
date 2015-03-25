@@ -24,7 +24,8 @@ Rails.application.routes.draw do
   get     'stocks/:ticker_symbol'        =>   'stocks#show'
 
   get     'stockprices/:ticker_symbol'   =>   'stockprices#show'
-  get     'stockprices/hover/:id'              =>   'stockprices#hover'
+  get     'stockprices/hover_daily/:id'  =>   'stockprices#hover_daily'
+  get     'stockprices/hover_intraday/:id' => 'stockprices#hover_intraday'
 
   post    'streams'                      =>   'streams#create'
   delete  'streams/:id'                  =>   'streams#destroy'

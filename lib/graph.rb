@@ -95,6 +95,16 @@ class Graph
     return daily_price_id_array
   end
 
+  def intraday_price_ids
+    start = @start_point - 60*60*24*9 #minus 9 days from the start_time to get at least 5 days of historical intraday data.
+    finish = @start_point + 60*60*24*6 #add 6 days to get at least 3 days of forward looking data.
+    intraday_price_ids = []
+    Intradayprice.where(ticker_symbol:@ticker_symbol).where("date > ?", start).where("date < ?", finish).reorder('date desc').reverse.each do |price|    
+      intraday_price_ids << price.id
+    end
+    return intraday_price_ids
+  end
+
 
   #Limited to 400 5 minute periods, which is 2000 minutes, just over the 975 minutes in 5 6.5 hour days.
 
