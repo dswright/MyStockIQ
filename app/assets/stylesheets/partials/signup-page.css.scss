@@ -132,6 +132,28 @@ body {
   outline: 1px solid rgba(0,0,0,0.07);
 }
 
+
+
+#file {
+  display:none;
+}
+
+
+#file button {
+  background-color: transparent;
+  border: none;
+  color: #7cb5ec;
+  font-weight: 300;
+  padding: 5px 10px;
+  border: 1px solid #7cb5ec;
+  border-radius: 3px;
+  z-index: 0;
+}
+
+
+
+
+
 .password-col1 {
   padding-left: 0px;
   padding-right: 0px;
@@ -146,7 +168,7 @@ body {
 
 .signup-privacy {
   margin-top: 0px;
-  margin-bottom: 15px;
+  margin-top: 15px;
   color: #919191;
   font-size: 12px;
   font-weight: 300;
@@ -171,6 +193,7 @@ body {
 }
 
 .signup-submit-button-div input {
+  margin-top: 15px;
   border: solid 1px #B3B3B3;
   border-radius: 3px;
   padding-bottom: 12px;

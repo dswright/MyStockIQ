@@ -21,3 +21,4 @@
 //= require graph
 //= require bootstrap
 //= require pagination
+//= require signup
