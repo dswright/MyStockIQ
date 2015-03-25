@@ -42,8 +42,9 @@
         <p class="signup-signin-link">Select a profile image:</p>
 
         <span class="btn btn-custom btn-file">
-            Browse <input type="file" class="custom-file-input">
+            Browse <%= f.file_field :image, class: "custom-file-input" %>
         </span>
+        <div id="signup-label"></div>
  
 
 
