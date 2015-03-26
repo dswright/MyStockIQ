@@ -126,25 +126,6 @@ body {
 }
 
 
-.blue-blur-tile {
-  background: #7cb5ec;
-  opacity: .9;
-}
-
-.blue-blur-tile:hover {
-  opacity: 1;
-}
-
-.blue-blur {
-  background-image: url("blue-blur33.png");
-  background-size: cover;
-  max-width: 100%;
-  clear: both;
-  padding-top: 1px;
-  overflow: hidden;
-  background-repeat: no-repeat;
-  background-position: center;
-}
 
 
 .red-gradient {
