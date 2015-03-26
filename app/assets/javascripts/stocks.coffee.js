@@ -4,7 +4,7 @@ function resizeChart() {
   $(".stockpage-graph").css("height", height+10);
 };
 
-//Global variables 
+//Global variables\
 var stockChart;
 var stockChartFunctions;
 var currentRange = [];
@@ -76,22 +76,33 @@ $(document).ready(function () {
       },
       series: {
         cursor: 'pointer',
-        states: {
-          hover: {
-            halo: {
-              size: 0
+        marker: {
+          states: {
+            hover: { //select state doesnt work here.
+              radius: 4, //radius of the on-hover ball
+              lineWidth: 2, //width of the line around the ball
+              lineColor: "#FFF"
             }
           }
         },
-        point: {
+        states: { //no select state for the series.
+          hover: {
+            halo: {
+              size: 0 //gets rid of the halo effect.
+            }
+          }
+        },
+        /*point: {
           events: {
-            click: function() {
-              if (freezeHover == false) {
-                freezeHover = true;
-              }
-              else {
-                freezeHover = false;
-              }
+            select: function() {
+              //if (freezeHover == false) {
+                this.series.update({
+                  color: "#FFF"
+                });
+              //}
+              //else {
+              //  freezeHover = false;
+              //}
 
               /*if(this.series.name == 'my_prediction') {
                 var arrId = this.series.data[0].index;
@@ -102,10 +113,10 @@ $(document).ready(function () {
                 var arrId = this.series.data[0].index;
                 var predictionId = stockGraph["prediction_ids"][arrId];
                 location.href = '/predictions/'+predictionId;  
-              }*/
+              
             }
           }
-        }
+        }*/
       }
     },
     tooltip: {
