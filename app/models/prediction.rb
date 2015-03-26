@@ -16,7 +16,6 @@ class Prediction < ActiveRecord::Base
 
   validates :prediction_end_price, presence: true, numericality: true
   validates :stock_id, presence: true, numericality: true
-  validates :prediction_comment, length: {maximum: 140}
   default_scope -> { order(created_at: :desc) }
 
 
