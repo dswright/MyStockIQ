@@ -3,7 +3,7 @@
   
   <% if Like.where(user_id:current_user.id, likable_type:likable_type, likable_id:likable_id, like_type:"like").exists? %>
     <%= link_to({controller:"likes", action:"destroy", like_type:"like", likable_type:likable_type, likable_id:likable_id}, {method: :put, remote: true}) do %>
-      <i class="fa fa-angle-up" style="color:#63010D"></i>
+      <i class="fa fa-angle-up" style="color:#7cb5ec"></i>
     <% end %>
   <% else %>
     <%= link_to({controller:"likes", action:"create", like_type:"like", likable_type:likable_type, likable_id:likable_id}, {method: :put, remote: true}) do %>
@@ -15,7 +15,7 @@
   
   <% if Like.where(user_id:current_user.id, likable_type:likable_type, likable_id:likable_id, like_type:"dislike").exists? %>
     <%= link_to({controller:"likes", action:"destroy", like_type:"dislike", likable_type:likable_type, likable_id:likable_id}, {method: :put, remote: true}) do %>
-      <i class="fa fa-angle-down" style="color:#63010D"></i>
+      <i class="fa fa-angle-down" style="color:#7cb5ec"></i>
     <% end %>
   <% else %>
     <%= link_to({controller:"likes", action:"create", like_type:"dislike", likable_type:likable_type, likable_id:likable_id}, {method: :put, remote: true}) do %>

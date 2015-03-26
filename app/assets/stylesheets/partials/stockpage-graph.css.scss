@@ -45,7 +45,7 @@
 
 .ticker-name p {
 	margin-top: 27px;
-	font-size: 39px;
+	font-size: 33px;
 	text-align: center;
 	font-weight: 300;
 	color: rgba(255, 255, 255, 1);
@@ -80,37 +80,85 @@
 
 /*-------- PREDICTION NAME TITLE -----------*/
 
-
-.prediction-name {
-	margin: auto;
-
+.prediction-name-title-name {
+	display: none;
 }
 
-.prediction-name img {
-	width: 24px;
+.prediction-name {
+	text-align: center;
+	height: 42px;
+	margin-top: 27px;
+}
+
+.prediction-name-center {
+	display: inline-block;
+}
+
+.prediction-name-items img {
+	width: 30px;
 	margin-right: 3px;
 	position: relative;
 	border-radius: 90px;
 	border: 3px solid rgba(255, 255, 255, 1);
 }
 
-.prediction-name p {
-	margin-top: 30px;
-	height: 46px;
-	font-size: 29px;
-	text-align: center;
+.prediction-name-title {
+	display: inline-block;
+	vertical-align: 9%;
+	font-size: 33px;
 	font-weight: 300;
 	color: rgba(255, 255, 255, 1);
 }
 
-.prediction-name-title {
-	display: inline;
-	vertical-align: 12%;
+
+
+.prediction-name-vote-count {
+  margin-left: 10px;
+  margin-top: -13px;
+  padding-left: 0px;
+  padding-right: 0px;
 }
+
+.prediction-name-vote-count a {
+	display: block;
+	margin: auto;
+	text-align: center;
+	color: #C7C7C7;
+	font-size: 24px;
+
+  -webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+}
+
+.prediction-name-vote-count a:hover {
+	color: #7cb5ec;
+}
+
+.prediction-name-vote-count p {
+	text-align: center;
+	color: #fff;
+	line-height: 10px;
+	font-size: 18px;
+	font-weight: 300;
+	margin-bottom: 0px;
+	margin-top: 2px;
+}
+
+
 
 
 /*----------------- GRAPH ----------------*/
 
+.stockpage-graph-col {
+	padding-left: 0px;
+}
+
+.graph-replace-box {
+	display: block;
+	overflow: hidden;
+}
 
 .graph-background-div {
 	margin-top: 0px;
@@ -188,10 +236,7 @@
 .stockpage-graph-stats-col {
 	padding-left: 0px;
 	padding-right: 0px;
-}
-
-.stockpage-graph-col {
-	padding-left: 0px;
+	clear: both;
 }
 
 .graph-stats-date-price {
@@ -344,26 +389,13 @@
 }
 
 
+
 /*-------- PREDICTION NAME TITLE -----------*/
 
-.prediction-name p {
-	margin-top: 27px;
-	height: 46px;
-	font-size: 33px;
-	text-align: center;
-	font-weight: 300;
-	color: rgba(255, 255, 255, 1);
+.prediction-name-title-name {
+	display: none;
 }
 
-.prediction-name img {
-	width: 33px;
-	margin-right: 3px;
-}
-
-.prediction-name-title {
-	display: inline;
-	vertical-align: 15%;
-}
 
 
 /*----------------- GRAPH ----------------*/
@@ -405,6 +437,7 @@
 	margin-top: 30px;
 	padding-left: 0px;
 	padding-right: 0px;
+	clear: none;
 }
 
 .stockpage-graph-col {
@@ -456,19 +489,11 @@
 	border: 3px solid rgba(255, 255, 255, 1);
 }
 
-.prediction-name p {
-	margin-top: 27px;
-	height: 46px;
-	font-size: 39px;
-	text-align: center;
-	font-weight: 300;
-	color: rgba(255, 255, 255, 1);
-}
 
 .prediction-name-title {
-	display: inline;
 	vertical-align: 12%;
 }
+
 
 .graph-background-div {
 	margin-top: 50px;
