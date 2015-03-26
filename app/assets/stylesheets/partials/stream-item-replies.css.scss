@@ -1,4 +1,8 @@
 
+.stream-reply-form-buton {
+	display: none;
+}
+
 .stream-item-comments {
 	margin-left: 53px;
 	margin-right: 0px;
@@ -10,7 +14,7 @@
 	font-size: 14px;
 	font-weight: 300;
 	padding-bottom: 6px;
-	margin-top: 10px;
+	margin-top: 20px;
 	border-bottom: solid 1px #C7C7C7; 
 }
 
@@ -43,6 +47,7 @@
 	text-align: center;
 	color: #C7C7C7;
 	font-size: 18px;
+	line-height: 12px;
 
 	-webkit-transition: 150ms ease-in;
   -moz-transition: 150ms ease-in;
@@ -78,14 +83,35 @@
 	width: 85%;
 }
 
+.stream-comments-txt p {
+	color: #C7C7C7;
+}
+
 .stream-comments-txt-username {
-	margin-bottom: 3px;
+	color: #C7C7C7;
+	font-size: 12px;
+	text-decoration: none;
+	padding-bottom: 2px;
+	margin-bottom: 2px;
 	letter-spacing: 0px;
 	text-transform: uppercase;
+
+  -webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+}
+
+.stream-comments-txt-username:hover {
+	text-decoration: none;
+	cursor: pointer;
+	color: #7cb5ec;
+	border-bottom: 1px solid #7cb5ec;
 }
 
 .stream-comments-txt p {
 	font-size: 13px;
+	color: #919191;
 	letter-spacing: 1px;
 	line-height: 18px;
 	font-weight: 300;
@@ -131,6 +157,7 @@
 
 .stream-item-comments {
 	margin-left: 60px;
+	margin-right: 39px;
 }
 
 

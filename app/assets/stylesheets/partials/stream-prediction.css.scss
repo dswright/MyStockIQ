@@ -34,12 +34,25 @@
 
 
 .prediction-item-username {
-	font-size: 11px;
+	font-size: 12px;
 	font-weight: 300;
 	padding-top: 2px;
-	margin-bottom: 1px;
+	padding-bottom: 2px;
 	text-transform: uppercase;
 	color: #C7C7C7;
+	text-decoration: none;
+
+  -webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+}
+
+.prediction-item-username:hover {
+	text-decoration: none;
+	cursor: pointer;
+	color: #7cb5ec;
+	border-bottom: 1px solid #7cb5ec;
 }
 
 .prediction-item-txt {
@@ -48,7 +61,7 @@
 }
 
 .prediction-item-main-txt {
-	padding-top: 2px;
+	margin-top: 3px;
 	margin-bottom: 0px;
 	font-size: 15px;
 	font-weight: 300;
@@ -107,7 +120,7 @@
 	color: #C7C7C7;
 	font-size: 24px;
 
-	-webkit-transition: 150ms ease-in;
+  -webkit-transition: 150ms ease-in;
   -moz-transition: 150ms ease-in;
   -o-transition: 150ms ease-in;
   transition: 150ms ease-in;
@@ -165,8 +178,8 @@
 }
 
 .prediction-item-main-txt {
-	margin-top: 0px;
-	margin-bottom: 0px;
+	margin-top: 5px;
+	margin-bottom: 3px;
 	max-width: 600px;
 }
 
