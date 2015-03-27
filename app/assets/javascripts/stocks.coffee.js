@@ -123,74 +123,72 @@ $(document).ready(function () {
       crosshairs: null,
       shared: false,
       formatter: function() {
-        if (freezeHover == false) {
-          if(this.series.name == 'prices') {
-            if (currentRange["buttonType"] == "1D" || currentRange["buttonType"] == "5D") {
-              var arrId = this.series.data.indexOf(this.point);
-              var priceId = stockGraph["intraday_price_ids"][arrId]; //this will always use just the 1 my_prediction_id which will always show on the graph.
-              $.ajax({
-                url: "/stockprices/hover_intraday/"+priceId, //pass the prediction id to the prediction hover partial.
-                dataType: "script"
-              }).done(function( script, textStatus ) {
-                script //this loads in the html returned from the ajax request.
-              })
-            }
-            else {
-              var arrId = this.series.data.indexOf(this.point);
-              var priceId = stockGraph["daily_price_ids"][arrId]; //this will always use just the 1 my_prediction_id which will always show on the graph.
-              $.ajax({
-                url: "/stockprices/hover_daily/"+priceId, //pass the prediction id to the prediction hover partial.
-                dataType: "script"
-              }).done(function( script, textStatus ) {
-                script //this loads in the html returned from the ajax request.
-              })
-            }
+        if(this.series.name == 'prices') {
+          if (currentRange["buttonType"] == "1D" || currentRange["buttonType"] == "5D") {
+            var arrId = this.series.data.indexOf(this.point);
+            var priceId = stockGraph["intraday_price_ids"][arrId]; //this will always use just the 1 my_prediction_id which will always show on the graph.
+            $.ajax({
+              url: "/stockprices/hover_intraday/"+priceId, //pass the prediction id to the prediction hover partial.
+              dataType: "script"
+            }).done(function( script, textStatus ) {
+              script //this loads in the html returned from the ajax request.
+            })
           }
-
-          if(this.series.name == 'predictions') {
-            if (currentRange["buttonType"] == "1D" || currentRange["buttonType"] == "5D") {
-              var arrId = this.series.data.indexOf(this.point);
-              var priceId = stockGraph["intraday_prediction_ids"][arrId]; //this will always use just the 1 my_prediction_id which will always show on the graph.
-              $.ajax({
-                url: "/predictions/hover_intraday/"+priceId, //pass the prediction id to the prediction hover partial.
-                dataType: "script"
-              }).done(function( script, textStatus ) {
-                script //this loads in the html returned from the ajax request.
-              })
-            }
-            else {
-              var arrId = this.series.data.indexOf(this.point);
-              var priceId = stockGraph["daily_prediction_ids"][arrId]; //this will always use just the 1 my_prediction_id which will always show on the graph.
-              $.ajax({
-                url: "/predictions/hover_daily/"+priceId, //pass the prediction id to the prediction hover partial.
-                dataType: "script"
-              }).done(function( script, textStatus ) {
-                script //this loads in the html returned from the ajax request.
-              })
-            }
+          else {
+            var arrId = this.series.data.indexOf(this.point);
+            var priceId = stockGraph["daily_price_ids"][arrId]; //this will always use just the 1 my_prediction_id which will always show on the graph.
+            $.ajax({
+              url: "/stockprices/hover_daily/"+priceId, //pass the prediction id to the prediction hover partial.
+              dataType: "script"
+            }).done(function( script, textStatus ) {
+              script //this loads in the html returned from the ajax request.
+            })
           }
+        }
 
-          if(this.series.name == 'my_prediction') {
-            if (currentRange["buttonType"] == "1D" || currentRange["buttonType"] == "5D") {
-              var arrId = this.series.data.indexOf(this.point);
-              var priceId = stockGraph["my_prediction_id"][arrId]; //this will always use just the 1 my_prediction_id which will always show on the graph.
-              $.ajax({
-                url: "/predictions/hover_intraday/"+priceId, //pass the prediction id to the prediction hover partial.
-                dataType: "script"
-              }).done(function( script, textStatus ) {
-                script //this loads in the html returned from the ajax request.
-              })
-            }
-            else {
-              var arrId = this.series.data.indexOf(this.point);
-              var priceId = stockGraph["my_prediction_id"][arrId]; //this will always use just the 1 my_prediction_id which will always show on the graph.
-              $.ajax({
-                url: "/predictions/hover_daily/"+priceId, //pass the prediction id to the prediction hover partial.
-                dataType: "script"
-              }).done(function( script, textStatus ) {
-                script //this loads in the html returned from the ajax request.
-              })
-            }
+        if(this.series.name == 'predictions') {
+          if (currentRange["buttonType"] == "1D" || currentRange["buttonType"] == "5D") {
+            var arrId = this.series.data.indexOf(this.point);
+            var priceId = stockGraph["intraday_prediction_ids"][arrId]; //this will always use just the 1 my_prediction_id which will always show on the graph.
+            $.ajax({
+              url: "/predictions/hover_intraday/"+priceId, //pass the prediction id to the prediction hover partial.
+              dataType: "script"
+            }).done(function( script, textStatus ) {
+              script //this loads in the html returned from the ajax request.
+            })
+          }
+          else {
+            var arrId = this.series.data.indexOf(this.point);
+            var priceId = stockGraph["daily_prediction_ids"][arrId]; //this will always use just the 1 my_prediction_id which will always show on the graph.
+            $.ajax({
+              url: "/predictions/hover_daily/"+priceId, //pass the prediction id to the prediction hover partial.
+              dataType: "script"
+            }).done(function( script, textStatus ) {
+              script //this loads in the html returned from the ajax request.
+            })
+          }
+        }
+
+        if(this.series.name == 'my_prediction') {
+          if (currentRange["buttonType"] == "1D" || currentRange["buttonType"] == "5D") {
+            var arrId = this.series.data.indexOf(this.point);
+            var priceId = stockGraph["my_prediction_id"][arrId]; //this will always use just the 1 my_prediction_id which will always show on the graph.
+            $.ajax({
+              url: "/predictions/hover_intraday/"+priceId, //pass the prediction id to the prediction hover partial.
+              dataType: "script"
+            }).done(function( script, textStatus ) {
+              script //this loads in the html returned from the ajax request.
+            })
+          }
+          else {
+            var arrId = this.series.data.indexOf(this.point);
+            var priceId = stockGraph["my_prediction_id"][arrId]; //this will always use just the 1 my_prediction_id which will always show on the graph.
+            $.ajax({
+              url: "/predictions/hover_daily/"+priceId, //pass the prediction id to the prediction hover partial.
+              dataType: "script"
+            }).done(function( script, textStatus ) {
+              script //this loads in the html returned from the ajax request.
+            })
           }
         }
 
@@ -284,11 +282,13 @@ $(document).ready(function () {
       stockChartFunctions = new StockGraph(stockGraph, stockChart);
 
       stockChartFunctions.startChart(); 
-      stockChart.hideLoading();
 
       //$("body").on('click', 'button[data-button-type]', chartFunctions.buttonClick);
       //so this button click is being called like a closure? maybe? This thing needs to execute itself...
-      $("div[data-button-type]").click(stockChartFunctions.buttonClick);
+      //$("div[data-button-type]").click(stockChartFunctions.buttonClick);
+      var the_function = function blah() { alert("blah"); };
+      $("div[data-button-type]").click(the_function);
+
 
       window.inputPrediction = function(endTime, endPrice, predictionId) {
         stockChartFunctions.inputPrediction(endTime, endPrice, predictionId); //when a prediction is input, this function fires from the predicitoninput ajax call.

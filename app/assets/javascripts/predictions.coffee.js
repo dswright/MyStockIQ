@@ -43,11 +43,12 @@ function resizeChart() {
   $(".stockgraph-container1").css("height", height+10);
 };
 
+
 //Global variables 
-var graph;
-var chart1;
+var predictionGraph;
+var predictionChart;
 var currentRange = [];
-var rangeHash = {};
+var predictionGraph;
 
 $(document).ready(function () {
   resizeChart();
@@ -87,11 +88,24 @@ $(document).ready(function () {
     }
   ];
 
-  chart = new Highcharts.StockChart({
+  predictionChart = new Highcharts.StockChart({
     chart: {
       renderTo: 'prediction-div',
-      panning: false,
-      pinchType: false
+      panning: false, //disables time frame dragging on desktop
+      pinchType: false, //disable time frame dragging on mobile.
+      spacingLeft: 0,
+      spacingRight: 1,
+      backgroundColor:'transparent'
+    },
+    exporting: {
+      enabled: false
+    },
+    tooltip: {
+      crosshairs: null,
+      shared: false,
+       formatter: function() {
+        return false;
+      }
     },
     rangeSelector : {
       enabled: false
@@ -107,28 +121,59 @@ $(document).ready(function () {
     navigator: {
       enabled: false
     },
+    yAxis: {
+      gridLineColor: 'rgba(255, 255, 255, 0.39)',
+      gridLineWidth: 0,
+      lineWidth: 1,
+      lineColor: 'rgba(255, 255, 255, 0.39)',
+      tickColor: 'rgba(255, 255, 255, 0.39)',
+      tickLength: 5,
+      tickWidth: 1,
+      tickPosition: "inside",
+      showFirstLabel: false,
+      showLastLabel: false,
+      startOnTick: true,
+      endOnTick: true,
+      labels: {
+        style: {color:"rgba(255, 255, 255, 0.39)", "font-size": "11px", "font-family":"Lato", "font-weight": "300"},
+        formatter: function() {
+          return "$" + this.value;
+        },
+        x: -10,
+        y: 5
+      }
+    },
     xAxis: {
-      minRange: 3600 * 1000
+      minRange: 3600 * 1000,
+      labels: {
+        enabled: false
+      },
+      minorTickLength: 0,
+      tickLength: 0,
+      lineColor: 'rgba(255, 255, 255, 0.39)',
+      lineWidth: 1,
     },
     series: seriesVar
   });
 
 
   var apiUrl = "/predictions/" + gon.prediction_id + ".json";
-  chart.showLoading('Loading data from server');
   $.getJSON(apiUrl, function (data) {
 
-    graph = data;
+    predictionGraph = data;
 
-    chartFunctions = new PredictionDetails(graph, chart);
+    predictionChartFunctions = new PredictionDetails(predictionGraph, predictionChart);
 
-    chartFunctions.startChart();
-    chart.hideLoading();
+    predictionChartFunctions.startChart();
 
-    $("button[data-button-type]").click(chartFunctions.buttonClick); //this in my object is now referring to the jquery object?
+    //$("button[data-button-type]").click(predictionChartFunctions.buttonClick); //this in my object is now referring to the jquery object?
+    //$("div[data-button-type]").click(console.log("CLICCCK!"));
+
+    var the_function = function blah() { alert("blah"); };
+    $("div[data-button-type]").click(the_function);
 
     window.endPrediction = function(endTime, endPrice) {
-      chartFunctions.endPrediction(endTime, endPrice);
+      predictionChartFunctions.endPrediction(endTime, endPrice);
     }
 
     //create prediction arrays where predictions ending that day are rounded to the end of the day to appear nicely on the 1m+ graphs.

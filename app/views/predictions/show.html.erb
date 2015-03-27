@@ -5,6 +5,78 @@
   <title><%= @stock[:ticker_symbol] %> Stock Predictions - StockHero.com</title>
 <% end %>
 
+
+<section class="stockpage-graph-full blue-blur">
+  <div class="constrainer">
+    
+    <!-- title of the stock graph -->
+    <div id = "title-replace-box">
+      <%= render partial: "shared/graph/prediction_title", locals: {prediction: @prediction} %>
+    </div>
+    
+    <div class="col-xs-12 col-sm-9 stockpage-graph-col">
+      <div class="graph-background-div">
+        <p class="tkr"><%= @stock.ticker_symbol %></p>
+      </div>
+      
+      <div>
+        <div id="prediction-div"></div>
+      </div>
+
+      <div class="graph-full-timeframes">
+        <% @graph_buttons.each do |button| %>
+          <% if button == "3M" || button == "6M" %>
+            <span class="add-timeframes">
+              <div class="timeframe-item pull-left" id="button" data-button-type=<%= button %>>
+                <a><%= button %></a>
+              </div>
+            </span>
+          <% else %> 
+            <div class="timeframe-item pull-left" id="button" data-button-type=<%= button %>>
+              <a><%= button %></a>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="col-sm-3 stockpage-graph-stats-col">
+
+      <div id ="graph-replace-box">
+        <%= render partial: "shared/graph/daily_prediction.html.erb", locals: {prediction:@prediction} %>
+      </div>
+    </div>
+
+    <div class="col-sm-12 col-md-9 stockpage-mobile-buttoms-col">
+
+      <div class="graph-mobile-predict-button-div">
+        <a class="btn">PREDICT APPL</a>
+      </div>
+
+      <div class="graph-mobile-open-prediction">
+        <div class="graph-mobile-open-prediction-col col-xs-4">
+          <p class="graph-mobile-open-prediction-figure">1 DAY</p>
+          <p class="graph-mobile-open-prediction-title">TIME LEFT</p>
+        </div>
+        <div class="graph-mobile-open-prediction-col col-xs-4">
+          <p class="graph-mobile-open-prediction-figure">$170</p>
+          <p class="graph-mobile-open-prediction-title">TARGET PRICE</p>
+        </div>
+        <div class="graph-mobile-open-prediction-col col-xs-4">
+          <p class="graph-mobile-open-prediction-figure">+3</p>
+          <p class="graph-mobile-open-prediction-title">POINTS</p>
+        </div>
+      </div>
+      <div class="graph-mobile-close-prediction-button-mobile">
+        <a class="btn">CLOSE PREDICTION</a>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
 <div class="constrainer">
 
   <div class="col-xs-12 col-sm-9 stockpage-body">
@@ -31,23 +103,6 @@
           <%= image_tag "del.jpg" %>
           <p class="graph-hover-title">delmnstr12</p>
         </div>
-      </div>
-
-      <div class="stockpage-graph">
-
-        <div id="prediction-div"></div>
-      </div>
-
-      <div class="timeframes-mobile">
-        <% @graph_buttons.each do |button| %>
-          <div class="timeframes-item pull-right" id="button" data-button-type=<%= button %>>
-            <a><%= button %></a>
-          </div>
-        <% end %>
-      </div>
-
-      <div class = "graph-buttons" style="width:450px">
-        
       </div>
 
       <div class="stockpage-mobile-predict-button-div">
