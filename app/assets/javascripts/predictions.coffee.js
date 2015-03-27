@@ -166,11 +166,7 @@ $(document).ready(function () {
 
     predictionChartFunctions.startChart();
 
-    //$("button[data-button-type]").click(predictionChartFunctions.buttonClick); //this in my object is now referring to the jquery object?
-    //$("div[data-button-type]").click(console.log("CLICCCK!"));
-
-    var the_function = function blah() { alert("blah"); };
-    $("div[data-button-type]").click(the_function);
+    $("div[data-button-type]").click(predictionChartFunctions.buttonClick); //this in my object is now referring to the jquery object?
 
     window.endPrediction = function(endTime, endPrice) {
       predictionChartFunctions.endPrediction(endTime, endPrice);

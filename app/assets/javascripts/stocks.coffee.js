@@ -285,10 +285,7 @@ $(document).ready(function () {
 
       //$("body").on('click', 'button[data-button-type]', chartFunctions.buttonClick);
       //so this button click is being called like a closure? maybe? This thing needs to execute itself...
-      //$("div[data-button-type]").click(stockChartFunctions.buttonClick);
-      var the_function = function blah() { alert("blah"); };
-      $("div[data-button-type]").click(the_function);
-
+      $("div[data-button-type]").click(stockChartFunctions.buttonClick);
 
       window.inputPrediction = function(endTime, endPrice, predictionId) {
         stockChartFunctions.inputPrediction(endTime, endPrice, predictionId); //when a prediction is input, this function fires from the predicitoninput ajax call.
