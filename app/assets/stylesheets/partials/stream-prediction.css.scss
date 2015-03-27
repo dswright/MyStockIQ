@@ -29,7 +29,8 @@
 
 .prediction-item-img img {
 	width: 33px;
-	border-radius: 90px
+	border-radius: 90px;
+	margin-top: 4px;
 }
 
 
@@ -135,6 +136,7 @@
 	font-size: 15;
 	font-weight: 300;
 	margin-bottom: 0px;
+	line-height: 9px;
 }
 
 @media (min-width: 480px) {
