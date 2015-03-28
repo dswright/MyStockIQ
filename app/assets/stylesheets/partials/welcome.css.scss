@@ -58,6 +58,16 @@
   text-decoration: none;
 }
 
+
+.welcome-stock-box:focus {
+  color: #FAFAFA;
+  border-radius: 3px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+
+
 .welcome-stock-box span {
   display: table-cell;
   vertical-align: middle; 
