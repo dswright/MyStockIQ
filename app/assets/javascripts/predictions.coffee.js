@@ -56,7 +56,7 @@ $(document).ready(function () {
 
   seriesVar = [
     {
-      name : gon.ticker_symbol,
+      name : "prices",
       dataGrouping: {
         enabled: false
       }
@@ -104,6 +104,28 @@ $(document).ready(function () {
       crosshairs: null,
       shared: false,
        formatter: function() {
+        if(this.series.name == 'prices') {
+          if (currentRange["buttonType"] == "1D" || currentRange["buttonType"] == "5D") {
+            var arrId = this.series.data.indexOf(this.point);
+            var priceId = predictionGraph["intraday_price_ids"][arrId]; //this will always use just the 1 my_prediction_id which will always show on the graph.
+            $.ajax({
+              url: "/stockprices/hover_intraday/"+priceId, //pass the prediction id to the prediction hover partial.
+              dataType: "script"
+            }).done(function( script, textStatus ) {
+              script //this loads in the html returned from the ajax request.
+            })
+          }
+          else {
+            var arrId = this.series.data.indexOf(this.point);
+            var priceId = predictionGraph["daily_price_ids"][arrId]; //this will always use just the 1 my_prediction_id which will always show on the graph.
+            $.ajax({
+              url: "/stockprices/hover_daily/"+priceId, //pass the prediction id to the prediction hover partial.
+              dataType: "script"
+            }).done(function( script, textStatus ) {
+              script //this loads in the html returned from the ajax request.
+            })
+          }
+        }
         return false;
       }
     },

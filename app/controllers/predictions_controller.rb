@@ -156,7 +156,10 @@ class PredictionsController < ApplicationController
           :daily_prices => graph.daily_prices,
           :prediction => graph.prediction, #the specific prediction to be displayed on the graph.
           :predictionend => graph.predictionend,
-          :intraday_prices => graph.intraday_prices
+          :intraday_prices => graph.intraday_prices,
+                    
+          :daily_price_ids => graph.daily_price_ids,
+          :intraday_price_ids => graph.intraday_price_ids
         }
       }
     end
