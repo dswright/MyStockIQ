@@ -15,11 +15,21 @@
     </div>
     
     <div class="col-xs-12 col-sm-9 stockpage-graph-col">
+      <div class="prediction-detail-tweet">
+        <p>Do ennui laboris, meditation dolor occaecat organic eu Truffaut master cleanse <a href="#">$APPL</a> anim pickled ad quis Portland. <a href="#">@dillshmill</a> deep v anim id, fixie adipisicing dolor eiusmod non PBR Brooklyn Portland esse Thundercats <a href="#">#drake</a><a href="#">#6god</a> <a href="#">#ohveeohhh</a></p>
+      </div>
+
+      <div class="prediction-detail-tweet-closed">
+        <p>Do ennui laboris, meditation dolor occaecat organic eu Truffaut master cleanse <a href="#">$APPL</a> anim pickled ad quis Portland. <a href="#">@dillshmill</a> deep v anim id, fixie adipisicing dolor eiusmod non PBR Brooklyn Portland esse Thundercats <a href="#">#drake</a><a href="#">#6god</a> <a href="#">#ohveeohhh</a></p>
+
+        <p class="prediction-closed-original-tweet">ORIGINAL COMMENT: Do ennui laboris, meditation dolor occaecat organic eu Truffaut master cleanse <a href="#">$APPL</a> anim pickled ad quis Portland. <a href="#">@dillshmill</a> deep v anim id, fixie adipisicing dolor eiusmod non PBR Brooklyn Portland esse Thundercats <a href="#">#drake</a><a href="#">#6god</a> <a href="#">#ohveeohhh</a></p>
+      </div>
+
       <div class="graph-background-div">
         <p class="tkr"><%= @stock.ticker_symbol %></p>
       </div>
       
-        <div id="prediction-div" class = "graph-div"></div>
+      <div id="prediction-div" class = "graph-div"></div>
 
       <div class="graph-full-timeframes">
         <% @graph_buttons.each do |button| %>
@@ -78,6 +88,9 @@
 <div class="constrainer">
 
   <div class="col-xs-12 col-sm-9 stockpage-body">
+
+
+
 
     <div class = "stream" >
       <div class="prediction-item" id="stream_Prediction_<%= @prediction.id %>">
