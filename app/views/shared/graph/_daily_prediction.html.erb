@@ -6,7 +6,8 @@
   <div class="graph-prediction-stats graph-prediction-stats-2 col-xs-6 col-sm-12">
     <p class="graph-price"><%= prediction.score.round(2) %></p>
     <p class="graph-label">POINTS</p>
-  </div><br /><br />
-  <div><%= link_to "Details", "/predictions/#{prediction.id}/" %></div>
-
+  </div>
+  <div class="graph-prediction-detail-btn clearfix">
+  	<%= link_to "Details", "/predictions/#{prediction.id}/" %>
+  </div>
 </div>
