@@ -6,7 +6,7 @@
 <% end %>
 
 
-<section class="stockpage-graph-full blue-blur">
+<section class="stockpage-graph-full prediction-detail-blue-blur">
   <div class="constrainer">
     
     <!-- title of the stock graph -->
@@ -15,15 +15,6 @@
     </div>
     
     <div class="col-xs-12 col-sm-9 stockpage-graph-col">
-      <div class="prediction-detail-tweet">
-        <p>Do ennui laboris, meditation dolor occaecat organic eu Truffaut master cleanse <a href="#">$APPL</a> anim pickled ad quis Portland. <a href="#">@dillshmill</a> deep v anim id, fixie adipisicing dolor eiusmod non PBR Brooklyn Portland esse Thundercats <a href="#">#drake</a><a href="#">#6god</a> <a href="#">#ohveeohhh</a></p>
-      </div>
-
-      <div class="prediction-detail-tweet-closed">
-        <p>Do ennui laboris, meditation dolor occaecat organic eu Truffaut master cleanse <a href="#">$APPL</a> anim pickled ad quis Portland. <a href="#">@dillshmill</a> deep v anim id, fixie adipisicing dolor eiusmod non PBR Brooklyn Portland esse Thundercats <a href="#">#drake</a><a href="#">#6god</a> <a href="#">#ohveeohhh</a></p>
-
-        <p class="prediction-closed-original-tweet">ORIGINAL COMMENT: Do ennui laboris, meditation dolor occaecat organic eu Truffaut master cleanse <a href="#">$APPL</a> anim pickled ad quis Portland. <a href="#">@dillshmill</a> deep v anim id, fixie adipisicing dolor eiusmod non PBR Brooklyn Portland esse Thundercats <a href="#">#drake</a><a href="#">#6god</a> <a href="#">#ohveeohhh</a></p>
-      </div>
 
       <div class="graph-background-div">
         <p class="tkr"><%= @stock.ticker_symbol %></p>
@@ -39,7 +30,7 @@
                 <a><%= button %></a>
               </div>
             </span>
-          <% else %> 
+          <% else %>
             <div class="timeframe-item pull-left" id="button" data-button-type=<%= button %>>
               <a><%= button %></a>
             </div>
@@ -57,27 +48,6 @@
 
     <div class="col-sm-12 col-md-9 stockpage-mobile-buttoms-col">
 
-      <div class="graph-mobile-predict-button-div">
-        <a class="btn">PREDICT APPL</a>
-      </div>
-
-      <div class="graph-mobile-open-prediction">
-        <div class="graph-mobile-open-prediction-col col-xs-4">
-          <p class="graph-mobile-open-prediction-figure">1 DAY</p>
-          <p class="graph-mobile-open-prediction-title">TIME LEFT</p>
-        </div>
-        <div class="graph-mobile-open-prediction-col col-xs-4">
-          <p class="graph-mobile-open-prediction-figure">$170</p>
-          <p class="graph-mobile-open-prediction-title">TARGET PRICE</p>
-        </div>
-        <div class="graph-mobile-open-prediction-col col-xs-4">
-          <p class="graph-mobile-open-prediction-figure">+3</p>
-          <p class="graph-mobile-open-prediction-title">POINTS</p>
-        </div>
-      </div>
-      <div class="graph-mobile-close-prediction-button-mobile">
-        <a class="btn">CLOSE PREDICTION</a>
-      </div>
 
     </div>
 
@@ -93,11 +63,22 @@
 
 
     <div class = "stream" >
-      <div class="prediction-item" id="stream_Prediction_<%= @prediction.id %>">
-        <div class="stream-item-comments">
+      <div class="prediction-detail-item" id="stream_Prediction_<%= @prediction.id %>">
+
+        <div class="prediction-detail-replies">
+
+          <div class="prediction-detail-tweet">x
+            <p>Do ennui laboris, meditation dolor occaecat organic eu Truffaut master cleanse <a href="#">$APPL</a> anim pickled ad quis Portland. <a href="#">@dillshmill</a> deep v anim id, fixie adipisicing dolor eiusmod non PBR Brooklyn Portland esse Thundercats <a href="#">#drake</a><a href="#">#6god</a> <a href="#">#ohveeohhh</a></p>
+          </div>
+
+          <div class="prediction-detail-tweet-closed">
+            <p class="prediction-detail-tweet-new">Do ennui laboris, meditation dolor occaecat organic eu Truffaut master cleanse <a href="#">$APPL</a> anim pickled ad quis Portland. <a href="#">@dillshmill</a> deep v anim id, fixie adipisicing dolor eiusmod non PBR Brooklyn Portland esse Thundercats <a href="#">#drake</a><a href="#">#6god</a> <a href="#">#ohveeohhh</a></p>
+
+            <p class="prediction-closed-original-tweet">ORIGINAL COMMENT: Do ennui laboris, meditation dolor occaecat organic eu Truffaut master cleanse <a href="#">$APPL</a> anim pickled ad quis Portland. <a href="#">@dillshmill</a> deep v anim id, fixie adipisicing dolor eiusmod non PBR Brooklyn Portland esse Thundercats <a href="#">#drake</a><a href="#">#6god</a> <a href="#">#ohveeohhh</a></p>
+          </div>
     
           <!-- load this only if there are replies -->
-          <div class="stream-comment-header">
+          <div class="detail-stream-comment-header">
             <p><%= @prediction.replies.count %> Replies</p>
           </div>
 
