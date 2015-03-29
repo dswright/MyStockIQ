@@ -126,8 +126,59 @@ $(document).ready(function () {
             })
           }
         }
+
+        else if(this.series.name == 'myprediction') {
+          var arrId = this.series.data.indexOf(this.point);
+          var priceId = predictionGraph["prediction_details_id"]; //this will always use just the 1 my_prediction_id which will always show on the graph.
+
+          if (currentRange["buttonType"] == "1D" || currentRange["buttonType"] == "5D") {
+            
+            $.ajax({
+              url: "/predictions/details_hover_intraday/"+priceId+"-"+arrId, //pass the prediction id to the prediction hover partial.
+              dataType: "script"
+            }).done(function( script, textStatus ) {
+              script //this loads in the html returned from the ajax request.
+            })
+          }
+          else {
+            $.ajax({
+              url: "/predictions/details_hover_daily/"+priceId+"-"+arrId, //pass the prediction id to the prediction hover partial.
+              dataType: "script"
+            }).done(function( script, textStatus ) {
+              script //this loads in the html returned from the ajax request.
+            })
+          }
+        }
+
+        else if(this.series.name == 'endprediction') {
+          if (this.series.data.indexOf(this.point) == 1) {
+            var priceId = predictionGraph["prediction_details_id"];
+
+            if (currentRange["buttonType"] == "1D" || currentRange["buttonType"] == "5D") {
+              $.ajax({
+                url: "/predictions/details_hover_intraday/"+priceId+"-2", //pass the prediction id to the prediction hover partial.
+                dataType: "script"
+              }).done(function( script, textStatus ) {
+                script //this loads in the html returned from the ajax request.
+              })
+            }
+            else {
+              $.ajax({
+                url: "/predictions/details_hover_daily/"+priceId+"-2", //pass the prediction id to the prediction hover partial.
+                dataType: "script"
+              }).done(function( script, textStatus ) {
+                script //this loads in the html returned from the ajax request.
+              })
+            }
+          }
+        }
+
+
         return false;
       }
+
+
+
     },
     rangeSelector : {
       enabled: false

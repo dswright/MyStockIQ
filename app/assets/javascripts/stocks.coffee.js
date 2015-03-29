@@ -19,7 +19,7 @@ $(document).ready(function () {
   seriesVar = [
     {
       name : "prices",
-      lineWidth: 1,
+      lineWidth: 2,
       dataGrouping: {
         enabled: false
       },
@@ -29,7 +29,7 @@ $(document).ready(function () {
     },
     {
       name: "dateseries",
-      lineWidth : 1,
+      lineWidth : 0,
       dataGrouping: {
         enabled: false
       }
@@ -87,6 +87,7 @@ $(document).ready(function () {
         },
         states: { //no select state for the series.
           hover: {
+            lineWidthPlus: 0,
             halo: {
               size: 0 //gets rid of the halo effect.
             }
@@ -159,6 +160,7 @@ $(document).ready(function () {
           }
           else {
             var arrId = this.series.data.indexOf(this.point);
+            console.log(arrId);
             var priceId = stockGraph["daily_prediction_ids"][arrId]; //this will always use just the 1 my_prediction_id which will always show on the graph.
             $.ajax({
               url: "/predictions/hover_daily/"+priceId, //pass the prediction id to the prediction hover partial.

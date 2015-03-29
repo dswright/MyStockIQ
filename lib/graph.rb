@@ -31,6 +31,11 @@ class Graph
     return prediction_graph
   end
 
+  def prediction_details_id #used for the prediction details graph.
+    return @prediction.id
+  end
+
+
   def predictionend #used for the prediction details graph.
     if @prediction.predictionend
       return [[@prediction.start_time.utc_time_int.graph_time_int, @prediction.start_price], [@prediction.predictionend.actual_end_time.utc_time_int.graph_time_int, @prediction.predictionend.actual_end_price]]

@@ -1,0 +1,10 @@
+<div class="graph-prediction-stats clearfix">
+  <div class="graph-stats-date-price col-xs-6 col-sm-12">
+    <p class="graph-price">$<%= prediction_custom[:price].round(2) %></p>
+    <p class="graph-label"><%= (prediction_custom[:date] + Time.zone_offset("EST")).strftime("%b %d, %Y - %I:%M %p") %></p>
+  </div>
+  <div class="graph-prediction-stats graph-prediction-stats-2 col-xs-6 col-sm-12">
+    <p class="graph-price"><%= prediction_custom[:score].round(2) %></p>
+    <p class="graph-label">POINTS</p>
+  </div>
+</div>
