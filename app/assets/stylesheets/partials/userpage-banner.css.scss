@@ -11,7 +11,7 @@
 
 .user-page-banner {
 	display: block;
-	height: 160px;
+	height: 230px;
 }
 
 .user-page-banner-overlay {
@@ -32,6 +32,10 @@
 .user-page-banner-overlay ul li:first-child {
 	font-size: 11px;
 	color: #E6E6E6;
+}
+
+.overlay-name {
+	text-transform: uppercase;
 }
 
 .user-page-banner-overlay ul li {

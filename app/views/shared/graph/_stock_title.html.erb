@@ -2,5 +2,8 @@
   <p>
     <span><%= link_to stock.stock, "/stocks/#{stock.ticker_symbol}/" %></span>
     <a class="stockpage-follow-btn btn">Follow</a>
+          <div class="stockpage-follow-btn">
+        <%= render partial: 'shared/follow_form', locals: {target: @target} %>
+      </div>
   </p>
 </div>
