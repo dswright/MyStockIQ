@@ -1,16 +1,22 @@
 
-    <div class="stockpage-side-analysts-box">
 
-      <a class="stockpage-side-analysts-anchor clearfix" href="#">
-        <div class="stockpage-side-analysts-img pull-left">
-          <%= image_tag "del.jpg" %>
-        </div>
-        <div class="stockpage-side-analysts-label pull-left">
-          <%= analyst.username %>
-        </div>
-        <div class="stockpage-side-analysts-number pull-right">
-          <%= analyst.total_score(stock) %>
-        </div>
-      </a>
-
-    <div>
+<div class="stockpage-side-analysts-box">
+  <div class="stockpage-side-analysts-header">
+    <div class="user-sidebar-similar-header-txt">
+      Top analysts for <%= stock.ticker_symbol %>
+    </div>
+  </div>
+  <% stock.top_analysts(5).each do |analyst| %>
+    <%= link_to "/users/#{analyst.username}/", class: "stockpage-side-analysts-anchor clearfix" do %>
+      <div class="stockpage-side-analysts-img pull-left">
+        <%= image_tag "del.jpg" %>
+      </div>
+      <div class="stockpage-side-analysts-label pull-left">
+        <%= analyst.username %>
+      </div>
+      <div class="stockpage-side-analysts-number pull-right">
+        <%= analyst.total_score(stock) %> pts
+      </div>
+    <% end %>
+  <% end %>
+</div>

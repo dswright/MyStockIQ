@@ -1,0 +1,42 @@
+<div class="stockpage-sidebar-open">
+  <div class="stockpage-sidebar-open-box">
+    <div class="stockpage-sidebar-open-header">
+      <div class="stockpage-sidebar-open-header-txt pull-left">
+        Open Prediction
+      </div>
+      <div class="stockpage-sidebar-open-points pull-right">
+        <i class="fa fa-line-chart"></i>
+      </div>
+    </div>
+
+    <div class="sidebar-open-item col-md-4">
+      <p class="sidebar-open-figure">50 days</p>
+      <p class="sidebar-open-title">REMAINING</p>
+    </div>
+    <div class="sidebar-open-item col-md-4">
+      <p class="sidebar-open-figure">$<%= prediction.prediction_end_price %></p>
+      <p class="sidebar-open-title">TARGET</p>
+    </div>
+    <div class="sidebar-open-item col-md-4">
+      <p class="sidebar-open-figure"><%= prediction.score %></p>
+      <p class="sidebar-open-title">POINTS</p>
+    </div>
+
+    <% if prediction.user.id == current_user.id %>
+
+      <%= form_for(Predictionend.new, remote:true) do |f| %>
+        <div class="sidebar-open-close-comment-div">
+         <%= text_area_tag 'comment', nil, placeholder: "Make a closing comment", class: "close-comment-textarea" %>
+        </div>
+
+        <%= hidden_field_tag :input_page, @prediction_end_input_page %>
+        <%= hidden_field_tag :prediction_id, prediction.id %>
+        
+        <div class="sidebar-close-button">
+          <%= f.submit "SUBMIT", class: "btn" %>
+        </div>
+      <% end %>
+      
+    <% end %>
+  </div>
+</div>

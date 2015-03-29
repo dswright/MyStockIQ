@@ -69,6 +69,12 @@ gem 'pg',             '0.17.1'
 gem 'rails_12factor', '0.0.2'
 gem 'rack-mini-profiler'
 
+#use for uploading user images
+gem 'carrierwave'
+#gem 'rmagick'
+
+gem 'ruby-progressbar', '1.7.5'
+
 group :development, :test do
 
 	# Use sqlite3 as the database for Active Record

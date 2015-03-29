@@ -3,238 +3,162 @@
 <%= javascript_include_tag "stocks.coffee.js" %>
 <%= include_gon(:init => true) %>
 
-
-
 <% content_for :title do %>
   <title><%= @stock[:ticker_symbol] %> Stock Predictions - StockHero.com</title>
 <% end %>
+
+<!-- FULL WIDTH GRAPH -->
+
+<section class="stockpage-graph-full blue-blur">
+  <div class="constrainer">
+    
+    <!-- title of the stock graph -->
+    <div id = "title-replace-box">
+      <%= render partial: "shared/graph/stock_title", locals: {stock: @stock} %>
+    </div>
+    
+    <div class="col-xs-12 col-sm-9 stockpage-graph-col">
+      <div class="graph-background-div">
+        <p class="tkr"><%= @stock.ticker_symbol %></p>
+      </div>
+      
+      <div id="stock-div" class="graph-div"></div>
+
+      <div class="graph-full-timeframes">
+        <% @graph_buttons.each do |button| %>
+          <% if button == "3M" || button == "6M" %>
+            <span class="add-timeframes">
+              <div class="timeframe-item pull-left" id="button" data-button-type=<%= button %>>
+                <a><%= button %></a>
+              </div>
+            </span>
+          <% else %> 
+            <div class="timeframe-item pull-left" id="button" data-button-type=<%= button %>>
+              <a><%= button %></a>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="col-sm-3 stockpage-graph-stats-col">
+
+      <div id ="graph-replace-box">
+        <%= render partial: "shared/graph/daily_price.html.erb", locals: {price:@price_point} %>
+      </div>
+    </div>
+
+    <div class="col-sm-12 col-md-9 stockpage-mobile-buttoms-col">
+
+      <div class="graph-mobile-predict-button-div">
+        <a class="btn">PREDICT APPL</a>
+      </div>
+
+      <div class="graph-mobile-open-prediction">
+        <div class="graph-mobile-open-prediction-col col-xs-4">
+          <p class="graph-mobile-open-prediction-figure">1 DAY</p>
+          <p class="graph-mobile-open-prediction-title">TIME LEFT</p>
+        </div>
+        <div class="graph-mobile-open-prediction-col col-xs-4">
+          <p class="graph-mobile-open-prediction-figure">$170</p>
+          <p class="graph-mobile-open-prediction-title">TARGET PRICE</p>
+        </div>
+        <div class="graph-mobile-open-prediction-col col-xs-4">
+          <p class="graph-mobile-open-prediction-figure">+3</p>
+          <p class="graph-mobile-open-prediction-title">POINTS</p>
+        </div>
+      </div>
+      <div class="graph-mobile-close-prediction-button-mobile">
+        <a class="btn">CLOSE PREDICTION</a>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+<!-- END FULL WIDTH GRAPH -->
+
+
 
 <div class="constrainer">
 
   <div class="col-xs-12 col-sm-9 stockpage-body">
 
-    <div class="stockpage-graph-module black-gradient clearfix">
-      <div class="pull-left stockpage-ticker">
-        <p><%= @stock.ticker_symbol %> - <%= @stock.stock %></p>
-        <%= render partial: 'shared/follow_form', locals: {target: @target} %>
-      </div>
-
-      <div class="graph-point-hover">
-        <div class="pull-right graph-hover-stat-item">
-          <p class="graph-hover-figure">+3</p>
-          <p class="graph-hover-title">POINTS</p>
-        </div>  
-        <div class="pull-right graph-hover-stat-item">
-          <p class="graph-hover-figure">$170</p>
-          <p class="graph-hover-title">TARGET</p>
-        </div>
-        <div class="pull-right graph-hover-stat-item">
-          <p class="graph-hover-figure">1D</p>
-          <p class="graph-hover-title">TIME LEFT</p>
-        </div>
-        <div class="pull-right graph-hover-stat-item">
-          <%= image_tag "del.jpg" %>
-          <p class="graph-hover-title">delmnstr12</p>
-        </div>
-      </div>
-
-      <div class="stockpage-graph">
-
-        <div id="stock-div"></div>
-      </div>
-
-      <div class="timeframes-mobile">
-        <% @graph_buttons.each do |button| %>
-          <div class="timeframes-item pull-right" id="button" data-button-type=<%= button %>
-          >
-            <a><%= button %></a>
-          </div>
-        <% end %>
-      </div>
-
-      <div class = "graph-buttons" style="width:450px">
-        
-        
-      </div>
-
-      <div class="stockpage-mobile-predict-button-div">
-        <a class="btn">PREDICT APPL</a>
-      </div>
-
-      <div class="open-prediction">
-        <div class="open-prediction-col col-xs-4">
-          <p class="open-prediction-figure">1 DAY</p>
-          <p class="open-prediction-title">TIME LEFT</p>
-        </div>
-        <div class="open-prediction-col col-xs-4">
-          <p class="open-prediction-figure">$170</p>
-          <p class="open-prediction-title">TARGET PRICE</p>
-        </div>
-        <div class="open-prediction-col col-xs-4">
-          <p class="open-prediction-figure">+3</p>
-          <p class="open-prediction-title">POINTS</p>
-        </div>
-      </div>    
-      <div class="close-prediction-button-mobile">
-        <a class="btn">CLOSE PREDICTION</a>
-      </div>
-
-
-      <div class="stats-header">
-        <p>Mar 12th, 2015</p>
-
-      </div>
-      <div class="stats-content">
-        <div class="stats-content-col-left col-xs-6">
-          <div class="stats-content-item">
-            <span class="stats-content-label">PRICE</span><span class="pull-right">$99.76</span>
-          </div>
-          
-        </div>
-        <div class="stats-content-col-right col-xs-6">
-          <div class="stats-content-item">
-            <span class="stats-content-label">CHANGE</span><span class="pull-right">+2.6%</span>  
-          </div>
-          
-        </div>
-      </div>
-    </div>
-
-   
-
-
-
-
-
-
     <!-- STREAM POSTS -->
     <div class = "stream" >
-      <%= render partial: "streams/stream_main", locals: {streams: @streams, nest_count: 0} %>
+      <%= render partial: "streams/stream_main", locals: {streams: @streams} %>
     </div>
     <div id = "infinite-scrolling" >
       <%= will_paginate @streams %>
     </div>
+
   </div>
 
   <div class="col-sm-3 stockpage-sidebar">
 
-  <% if @prediction.active %> 
-    <%= render partial: 'predictions/prediction', locals: {prediction: @prediction} %>
-  <% else %>
-    <%= render 'shared/prediction_form' %>
-  <% end %>
-   
+    <% if @prediction.active %> 
+      <%= render partial: 'shared/prediction_open', locals: {prediction: @prediction} %>
+    <% else %>
+      <%= render 'shared/prediction_form' %>
+    <% end %>
 
+    <%= render partial: 'shared/comment_form', locals: {stock: @stock} %>
+    
+    <%= render partial: 'stocks/ranking', locals: {stock: @stock} %>
+    
 
-
-    <div class="stockpage-sidebar-open">
-      <div class="stockpage-sidebar-open-header red-gradient">
-        <div class="stockpage-sidebar-open-header-txt pull-left">
-          Open Prediction
-        </div>
-        <div class="stockpage-sidebar-open-points pull-right">
-          <i class="fa fa-line-chart"></i>
-        </div>
-      </div>
-      <div class="stockpage-sidebar-open-box">
-        <div class="sidebar-open-item col-md-4">
-          <p class="sidebar-open-figure">1D</p>
-          <p class="sidebar-open-title">TIME LEFT</p>
-        </div>
-        <div class="sidebar-open-item col-md-4">
-          <p class="sidebar-open-figure">$170</p>
-          <p class="sidebar-open-title">TARGET</p>
-        </div>
-        <div class="sidebar-open-item col-md-4">
-          <p class="sidebar-open-figure">+3</p>
-          <p class="sidebar-open-title">POINTS</p>
-        </div>  
-        <div class="sidebar-open-close-comment-div">
-          <textarea class="close-comment-textarea" placeholder="Why are you closing this prediction?"></textarea>
-          <div class="checkbox">
-            <input class="comment-only" type="checkbox" name="" value=""><span class="check-box-span">No comment</span>
+    <div class="stockpage-sidebar-stocks">
+      <div class="stockpage-sidebar-stocks-box">
+        <div class="stockpage-sidebar-stocks-header">
+          <div class="stockpage-sidebar-stocks-header-txt pull-left">
+            Stocks Similar to AAPL
           </div>
         </div>
-        <div class="sidebar-close-button">
-          <a class="btn">CLOSE PREDICTION</a>
-        </div>
-      </div>
 
-      <div class="stockpage-sidebar-comment-header red-gradient">
-        <div class="stockpage-sidebar-comment-header-txt pull-left">
-          Comment on APPL
-        </div>
-        <div class="stockpage-sidebar-comment-points pull-right">
-          <i class="fa fa-comment"></i>
-        </div>
+        <a class="stockpage-sidebar-stocks-item clearfix" href="#">
+          <div class="stockpage-sidebar-stocks-label pull-left">
+            TWTR<span>&nbsp;&nbsp;&nbsp;(TECH)</span>
+          </div>
+          <div class="stockpage-sidebar-stocks-number pull-right">
+            <i class="fa fa-users"></i>163
+          </div>
+        </a>
+        <a class="stockpage-sidebar-stocks-item clearfix" href="#">
+          <div class="stockpage-sidebar-stocks-label pull-left">
+            AMZN<span>&nbsp;&nbsp;&nbsp;(TECH)</span>
+          </div>
+          <div class="stockpage-sidebar-stocks-number pull-right">
+            <i class="fa fa-users"></i>63
+          </div>
+        </a>
+        <a class="stockpage-sidebar-stocks-item clearfix" href="#">
+          <div class="stockpage-sidebar-stocks-label pull-left">
+            GOOG<span>&nbsp;&nbsp;&nbsp;(TECH)</span>
+          </div>
+          <div class="stockpage-sidebar-stocks-number pull-right">
+            <i class="fa fa-users"></i>390
+          </div>
+        </a>
+        <a class="stockpage-sidebar-stocks-item clearfix" href="#">
+          <div class="stockpage-sidebar-stocks-label pull-left">
+            FB<span>&nbsp;&nbsp;&nbsp;(TECH)</span>
+          </div>
+          <div class="stockpage-sidebar-stocks-number pull-right">
+            <i class="fa fa-users"></i>21k
+          </div>
+        </a>
       </div>
-      <div class="stockpage-sidebar-comment-box">
-        <div class="stockpage-sidebar-comment-div">
-          <textarea class="comment-form-textarea" placeholder="Comment on APPL"></textarea>
-        </div>
-        <div class="comment-submit-button-div">
-          <a class="btn">SUBMIT</a>
-        </div>
-      </div>
-
     </div>
-
-
-
-    <div class="stockpage-side-analysts-header black-gradient">
-      <div class="user-sidebar-similar-header-txt">
-        Top analysts for APPL
-      </div>
-    </div>
-    <div class="stockpage-side-analysts-box">
-    <% @stock.top_analysts(5).each do |analyst| %>
-      <%= render partial: 'stocks/ranking', locals: {analyst: analyst, stock: @stock} %>
-    <% end %>
-    </div>
+    
     
   </div>
 
 </div>
-
-
-
-    <!-- 
-    
-    
-  </div>
-</div>
-    -->
-  <%
-   #  <div class = "stream" >
-   #   <%= #render partial: "streams/stream_main", locals: {streams: @streams, nest_count: 0} 
-   # </div>
-   # <div id = "infinite-scrolling" >
-   #   <%= #will_paginate @streams 
-   # </div>
-  %>
 
   
 
-
-
-<% #
-   #</div>
-   #   render 'shared/follow_form'
-  #</div>
-#</div>
-
-#
-#<div class = "stock-page-prediction-box">
-#   if @prediction.active_prediction_exists? 
-#     render @prediction 
-#   else 
-#     render 'shared/prediction_form' 
-#   end 
-#</div>
-#
-#  <%= render 'shared/comment_form'
-
-%>
 
 
 

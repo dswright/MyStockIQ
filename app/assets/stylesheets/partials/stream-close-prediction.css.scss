@@ -29,17 +29,31 @@
 
 .close-prediction-item-img img {
 	width: 33px;
-	border-radius: 90px
+	border-radius: 90px;
+	margin-top: 4px;
 }
 
 
 .close-prediction-item-username {
-	font-size: 11px;
+	font-size: 12px;
 	font-weight: 300;
-	padding-top: 2px;
-	margin-bottom: 1px;
+	padding-top: 0px;
 	text-transform: uppercase;
 	color: #C7C7C7;
+	padding-bottom: 2px;
+	text-decoration: none;  
+
+  -webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+}
+
+.close-prediction-item-username:hover {
+	cursor: pointer;
+	text-decoration: none;
+	color: #7cb5ec;
+	border-bottom: 1px solid #7cb5ec;
 }
 
 .close-prediction-item-txt {
@@ -49,6 +63,7 @@
 
 .close-prediction-item-main-txt {
 	padding-top: 2px;
+	margin-top: 3px;
 	margin-bottom: 0px;
 	font-size: 15px;
 	font-weight: 300;
@@ -71,7 +86,7 @@
 }
 
 .close-prediction-item-tweet a {
-	color: #63010d;
+	color: #7cb5ec;
 }
 
 
@@ -87,7 +102,7 @@
 }
 
 .close-prediction-item-closing-tweet a {
-	color: #63010d;
+	color: #7cb5ec;
 }
 
 .closing-tweet {
@@ -108,7 +123,7 @@
 	display: inline-block;
 	margin-left: 20px;
 	padding: 2px 4px 2px 4px;
-	background-color: #63010D;
+	background-color: #7cb5ec;
 	color: #fff;
 }
 
@@ -136,7 +151,7 @@
 }
 
 .close-prediction-item-vote-count a:hover {
-	color: #63010D;
+	color: #7cb5ec;
 }
 
 .close-prediction-item-vote-count p {
@@ -144,6 +159,7 @@
 	font-size: 15;
 	font-weight: 300;
 	margin-bottom: 0px;
+	line-height: 9px;
 }
 
 

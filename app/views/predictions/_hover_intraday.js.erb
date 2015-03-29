@@ -1,0 +1,9 @@
+
+
+var price_box_html = "<%= j render :partial => 'shared/graph/intraday_prediction', :locals => { :prediction => prediction } %>";
+
+$('#graph-replace-box').html(price_box_html);
+
+var title_box_html = "<%= j render :partial => 'shared/graph/prediction_title', :locals => { :prediction => prediction } %>";
+$('#title-replace-box').html(title_box_html);
+

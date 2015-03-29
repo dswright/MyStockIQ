@@ -3,17 +3,18 @@
 .stockpage-side-analysts-box {
 	border: 1px solid rgba(0,0,0,.07);
 	background-color: #fff;
-	font-size: 11px;
+	margin-top: 20px;
 }
 
 .stockpage-side-analysts-header {
-	height: 33px;
-	margin-top: 15px;
-	color: #E6E6E6;
+	height: 39px;
+	color: #7cb5ec;
 	font-size: 11px;
-	padding-left: 10px;
-	padding-right: 10px;
-	padding-top: 10px;
+	font-weight: 300;
+	margin-left: 10px;
+	margin-right: 10px;
+	padding-top: 13px;
+	border-bottom: 1px solid rgba(0,0,0,.07);
 }
 
 .stockpage-side-analysts-img img {
@@ -38,6 +39,7 @@
 	padding-bottom: 10px;
 	color: #808080;
 	font-size: 11px;
+	font-weight: 300;
 
 	-webkit-transition: 150ms ease-in;
   -moz-transition: 150ms ease-in;
@@ -47,5 +49,5 @@
 }
 
 .stockpage-side-analysts-box a:hover {
-	background-color: rgba(0,0,0,.07);
+	background-color: #FAFAFA;
 }

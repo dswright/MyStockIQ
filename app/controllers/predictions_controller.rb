@@ -5,21 +5,84 @@ class PredictionsController < ApplicationController
   require 'graph'
 	
 
-  def hover    
+  def hover_daily
     prediction = Prediction.find(params[:id])
 
     respond_to do |f|
-      f.html { 
-        render :partial => 'hover', :locals => { :prediction => prediction } #this is working...
+      f.html {
+        render :partial => 'predictions/hover_daily.js.erb', :locals => { :prediction => prediction } #this is working...
+        #render :partial => 'shared/graph/daily_prediction', :locals => { :prediction => prediction_data } #this is working...
       }
     end
+  end
+  
+
+  def hover_intraday
+    prediction = Prediction.find(params[:id])
+
+    respond_to do |f|
+      f.html {
+        render :partial => 'predictions/hover_intraday.js.erb', :locals => {:prediction => prediction } #this is working...
+      }
+    end
+  end
+
+  def details_hover_intraday
+    params_break = params[:id].split("-")
+    prediction = Prediction.find_by(id:params_break[0])
+    prediction_custom = {}
+
+    if (params_break[1] == "0")
+      prediction_custom[:price] = prediction.start_price
+      prediction_custom[:date] = prediction.start_time
+      prediction_custom[:score] = prediction.score
+      prediction_custom[:id] = prediction.id
+    elsif (params_break[1] == "1")
+      prediction_custom[:price] = prediction.prediction_end_price
+      prediction_custom[:date] = prediction.prediction_end_time
+      prediction_custom[:score] = prediction.score
+      prediction_custom[:id] = prediction.id
+    elsif (params_break[1] == "2")
+      prediction_custom[:price] = prediction.predictionend.actual_end_time
+      prediction_custom[:date] = prediction.predictionend.actual_end_price
+      prediction_custom[:score] = prediction.score
+      prediction_custom[:id] = prediction.id
+    end
+
+    render :partial => 'predictions/details_hover_intraday.js.erb', :locals => {:prediction_custom => prediction_custom, :prediction => prediction}
 
   end
+
+    def details_hover_daily
+    params_break = params[:id].split("-")
+    prediction = Prediction.find_by(id:params_break[0])
+    prediction_custom = {}
+
+    if (params_break[1] == "0")
+      prediction_custom[:price] = prediction.start_price
+      prediction_custom[:date] = prediction.start_time
+      prediction_custom[:score] = prediction.score
+      prediction_custom[:id] = prediction.id
+    elsif (params_break[1] == "1")
+      prediction_custom[:price] = prediction.prediction_end_price
+      prediction_custom[:date] = prediction.prediction_end_time
+      prediction_custom[:score] = prediction.score
+      prediction_custom[:id] = prediction.id
+    elsif (params_break[1] == "2")
+      prediction_custom[:price] = prediction.predictionend.actual_end_time
+      prediction_custom[:date] = prediction.predictionend.actual_end_price
+      prediction_custom[:score] = prediction.score
+      prediction_custom[:id] = prediction.id
+    end
+
+    render :partial => 'predictions/details_hover_daily.js.erb', :locals => {:prediction_custom => prediction_custom, :prediction => prediction}
+
+  end
+
 
 	def create
 		#Obtain user session information from Session Helper function 'current_user'.
 		@user = current_user
-    puts "stockid: #{prediction_params[:stock_id]}"
 		stock = Stock.find(prediction_params[:stock_id])
 
 		#Create the prediction settings.
@@ -85,7 +148,7 @@ class PredictionsController < ApplicationController
         if invalid_start
          render 'shared/_error_messages.js.erb'
         else 
-          render "create.js.erb"
+          render "predictions/create.js.erb"
         end 
       }
     end
@@ -111,6 +174,12 @@ class PredictionsController < ApplicationController
 
     gon.ticker_symbol = @stock.ticker_symbol
 
+    @prediction_custom = {}
+    @prediction_custom[:price] = @prediction.prediction_end_price
+    @prediction_custom[:date] = @prediction.prediction_end_time
+    @prediction_custom[:score] = @prediction.score
+    @prediction_custom[:id] = @prediction.id
+
     #unless streams == nil
     #  streams.each {|stream| stream.streamable.update_popularity_score}
     #end
@@ -126,7 +195,7 @@ class PredictionsController < ApplicationController
 
     @prediction_end_input_page = "predictiondetails"
     
-    @graph_buttons = ["1d", "5d", "1m", "3m", "6m", "1yr", "5yr"]
+    @graph_buttons = ["1D", "5D", "1M", "3M", "6M", "1Yr", "5Yr"]
     #used by the view to generate the html buttons
 
     gon.ticker_symbol = @stock.ticker_symbol
@@ -142,7 +211,10 @@ class PredictionsController < ApplicationController
           :daily_prices => graph.daily_prices,
           :prediction => graph.prediction, #the specific prediction to be displayed on the graph.
           :predictionend => graph.predictionend,
-          :intraday_prices => graph.intraday_prices
+          :intraday_prices => graph.intraday_prices,          
+          :daily_price_ids => graph.daily_price_ids,
+          :intraday_price_ids => graph.intraday_price_ids,
+          :prediction_details_id => graph.prediction_details_id
         }
       }
     end

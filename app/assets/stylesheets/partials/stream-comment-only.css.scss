@@ -30,19 +30,34 @@
 
 .comment-only-item-img img {
 	width: 33px;
-	border-radius: 90px
+	border-radius: 90px;
+	margin-top: 5px;
 }
 
-
-
 .comment-only-item-username {
-	font-size: 11px;
+	color: #C7C7C7;
+	font-size: 12px;
 	font-weight: 300;
+	padding-bottom: 2px;
 	margin-top: 0px;
 	margin-bottom: 1px;
 	text-transform: uppercase;
-	color: #C7C7C7;
+	text-decoration: none;
+
+  -webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
 }
+
+.comment-only-item-username:hover {
+	text-decoration: none;
+	cursor: pointer;
+	color: #7cb5ec;
+	border-bottom: 1px solid #7cb5ec;
+}
+
+
 
 .comment-only-item-txt {
 	padding-left: 0px;
@@ -60,8 +75,19 @@
 	letter-spacing: 1px;
 }
 
-.comment-only-item-txt a {
-	color: #63010d;
+.comment-only-item-main-txt a {
+	color: #7cb5ec;
+	text-decoration: none;
+	padding-bottom: 2px;
+
+  -webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+}
+
+.comment-only-item-main-txt a:hover {
+	border-bottom: 1px solid #7cb5ec;
 }
 
 .comment-only-footer {
@@ -101,7 +127,7 @@
 }
 
 .comment-only-item-vote-count a:hover {
-	color: #63010D;
+	color: #7cb5ec;
 }
 
 .comment-only-item-vote-count p {
@@ -109,14 +135,11 @@
 	font-size: 15;
 	font-weight: 300;
 	margin-bottom: 0px;
+	line-height: 9px;
 }
 
 
-
-
 @media (min-width: 768px) {
-
-
 
 .comment-only-item-img {
 	padding-left: 10px;

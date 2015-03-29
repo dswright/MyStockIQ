@@ -125,29 +125,7 @@ body {
   clear: both;
 }
 
-.nav-singed-in a {
-  color: #808080;
 
-  -webkit-transition: 300ms ease-in;
-  -moz-transition: 300ms ease-in;
-  -o-transition: 300ms ease-in;
-  transition: 300ms ease-in;
-
-}
-
-.nav-singed-in a:hover {
-  color: #4D4D4D;
-  cursor: pointer;
-  text-decoration: none
-}
-
-.nav-singed-in a:focus {
-  color: #808080;
-  text-decoration: none;
-  outline: none;
-  outline: 0px auto -webkit-focus-ring-color;
-  outline-offset: 0px;
-}
 
 
 .red-gradient {

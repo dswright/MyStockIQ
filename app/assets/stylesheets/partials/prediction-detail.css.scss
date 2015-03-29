@@ -1,0 +1,167 @@
+
+
+.prediction-detail-blue-blur {
+  background-image: asset-url("blue-blur33.png");
+  background-size: cover;
+  max-width: 100%;
+  clear: both;
+  padding-top: 1px;
+  overflow: hidden;
+  padding-bottom: 30px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+
+/* ----- DETAIL BUTTON ------*/
+
+
+.graph-prediction-detail-btn {
+	margin-top: 20px;
+}
+
+.graph-prediction-detail-btn a {
+	display: inline-block;
+	border: solid 1px rgba(255,255,255,.85);
+	border-radius: 2px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	width: 100%;
+	font-size: 10px;
+	font-family: 'Lato';
+	cursor: pointer;
+	color: rgba(255,255,255,.85);
+	text-decoration: none;
+	margin-top: 24px;
+	text-align: center;
+
+  -webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+}
+
+.graph-prediction-detail-btn a:hover {
+	border: solid 1px rgba(255,255,255,1);
+	color: rgba(255,255,255,1);
+}
+
+
+.prediction-detail-item {
+	display: block;
+	margin-top: 20px;
+	margin-bottom: 30px;
+	overflow: hidden;
+	padding-top: 0px;
+	padding-bottom: 10px;
+	padding-right: 10px;
+	background-color: #fff;
+	border: solid 1px rgba(0,0,0,.07);;
+	color: #919191;
+	text-decoration: none;
+}
+
+
+.prediction-detail-replies {
+	margin-right: 0px;
+	padding-left: 30px;
+	padding-right: 30px;
+}
+
+
+/* ----- PREDICTION TWEET ------*/
+
+.prediction-detail-tweet {
+	overflow: hidden;
+	color: #FAFAFA;
+	font-weight: 300;
+	line-height: 18px;
+	letter-spacing: 1px;
+}
+
+.prediction-detail-tweet p {
+	line-height: 24px;
+	color: #919191;
+	font-size: 18px;
+	margin-top: 10px;
+}
+
+.prediction-detail-tweet a {
+	color: #7cb5ec;
+	text-decoration: none;
+	padding-bottom: 2px;
+}
+
+.prediction-detail-tweet a:hover {
+	text-decoration: none;
+	border-bottom: 1px solid #7cb5ec;
+}
+
+
+
+/* ----- PREDICTION CLOSED TWEET ------*/
+
+
+.prediction-detail-tweet-closed {
+	overflow: hidden;
+	margin-top: 10px;
+	font-weight: 300;
+	letter-spacing: 1px;
+}
+
+.prediction-detail-tweet-new {
+	line-height: 24px;
+	color: #919191;
+	font-size: 18px;
+}
+
+.prediction-detail-tweet-closed a {
+	color: #7cb5ec;
+	text-decoration: none;
+	padding-bottom: 2px;
+}
+
+.prediction-detail-tweet-closed a:hover {
+	text-decoration: none;
+	border-bottom: 1px solid #7cb5ec;
+}
+
+.prediction-closed-original-tweet {
+	margin-top: 20px;
+	color: #C7C7C7;
+	line-height: 24px;
+	font-size: 18px;
+}
+
+.detail-stream-comment-header {
+	font-size: 18px;
+	font-weight: 300;
+	padding-bottom: 6px;
+	margin-top: 30px;
+	border-bottom: solid 1px #C7C7C7; 
+}
+
+.detail-stream-comment-header p {
+	color: #919191;
+	margin-bottom: 0px;
+}
+
+
+
+@media (min-width: 768px) {
+
+.prediction-detail-blue-blur {
+  padding-bottom: 0px;
+
+}
+
+.graph-prediction-detail-btn a {
+	width: 70%;
+}
+
+.graph-prediction-detail-btn a {
+	padding-top: 12px;
+	padding-bottom: 12px;
+}
+
+}

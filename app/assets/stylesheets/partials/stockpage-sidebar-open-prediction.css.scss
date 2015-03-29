@@ -1,22 +1,31 @@
 
+.stockpage-sidebar-open {
+	overflow:hidden;
+	display:block;
+	margin-top: 20px;
+}
+
 .stockpage-sidebar-open-header {
-	height: 33px;
-	margin-top: 15px;
-	color: #E6E6E6;
+	height: 39px;
+	color: #7cb5ec;
 	font-size: 11px;
-	padding-left: 10px;
-	padding-right: 10px;
-	padding-top: 10px;
+	font-weight: 300;
+	padding-left: 0px;
+	padding-right: 0px;
+	padding-top: 13px;
+	border-bottom: 1px solid rgba(0,0,0,.07);
 }
 
 .stockpage-sidebar-open-box {
 	border: 1px solid rgba(0,0,0,.07);
 	background-color: #fff;
 	font-size: 11px;
+	font-weight: 300;
 	padding-left: 10px;
 	padding-right: 10px;
 	padding-top: 0px;
 	padding-bottom: 15px;
+	overflow:hidden;
 }
 
 .sidebar-open-item {
@@ -39,6 +48,7 @@
 .sidebar-open-title {
 	color: #B3B3B3;
 	font-size: 11px;
+	font-weight: 300;
 	margin-bottom: 0px;
 }
 
@@ -71,7 +81,7 @@
 }
 
 
-.sidebar-close-button a {
+.sidebar-close-button input {
 	margin-top: 10px;
 	border: solid 1px #B3B3B3;
 	border-radius: 0px;
@@ -79,7 +89,9 @@
 	padding-top: 9px;
 	color: #B3B3B3;
 	font-size: 11px;
+	font-weight: 300;
 	width: 100%;
+	background-color:#FFF;
 
 	-webkit-transition: 150ms ease-in;
   -moz-transition: 150ms ease-in;
@@ -87,28 +99,29 @@
   transition: 150ms ease-in;
 }
 
-.sidebar-close-button a:hover {
+.sidebar-close-button input:hover {
 	border: solid 1px #808080;
 	color: #808080;
 }
 
 
-
-
 .stockpage-sidebar-comment-header {
-	height: 33px;
-	margin-top: 15px;
-	color: #E6E6E6;
+	height: 39px;
+	color: #7cb5ec;
 	font-size: 11px;
-	padding-left: 10px;
-	padding-right: 10px;
-	padding-top: 10px;
+	font-weight: 300;
+	padding-left: 0px;
+	padding-right: 0px;
+	padding-top: 13px;
+	border-bottom: 1px solid rgba(0,0,0,.07);
 }
 
 .stockpage-sidebar-comment-box {
+	display: block;
 	border: 1px solid rgba(0,0,0,.07);
 	background-color: #fff;
 	font-size: 11px;
+	font-weight: 300;
 	padding-left: 10px;
 	padding-right: 10px;
 	padding-top: 0px;
@@ -128,17 +141,16 @@
 	padding-left: 10px;
 	padding-right: 10px;
 	background-color: #FAFAFA;
-	color: #FAFAFA;
+	color: #808080;
 	outline: none;
 	width: 100%;
 	resize: none;
 	height: 50px;
 	margin-top: 20px;
-
 }
 
 .comment-form-textarea:focus {
-	border: 1px solid rgba(0,0,0,.07);
+	outline: 1px solid rgba(0,0,0,.07);
 }
 
 
@@ -146,14 +158,16 @@
 	margin-top: 10px;
 }
 
-.comment-submit-button-div a {
+.comment-submit-button-div input {
 	border: solid 1px #B3B3B3;
 	border-radius: 0px;
 	padding-bottom: 9px;
 	padding-top: 9px;
 	color: #B3B3B3;
 	font-size: 11px;
+	font-weight: 300;
 	width: 100%;
+	background-color:#FFF;
 
 	-webkit-transition: 150ms ease-in;
   -moz-transition: 150ms ease-in;
@@ -161,7 +175,7 @@
   transition: 150ms ease-in;
 }
 
-.comment-submit-button-div a:hover {
+.comment-submit-button-div input:hover {
 	border: solid 1px #808080;
 	color: #808080;
 }

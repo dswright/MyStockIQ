@@ -56,21 +56,28 @@ require 'scraper'
           @prediction.exceeds_end_price #if the stock price exceeds the prediction price, move date and set to active:false, create prediction end and stream items.
           @prediction.exceeds_end_time #if the current time exceeds the prediction end time, set active:false, create prediction ends, and stream items.
           @prediction.update_score #run an update of the current score.
+
+          @predictionend = @prediction.build_predictionend()
+          @prediction_end_input_page = "stockspage" #for the prediction details box, set the input page for the prediction cancel button.
+
         end
 
         #Determines relationship between current user and target user
         @target = @stock
 
-      	@comment_stream_inputs = "Stock:#{@stock.id},User:#{@current_user.id}"
-      	@prediction_stream_inputs = "Stock:#{@stock.id},User#{@current_user.id}"
 
-        @prediction_end_input_page = "stockspage" #for the prediction details box, set the input page for the prediction cancel button.
+
+      	@comment_stream_string = "Stock:#{@stock.id},User:#{@current_user.id}"
+      	@prediction_stream_string = "Stock:#{@stock.id},User:#{@current_user.id}"
+
+
 
         
-        @graph_buttons = ["1d", "5d", "1m", "3m", "6m", "1yr", "5yr"]
+        @graph_buttons = ["1D", "5D", "1M", "3M", "6M", "1Yr", "5Yr"]
         #used by the view to generate the html buttons
 
         gon.ticker_symbol = @stock.ticker_symbol
+        @price_point = {price:@stock.daily_stock_price,date:@stock.date}
       }
       format.json {
 

@@ -1,0 +1,13 @@
+<div class="graph-prediction-stats clearfix">
+  <div class="graph-stats-date-price col-xs-6 col-sm-12">
+    <p class="graph-price">$<%= prediction.prediction_end_price.round(2) %></p>
+    <p class="graph-label"><%= (prediction.prediction_end_time + Time.zone_offset("EST")).strftime("%b %d, %Y") %></p>
+  </div>
+  <div class="graph-prediction-stats graph-prediction-stats-2 col-xs-6 col-sm-12">
+    <p class="graph-price"><%= prediction.score.round(2) %></p>
+    <p class="graph-label">POINTS</p>
+  </div>
+  <div class="graph-prediction-detail-btn clearfix">
+    <%= link_to "Details", "/predictions/#{prediction.id}/" %>
+  </div>
+</div>

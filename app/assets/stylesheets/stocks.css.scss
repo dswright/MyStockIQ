@@ -10,12 +10,22 @@
   display: none;
 }
 
+.stockpage-body {
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+
 @media (min-width: 480px) {
 
 
 }
 
 @media (min-width: 768px) {
+
+.stockpage-body {
+	padding-right: 15px;
+}
 
 .stockpage-sidebar {
   display: block;
@@ -25,6 +35,14 @@
 
 }
 
+
+@media (min-width: 991px) {
+
+.stockpage-body {
+	padding-right: 30px;
+}
+
+}
 
 
 

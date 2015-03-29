@@ -1,202 +1,106 @@
 <%= javascript_include_tag "predictions.coffee.js" %>
 <%= include_gon(:init => true) %>
 
-
-
 <% content_for :title do %>
   <title><%= @stock[:ticker_symbol] %> Stock Predictions - StockHero.com</title>
 <% end %>
+
+
+<section class="stockpage-graph-full prediction-detail-blue-blur">
+  <div class="constrainer">
+    
+    <!-- title of the stock graph -->
+    <div id = "title-replace-box">
+      <%= render partial: "shared/graph/prediction_title", locals: {prediction: @prediction} %>
+    </div>
+    
+    <div class="col-xs-12 col-sm-9 stockpage-graph-col">
+
+      <div class="graph-background-div">
+        <p class="tkr"><%= @stock.ticker_symbol %></p>
+      </div>
+      
+      <div id="prediction-div" class = "graph-div"></div>
+
+      <div class="graph-full-timeframes">
+        <% @graph_buttons.each do |button| %>
+          <% if button == "3M" || button == "6M" %>
+            <span class="add-timeframes">
+              <div class="timeframe-item pull-left" id="button" data-button-type=<%= button %>>
+                <a><%= button %></a>
+              </div>
+            </span>
+          <% else %>
+            <div class="timeframe-item pull-left" id="button" data-button-type=<%= button %>>
+              <a><%= button %></a>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="col-sm-3 stockpage-graph-stats-col">
+
+      <div id ="graph-replace-box">
+        <%= render partial: "shared/graph/details_daily_prediction.html.erb", locals: {prediction:@prediction, prediction_custom: @prediction_custom} %>
+      </div>
+    </div>
+
+    <div class="col-sm-12 col-md-9 stockpage-mobile-buttoms-col">
+
+
+    </div>
+
+  </div>
+</section>
+
 
 <div class="constrainer">
 
   <div class="col-xs-12 col-sm-9 stockpage-body">
 
-    <div class="stockpage-graph-module black-gradient clearfix">
-      <div class="pull-left stockpage-ticker">
-        <p><%= @stock.ticker_symbol %> - <%= @stock.stock %></p>
-      </div>
-
-      <div class="graph-point-hover">
-        <div class="pull-right graph-hover-stat-item">
-          <p class="graph-hover-figure">+3</p>
-          <p class="graph-hover-title">POINTS</p>
-        </div>  
-        <div class="pull-right graph-hover-stat-item">
-          <p class="graph-hover-figure">$170</p>
-          <p class="graph-hover-title">TARGET</p>
-        </div>
-        <div class="pull-right graph-hover-stat-item">
-          <p class="graph-hover-figure">1D</p>
-          <p class="graph-hover-title">TIME LEFT</p>
-        </div>
-        <div class="pull-right graph-hover-stat-item">
-          <%= image_tag "del.jpg" %>
-          <p class="graph-hover-title">delmnstr12</p>
-        </div>
-      </div>
-
-      <div class="stockpage-graph">
-
-        <div id="prediction-div"></div>
-      </div>
-
-      <div class="timeframes-mobile">
-        <% @graph_buttons.each do |button| %>
-          <div class="timeframes-item pull-right" id="button" data-button-type=<%= button %>
-          >
-            <a><%= button %></a>
-          </div>
-        <% end %>
-      </div>
-
-      <div class = "graph-buttons" style="width:450px">
-        
-        
-      </div>
-
-      <div class="stockpage-mobile-predict-button-div">
-        <a class="btn">PREDICT APPL</a>
-      </div>
-
-      <div class="open-prediction">
-        <div class="open-prediction-col col-xs-4">
-          <p class="open-prediction-figure">1 DAY</p>
-          <p class="open-prediction-title">TIME LEFT</p>
-        </div>
-        <div class="open-prediction-col col-xs-4">
-          <p class="open-prediction-figure">$170</p>
-          <p class="open-prediction-title">TARGET PRICE</p>
-        </div>
-        <div class="open-prediction-col col-xs-4">
-          <p class="open-prediction-figure">+3</p>
-          <p class="open-prediction-title">POINTS</p>
-        </div>
-      </div>    
-      <div class="close-prediction-button-mobile">
-        <a class="btn">CLOSE PREDICTION</a>
-      </div>
 
 
-      <div class="stats-header">
-        <p>Stats</p>
-      </div>
-      <div class="stats-content">
-        <div class="stats-content-col-left col-xs-6">
-          <div class="stats-content-item">
-            <span class="stats-content-label">PRICE</span><span class="pull-right">$99.76</span>
-          </div>
-          <div class="stats-content-item">
-            <span class="stats-content-label">MKTCAP</span><span class="pull-right">624.4B</span>
-          </div>
-          <div class="stats-content-item">
-            <span class="stats-content-label">P/E RATIO</span><span class="pull-right">17</span>
-          </div>
-          <div class="stats-content-item">
-            <span class="stats-content-label">AVG VOL</span><span class="pull-right">50.9M</span>
-          </div>
-        </div>
-        <div class="stats-content-col-right col-xs-6">
-          <div class="stats-content-item">
-            <span class="stats-content-label">CHANGE</span><span class="pull-right">+2.6%</span>  
-          </div>
-          <div class="stats-content-item">
-            <span class="stats-content-label">52 WK HIGH</span><span class="pull-right">102.3</span>
-          </div>
-          <div class="stats-content-item">
-            <span class="stats-content-label">52 WK LOW</span><span class="pull-right">87.5</span>
-          </div>
-          <div class="stats-content-item">
-            <span class="stats-content-label">VOLUME</span><span class="pull-right">55.3</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="prediction-item">
-      <a class="prediction-item-anchor red-gradient expand">
-        <div class="col-xs-2 prediction-item-img">
-          <%= image_tag "del.jpg" %>
-        </div>
-        <div class="pull-left prediction-item-txt">
-          <p class="prediction-item-username">delmnstr12&nbsp;&middot;&nbsp;2hr</p> 
-          <p class="prediction-item-main-txt"><span class="filler">Predicts</span> APPL will be +30 <span class="filler">points</span> in 2 weeks</p> 
-        </div>
-        <div class="prediction-item-points pull-right">
-          <p>+20</p>
-        </div>
-      </a>
-    </div>
 
     <div class = "stream" >
-    <%= render partial: "streams/stream_main", locals: {streams: @streams, nest_count: 0} %>
-    </div>
-    <div id = "infinite-scrolling" >
-    <%= will_paginate @streams %>
-    </div>
 
-    <!-- STREAM POSTS -->
+      <div class="prediction-detail-item" id="stream_Prediction_<%= @prediction.id %>">
+
+        <div class="prediction-detail-replies">
+
+          <div class="prediction-detail-tweet">x
+            <p>Do ennui laboris, meditation dolor occaecat organic eu Truffaut master cleanse <a href="#">$APPL</a> anim pickled ad quis Portland. <a href="#">@dillshmill</a> deep v anim id, fixie adipisicing dolor eiusmod non PBR Brooklyn Portland esse Thundercats <a href="#">#drake</a><a href="#">#6god</a> <a href="#">#ohveeohhh</a></p>
+          </div>
+
+          <div class="prediction-detail-tweet-closed">
+            <p class="prediction-detail-tweet-new">Do ennui laboris, meditation dolor occaecat organic eu Truffaut master cleanse <a href="#">$APPL</a> anim pickled ad quis Portland. <a href="#">@dillshmill</a> deep v anim id, fixie adipisicing dolor eiusmod non PBR Brooklyn Portland esse Thundercats <a href="#">#drake</a><a href="#">#6god</a> <a href="#">#ohveeohhh</a></p>
+
+            <p class="prediction-closed-original-tweet">ORIGINAL COMMENT: Do ennui laboris, meditation dolor occaecat organic eu Truffaut master cleanse <a href="#">$APPL</a> anim pickled ad quis Portland. <a href="#">@dillshmill</a> deep v anim id, fixie adipisicing dolor eiusmod non PBR Brooklyn Portland esse Thundercats <a href="#">#drake</a><a href="#">#6god</a> <a href="#">#ohveeohhh</a></p>
+          </div>
+    
+          <!-- load this only if there are replies -->
+          <div class="detail-stream-comment-header">
+            <p><%= @prediction.replies.count %> Replies</p>
+          </div>
+
+          <!-- load partials for each reply -->
+          <% @prediction.replies.each do |reply| %>
+            <%= render partial: "streams/stream_reply", locals: {reply: reply}  %>
+          <% end %>
+          
+          <!-- load this reply input everytime -->
+          <%= render partial: "streams/stream_reply_form", locals: {repliable_type:"Prediction", repliable_id:@prediction.id}  %>
+        </div> 
+      </div>
+    </div>
+  
 
   </div>
   <div class="col-sm-3 stockpage-sidebar">
 
-  <% if @prediction.active %> 
-    <%= render partial: 'predictions/prediction', locals: {prediction: @prediction} %>
-  <% else %>
-    <% #render a completed prediction box here. %>
-  <% end %>
+    <%= render partial: 'shared/prediction_open', locals: {prediction: @prediction} %>
    
-
-    <div class="stockpage-side-analysts-header black-gradient">
-      <div class="user-sidebar-similar-header-txt">
-        Top analysts for APPL
-      </div>
-    </div>
-    <div class="stockpage-side-analysts-box">
-      <a class="stockpage-side-analysts-anchor clearfix" href="#">
-        <div class="stockpage-side-analysts-img pull-left">
-          <%= image_tag "del.jpg" %>
-        </div>
-        <div class="stockpage-side-analysts-label pull-left">
-          delmnstr12
-        </div>
-        <div class="stockpage-side-analysts-number pull-right">
-          400
-        </div>
-      </a>
-      <a class="stockpage-side-analysts-anchor clearfix" href="#">
-        <div class="stockpage-side-analysts-img pull-left">
-          <%= image_tag "dyl.png" %>
-        </div>
-        <div class="stockpage-side-analysts-label pull-left">
-          dyl$hmil
-        </div>
-        <div class="stockpage-side-analysts-number pull-right">
-          60k
-        </div>
-      </a>
-      <a class="stockpage-side-analysts-anchor clearfix" href="#">
-        <div class="stockpage-side-analysts-img pull-left">
-          <%= image_tag "elmer.png" %>
-        </div>
-        <div class="stockpage-side-analysts-label pull-left">
-          fuddmnstr7
-        </div>
-        <div class="stockpage-side-analysts-number pull-right">
-          163
-        </div>
-      </a>
-      <a class="stockpage-side-analysts-anchor clearfix" href="#">
-        <div class="stockpage-side-analysts-img pull-left">
-          <%= image_tag "sean.png" %>
-        </div>
-        <div class="stockpage-side-analysts-label pull-left">
-          seanjuan
-        </div>
-        <div class="stockpage-side-analysts-number pull-right">
-          90k
-        </div>
-      </a>
-    </div>
+    <%= render partial: 'stocks/ranking', locals: {stock: @stock} %>
     
   </div>
 

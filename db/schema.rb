@@ -11,10 +11,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150312015518) do
+ActiveRecord::Schema.define(version: 20150321211040) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "adminpack"
   enable_extension "plpgsql"
 
   create_table "comments", force: true do |t|
@@ -80,6 +79,7 @@ ActiveRecord::Schema.define(version: 20150312015518) do
     t.integer  "prediction_id"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
+    t.string   "comment"
   end
 
   add_index "predictionends", ["prediction_id"], name: "index_predictionends_on_prediction_id", using: :btree
@@ -188,6 +188,8 @@ ActiveRecord::Schema.define(version: 20150312015518) do
     t.datetime "updated_at"
     t.string   "password_digest"
     t.string   "remember_digest"
+    t.string   "image"
+    t.string   "bio"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

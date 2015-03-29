@@ -15,12 +15,12 @@
 <%= form_for(:session, url: login_path) do |f| %>
   <div class="constrainer">
     <div class="signin-form-div">
-      <div class="signin-form-header red-gradient">
+      <div class="signin-form-box">
+      <div class="signin-form-header">
         <div class="signin-form-header-txt">
           Sign In
         </div>
       </div>
-      <div class="signin-form-box">
         <p class="signin-signin-link">Don't have and account?
         <%= link_to "Sign up here.", signup_path %></p>
         <div class="signin-form-fields">
@@ -28,7 +28,7 @@
           <%= f.password_field :password, :placeholder => "Password", :class => "signin-email-field", :id => "password" %>
         </div>
         <div class="signin-submit-button-div">
-          <%= f.submit "SIGN IN", :class => "btn" %>
+          <%= f.submit "SUBMIT", :class => "btn" %>
         </div>
       </div>
     </div>
