@@ -2,5 +2,5 @@ var price_box_html = "<%= j render :partial => 'shared/graph/daily_price', :loca
 
 $('#graph-replace-box').html(price_box_html);
 
-var title_box_html = "<%= j render :partial => 'shared/graph/stock_title', :locals => { :stock => stock } %>";
+var title_box_html = "<%= j render :partial => 'shared/graph/stock_title', :locals => { :stock => stock, target: target } %>";
 $('#title-replace-box').html(title_box_html);

@@ -38,19 +38,23 @@
 
 /*-------- TICKER NAME TITLE -----------*/
 
-
-.ticker-name {
-	margin: auto;
+.stock-name {
+	text-align: center;
+	height: 42px;
+	margin-top: 27px;
 }
 
-.ticker-name p {
+.stock-name-center {
+	display: inline-block;
 	margin-top: 27px;
+}
+
+.stock-name-center p {
 	font-size: 33px;
 	text-align: center;
 	font-weight: 300;
 	color: rgba(255, 255, 255, 1);
 }
-
 
 .stockpage-follow-btn {
 	border: solid 1px rgba(255,255,255,.85);
@@ -59,14 +63,17 @@
 	padding-bottom: 2px;
 	font-size: 10px;
 	font-family: 'Lato';
+	background-color: transparent;
 	color: rgba(255,255,255,.85);
 	text-decoration: none;
 	margin-top: 0px;
+	margin-left: 10px;
 	margin-bottom: 21px;
 	padding-left: 11px;
 	padding-right: 11px;
 
-	-webkit-transition: 150ms ease-in;
+
+  -webkit-transition: 150ms ease-in;
   -moz-transition: 150ms ease-in;
   -o-transition: 150ms ease-in;
   transition: 150ms ease-in;
@@ -77,8 +84,26 @@
 	color: rgba(255,255,255,1);
 }
 
+.follow-btn-div input:focus {
+	outline: none;
+	outline-color: transparent;
+}
+
+
 
 /*-------- PREDICTION NAME TITLE -----------*/
+
+
+.prediction-name {
+	text-align: center;
+	height: 42px;
+	margin-top: 27px;
+}
+
+.prediction-name-center {
+	display: inline-block;
+	margin-top: 27px;
+}
 
 .prediction-name-title-name {
 	display: none;

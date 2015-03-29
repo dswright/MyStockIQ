@@ -1,9 +1,9 @@
-<div class="ticker-name clearfix">
-  <p>
-    <span><%= link_to stock.stock, "/stocks/#{stock.ticker_symbol}/" %></span>
-    <a class="stockpage-follow-btn btn">Follow</a>
-          <div class="stockpage-follow-btn">
-        <%= render partial: 'shared/follow_form', locals: {target: @target} %>
-      </div>
-  </p>
+<div class="stock-name">
+  <div class="stock-name-center clearfix">
+    <p class="pull-left"><%= link_to stock.stock, "/stocks/#{stock.ticker_symbol}/" %>
+    </p>
+    <div class="pull-left follow-btn-div">
+    	<%= render partial: "shared/follow_form", locals: {target: target} %>
+    </div>
+  </div>
 </div>

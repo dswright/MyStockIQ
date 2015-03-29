@@ -1,7 +1,7 @@
-<% unless current_user?(@target) %>
-  <% if current_user.following?(@target) %>
-    <%= render 'shared/unfollow' %>
+<% unless current_user?(target) %>
+  <% if current_user.following?(target) %>
+    <%= render partial: 'shared/unfollow', locals: {target: target} %>
   <% else %>
-    <%= render 'shared/follow' %>
+    <%= render partial: 'shared/follow', locals: {target: target} %>
   <% end %>
 <% end %>

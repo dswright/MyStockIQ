@@ -1,2 +1,1 @@
-$("#follow_form").html("<%= j render('shared/follow') %>");
-$("#followers").html("<%= j @target.followers.count.to_s %>");
+$(".follow-btn-div").html("<%= j render partial: 'shared/follow', locals: {target: @target} %>");

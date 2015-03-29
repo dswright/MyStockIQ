@@ -21,7 +21,7 @@ require 'graph'
 
     respond_to do |f|
       f.html {
-        render :partial => 'stockprices/hover_daily.js.erb', :locals => { price: price_data, stock:stock } #this is working...
+        render :partial => 'stockprices/hover_daily.js.erb', :locals => { price: price_data, stock:stock, target: stock } #this is working...
       }
     end
 
@@ -33,7 +33,7 @@ require 'graph'
 
     respond_to do |f|
       f.html {
-        render :partial => 'stockprices/hover_intraday.js.erb', :locals => { :price =>  price, stock:stock } #this is working...
+        render :partial => 'stockprices/hover_intraday.js.erb', :locals => { :price =>  price, stock:stock, target: stock } #this is working...
       }
     end
   end
