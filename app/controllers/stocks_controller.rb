@@ -61,8 +61,8 @@ require 'scraper'
         #Determines relationship between current user and target user
         @target = @stock
 
-      	@comment_stream_inputs = "Stock:#{@stock.id}"
-      	@prediction_stream_inputs = "Stock:#{@stock.id}"
+      	@comment_stream_inputs = "Stock:#{@stock.id},User:#{@current_user.id}"
+      	@prediction_stream_inputs = "Stock:#{@stock.id},User#{@current_user.id}"
 
         @prediction_end_input_page = "stockspage" #for the prediction details box, set the input page for the prediction cancel button.
 

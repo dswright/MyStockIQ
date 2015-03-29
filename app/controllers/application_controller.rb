@@ -11,6 +11,7 @@ class ApplicationController < ActionController::Base
   include CommentsHelper
   include StreamsHelper
   include PredictionsHelper
+  include FeedsHelper
 
   
   
