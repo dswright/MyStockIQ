@@ -7,11 +7,11 @@
     <div class="col-sm-9">
       <ul class="pull-right">
         <li><%= "#{@user.username}'s top stocks:" %></li>
-        <li><a href="#">TWTR</a></li>
-        <li><a href="#">AMZN</a></li>
-        <li><a href="#">FB</a></li>
-        <li><a href="#">GOOG</a></li>
-        <li><a href="#">APPL</a></li>
+        <li><%= link_to "TWTR", '/stocks/TWTR' %></li>
+        <li><%= link_to "AMZN", '/stocks/AMZN' %></li>
+        <li><%= link_to "FB", '/stocks/FB' %></li>
+        <li><%= link_to "GOOG", '/stocks/GOOG' %></li>
+        <li><%= link_to "AAPL", '/stocks/AAPL' %></li>
       </ul>
     </div>
   </div>

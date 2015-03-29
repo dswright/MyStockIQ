@@ -1,5 +1,5 @@
 <%= form_for(@current_user.active_relationships.build, remote: true) do |f| %>
-  <div><%= hidden_field_tag :followed_id, @target.id %></div>
-  <div><%= hidden_field_tag :followed_type, @target.class.name%></div>
+  <%= hidden_field_tag :followed_id, @target.id %></div>
+  <%= hidden_field_tag :followed_type, @target.class.name%>
   <%= f.submit "Follow", class: "btn" %>
 <% end %>
