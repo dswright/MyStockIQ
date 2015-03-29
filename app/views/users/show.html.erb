@@ -6,7 +6,7 @@
   <div class="constrainer">
     <div class="col-sm-9">
       <ul class="pull-right">
-        <li><%= "#{@user.username}'s top stocks:" %></li>
+        <li><span class="overlay-name"><%= "#{@user.username}"%></span>'s top stocks:</li>
         <li><a href="#">TWTR</a></li>
         <li><a href="#">AMZN</a></li>
         <li><a href="#">FB</a></li>
@@ -20,7 +20,7 @@
 <div class="constrainer">
   <div class="col-xs-12 user-top-box">
     <div class="col-xs-4 user-top-box-img">
-      <%= image_tag "del.jpg" %>
+      <%= image_tag @user.image %>
     </div>
     <div class="col-xs-8 user-top-box-data">
       <div class="user-top-box-bio">
@@ -81,7 +81,7 @@
 
   <div class="col-sm-3 user-page-sidebar">
     <div class="user-page-sidebar-image">
-      <%= image_tag "del.jpg" %>
+      <%= image_tag @user.image %>
     </div>
     <div class="user-page-sidebar-image-overlay">
       <div class="user-sidebar-image-username pull-left">
