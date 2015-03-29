@@ -6,14 +6,17 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-
-#user = User.find_by(username: "merrifield")
-#stock = Stock.find_by(ticker_symbol: "AAPL")
+users = User.all
+stock = Stock.find_by(ticker_symbol: "AAPL")
 
 #Creates 50 comment posts
-#50.times do 
-#	content = Faker::Lorem.sentence(5)
-#	comment = user.comments.create!(content: content, popularity_score: 0)
-#	comment.streams.create!(streamable_type: comment.class.name, target_type: stock.class.name, target_id: stock.id)
-#end
+20.times do
+	users.each do |user|
+		content = Faker::Lorem.sentence(5)
+		comment = user.comments.create!(content: content)
+		comment.streams.create!(streamable_type: comment.class.name, targetable_type: stock.class.name, targetable_id: stock.id)
+		comment.streams.create!(streamable_type: comment.class.name, targetable_type: user.class.name, targetable_id: user.id)
+		comment.build_popularity(score: 0).save
+	end
+end
 

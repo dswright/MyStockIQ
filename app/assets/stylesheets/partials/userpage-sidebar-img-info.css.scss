@@ -20,7 +20,7 @@
 	font-size: 11px;
 }
 
-.user-sidebar-follow a {
+.user-sidebar-follow input {
 	border: solid 1px rgba(255,255,255,.85);;
 	padding-top: 2px;
 	padding-bottom: 2px;
@@ -30,14 +30,14 @@
 	margin: auto;
 	padding-left: 11px;
 	padding-right: 11px;
-
+	background: transparent;
 	-webkit-transition: 150ms ease-in;
   -moz-transition: 150ms ease-in;
   -o-transition: 150ms ease-in;
   transition: 150ms ease-in;
 }
 
-.user-sidebar-follow a:hover {
+.user-sidebar-follow input:hover {
 	border: solid 1px rgba(255,255,255,1);
 	color: rgba(255,255,255,1);
 }

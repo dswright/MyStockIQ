@@ -25,13 +25,13 @@
         </a>
       </div>
       <div class="nav-items-user pull-right">
-        <a href="#">
+        <%= link_to "/users/#{current_user.username}/" do %>
           <%= image_tag "del.jpg" %>
-          <p>delmnstr6</p>
-        </a>
+          <p><%= current_user.username %></p>
+        <% end %>
       </div>
       <div class="nav-items-feed pull-right">
-        <a href="#">Feed</a>
+        <%= link_to "Feed", feed_path, id: "feed" %>
       </div>
     </div>
   </div>
@@ -52,7 +52,7 @@
         <img src="img/del.jpg">
       </div>
       <div class="nav-dropdown-label pull-left">
-        <p>delmnstr12</p>
+        <%= link_to "Hello", "#{users_path}/current_user.username/", id: "current_user.username" %>   
       </div>
     </a>
     <a class="nav-dropdown-item clearfix">

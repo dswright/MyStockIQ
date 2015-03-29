@@ -73,6 +73,7 @@ gem 'rack-mini-profiler'
 gem 'carrierwave'
 #gem 'rmagick'
 
+gem 'ruby-progressbar', '1.7.5'
 
 group :development, :test do
 

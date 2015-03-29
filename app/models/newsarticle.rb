@@ -7,4 +7,5 @@ class Newsarticle < ActiveRecord::Base
   has_many :streams, as: :streamable, dependent: :destroy
   has_one :popularity, as: :popularable, dependent: :destroy
 
+  default_scope -> { order(created_at: :desc) }
 end

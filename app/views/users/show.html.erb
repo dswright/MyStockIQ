@@ -6,7 +6,7 @@
   <div class="constrainer">
     <div class="col-sm-9">
       <ul class="pull-right">
-        <li>delmnstr12's top stocks:</li>
+        <li><%= "#{@user.username}'s top stocks:" %></li>
         <li><a href="#">TWTR</a></li>
         <li><a href="#">AMZN</a></li>
         <li><a href="#">FB</a></li>
@@ -44,7 +44,7 @@
             Following
           </div>
           <div class="user-top-stats-number pull-right">
-            163
+            <%= @user.followings.count%>
           </div>
         </div>
         <div class="user-top-stats-item clearfix" href="#">
@@ -52,7 +52,7 @@
             Followers
           </div>
           <div class="user-top-stats-number pull-right">
-            63
+            <%= @user.followers.count %>
           </div>
         </div>
         <div class="user-top-stats-item clearfix" href="#">
@@ -60,7 +60,7 @@
             Predictions
           </div>
           <div class="user-top-stats-number pull-right">
-            390
+            <%= @user.predictions.count %>
           </div>
         </div>
       </div>
@@ -85,10 +85,10 @@
     </div>
     <div class="user-page-sidebar-image-overlay">
       <div class="user-sidebar-image-username pull-left">
-        <p>delmnstr12</p>
+        <p><%= @user.username %></p>
       </div>
       <div class="user-sidebar-follow pull-right">
-        <a class="btn">Follow</a>
+        <%= render partial: 'shared/follow_form', locals: {target: @target} %>
       </div>
     </div>
     <div class="user-sidebar-bio">
