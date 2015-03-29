@@ -47,6 +47,7 @@ class User < ActiveRecord::Base
     BCrypt::Password.create(string, cost: cost)
   end
 
+
   #save the remember_digest to the database to match with the user id saved in the user cookie.
   def User.remember(user)
     #create string of characters
