@@ -17,21 +17,24 @@
 
 .user-top-box-bio {
 	border: 1px solid rgba(0,0,0,.07);
-	margin-left: 10px;
-	padding-left: 10px;
-	padding-right: 10px;
+	margin-left: 15px;
+	padding-left: 15px;
+	padding-right: 15px;
 	padding-top: 10px;
 	padding-bottom: 10px;
 }
 
 .user-top-box-bio p {
 	font-size: 12px;
+	font-family: 'Lato';
+	line-height: 18px;
 	color: #808080;
 	margin-top: 0px;
 	margin-bottom: 0px;
 }
 
 .user-top-box-stats-box {
+	margin-top: 20px;
 	border: 1px solid rgba(0,0,0,.07);
 }
 
@@ -41,20 +44,21 @@
 }
 
 .user-top-stats-header {
-	height: 33px;
-	margin-top: 15px;
-	color: #E6E6E6;
+	height: 39px;
+	color: #7cb5ec;
 	font-size: 11px;
-	padding-left: 10px;
-	padding-right: 10px;
-	padding-top: 10px;
+	font-weight: 300;
+	margin-left: 10px;
+	margin-right: 10px;
+	padding-top: 13px;
+	border-bottom: 1px solid rgba(0,0,0,.07);
 }
 
 .user-top-stats-item {
 	padding-left: 10px;
 	padding-right: 10px;
-	padding-top: 10px;
-	padding-bottom: 10px;
+	padding-top: 15px;
+	padding-bottom: 15px;
 	color: #808080;
 	font-size: 12px;
 }
