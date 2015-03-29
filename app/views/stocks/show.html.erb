@@ -16,6 +16,7 @@
     <div class="stockpage-graph-module black-gradient clearfix">
       <div class="pull-left stockpage-ticker">
         <p><%= @stock.ticker_symbol %> - <%= @stock.stock %></p>
+        <%= render partial: 'shared/follow_form', locals: {target: @target} %>
       </div>
 
       <div class="graph-point-hover">
@@ -177,15 +178,6 @@
       </div>
 
     </div>
-
-
-
-
-
-
-
-
-
 
 
 

@@ -9,31 +9,28 @@ class FeedsController < ApplicationController
   def show
     return if user_logged_in? #redirects the user to the login page if they are not logged in.
 
-    @current_user = current_user
-    #sets @predictions for the view, and for making stream.
-    @predictions = @current_user.predictions.where(active:true)
+    respond_to do |format| 
 
-    #sets @predictions for the view, and for making stream.
-    @historical_predictions = @current_user.predictions.where(active:false).reorder("score desc").limit(5)
+      @current_user = current_user
+      #sets @predictions for the view, and for making stream.
+      @predictions = @current_user.predictions.where(active:true)
+
+      #sets @predictions for the view, and for making stream.
+      @historical_predictions = @current_user.predictions.where(active:false).reorder("score desc").limit(5)
 
 
-    #this is the tricky line. The stream needs to be build well.
-    #first one for now is all things that the user is directly related in, like the user page.
-    @streams = @current_user.streams.limit(40)
+      #this is the tricky line. The stream needs to be build well.
+      #first one for now is all things that the user is directly related in, like the user page.
 
-    unless @streams == nil
-      #@streams.each {|stream| stream.update_stream_popularity_scores}
+      @streams = Stream.feed(@current_user).by_popularity_score.paginate(page: params[:page], per_page: 10)
 
-      #this line makes sorts the stream by popularity score.
-      #@streams = @streams.sort_by {|stream| stream.streamable.popularity_score}
+      format.html{
 
-      #streams = sort_by_popularity(streams)
-      #@streams = @streams.reverse
-      
-      #Stock's posts, comments, and predictions to be shown in the view
-      #will_paginate in view automatically generates params[:page]
-      @streams = @streams.paginate(page: params[:page], per_page: 10)
-      #@stream_hash_array = Stream.stream_maker(@streams, 0)
+      }
+
+      format.js{
+
+      }
     end
   end
 end

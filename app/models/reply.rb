@@ -14,8 +14,7 @@ class Reply < ActiveRecord::Base
 	validates :repliable_type, presence: true
 	validates :content, presence: true, length: { maximum: 5000 }
 
+	default_scope -> { order(created_at: :desc) }
 
-	def replies
-		replies = Reply.where(repliable_type: self.class.name, repliable_id: self.id)
-	end
+	
 end

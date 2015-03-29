@@ -4,7 +4,7 @@ class Comment < ActiveRecord::Base
 
 	belongs_to :user
 	has_one :popularity, as: :popularable, dependent: :destroy
-  has_many :streams, as: :streamable, dependent: :destroy
+  	has_many :streams, as: :streamable, dependent: :destroy
 	has_many :likes, as: :likable
 	has_many :replies, as: :repliable
 
@@ -12,4 +12,5 @@ class Comment < ActiveRecord::Base
 	validates :user_id, presence: true, numericality: true
 	default_scope -> { order(created_at: :desc) }
 
+	scope :by_user, lambda {|user| where(user_id: user.id)}
 end

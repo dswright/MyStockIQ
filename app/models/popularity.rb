@@ -38,7 +38,16 @@ class Popularity < ActiveRecord::Base
 		end
 
 		#Reduce popularity score 1 point per half day
-		score -= (Time.zone.now - self.created_at)/(60*60*12)
+		if self.popularable.class.name == "Newsarticle"
+			#Minus 8 points per day
+			decay_rate = 8
+		else 
+			#Minus 2 points per day
+			decay_rate = 2
+		end
+
+		#Reduce popularity score
+		score -= decay_rate*(Time.zone.now - self.created_at)/(60*60*24)
 
 		self.score = score.round(6)
 

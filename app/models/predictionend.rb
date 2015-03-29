@@ -8,5 +8,5 @@ class Predictionend < ActiveRecord::Base
   has_one :popularity, as: :popularable, dependent: :destroy
   has_many :replies, as: :repliable
 
-
+  default_scope -> { order(created_at: :desc) }
 end

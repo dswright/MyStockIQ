@@ -92,8 +92,28 @@ class User < ActiveRecord::Base
   end
 
   def followers
-    Relationship.where(followed_id: self.id)
+    followers = Array.new
+    Relationship.where(followed_id: self.id).find_each do |relationship|
+      #Assumes User is the only type of follower (Stocks don't follow anyone)
+      followers << User.where(id: relationship.follower_id)
+    end
+    return followers
   end
+
+  def followings
+    followings = Array.new
+    Relationship.where(follower_id: self.id).find_each do |relationship|
+      if relationship.followed_type == "Stock"
+        followings << Stock.where(id: relationship.followed_id)
+      elsif relationship.followed_type == "User"
+        followings << User.where(id: relationship.followed_id)
+      end
+      #following_ids << relationship.followed_id
+    end
+    return followings
+  end
+
+
 
   def likes_this?(object)
     like_type = object.likes.where(user_id: self.id).first.like_type

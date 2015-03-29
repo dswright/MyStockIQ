@@ -6,10 +6,9 @@ class Stream < ActiveRecord::Base
   belongs_to :targetable, polymorphic: true
 
   #uses Rails default_scope function to sort the posts such that the most recent one is first.
-  default_scope -> {order('created_at DESC')}
+  default_scope -> {order(created_at: :desc)}
 
   scope :by_popularity_score, lambda { self.joins("join popularities on popularities.popularable_id = streams.streamable_id and popularities.popularable_type = streams.streamable_type").reorder("popularities.score DESC")}
-
 
   ######### STREAM MODEL VALIDATIONS ##########
 
@@ -18,6 +17,18 @@ class Stream < ActiveRecord::Base
   validates :streamable_type, presence: true
   validates :targetable_id, presence: true
   validates :targetable_type, presence: true
+
+  def self.feed(user)
+    following_ids = Array.new
+    following_type = Array.new
+
+    user.followings.each do |following|
+      following_ids << following[0].id
+      following_type << following[0].class.name
+    end
+
+    where(targetable_id: following_ids, targetable_type: following_type)
+  end
 
 
   def self.stream_maker(streams, nest_count)
