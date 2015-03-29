@@ -9,7 +9,7 @@
   <% stock.top_analysts(5).each do |analyst| %>
     <%= link_to "/users/#{analyst.username}/", class: "stockpage-side-analysts-anchor clearfix" do %>
       <div class="stockpage-side-analysts-img pull-left">
-        <%= image_tag "del.jpg" %>
+        <%= image_tag analyst.image %>
       </div>
       <div class="stockpage-side-analysts-label pull-left">
         <%= analyst.username %>
