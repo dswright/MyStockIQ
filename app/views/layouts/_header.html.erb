@@ -26,7 +26,7 @@
       </div>
       <div class="nav-items-user pull-right">
         <%= link_to "/users/#{current_user.username}/" do %>
-          <%= image_tag "del.jpg" %>
+          <%= image_tag current_user.image %>
           <p><%= current_user.username %></p>
         <% end %>
       </div>
