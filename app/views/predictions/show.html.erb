@@ -42,7 +42,7 @@
     <div class="col-sm-3 stockpage-graph-stats-col">
 
       <div id ="graph-replace-box">
-        <%= render partial: "shared/graph/daily_prediction.html.erb", locals: {prediction:@prediction} %>
+        <%= render partial: "shared/graph/details_daily_prediction.html.erb", locals: {prediction:@prediction, prediction_custom: @prediction_custom} %>
       </div>
     </div>
 
