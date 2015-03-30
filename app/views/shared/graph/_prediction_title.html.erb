@@ -2,12 +2,20 @@
 
 	<div class="prediction-name-center clearfix">
 		
-		<%= link_to "/predictions/#{prediction.id}/" do %>
-		<div class="prediction-name-items pull-left">
-	  	<%= image_tag prediction.user.image %>
-	  	<span class="prediction-name-title"><span class="prediction-name-title-name"><%= prediction.user.username %></span> Prediction</span>
-	  </div>
-	  <% end %>
+		
+			<div class="prediction-name-items pull-left">	
+				<%= link_to "/predictions/#{prediction.id}/" do %>
+			  	<%= image_tag prediction.user.image %>
+			  <% end %>
+		  	<span class="prediction-name-title">
+		  		<%= link_to "/predictions/#{prediction.id}/" do %>
+			  		<span class="prediction-name-title-name">
+			  			<%= prediction.user.username %>
+			  		</span> Prediction
+			  	<% end %>
+			  </span>	
+		  </div>
+
 		<div class="prediction-name-vote-count pull-left">
 			<a class="prediction-name-vote-count-up" href="#"><i class="fa fa-angle-up"></i></a>
 			<p>10</p>
