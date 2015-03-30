@@ -8,10 +8,8 @@
 	  	<span class="prediction-name-title"><span class="prediction-name-title-name"><%= prediction.user.username %></span> Prediction</span>
 	  </div>
 	  <% end %>
-		<div class="prediction-name-vote-count pull-left">
-			<a class="prediction-name-vote-count-up" href="#"><i class="fa fa-angle-up"></i></a>
-			<p>10</p>
-			<a class="prediction-name-vote-count-down" href="#"><i class="fa fa-angle-down"></i></a>
+		<div class="prediction-name-vote-count pull-left" id ="likes-Prediction-<%= prediction.id %>">
+			 <%= render partial: "streams/stream_like", locals: {likable_type:prediction.class.name, likable_id:prediction.id} %>
 		</div>
 	</div>
 

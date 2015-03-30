@@ -1,2 +1,4 @@
 
-$('#likes-<%= j @likable_type.to_s %>-<%= j @likable_id.to_s %>').html("<%= j render partial: 'streams/stream_like', locals: {likable_type:@likable_type, likable_id:@likable_id} %> ");
+
+//the special format on the id here will make it so that both the likes in the title partial and in the stream will update at the same time.
+$("[id^='likes-<%= j @likable_type.to_s %>-<%= j @likable_id.to_s %>']").html("<%= j render partial: 'streams/stream_like', locals: {likable_type:@likable_type, likable_id:@likable_id} %> ");
