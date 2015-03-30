@@ -46,13 +46,25 @@
 
 .stock-name-center {
 	display: inline-block;
-	margin-top: 27px;
+	margin-top: 9px;
+	margin-bottom: 9px;
 }
 
-.stock-name-center p {
+.stock-name-center p a {
 	font-size: 33px;
 	text-align: center;
+	text-decoration: none;
 	font-weight: 300;
+	color: rgba(255, 255, 255, .90);
+
+  -webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+}
+
+.stock-name-center p a:hover {
+	text-decoration: none;
 	color: rgba(255, 255, 255, 1);
 }
 
@@ -64,7 +76,7 @@
 	font-size: 10px;
 	font-family: 'Lato';
 	background-color: transparent;
-	color: rgba(255,255,255,.85);
+	color: rgba(255,255,255,.90);
 	text-decoration: none;
 	margin-top: 0px;
 	margin-left: 10px;
@@ -102,7 +114,8 @@
 
 .prediction-name-center {
 	display: inline-block;
-	margin-top: 27px;
+	margin-top: 9px;
+	margin-bottom: 9px
 }
 
 .prediction-name-title-name {
@@ -127,11 +140,20 @@
 	border: 1px solid rgba(255, 255, 255, 1);
 }
 
-.prediction-name-title {
+.prediction-name-title a {
 	display: inline-block;
+	text-decoration: none;
 	vertical-align: 9%;
 	font-size: 33px;
 	font-weight: 300;
+	color: rgba(255, 255, 255, .90);
+  -webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+}
+
+.prediction-name-title a:hover {
 	color: rgba(255, 255, 255, 1);
 }
 
@@ -148,7 +170,7 @@
 	display: block;
 	margin: auto;
 	text-align: center;
-	color: #C7C7C7;
+	color: rgba(255,255,255,.90);
 	font-size: 24px;
 
   -webkit-transition: 150ms ease-in;
@@ -158,7 +180,7 @@
 }
 
 .prediction-name-vote-count a:hover {
-	color: #7cb5ec;
+	color: rgba(255,255,255,1);
 }
 
 .prediction-name-vote-count p {
@@ -343,7 +365,7 @@
 }
 
 .graph-mobile-open-prediction-figure {
-	color: rgba(255, 255, 255, 0.85);
+	color: rgba(255, 255, 255, 0.90);
 	margin-bottom: 5px;
 	font-weight: 300;
 	font-size: 21px;
