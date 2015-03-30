@@ -10,7 +10,7 @@
     </div>
 
     <div class="sidebar-open-item col-md-4">
-      <p class="sidebar-open-figure">50 days</p>
+      <p class="sidebar-open-figure"><%= pluralize(prediction.days_remaining.round(0), "day") %> </p>
       <p class="sidebar-open-title">REMAINING</p>
     </div>
     <div class="sidebar-open-item col-md-4">
@@ -33,7 +33,7 @@
         <%= hidden_field_tag :prediction_id, prediction.id %>
         
         <div class="sidebar-close-button">
-          <%= f.submit "SUBMIT", class: "btn" %>
+          <%= f.submit "CLOSE PREDICTION", class: "btn" %>
         </div>
       <% end %>
       

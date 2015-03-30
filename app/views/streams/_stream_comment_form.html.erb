@@ -1,9 +1,7 @@
 
 <%= form_for(Comment.new, remote:true) do |f| %>
   <%= f.text_area :content, placeholder: "crappy reply box placeholder", class: "stock-page-comment-field", id: "comment", style: "width:100px; height:70px; float:left;" %>
-  <%= hidden_field_tag :stream_string, stream_string %>
-  <%= hidden_field_tag :parent, "#{stream_obj.streamable_type}_#{stream_obj.streamable_id}" %>
-  <%= hidden_field_tag :nest_count, "#{nest_count}" %>
+  <%= hidden_field_tag :ticker_symbol, ticker_symbol  %>
   <%= f.submit "Post", class: "btn btn-primary", style: "float:left; width:50px;" %>
 <% end %>
 

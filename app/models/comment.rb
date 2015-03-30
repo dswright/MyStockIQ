@@ -13,4 +13,22 @@ class Comment < ActiveRecord::Base
 	default_scope -> { order(created_at: :desc) }
 
 	scope :by_user, lambda {|user| where(user_id: user.id)}
+
+	def add_tags(ticker_symbol)
+		 
+		words = self.content.split
+
+		words.unshift("$#{ticker_symbol}")
+
+		words.each do |word|
+			if word[0] == "$"
+
+		 	elsif word[0] == "@"
+
+		 	end
+		 end
+		 self.content = words.join(" ")
+		 self.save
+	end
+
 end

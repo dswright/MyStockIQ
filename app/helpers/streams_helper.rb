@@ -1,16 +1,17 @@
 module StreamsHelper
 
+
   #used to process the string sent from the form to break down the different target types to be inserted into the streams table.
-  def stream_params_process(stream_array)
-    processed_stream_array = []
-    stream_input_array = stream_array.split(",")
-    stream_input_array.each do |stream_item|
+#  def stream_params_process(stream_array)
+#    processed_stream_array = []
+#    stream_input_array = stream_array.split(",")
+#    stream_input_array.each do |stream_item|
       #Must add validation of these parameters against existing stock/user ids to prevent hacking.
-      stream_elements = stream_item.split(":")
-      processed_stream_array << {targetable_type: stream_elements[0], targetable_id: stream_elements[1]}
-    end
-    return processed_stream_array
-  end
+#      stream_elements = stream_item.split(":")
+#      processed_stream_array << {targetable_type: stream_elements[0], targetable_id: stream_elements[1]}
+#    end
+#    return processed_stream_array
+#  end
 
   #used to display each stream object in the stream.
   def stream_redirect_processor(landing_page)
@@ -29,7 +30,7 @@ module StreamsHelper
   end
 
  
-
+  
   def sort_by_popularity(streams)
 
     #Build an array of comments and prediction id/popularity_score hashes

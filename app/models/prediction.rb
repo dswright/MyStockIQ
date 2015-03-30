@@ -18,6 +18,15 @@ class Prediction < ActiveRecord::Base
   validates :stock_id, presence: true, numericality: true
   default_scope -> { order(created_at: :desc) }
 
+  def days_remaining
+    days_remaining = (self.prediction_end_time - Time.now)/(60*60*24).round(0)
+    
+    if days_remaining < 0
+      days_remaining = 0
+    end
+
+    return days_remaining
+  end
 
 
   def update_score
