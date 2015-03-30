@@ -33,8 +33,16 @@
 	position: relative;
 	height: 33px;
 	background: rgba(0,0,0,0.7);
-	margin-top: -33px;
+	margin-top: -36px;
 	padding-top: 7px;
+}
+
+.settings-top-box-overlay p {
+	color: rgba(255,255,255,.90);
+	font-size: 11px;
+	margin-left: 15px;
+	margin-top: 3px;
+
 }
 
 .settings-top-box-overlay a {
@@ -63,6 +71,7 @@
 	color: rgba(255,255,255,1);
 }
 
+
 .settings-top-box-form {
 	padding-left: 0px;
 	padding-right: 0px;
@@ -78,12 +87,18 @@
 	padding-top: 10px;
 }
 
-.update-bio-header {
+.settings-top-box-bio-header {
 	margin-top: 5px;
 	text-align: center;
-	font-size: 21px;
+	font-size: 18px;
 	font-weight: 300;
 	color: #808080;
+}
+
+.settings-top-box-bio-txt {
+	font-size: 11px;
+	color: #808080;
+	line-height: 15px;
 }
 
 .settings-top-box-bio textarea {
@@ -164,6 +179,17 @@
 	width: 100%;
 }
 
+
+
+.settings-prof-img-txt {
+  margin-top: 20px;
+  margin-bottom: 15px;
+  color: #919191;
+  font-size: 12px;
+  font-weight: 300;
+}
+
+
 .settings-update-privacy {
 	margin-top: 15px;
 	margin-bottom: 15px;
@@ -175,7 +201,8 @@
 }
 
 .settings-update-privacy a {
-	color: #0543A6;
+	color: #7cb5ec;
+	padding-bottom: 2px;
 
   -webkit-transition: 150ms ease-in;
   -moz-transition: 150ms ease-in;
@@ -185,7 +212,7 @@
 
 .settings-update-privacy a:hover {
 	text-decoration: none;
-	border-bottom: 1px solid #0543A6;
+	border-bottom: 1px solid #7cb5ec;
 }
 
 
@@ -312,7 +339,7 @@ input.cmn-toggle-round-flat:checked + label:after {
 
 .save-changes-button-div input {
 	display: block;
-	border: solid 1px #B3B3B3;
+	border: solid 1px #C7C7C7;
 	border-radius: 0px;
 	margin-top: 30px;
 	margin-bottom: 15px;
@@ -321,7 +348,8 @@ input.cmn-toggle-round-flat:checked + label:after {
 	color: #B3B3B3;
 	font-size: 12px;
 	width: 100%;
-  background-color: transparent;
+    background-color: transparent;
+    border-radius: 3px;
 
   -webkit-transition: 150ms ease-in;
   -moz-transition: 150ms ease-in;
@@ -330,8 +358,8 @@ input.cmn-toggle-round-flat:checked + label:after {
 }
 
 .save-changes-button-div input:hover {
-	border: solid 1px #808080;
-	color: #808080;
+	border: solid 1px #7cb5ec;
+	color: #7cb5ec;
 }
 
 
@@ -360,7 +388,7 @@ input.cmn-toggle-round-flat:checked + label:after {
 	position: relative;
 	height: 33px;
 	background: rgba(0,0,0,0.7);
-	margin-top: -57px;
+	margin-top: -33px;
 	padding-left: 10px;
 	padding-right: 10px;
 	padding-top: 6px;
@@ -458,6 +486,12 @@ input.cmn-toggle-round-flat:checked + label:after {
 	padding-top: 6px;
 }
 
+.settings-page-sidebar-image-overlay p {
+	color: rgba(255,255,255,.90);
+	font-size: 11px;
+	margin-top: 5px;
+}
+
 .settings-sidebar-change-img a {
 	border: solid 1px rgba(255,255,255,.85);
 	border-radius: 2px;
@@ -489,26 +523,17 @@ input.cmn-toggle-round-flat:checked + label:after {
 	color: #808080;
 }
 
-.settings-sidebar-bio textarea {
-	width: 100%;
-	height: 109px;
-	padding-top: 10px;
-	padding-left: 10px;
-	padding-right: 10px;
-	margin-bottom: 15px;
-	background-color: #FAFAFA;
-	font-size: 12px;
+.settings-sidebar-bio-txt {
+	font-size: 11px;
 	font-weight: 300;
+	color: #808080;
 	line-height: 18px;
-	letter-spacing: .04em;
-    border: 0px;
-    outline: none;
-    resize: none;
-    color: #808080;
 }
 
-.settings-sidebar-bio textarea:focus {
- 	outline: 1px solid rgba(0,0,0,0.07);
+
+.save-changes-button-div input {
+	width: 40%;
+	float: right;
 }
 
 
