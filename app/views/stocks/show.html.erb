@@ -1,5 +1,4 @@
 
-
 <%= javascript_include_tag "stocks.coffee.js" %>
 <%= include_gon(:init => true) %>
 
@@ -107,50 +106,8 @@
     <%= render partial: 'shared/comment_form', locals: {stock: @stock} %>
     
     <%= render partial: 'stocks/ranking', locals: {stock: @stock} %>
-    
 
-    <div class="stockpage-sidebar-stocks">
-      <div class="stockpage-sidebar-stocks-box">
-        <div class="stockpage-sidebar-stocks-header">
-          <div class="stockpage-sidebar-stocks-header-txt pull-left">
-            Stocks Similar to AAPL
-          </div>
-        </div>
-
-        <a class="stockpage-sidebar-stocks-item clearfix" href="#">
-          <div class="stockpage-sidebar-stocks-label pull-left">
-            TWTR<span>&nbsp;&nbsp;&nbsp;(TECH)</span>
-          </div>
-          <div class="stockpage-sidebar-stocks-number pull-right">
-            <i class="fa fa-users"></i>163
-          </div>
-        </a>
-        <a class="stockpage-sidebar-stocks-item clearfix" href="#">
-          <div class="stockpage-sidebar-stocks-label pull-left">
-            AMZN<span>&nbsp;&nbsp;&nbsp;(TECH)</span>
-          </div>
-          <div class="stockpage-sidebar-stocks-number pull-right">
-            <i class="fa fa-users"></i>63
-          </div>
-        </a>
-        <a class="stockpage-sidebar-stocks-item clearfix" href="#">
-          <div class="stockpage-sidebar-stocks-label pull-left">
-            GOOG<span>&nbsp;&nbsp;&nbsp;(TECH)</span>
-          </div>
-          <div class="stockpage-sidebar-stocks-number pull-right">
-            <i class="fa fa-users"></i>390
-          </div>
-        </a>
-        <a class="stockpage-sidebar-stocks-item clearfix" href="#">
-          <div class="stockpage-sidebar-stocks-label pull-left">
-            FB<span>&nbsp;&nbsp;&nbsp;(TECH)</span>
-          </div>
-          <div class="stockpage-sidebar-stocks-number pull-right">
-            <i class="fa fa-users"></i>21k
-          </div>
-        </a>
-      </div>
-    </div>
+    <%= render partial: 'shared/popular_stocks' %>
     
     
   </div>
