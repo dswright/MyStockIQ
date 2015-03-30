@@ -80,7 +80,7 @@
     
           <!-- load this only if there are replies -->
           <div class="detail-stream-comment-header">
-            <p><%= @prediction.replies.count %> Replies</p>
+            <p><%= pluralize(@prediction.replies.count, "Reply") %></p>
           </div>
 
           <!-- load partials for each reply -->
