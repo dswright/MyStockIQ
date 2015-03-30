@@ -39,7 +39,7 @@
     <% end %>
     
     <!-- load this reply input everytime -->
-    <%= render partial: "streams/stream_reply_form", locals: {repliable_type: stream.streamable.class.name, repliable_id: stream.streamable.id}  %>
+    <%= render partial: "streams/stream_reply_form", locals: {repliable_type: stream.streamable.class.name, repliable_id: stream.streamable.id, stream_id: stream.id}  %>
 
   </div>
 </div>
