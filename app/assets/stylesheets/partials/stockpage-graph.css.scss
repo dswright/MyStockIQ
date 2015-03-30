@@ -55,15 +55,7 @@
 	text-align: center;
 	text-decoration: none;
 	font-weight: 300;
-	color: rgba(255, 255, 255, .85);
-}
-
-.stock-name-center p a {
-	font-size: 33px;
-	text-align: center;
-	text-decoration: none;
-	font-weight: 300;
-	color: rgba(255, 255, 255, .85);
+	color: rgba(255, 255, 255, .90);
 
   -webkit-transition: 150ms ease-in;
   -moz-transition: 150ms ease-in;
@@ -84,7 +76,7 @@
 	font-size: 10px;
 	font-family: 'Lato';
 	background-color: transparent;
-	color: rgba(255,255,255,.85);
+	color: rgba(255,255,255,.90);
 	text-decoration: none;
 	margin-top: 0px;
 	margin-left: 10px;
@@ -154,7 +146,7 @@
 	vertical-align: 9%;
 	font-size: 33px;
 	font-weight: 300;
-	color: rgba(255, 255, 255, .85);
+	color: rgba(255, 255, 255, .90);
   -webkit-transition: 150ms ease-in;
   -moz-transition: 150ms ease-in;
   -o-transition: 150ms ease-in;
@@ -178,7 +170,7 @@
 	display: block;
 	margin: auto;
 	text-align: center;
-	color: rgba(255,255,255,.85);
+	color: rgba(255,255,255,.90);
 	font-size: 24px;
 
   -webkit-transition: 150ms ease-in;
@@ -188,7 +180,7 @@
 }
 
 .prediction-name-vote-count a:hover {
-	color: rgba(255,255,255,.85);
+	color: rgba(255,255,255,1);
 }
 
 .prediction-name-vote-count p {
@@ -373,7 +365,7 @@
 }
 
 .graph-mobile-open-prediction-figure {
-	color: rgba(255, 255, 255, 0.85);
+	color: rgba(255, 255, 255, 0.90);
 	margin-bottom: 5px;
 	font-weight: 300;
 	font-size: 21px;
