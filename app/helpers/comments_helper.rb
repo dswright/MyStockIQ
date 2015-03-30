@@ -21,5 +21,18 @@ module CommentsHelper
 			"/users/show"
 		end
 	end
+
+	def add_tags(comment_content)
+		words = comment_content.split
+		words.collect do |word|
+			if word[0] == "$"
+				word = "ticker"
+			elsif word[0] == "@"
+				word = "username"
+			else
+				word = word
+			end
+		end
+	end
 end
 
