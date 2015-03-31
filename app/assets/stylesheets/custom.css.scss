@@ -1,2 +1,75 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 900;
+
+  src: asset-url('lato-black.eot');
+  src: asset-url('lato-black.eot?#iefix') format('embedded-opentype'), 
+       asset-url('lato-black.woff') format('woff'), 
+       asset-url('lato-black.ttf') format('truetype'), 
+       asset-url('lato-black.svg#latoblack') format('svg');
+}
+
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: bold;
+
+  src: asset-url('lato-bold.eot');
+  src: asset-url('lato-bold.eot?#iefix') format('embedded-opentype'), 
+       asset-url('lato-bold.woff') format('woff'), 
+       uasset-url('lato-bold.ttf') format('truetype'), 
+       asset-url('lato-bold.svg#latobold') format('svg');
+}
+
+@font-face {
+  font-family: 'Lato';
+  font-style: italic;
+  font-weight: bold;
+
+  src: asset-url('lato-bolditalic.eot');
+  src: asset-url('lato-bolditalic.eot?#iefix') format('embedded-opentype'), 
+       uasset-url('lato-bolditalic.woff') format('woff'), 
+       asset-url('lato-bolditalic.ttf') format('truetype'), 
+       asset-url('lato-bolditalic.svg#latobold-italic') format('svg');
+}
+
+/* this one */
+@font-face {
+  font-family: 'Lato';
+  font-style: italic;
+  font-weight: normal;
+
+  src: asset-url('lato-italic.eot');
+  src: asset-url('lato-italic.eot?#iefix') format('embedded-opentype'), 
+       asset-url('lato-italic.woff') format('woff'), 
+       asset-url('lato-italic.ttf') format('truetype'), 
+       asset-url('lato-italic.svg#latoitalic') format('svg');
+}
+
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 300;
+
+  src: asset-url('lato-light.eot');
+  src: asset-url('lato-light.eot?#iefix') format('embedded-opentype'), 
+       asset-url('lato-light.woff') format('woff'), 
+       asset-url('lato-light.ttf') format('truetype'), 
+       asset-url('lato-light.svg#latolight') format('svg');
+}
+
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: normal;
+
+  src: asset-url('lato-regular.eot');
+  src: asset-url('lato-regular.eot?#iefix') format('embedded-opentype'), 
+       asset-url('lato-regular.woff') format('woff'), 
+       asset-url('lato-regular.ttf') format('truetype'), 
+       asset-url('lato-regular.svg#latoregular') format('svg');
+}
