@@ -68,17 +68,25 @@
 
         <div class="prediction-detail-replies" id="new-reply-container">
 
-          <div class="prediction-detail-tweet">x
-            <p>Do ennui laboris, meditation dolor occaecat organic eu Truffaut master cleanse <a href="#">$APPL</a> anim pickled ad quis Portland. <a href="#">@dillshmill</a> deep v anim id, fixie adipisicing dolor eiusmod non PBR Brooklyn Portland esse Thundercats <a href="#">#drake</a><a href="#">#6god</a> <a href="#">#ohveeohhh</a></p>
-          </div>
-
-          <div class="prediction-detail-tweet-closed">
-            <p class="prediction-detail-tweet-new">Do ennui laboris, meditation dolor occaecat organic eu Truffaut master cleanse <a href="#">$APPL</a> anim pickled ad quis Portland. <a href="#">@dillshmill</a> deep v anim id, fixie adipisicing dolor eiusmod non PBR Brooklyn Portland esse Thundercats <a href="#">#drake</a><a href="#">#6god</a> <a href="#">#ohveeohhh</a></p>
-
-            <p class="prediction-closed-original-tweet">ORIGINAL COMMENT: Do ennui laboris, meditation dolor occaecat organic eu Truffaut master cleanse <a href="#">$APPL</a> anim pickled ad quis Portland. <a href="#">@dillshmill</a> deep v anim id, fixie adipisicing dolor eiusmod non PBR Brooklyn Portland esse Thundercats <a href="#">#drake</a><a href="#">#6god</a> <a href="#">#ohveeohhh</a></p>
-          </div>
+        <% unless @prediction.prediction_comment.nil? %>
+          <% unless @prediction.predictionend.comment.nil? %>
+            <div class="prediction-detail-tweet">
+              <div class="prediction-detail-tweet-clear">
+                <p><%= @prediction.predictionend.comment %></p>
+              </div>
+              <div class="prediction-detail-tweet-clear">
+                <p><%= @prediction.prediction_comment %></p>
+              </div>
+            </div>
+          <% else %>
+            <div class="prediction-detail-tweet">
+              <div class="prediction-detail-tweet-clear">
+                <p><%= @prediction.prediction_comment %></p>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
     
-          <!-- load this only if there are replies -->
           <div class="detail-stream-comment-header">
             <p><%= pluralize(@prediction.replies.count, "Reply") %></p>
           </div>

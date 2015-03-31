@@ -102,36 +102,33 @@
 /* ----- PREDICTION CLOSED TWEET ------*/
 
 
-.prediction-detail-tweet-closed {
+.prediction-detail-tweet {
 	overflow: hidden;
 	margin-top: 10px;
 	font-weight: 300;
 	letter-spacing: 1px;
 }
 
-.prediction-detail-tweet-new {
-	line-height: 24px;
-	color: #919191;
-	font-size: 18px;
-}
-
-.prediction-detail-tweet-closed a {
+.prediction-detail-tweet a {
 	color: #7cb5ec;
 	text-decoration: none;
 	padding-bottom: 2px;
 }
 
-.prediction-detail-tweet-closed a:hover {
-	text-decoration: none;
-	border-bottom: 1px solid #7cb5ec;
+.prediction-detail-tweet-clear {
+	line-height: 24px;
+	color: #919191;
+	font-size: 18px;
 }
 
-.prediction-closed-original-tweet {
+.prediction-detail-tweet-opaque {
 	margin-top: 20px;
 	color: #C7C7C7;
 	line-height: 24px;
 	font-size: 18px;
 }
+
+
 
 .detail-stream-comment-header {
 	font-size: 18px;
