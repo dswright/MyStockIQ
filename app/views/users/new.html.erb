@@ -10,6 +10,14 @@
   </div>
 </section>
 
+<% if session[:errors] %>
+  <div class="error-box">
+  <% session[:errors].each do |error_message| %>
+    <div><%= error_message %></div>
+  <% end %>
+<% end %>
+<% session.delete :errors %>
+
 <%= form_for(:user, url: users_path, :multipart => true) do |f| %>
   <div class="constrainer">
     <p class="signup-title">What's your Stock IQ?</p>
