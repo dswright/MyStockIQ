@@ -7,4 +7,7 @@
     <p class="graph-price"><%= prediction_custom[:score].round(2) %></p>
     <p class="graph-label">POINTS</p>
   </div>
+  <div class="graph-prediction-detail-btn clearfix">
+  	<%= link_to "CLOSE PREDICTION", "/predictions/#{prediction.id}/" %>
+  </div>
 </div>
