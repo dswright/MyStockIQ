@@ -10,8 +10,8 @@
   <% elsif stream.streamable.class.name == "Prediction" %>
     <%= render partial: "streams/stream_prediction", locals: {stream: stream} %>
 
-  <% elsif stream.streamable.class.name == "Newsarticle" %>
-    <%= render partial: "streams/stream_newsarticle", locals: {stream: stream} %>
+  <% #elsif stream.streamable.class.name == "Newsarticle" %>
+    <% #render partial: "streams/stream_newsarticle", locals: {stream: stream} %>
 
   <% elsif stream.streamable.class.name == "Predictionend" %>
     <%= render partial: "streams/stream_predictionend", locals: {stream: stream} %>
