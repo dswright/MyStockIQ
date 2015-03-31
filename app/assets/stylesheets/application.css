@@ -113,7 +113,7 @@ html, body, div, section, article, aside, header, hgroup, footer, nav, h1, h2, h
   padding: 0;
   border: 0;
   vertical-align:baseline;
-  font: inherit;
+  font-family: 'Lato';
   font-weight: 300;
 }
 
