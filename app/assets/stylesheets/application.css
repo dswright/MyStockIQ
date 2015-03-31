@@ -37,11 +37,12 @@ html, body, div, section, article, aside, header, hgroup, footer, nav, h1, h2, h
   margin: 0;
   padding: 0;
   border: 0;
-  vertical-align:baseline;
+  vertical-align: baseline;
   font: inherit;
-  font-family: 'Lato';
+  font-family: 'Lato', sans-serif;
   font-weight: 300;
 }
+
 
 body {
   background-color: #FAFAFA;
