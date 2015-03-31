@@ -69,15 +69,17 @@
         <div class="prediction-detail-replies" id="new-reply-container">
 
         <% unless @prediction.prediction_comment.nil? %>
-          <% unless @prediction.predictionend.comment.nil? %>
-            <div class="prediction-detail-tweet">
-              <div class="prediction-detail-tweet-clear">
-                <p><%= @prediction.predictionend.comment %></p>
+          <% unless @prediction.predictionend.nil? %>
+            <% unless @prediction.predictionend.comment.nil? %>
+              <div class="prediction-detail-tweet">
+                <div class="prediction-detail-tweet-clear">
+                  <p><%= @prediction.predictionend.comment %></p>
+                </div>
+                <div class="prediction-detail-tweet-clear">
+                  <p><%= @prediction.prediction_comment %></p>
+                </div>
               </div>
-              <div class="prediction-detail-tweet-clear">
-                <p><%= @prediction.prediction_comment %></p>
-              </div>
-            </div>
+            <% end %>
           <% else %>
             <div class="prediction-detail-tweet">
               <div class="prediction-detail-tweet-clear">
