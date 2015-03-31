@@ -26,7 +26,7 @@
     </div>
   </div>
   
-  <div class="stream-item-comments">
+  <div class="stream-item-comments" id="new-reply-container">
     
     <!-- load this only if there are replies -->
     <div class="stream-comment-header">
@@ -39,7 +39,7 @@
     <% end %>
     
     <!-- load this reply input everytime -->
-    <%= render partial: "streams/stream_reply_form", locals: {repliable_type: stream.streamable.class.name, repliable_id: stream.streamable.id, stream_id: stream.id}  %>
+    <%= render partial: "streams/stream_reply_form", locals: {repliable_type: stream.streamable.class.name, repliable_id: stream.streamable.id}  %>
 
   </div>
 </div>
