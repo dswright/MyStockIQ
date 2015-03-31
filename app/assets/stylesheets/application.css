@@ -162,6 +162,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2d2b29', end
   font-family: 'Lato', sans-serif;
 }
 
+#infinite-scrolling {
+  display: none;
+}
+
 .nav-constrainer {
   margin: auto;
   max-width: 390px;
