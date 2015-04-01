@@ -25,7 +25,11 @@
     <div class="col-xs-8 user-top-box-data">
       <div class="user-top-box-bio">
         <p>
-          Vero tempor PBR excepteur proident. Literally street art Banksy wolf, aute cronut mollit twee typewriter. Tofu nulla listicle, viral Austin.
+          <% if @user.bio.nil? %>
+            No bio.
+          <% else %>
+            <%= @user.bio %>
+          <% end %>
         </p>
       </div>
     </div>
@@ -69,14 +73,12 @@
 
 
   <div class="col-xs-12 col-sm-9 user-page-body">
-
     <div class = "stream" >
       <%= render partial: "streams/stream_main", locals: {streams: @streams, nest_count: 0} %>
     </div>
     <div id = "infinite-scrolling" >
       <%= will_paginate @streams %>
     </div>
-
   </div>
 
   <div class="col-sm-3 user-page-sidebar">
@@ -92,8 +94,18 @@
       </div>
     </div>
     <div class="user-sidebar-bio">
-      <p class="text-on-white">Vero tempor PBR excepteur proident. Literally street art Banksy wolf, aute cronut mollit twee typewriter. Tofu nulla listicle, viral Austin.</p>
+      <p class="text-on-white">
+        <% if @user.bio.nil? %>
+          No bio.
+        <% else %>
+          <%= @user.bio %>
+        <% end %>
+      </p>
     </div>
+
+    <%= render partial: 'shared/popular_stocks' %>
+
+  </div>
 
 
     <div class="user-sidebar-stats">

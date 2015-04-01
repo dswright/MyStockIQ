@@ -69,15 +69,8 @@ namespace :scraper do
   end
 end
 
-namespace :predictions do
-  #this no longer seems necessary...
-  task :prediction_start => :environment do
-    time_now = Time.zone.now
-    predictions = Prediction.where("start_time < ?", time_now).where(start_price_verified:false)
-    predictions.each do |prediction|
-      PredictionstartWorker.perform_async(prediction.id)
-    end
-  end
+
+namespace :ten_minute_updates do
 
   task :prediction_end => :environment do
     predictions = Prediction.where(start_price_verified:false)
@@ -98,6 +91,7 @@ namespace :predictions do
     end
   end
 end
+
 
 namespace :updates do
   task :update_popularity => :environment do

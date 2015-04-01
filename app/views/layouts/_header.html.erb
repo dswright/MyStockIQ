@@ -13,7 +13,8 @@
       <div class="nav-items-icons pull-right">
         <%= link_to "/settings/", class: "nav-settings pull-right" do %>
           <i class="fa fa-cog"></i>
-        <% end%>
+        <% end %>
+        <!--
         <a class="nav-heart pull-right">
           <i class="fa fa-heart"></i>
         </a>
@@ -23,6 +24,7 @@
         <a class="nav-predict pull-right">
           <i class="fa fa-line-chart"></i>
         </a>
+        -->
       </div>
       <div class="nav-items-user pull-right">
         <%= link_to "/users/#{current_user.username}/" do %>
@@ -39,23 +41,23 @@
 
 <section id="nav-dropdown">
   <div class="constrainer">
-    <a class="nav-dropdown-item clearfix">
+    <%= link_to "/feed/", {class: "nav-dropdown-item clearfix"} do %>
       <div class="nav-dropdown-icon pull-left">
         <i class="fa fa-list"></i>
       </div>
       <div class="nav-dropdown-label pull-left">
         <p>Feed</p>
       </div>
-    </a>
-    <a class="nav-dropdown-item clearfix">
+    <% end %>
+    <%= link_to "/users/#{current_user.username}/", {class: "nav-dropdown-item clearfix"} do %>
       <div class="nav-dropdown-img pull-left">
-        <img src="img/del.jpg">
+        <%= image_tag current_user.image %>
       </div>
       <div class="nav-dropdown-label pull-left">
-        <%= link_to "Hello", "#{users_path}/current_user.username/", id: "current_user.username" %>   
+        <p><%= current_user.username %></p>   
       </div>
-    </a>
-    <a class="nav-dropdown-item clearfix">
+    <% end %>
+    <!-- <a class="nav-dropdown-item clearfix">
       <div class="nav-dropdown-icon pull-left">
         <i class="fa fa-line-chart"></i>
       </div>
@@ -79,14 +81,15 @@
         <p>Favorites</p>
       </div>
     </a>
-    <a class="nav-dropdown-item nav-dropdown-item-last clearfix">
+    -->
+    <%= link_to "/settings/", class: "nav-dropdown-item nav-dropdown-item-last clearfix" do %>
       <div class="nav-dropdown-icon pull-left">
         <i class="fa fa-cog"></i>
       </div>
       <div class="nav-dropdown-label pull-left">
         <p>Settings</p>
       </div>
-    </a>
+    <% end %>
   </div>
 </section>
 
