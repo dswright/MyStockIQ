@@ -1,0 +1,43 @@
+/*USER SIDEBAR STATS BOX***************************************************/
+
+.user-sidebar-stats-header {
+	height: 39px;
+	color: #808080;
+	font-size: 19px;
+	font-weight: 300;
+	margin-left: 10px;
+	margin-right: 10px;
+	padding-top: 9px;
+	border-bottom: 1px solid rgba(0,0,0,.07);
+}
+
+.user-sidebar-image-points i {
+	font-size: 18px;
+	margin-top: 2px;
+}
+
+.user-sidebar-stats-box {
+	border: 1px solid rgba(0,0,0,0.07);
+  	background-color: #fff;
+	font-size: 11px;
+	margin-top: 20px;
+}
+
+.user-sidebar-stats-item {
+	display: block;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	color: #808080;
+
+  -webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+
+}
+
+.user-sidebar-stats-box a:hover {
+	background-color: rgba(0,0,0,.07);
+}
