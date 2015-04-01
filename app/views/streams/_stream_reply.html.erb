@@ -2,11 +2,12 @@
 <div class="stream-comment-item">
   <div class="stream-comment-col col-xs-11">
     <div class="stream-comments-img pull-left">
-      <a href="#"><%= image_tag reply.user.image %></a>
+      <%= link_to image_tag(reply.user.image), "/users/#{reply.user.username}/" %>
     </div>
     <div class="stream-comments-txt pull-left">
       <p>
-        <a class="stream-comments-txt-username"><%= reply.user.username %></a>:&nbsp;<%= reply.content %>
+        <%= link_to reply.user.username, "users/#{reply.user.username}/", class: "stream-comments-txt-username" %>:&nbsp;
+        <%= reply.content %>
       </p>
       <div class="stream-comments-txt-footer clearfix">
         <i class="fa fa-clock-o">&nbsp;<%= distance_of_time_in_words(reply.created_at, Time.now) %> ago</i>

@@ -7,7 +7,7 @@
         <a href="#"><%= image_tag stream.streamable.user.image %></a>
       </div>
       <div class="prediction-item-txt">
-        <a class="prediction-item-username"><%= stream.streamable.user.username %></a>
+        <%= link_to stream.streamable.user.username, "/users/#{stream.streamable.user.username}/", class: "prediction-item-username" %>
         <p class="prediction-item-main-txt">
           <a href ="/predictions/<%= stream.streamable.id %>/">$<%= stream.streamable.stock.ticker_symbol %> Prediction:</a>
           <% percent_change = ((stream.streamable.prediction_end_price / stream.streamable.start_price-1) * 100).round(0) %>
