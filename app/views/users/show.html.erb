@@ -73,14 +73,12 @@
 
 
   <div class="col-xs-12 col-sm-9 user-page-body">
-
     <div class = "stream" >
       <%= render partial: "streams/stream_main", locals: {streams: @streams, nest_count: 0} %>
     </div>
     <div id = "infinite-scrolling" >
       <%= will_paginate @streams %>
     </div>
-
   </div>
 
   <div class="col-sm-3 user-page-sidebar">
