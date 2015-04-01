@@ -17,7 +17,7 @@
           <%= stock.ticker_symbol %><span>&nbsp;&nbsp;&nbsp;</span>
         </div>
         <div class="stockpage-sidebar-stocks-number pull-right">
-          <i class="fa fa-users"></i><%= stock.followers.count %>
+          <i class="fa fa-line-chart"></i><%= stock.predictions.where(active:true).count %>
         </div>
       </a>
     <% end %>

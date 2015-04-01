@@ -69,6 +69,7 @@ namespace :scraper do
   end
 end
 
+
 namespace :predictions do
   #this no longer seems necessary...
   task :prediction_start => :environment do
@@ -98,6 +99,7 @@ namespace :predictions do
     end
   end
 end
+
 
 namespace :updates do
   task :update_popularity => :environment do

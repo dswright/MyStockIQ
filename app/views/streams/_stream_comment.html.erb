@@ -10,10 +10,12 @@
         <%= link_to stream.streamable.user.username, "/users/#{stream.streamable.user.username}/", class: "comment-only-item-username" %>
         <p class="comment-only-item-main-txt">
           <%= stream.streamable.content %>
-           </p>
+        </p>
       </div>
       <div class="prediction-footer">
-        <i class="fa fa-clock-o">&nbsp;<%= distance_of_time_in_words(stream.streamable.created_at, Time.now) %> ago</i>
+        <i class="fa fa-clock-o">&nbsp;
+          <%= distance_of_time_in_words(stream.streamable.created_at, Time.now) %> ago
+        </i>
       </div>
     </div>
     <div class="comment-only-item-vote-count col-xs-1" id="likes-Comment-<%= stream.streamable.id %>">
