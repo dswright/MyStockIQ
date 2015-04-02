@@ -69,7 +69,7 @@ namespace :scraper do
   end
 end
 
-namespace :predictions do
+namespace :ten_minute_updates do
   #this no longer seems necessary...
   task :prediction_start => :environment do
     time_now = Time.zone.now
@@ -97,6 +97,10 @@ namespace :predictions do
       PredictionendWorker.perform_async(predictionend.id) #updates the predictionend to verified status.
     end
   end
+
+  task :update_popularity_scores => :environment do
+    Stream.find_each {|stream| stream.update_stream_popularity_scores}
+  end 
 end
 
 namespace :updates do

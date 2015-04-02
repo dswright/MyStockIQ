@@ -20,8 +20,8 @@ require 'scraper'
 
         @streams = @stock.streams.by_popularity_score.paginate(page: params[:page], per_page: 10)
 
-        # unless @streams == nil
-        #   @streams.each {|stream| stream.update_stream_popularity_scores}
+        unless @streams == nil
+          # @streams.each {|stream| stream.update_stream_popularity_scores}
 
         #   #this line makes sorts the stream by popularity score.
         #   @streams = @streams.sort_by {|stream| stream.streamable.popularity.score}
@@ -33,7 +33,7 @@ require 'scraper'
         #   #will_paginate in view automatically generates params[:page]
         #   @streams = @streams.paginate(page: params[:page], per_page: 5)
         #   #@stream_hash_array = Stream.stream_maker(@streams, 0)
-        # end
+         end
 
       format.html {
         

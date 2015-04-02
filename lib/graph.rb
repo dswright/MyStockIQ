@@ -36,6 +36,7 @@ class Graph
   end
 
 
+
   def predictionend #used for the prediction details graph.
     if @prediction.predictionend
       return [[@prediction.start_time.utc_time_int.graph_time_int, @prediction.start_price], [@prediction.predictionend.actual_end_time.utc_time_int.graph_time_int, @prediction.predictionend.actual_end_price]]
@@ -43,6 +44,7 @@ class Graph
       return [[nil, nil]]
     end
   end
+
 
   def my_prediction
     my_prediction = []

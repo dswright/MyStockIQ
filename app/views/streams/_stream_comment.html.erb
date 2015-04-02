@@ -9,7 +9,11 @@
           <div class="comment-only-item-txt">
             <a href="#" class="comment-only-item-username"><%= stream.streamable.user.username %></a>
             <p class="comment-only-item-main-txt">
-              <%= stream.streamable.content %>
+              <% unless stream.streamable.tag == nil %>
+                <%= render html: stream.streamable.tag.content.html_safe %>
+              <%else %>
+                <%= stream.streamable.content %>
+              <% end %>
                </p>
           </div>
         </div>
