@@ -33,7 +33,7 @@
     </div>
 
     <!-- load partials for each reply -->
-    <% stream.streamable.replies.each do |reply| %>
+    <% stream.streamable.replies.reorder('created_at asc').each do |reply| %>
       <%= render partial: "streams/stream_reply", locals: {reply: reply}  %>
     <% end %>
 

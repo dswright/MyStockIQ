@@ -94,7 +94,7 @@
           </div>
 
           <!-- load partials for each reply -->
-          <% @prediction.replies.each do |reply| %>
+          <% @prediction.replies.reorder('created_at asc').each do |reply| %>
             <%= render partial: "streams/stream_reply", locals: {reply: reply}  %>
           <% end %>
           
