@@ -19,3 +19,6 @@ config/database.yml
 /tmp
 
 latest.dump
+
+# Ignore application configuration
+/config/application.yml
