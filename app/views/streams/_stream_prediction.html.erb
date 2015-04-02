@@ -4,17 +4,21 @@
   <div class="vote-count-container clearfix">
     <div class="prediction-item-body col-xs-11 clearfix">
       <div class="col-xs-2 prediction-item-img">
-        <a href="#"><%= image_tag current_user.image %></a>
+        <%= link_to image_tag(stream.streamable.user.image), "/users/#{stream.streamable.user.username}/" %>
       </div>
       <div class="prediction-item-txt">
-        <a class="prediction-item-username"><%= stream.streamable.user.username %></a>
-        <p class="prediction-item-main-txt"><span class="filler"><%= stream.streamable.stock.ticker_symbol %></span> will increase to $<%= stream.streamable.prediction_end_price %>  in 2 weeks</p> 
+        <%= link_to stream.streamable.user.username, "/users/#{stream.streamable.user.username}/", class: "prediction-item-username" %>
+        <p class="prediction-item-main-txt">
+          <a href ="/predictions/<%= stream.streamable.id %>/">$<%= stream.streamable.stock.ticker_symbol %> Prediction:</a>
+          <% percent_change = ((stream.streamable.prediction_end_price / stream.streamable.start_price-1) * 100).round(0) %>
+         $<%= stream.streamable.prediction_end_price %> (<%= percent_change %>%) in <%=distance_of_time_in_words(stream.streamable.start_time, stream.streamable.prediction_end_time) %>
+        </p> 
       </div>
       <div class="prediction-item-tweet">
         <p><%= stream.streamable.prediction_comment %></p>
       </div>
       <div class="prediction-footer">
-        <i class="fa fa-clock-o">&nbsp;<%= distance_of_time_in_words(stream.streamable.created_at, Time.now) %> ago</i><span>+20 points</span>
+        <i class="fa fa-clock-o">&nbsp;<%= distance_of_time_in_words(stream.streamable.created_at, Time.now) %> ago</i><span><%= stream.streamable.score %> points</span>
       </div>
     </div>
     <div class="prediction-item-vote-count col-xs-1" id="likes-Prediction-<%= stream.streamable.id %>">
@@ -22,7 +26,7 @@
     </div>
   </div>
   
-  <div class="stream-item-comments">
+  <div class="stream-item-comments" id="new-reply-container">
     
     <!-- load this only if there are replies -->
     <div class="stream-comment-header">

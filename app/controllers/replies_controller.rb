@@ -4,11 +4,6 @@ class RepliesController < ApplicationController
 		#Obtain user session information from Session Helper function 'current_user'.
 		@user = current_user
 
-		#Obtain parent information from stream_reply_form
-		@parent_stream = Stream.find(params[:stream_id])
-		
-
-
 		#build the reply object for input to the db.
 		@reply = @user.replies.build(reply_params)
 		@reply.repliable_id = params[:repliable_id]

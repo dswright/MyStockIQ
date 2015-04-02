@@ -23,13 +23,12 @@ class SessionsController < ApplicationController
       remember @user #this should update the string in the database and
       # place a cookie on the users computer that remembers them.
 
-
-      flash[:success] = "Welcome to Stock Hero" 
       redirect_to user_profile
 
     else
-      flash.now[:danger] = 'Invalid email/password combination' # Not quite right!
-      render 'sessions/new'
+      @disable_nav = true
+      session[:errors] = ["Username or password is incorrect."]
+      redirect_to "/login"
     end
   end
 

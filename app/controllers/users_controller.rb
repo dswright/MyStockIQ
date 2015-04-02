@@ -28,14 +28,6 @@ class UsersController < ApplicationController
 
     @comment_landing_page = "users:#{@user.username}"
     @stream_comment_landing_page = "users:#{@user.username}"
-    
-
-    #creates empty comment object to plug into the form.
-    #right now the comment takes: id, content, ticker_symbol, stream_id, created_at, updated_at. Stream id should be implicit..
-    @comment = Comment.new 
-    @like = Like.new
-
-    #@comment = current_user.comments.build  #this assumes an association between comments and current user. Which does not exist.
 
     respond_to do |format|
       format.html
@@ -59,7 +51,9 @@ class UsersController < ApplicationController
   		redirect_to "/welcome"
 
   	else
-  		redirect_to '/signup'
+      @disable_nav = true
+      session[:errors] = @user.errors.full_messages
+  		redirect_to "/signup" #we're in the same template, so it assumes this controller, and this is the method name to go to.
   	end
 	end
 

@@ -140,19 +140,19 @@ body {
 }
 
 .btn-file input[type=file] {
+  margin-top: -20px;
   position: absolute;
   top: 0;
   right: 0;
   min-width: 100%;
   min-height: 100%;
-  font-size: 100px;
+  font-size: 12px;
   text-align: right;
   filter: alpha(opacity=0);
   opacity: 0;
   outline: none;
   background: white;
   cursor: inherit;
-  display: block;
   color: #7cb5ec;
   font-weight: 300;
   border: 1px solid #7cb5ec;
@@ -169,10 +169,10 @@ body {
 }
 
 .btn-custom {
-  padding: 5px 30px;
+  padding: 2px 20px;
   color: #B3B3B3;
   font-size: 11px;
-  font-weight: 300px;
+  font-weight: 300;
   background-color: #fff;
   border: solid 1px #C7C7C7;
   border-radius: 3px;

@@ -15,8 +15,54 @@
 	width: 100%;
 }
 
+
+.user-top-box-image-overlay {
+	position: relative;
+	height: 39px;
+	background: rgba(0,0,0,0.7);
+	margin-top: -39px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 3px;
+}
+
+.user-top-box-image-overlay p {
+	margin-top: 4px;
+	color: #E6E6E6;
+	font-size: 12px;
+}
+
+.follow-btn-div input {
+	border: solid 1px rgba(255,255,255,.85);;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	font-size: 10px;
+	color: rgba(255,255,255,.85);
+	text-decoration: none;
+	margin: auto;
+	padding-left: 11px;
+	padding-right: 11px;
+	background: transparent;
+  -webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+}
+
+.user-sidebar-follow input:hover {
+	border: solid 1px rgba(255,255,255,1);
+	color: rgba(255,255,255,1);
+}
+
+
+
+
+
+
+
 .user-top-box-bio {
 	border: 1px solid rgba(0,0,0,.07);
+	background-color: #fff;
 	margin-left: 15px;
 	padding-left: 15px;
 	padding-right: 15px;
@@ -24,9 +70,8 @@
 	padding-bottom: 10px;
 }
 
-.user-top-box-bio p {
+.user-top-box-bio {
 	font-size: 12px;
-	font-family: 'Lato';
 	line-height: 18px;
 	color: #808080;
 	margin-top: 0px;
@@ -35,6 +80,7 @@
 
 .user-top-box-stats-box {
 	margin-top: 20px;
+	background-color: #fff;
 	border: 1px solid rgba(0,0,0,.07);
 }
 
@@ -44,15 +90,21 @@
 }
 
 .user-top-stats-header {
-	height: 39px;
-	color: #7cb5ec;
-	font-size: 11px;
+	height: 47px;
+	color: #808080;
+	font-size: 18px;
 	font-weight: 300;
 	margin-left: 10px;
 	margin-right: 10px;
-	padding-top: 13px;
+	padding-top: 14px;
 	border-bottom: 1px solid rgba(0,0,0,.07);
 }
+
+.user-top-stats-header i {
+	font-size: 16px;
+	color: #C7C7C7;
+}
+
 
 .user-top-stats-item {
 	padding-left: 10px;

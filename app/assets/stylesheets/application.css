@@ -32,90 +32,17 @@ color palette
 */
 
 
-
-@font-face {
-  font-family: 'Lato';
-  font-style: normal;
-  font-weight: 900;
-
-  src: url('lato-black.eot');
-  src: url('lato-black.eot?#iefix') format('embedded-opentype'), 
-       url('lato-black.woff') format('woff'), 
-       url('lato-black.ttf') format('truetype'), 
-       url('lato-black.svg#latoblack') format('svg');
-}
-
-@font-face {
-  font-family: 'Lato';
-  font-style: normal;
-  font-weight: bold;
-
-  src: url('lato-bold.eot');
-  src: url('lato-bold.eot?#iefix') format('embedded-opentype'), 
-       url('lato-bold.woff') format('woff'), 
-       url('lato-bold.ttf') format('truetype'), 
-       url('lato-bold.svg#latobold') format('svg');
-}
-
-@font-face {
-  font-family: 'Lato';
-  font-style: italic;
-  font-weight: bold;
-
-  src: url('lato-bolditalic.eot');
-  src: url('lato-bolditalic.eot?#iefix') format('embedded-opentype'), 
-       url('lato-bolditalic.woff') format('woff'), 
-       url('lato-bolditalic.ttf') format('truetype'), 
-       url('lato-bolditalic.svg#latobold-italic') format('svg');
-}
-
-/* this one */
-@font-face {
-  font-family: 'Lato';
-  font-style: italic;
-  font-weight: normal;
-
-  src: url('lato-italic.eot');
-  src: url('lato-italic.eot?#iefix') format('embedded-opentype'), 
-       url('lato-italic.woff') format('woff'), 
-       url('lato-italic.ttf') format('truetype'), 
-       url('lato-italic.svg#latoitalic') format('svg');
-}
-
-@font-face {
-  font-family: 'Lato';
-  font-style: normal;
-  font-weight: 300;
-
-  src: url('lato-light.eot');
-  src: url('lato-light.eot?#iefix') format('embedded-opentype'), 
-       url('lato-light.woff') format('woff'), 
-       url('lato-light.ttf') format('truetype'), 
-       url('lato-light.svg#latolight') format('svg');
-}
-
-@font-face {
-  font-family: 'Lato';
-  font-style: normal;
-  font-weight: normal;
-
-  src: url('lato-regular.eot');
-  src: url('lato-regular.eot?#iefix') format('embedded-opentype'), 
-       url('lato-regular.woff') format('woff'), 
-       url('lato-regular.ttf') format('truetype'), 
-       url('lato-regular.svg#latoregular') format('svg');
-}
-
-
 /*limited reset*/
 html, body, div, section, article, aside, header, hgroup, footer, nav, h1, h2, h3, h4, h5, h6, blockquote, address, time, span, em, strong, img, ol, ul, li, figure, canvas, video, th, td, tr {
   margin: 0;
   padding: 0;
   border: 0;
-  vertical-align:baseline;
+  vertical-align: baseline;
   font: inherit;
+  font-family: 'Lato', sans-serif;
   font-weight: 300;
 }
+
 
 body {
   background-color: #FAFAFA;
@@ -125,8 +52,6 @@ body {
 .clearfix {
   clear: both;
 }
-
-
 
 
 .red-gradient {
@@ -160,6 +85,10 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2d2b29', end
   padding-left: 10px;
   padding-right: 10px;
   font-family: 'Lato', sans-serif;
+}
+
+#infinite-scrolling {
+  display: none;
 }
 
 .nav-constrainer {
