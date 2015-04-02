@@ -43,14 +43,18 @@
           <input class="update-username-field" id="signup-form-field" placeholder="dmnstr12"> -->
           <%= text_field_tag :email, current_user.email, placeholder:"Email address", id: "signup-form-field" %>
           <%= text_field_tag :bio, current_user.bio, placeholder:"Bio", id: "signup-form-field" %>
-          
-	        <p class="settings-prof-img-txt">Update profile image:</p>
+        
 
-	        <span class="btn btn-custom btn-file">
-	          Browse <%= file_field_tag :image, class: "custom-file-input" %>
-	        </span>
-	        <span id="signup-label"></span>
+        <div class="img-upload-div clearfix">
+          <p class="signup-signin-link">Select a profile image:</p>
+
+          <div class="btn-custom btn-file pull-left">
+            Browse <%= file_field_tag :image, class: "custom-file-input" %>
+          </div>
+          <div id="signup-label" class="pull-left"></div>
         </div>
+
+ 			</div>
 
         <p class="settings-update-privacy">StockIQ will never share your information with third parties. See our <a href="#">Privacy Policy</a> for further details.</p>
 
