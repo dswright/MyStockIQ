@@ -1,55 +1,43 @@
+/*USER SIDEBAR STATS BOX***************************************************/
 
-.stockpage-sidebar-stocks-header {
-	color: #808080;
+.user-sidebar-stats-header {
 	height: 47px;
+	color: #808080;
 	font-size: 19px;
+	font-weight: 300;
 	margin-left: 10px;
 	margin-right: 10px;
 	padding-top: 14px;
 	border-bottom: 1px solid rgba(0,0,0,.07);
 }
 
-.stockpage-sidebar-open-points i {
-	font-size: 15px;
-	color: #C7C7C7;
+.user-sidebar-image-points i {
+	font-size: 16px;
+	margin-top: 4px;
 }
 
-.stockpage-sidebar-stocks-box {
+.user-sidebar-stats-box {
 	border: 1px solid rgba(0,0,0,0.07);
   	background-color: #fff;
 	font-size: 11px;
-	font-weight: 300;
 	margin-top: 20px;
 }
 
-.stockpage-sidebar-stocks-item {
-	cursor: pointer;
+.user-sidebar-stats-item {
 	display: block;
 	padding-left: 10px;
 	padding-right: 10px;
 	padding-top: 15px;
 	padding-bottom: 15px;
 	color: #808080;
-	text-transform: uppercase;
 
   -webkit-transition: 150ms ease-in;
   -moz-transition: 150ms ease-in;
   -o-transition: 150ms ease-in;
   transition: 150ms ease-in;
-}
-
-.stockpage-sidebar-stocks-item span {
-	color: #C7C7C7;
-}
-
-.stockpage-sidebar-stocks-number i {
-	margin-right: 7px;
-	font-size: 9px;
-}
-
-.stockpage-sidebar-stocks-item:hover {
-	background-color: #FAFAFA;
-	color: #808080;
 
 }
 
+.user-sidebar-stats-box a:hover {
+	background-color: rgba(0,0,0,.07);
+}
