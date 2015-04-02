@@ -41,18 +41,16 @@
 .stock-name {
 	text-align: center;
 	height: 42px;
-	margin-top: 36px;
+	margin-top: 27px;
 }
 
 .stock-name-center {
 	display: inline-block;
+	margin-top: 9px;
+	margin-bottom: 9px;
 }
 
-
-
 .stock-name-center p a {
-	display: inline-block;
-	margin-right: 6px;
 	font-size: 33px;
 	text-align: center;
 	text-decoration: none;
@@ -67,21 +65,21 @@
 
 .stock-name-center p a:hover {
 	text-decoration: none;
-	color: #7cb5ec;
+	color: rgba(255, 255, 255, 1);
 }
 
 .stockpage-follow-btn {
-	display: inline-block;
 	border: solid 1px rgba(255,255,255,.85);
 	border-radius: 2px;
 	padding-top: 2px;
 	padding-bottom: 2px;
 	font-size: 10px;
+	font-family: 'Lato';
 	background-color: transparent;
 	color: rgba(255,255,255,.90);
 	text-decoration: none;
 	margin-top: 0px;
-	margin-left: 30px;
+	margin-left: 10px;
 	margin-bottom: 21px;
 	padding-left: 11px;
 	padding-right: 11px;
@@ -94,8 +92,8 @@
 }
 
 .stockpage-follow-btn:hover {
-	border: solid 1px #7cb5ec;
-	color: #7cb5ec;
+	border: solid 1px rgba(255,255,255,1);
+	color: rgba(255,255,255,1);
 }
 
 .follow-btn-div input:focus {
@@ -111,11 +109,13 @@
 .prediction-name {
 	text-align: center;
 	height: 42px;
-	margin-top: 36px;
+	margin-top: 27px;
 }
 
 .prediction-name-center {
 	display: inline-block;
+	margin-top: 9px;
+	margin-bottom: 9px
 }
 
 .prediction-name-title-name {
@@ -125,7 +125,7 @@
 .prediction-name {
 	text-align: center;
 	height: 42px;
-	margin-top: 36px;
+	margin-top: 27px;
 }
 
 .prediction-name-center {
@@ -154,7 +154,7 @@
 }
 
 .prediction-name-title a:hover {
-	color: #7cb5ec;
+	color: rgba(255, 255, 255, 1);
 }
 
 
@@ -180,13 +180,13 @@
 }
 
 .prediction-name-vote-count a:hover {
-	color: #7cb5ec;
+	color: rgba(255,255,255,1);
 }
 
 .prediction-name-vote-count p {
 	text-align: center;
 	color: #fff;
-	line-height: 3px;
+	line-height: 10px;
 	font-size: 18px;
 	font-weight: 300;
 	margin-bottom: 0px;
@@ -213,16 +213,16 @@
 
 .tkr {
 	font-size: 69px;
-	line-height: 6px;
+	line-height: 21px;
 	font-weight: 600;
 	color: rgba(255, 255, 255, .09);
-	margin-top: 39px;
+	margin-top: 20px;
 	margin-bottom: 0px;
 	text-transform: uppercase;
 }
 
 .graph-div {
-	margin-top: -36px;
+	margin-top: -45px;
 }
 
 
@@ -231,7 +231,7 @@
 
 
 .graph-full-timeframes {
-	margin-top: 5px;
+	margin-top: 15px;
 	margin-bottom: 15px;
 	width: 100%;
 	overflow: hidden;
@@ -303,15 +303,13 @@
 .graph-price {
 	font-size: 49px;
 	color: #fff;
-	margin-bottom: 0px;
-	line-height: 53px;
 }
 
 .graph-label {
-	font-size: 18px;
+	font-size: 12px;
 	color: rgba(255, 255, 255, 0.39);
 	text-transform: uppercase;
-	margin-top: 0px;
+	margin-top: 5px
 }
 
 
@@ -332,7 +330,7 @@
 .graph-mobile-predict-button-div a {
 	display: block;
 	border: solid 1px rgba(255, 255, 255, 0.80);
-	border-radius: 3px;
+	border-radius: 0px;
 	padding-bottom: 15px;
 	padding-top: 15px;
 	color: rgba(255, 255, 255, 0.80);
@@ -345,8 +343,8 @@
 }
 
 .graph-mobile-predict-button-div a:hover {
-	border: solid 1px #7cb5ec;
-	color: #7cb5ec;
+	border: solid 1px rgba(255, 255, 255, 1);
+	color: rgba(255, 255, 255, 1);
 }
 
 
@@ -387,7 +385,7 @@
 .graph-mobile-close-prediction-button-mobile a {
 	display: block;
 	border: solid 1px rgba(255, 255, 255, 0.80);
-	border-radius: 3px;
+	border-radius: 0px;
 	padding-bottom: 15px;
 	padding-top: 15px;
 	color: rgba(255, 255, 255, 0.80);
@@ -401,8 +399,8 @@
 }
 
 .graph-mobile-close-prediction-button-mobile a:hover {
-	border: solid 1px #7cb5ec;
-	color: #7cb5ec;
+	border: solid 1px rgba(255, 255, 255, 1);
+	color: rgba(255, 255, 255, 1);
 }
 
 
@@ -456,11 +454,11 @@
 }
 
 .graph-background-div {
-	margin-top: 30px;
+	margin-top: 33px;
 }
 
 .graph-div {
-	margin-top: -48px;
+	margin-top: -60px;
 }
 
 
@@ -476,6 +474,7 @@
 	width: 9%;
 	padding-left: 0px;
 	padding-right: 15px;
+	height: 22px;
 }
 
 
@@ -494,28 +493,25 @@
 
 .graph-prediction-stats {
 	text-align: center;
-	margin-top: 10px;
+	margin-top: 0px;
 	padding-left: 0px;
 	padding-right: 0px;
 }
 
 .graph-price {
-	font-size: 36px;
-	line-height: 18px;
+	font-size: 39px;
 	color: #fff;
-	margin-top: 5px;
-	line-height: 36px;
 }
 
 .graph-label {
 	font-size: 12px;
 	color: rgba(255, 255, 255, 0.39);
 	text-transform: uppercase;
-	margin-bottom: 0px;
+	margin-top: 5px
 }
 
 .graph-prediction-stats-2 {
-	margin-top: 7px;
+	margin-top: 20px;
 }
 
 
@@ -559,10 +555,6 @@
 	margin-top: -66px;
 }
 
-.graph-prediction-stats-2 {
-	margin-top: 24px;
-}
-
 
 
 /*------------ GRAPH STATS ASIDE -----------*/
@@ -580,17 +572,17 @@
 .graph-price {
 	font-size: 60px;
 	color: #fff;
-	line-height: 39px;
-	margin-top: 6px;
 }
 
 .graph-label {
-	font-size: 16px;
+	font-size: 15px;
 	color: rgba(255, 255, 255, 0.39);
 	text-transform: uppercase;
-	margin-top: 7px;
-	margin-bottom: 0px;
+	margin-top: 3px
 }
+
+
+
 
 
 .graph-full-timeframes {

@@ -3,31 +3,27 @@
   <div class="close-prediction-vote-count-container clearfix">
     <div class="close-prediction-item-body col-xs-11 clearfix">
       <div class="col-xs-2 close-prediction-item-img">
-        <%= link_to image_tag(stream.streamable.prediction.user.image), "/users/#{stream.streamable.prediction.user.username}/" %>
+        <a href="#"><%= image_tag current_user.image %></a>
       </div>
       <div class="close-prediction-item-txt">
-        <%= link_to stream.streamable.prediction.user.username, "/users/#{stream.streamable.prediction.user.username}/", class: "close-prediction-item-username" %>
-        <p class="close-prediction-item-main-txt">
-          <a href="/predictions/<%= stream.streamable.prediction.id %>/">
-            $<%= stream.streamable.prediction.stock.ticker_symbol %> Prediction
-          </a>
-          Closed
-        </p>
+        <a class="close-prediction-item-username">delmnstr12</a>
+        <p class="close-prediction-item-main-txt"><span class="filler">Predicts</span> APPL will be +30 <span class="filler">points</span> in 2 weeks</p> 
       </div>
       <div class="close-prediction-item-closing-tweet">
-        <p>
-          <%= stream.streamable.comment %>
-        </p>
+        <p><span class="closing-tweet">Closing Comment:</span> Do ennui laboris, meditation dolor occaecat organic eu Truffaut master cleanse <a href="#">$APPL</a> anim pickled ad quis Portland. <a href="#">@dillshmill</a> deep v anim id, fixie adipisicing dolor eiusmod non PBR Brooklyn Portland esse Thundercats <a href="#">#drake</a><a href="#">#6god</a> <a href="#">#ohveeohhh</a></p>
       </div>
       <div class="close-prediction-footer">
-        <i class="fa fa-clock-o">&nbsp;<%= distance_of_time_in_words(stream.streamable.created_at, Time.now) %> ago</i><span><%= stream.streamable.prediction.score %> points</span>
+        <i class="fa fa-clock-o">&nbsp;<%= distance_of_time_in_words(stream.streamable.created_at, Time.now) %> ago</i><span>+20 points</span>
+      </div>
+      <div class="close-prediction-item-tweet">
+        <p>Do ennui laboris, meditation dolor occaecat organic eu Truffaut master cleanse <a href="#">$APPL</a> anim pickled ad quis Portland. <a href="#">@dillshmill</a> deep v anim id, fixie adipisicing dolor eiusmod non PBR Brooklyn Portland esse Thundercats <a href="#">#drake</a><a href="#">#6god</a> <a href="#">#ohveeohhh</a></p>
       </div>
     </div>
     <div class="close-prediction-item-vote-count col-xs-1" id="likes-Predictionend-<%= stream.streamable.id %>">
       <%= render partial: "streams/stream_like", locals: {likable_type:stream.streamable.class.name, likable_id:stream.streamable.id} %>
     </div>
   </div>
-  <div class="stream-item-comments" id="new-reply-container">
+  <div class="stream-item-comments">
     <div class="stream-comment-header">
       <p><%= stream.streamable.replies.count %> replies</p>
     </div>

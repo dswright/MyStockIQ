@@ -10,14 +10,6 @@
   </div>
 </section>
 
-<% if session[:errors] %>
-  <div class="error-box">
-  <% session[:errors].each do |error_message| %>
-    <div><%= error_message %></div>
-  <% end %>
-<% end %>
-<% session.delete :errors %>
-
 <%= form_for(:user, url: users_path, :multipart => true) do |f| %>
   <div class="constrainer">
     <p class="signup-title">What's your Stock IQ?</p>
@@ -50,9 +42,10 @@
         <p class="signup-signin-link">Select a profile image:</p>
 
         <span class="btn btn-custom btn-file">
-          Browse <%= f.file_field :image, class: "custom-file-input" %>
+            Browse <%= f.file_field :image, class: "custom-file-input" %>
         </span>
         <span id="signup-label"></span>
+
 
 
 

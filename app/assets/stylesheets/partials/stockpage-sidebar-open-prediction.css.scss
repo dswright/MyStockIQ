@@ -6,13 +6,13 @@
 }
 
 .stockpage-sidebar-open-header {
-	height: 47px;
-	color: #808080;
-	font-size: 19px;
+	height: 39px;
+	color: #7cb5ec;
+	font-size: 11px;
 	font-weight: 300;
 	padding-left: 0px;
 	padding-right: 0px;
-	padding-top: 14px;
+	padding-top: 13px;
 	border-bottom: 1px solid rgba(0,0,0,.07);
 }
 
@@ -91,28 +91,28 @@
 	font-size: 11px;
 	font-weight: 300;
 	width: 100%;
-	background-color: #FFF;
+	background-color:#FFF;
 
 	-webkit-transition: 150ms ease-in;
-    -moz-transition: 150ms ease-in;
-    -o-transition: 150ms ease-in;
-    transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
 }
 
 .sidebar-close-button input:hover {
-	border: solid 1px #7cb5ec;
-	color: #7cb5ec;
+	border: solid 1px #808080;
+	color: #808080;
 }
 
 
 .stockpage-sidebar-comment-header {
-	height: 47px;
-	color: #808080;
-	font-size: 18px;
+	height: 39px;
+	color: #7cb5ec;
+	font-size: 11px;
 	font-weight: 300;
 	padding-left: 0px;
 	padding-right: 0px;
-	padding-top: 14px;
+	padding-top: 13px;
 	border-bottom: 1px solid rgba(0,0,0,.07);
 }
 
@@ -126,11 +126,6 @@
 	padding-right: 10px;
 	padding-top: 0px;
 	padding-bottom: 15px;
-}
-
-.stockpage-sidebar-comment-box i {
-	font-size: 15px;
-	color: #C7C7C7;
 }
 
 .stockpage-sidebar-comment-div {
@@ -181,7 +176,7 @@
 }
 
 .comment-submit-button-div input:hover {
-	border: solid 1px #7cb5ec;
-	color: #7cb5ec;
+	border: solid 1px #808080;
+	color: #808080;
 }
 

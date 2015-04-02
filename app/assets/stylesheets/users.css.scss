@@ -16,10 +16,12 @@
 
 .user-sidebar-image-username {
   color: #E6E6E6;
+  font-size: 11px;
 }
 
 .user-sidebar-image-points {
   color: #E6E6E6;
+  font-size: 11px;
 }
 
 .user-sidebar-bio {
@@ -27,18 +29,19 @@
   padding-left: 10px;
   padding-right: 10px;
   padding-top: 10px;
+  font-size: 11px;
 }
 
 
 @media (min-width: 768px) {
 
 .user-page-body {
-  padding-right: 20px;
+  padding-right: 10px;
 }
 
 .user-page-sidebar {
   display: block;
-  margin-top: -96px;
+  margin-top: -90px;
   height: 500px;
   padding-left: 0px;
   padding-right: 0px;
@@ -51,9 +54,7 @@
 
 @media (min-width: 991px) {
 
-.user-page-sidebar {
-  margin-top: -118px;
-}
+
 
 }
 
