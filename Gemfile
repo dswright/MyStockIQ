@@ -70,7 +70,7 @@ gem 'rails_12factor', '0.0.2'
 gem 'rack-mini-profiler'
 
 #use for uploading user images
-gem 'carrierwave'
+gem 'carrierwave-aws'
 gem 'mini_magick'
 gem 'fog'
 #gem 'rmagick'
