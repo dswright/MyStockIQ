@@ -21,10 +21,15 @@
   <div class="col-xs-12 user-top-box">
     <div class="col-xs-4 user-top-box-img">
       <%= image_tag @user.image %>
+      <div class="user-top-box-image-overlay clearfix">
+        <p class="pull-left"><%= @user.username%></p>
+        <div class="follow-btn-div pull-right">
+          <%= render partial: 'shared/follow_form', locals: {target: @target} %>
+        </div>
+      </div>
     </div>
     <div class="col-xs-8 user-top-box-data">
       <div class="user-top-box-bio">
-        <p>
           <% if @user.bio.nil? %>
             No bio.
           <% else %>
@@ -41,6 +46,14 @@
           </div>
           <div class="user-top-image-points pull-right">
             <i class="fa fa-trophy"></i>
+          </div>
+        </div>
+        <div class="user-top-stats-item clearfix" href="#">
+          <div class="user-top-stats-label pull-left">
+            Points
+          </div>
+          <div class="user-top-stats-number pull-right">
+            needed
           </div>
         </div>
         <div class="user-top-stats-item clearfix" href="#">
