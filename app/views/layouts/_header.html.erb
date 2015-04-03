@@ -1,9 +1,9 @@
 
 <script>
   $(function() {
-    $("#username").autocomplete({
+    $("#dropdown").autocomplete({
       delay: 500,
-      minLength:2,
+      minLength:1,
       source: function(request, response) {
         $.getJSON("/stocks/"+request.term+".json",
         function(data) {
@@ -26,9 +26,13 @@
         // navigate to the selected item's url
         window.open(ui.item.url);
       }
-    });
+    })
 
-    $(".ui-autocomplete").insertAfter($('.autocomplete3'));
+    .autocomplete("instance")._renderItem = function( ul, item ) {
+        return $( "<li>" ).append( "<div class='blah'>" + item.label + "- AAPLE STOCK" + "</div>" ).appendTo( ul );
+    };
+
+    $(".ui-autocomplete").insertAfter($('#autocomplete'));
 
 
   });
@@ -50,7 +54,6 @@
         <%= link_to "/settings/", class: "nav-settings pull-right" do %>
           <i class="fa fa-cog"></i>
         <% end %>
-        <li class="autocomplete3"><input type='text' name='search' class="search-field" id='username' placeholder="Search"/></li>
         <!--
         <a class="nav-heart pull-right">
           <i class="fa fa-heart"></i>
@@ -72,6 +75,11 @@
       <div class="nav-items-feed pull-right">
         <%= link_to "Feed", feed_path, id: "feed" %>
       </div>
+
+      <div class="nav-items-feed pull-right" id="autocomplete">
+        <input type='text' name='search' class="search-field" id='dropdown' placeholder="Search"/>
+      </div>
+
     </div>
   </div>
 </section>
