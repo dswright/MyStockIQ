@@ -17,12 +17,12 @@
 .user-page-banner-overlay {
 	display: block;
 	position: relative;
-	height: 33px;
+	height: 47px;
 	background: rgba(0,0,0,0.7);
-	margin-top: -33px;
-	padding-left: 10px;
-	padding-right: 10px;
-	padding-top: 6px;
+	margin-top: -50px;
+	padding-left: 0px;
+	padding-right: 20px;
+	padding-top: 16px;
 }
 
 .user-page-banner-overlay ul {
@@ -30,7 +30,7 @@
 }
 
 .user-page-banner-overlay ul li:first-child {
-	font-size: 11px;
+	font-size: 15px;
 	color: #E6E6E6;
 }
 
@@ -46,7 +46,7 @@
 .user-page-banner-overlay ul li a {
 	margin-left: 15px;
 	color: #E6E6E6;
-	font-size: 11px;
+	font-size: 15px;
 	text-decoration: underline;
 
 	-webkit-transition: 150ms ease-in;
@@ -61,3 +61,30 @@
 }
 
 }
+
+
+@media (min-width: 981px) {
+
+
+.user-page-banner-overlay ul {
+	display: inline;
+}
+
+.user-page-banner-overlay ul li:first-child {
+	font-size: 17px;
+}
+
+.user-page-banner-overlay ul li a {
+	font-size: 17px;
+}
+
+
+
+
+}
+
+
+
+
+
+

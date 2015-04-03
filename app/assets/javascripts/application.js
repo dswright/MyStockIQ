@@ -21,5 +21,5 @@
 //= require graph
 //= require bootstrap
 //= require pagination
-//= require signup
+//= require image-upload
 //= require nav

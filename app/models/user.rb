@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
 	before_save { self.email = self.email.downcase } #before inserting the data, make sure it is all downcase.
 	before_save { self.username = self.username.downcase } #before inserting the data, make sure it is all downcase.
 	validates :username,  presence: true, length: { maximum: 50 },
-                    format: { with: /\A([a-z]+|)\z/i }, #this doesn't allow numberals. Should fix.
+                    format: { with: /\A[-a-z0-9]+\z/i }, #this doesn't allow numberals. Should fix.
 										uniqueness: {case_sensitive: false}
 	
 	#form validation for the email address
