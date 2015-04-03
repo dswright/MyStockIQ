@@ -69,7 +69,6 @@ namespace :scraper do
   end
 end
 
-<<<<<<< HEAD
 namespace :ten_minute_updates do
   #this no longer seems necessary...
   task :prediction_start => :environment do
@@ -79,10 +78,6 @@ namespace :ten_minute_updates do
       PredictionstartWorker.perform_async(prediction.id)
     end
   end
-=======
-
-namespace :ten_minute_updates do
->>>>>>> origin/master
 
   task :prediction_end => :environment do
     predictions = Prediction.where(start_price_verified:false)
@@ -107,7 +102,6 @@ namespace :ten_minute_updates do
     Stream.find_each {|stream| stream.update_stream_popularity_scores}
   end 
 end
-
 
 namespace :updates do
   task :update_popularity => :environment do

@@ -11,13 +11,6 @@
   </div>
 </section>
 
-<% if session[:errors] %>
-  <div class="error-box">
-  <% session[:errors].each do |error_message| %>
-    <div><%= error_message %></div>
-  <% end %>
-<% end %>
-<% session.delete :errors %>
 
 <%= form_for(:session, url: login_path) do |f| %>
   <div class="constrainer">

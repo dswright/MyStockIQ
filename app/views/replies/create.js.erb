@@ -1,2 +1,2 @@
 
-$("<%= j render partial: 'streams/stream_reply', locals: {reply: @reply} %> ").insertBefore("#stream_<%= j @reply.repliable_type.to_s %>_<%= j @reply.repliable_id.to_s %> > #new-reply-container > #new_reply")
+$("<%= j render partial: 'streams/stream_reply', locals: {reply: @reply} %> ").insertBefore("#stream_<%= j @reply.repliable_type.to_s %>_<%= j @reply.repliable_id.to_s %> > .stream-item-comments > .new_reply")

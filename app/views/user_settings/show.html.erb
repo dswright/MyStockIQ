@@ -16,16 +16,14 @@
 		<div class="col-xs-4 settings-top-box-img">
       <%= image_tag current_user.image_url.to_s %>
 			<div class="settings-top-box-overlay">
-				<p><%= current_user.username %></p>
 				<!-- <a class="btn">Change Image</a> -->
 			</div>
 		</div>
 
 		<div class="col-xs-8 settings-top-box-form">
 			<div class="settings-top-box-bio">
-				<p class="settings-top-box-bio-header">Bio</p>
-				<p class="settings-top-box-bio-txt">
-					<%= current_user.bio %></p>
+				<p class="update-bio-header">Bio</p>
+				<p><%= current_user.bio %></p>
 			</div>
 		</div>
 	</div>
@@ -43,15 +41,11 @@
           <input class="update-username-field" id="signup-form-field" placeholder="dmnstr12"> -->
           <%= text_field_tag :email, current_user.email, placeholder:"Email address", id: "signup-form-field" %>
           <%= text_field_tag :bio, current_user.bio, placeholder:"Bio", id: "signup-form-field" %>
-          
-	        <p class="settings-prof-img-txt">Update profile image:</p>
+          <br /><br />
+          <p>Update profile picture:</p>
+          <%= file_field_tag :image %>
 
-	        <span class="btn btn-custom btn-file">
-	          Browse <%= file_field_tag :image, class: "custom-file-input" %>
-	        </span>
-	        <span id="signup-label"></span>
         </div>
-
         <p class="settings-update-privacy">StockIQ will never share your information with third parties. See our <a href="#">Privacy Policy</a> for further details.</p>
 
         <!-- <p class="settings-notifications-header">Notifications</p>
@@ -80,18 +74,21 @@
       <%= image_tag current_user.image_url.to_s %>
 		</div>
 		<div class="settings-page-sidebar-image-overlay">
-			<p><%= current_user.username %></p>
 			<div class="settings-sidebar-change-img pull-right">
 				<!-- <a class="btn">Change Image</a> -->
 			</div>
 		</div>
 		<div class="settings-sidebar-bio">
 			<p class="settings-sidebar-bio-header">Bio</p>
-			<p class="settings-sidebar-bio-txt"><%= current_user.bio %></p>
+			<p><%= current_user.bio %></p>
 		</div>
 
 
+
 	</div>
+
+
+
 </div>
 
 
