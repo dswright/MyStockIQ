@@ -1,4 +1,11 @@
 
+<style>
+.ui-helper-hidden-accessible {
+  display:none;
+}
+</style>
+
+
 <script>
   $(function() {
     $("#dropdown").autocomplete({
@@ -78,7 +85,7 @@
         <%= link_to "Feed", feed_path, id: "feed" %>
       </div>
 
-      <div class="nav-items-feed pull-right" id="autocomplete">
+      <div class="nav-items-feed" id="autocomplete">
         <input type='text' name='search' class="search-field" id='dropdown' placeholder="Search a ticker"/>
       </div>
 
