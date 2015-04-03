@@ -29,11 +29,10 @@
     })
 
     .autocomplete("instance")._renderItem = function( ul, item ) {
-        return $( "<li>" ).append( "<div class='blah'>" + item.label + "- AAPLE STOCK" + "</div>" ).appendTo( ul );
+        return $( "<li>" ).append( "<a>" + "$" + item.label + " (" + "Apple Inc" + ")" + "</a>" ).appendTo( ul );
     };
 
     $(".ui-autocomplete").insertAfter($('#autocomplete'));
-
 
   });
 </script>
@@ -77,7 +76,7 @@
       </div>
 
       <div class="nav-items-feed pull-right" id="autocomplete">
-        <input type='text' name='search' class="search-field" id='dropdown' placeholder="Search"/>
+        <input type='text' name='search' class="search-field" id='dropdown' placeholder="Search a ticker"/>
       </div>
 
     </div>
@@ -138,40 +137,6 @@
   </div>
 </section>
 
-
-<!-- 
-    <div class = "nav-custom collapse navbar-collapse navHeaderCollapse">
-      <ul class = "nav navbar-nav navbar-right">
-      <li><>Logout</a></li>
-      
-        <li><a href = "/stocks/AAPL/">AAPL</a></li>
-        <li><a href = "/feed/">My Feed</a></li>
-
-
-
-        
-        <li>
-          <div class = "prediction-btn-container">
-            <a href ="#" class="btn nav-prediction-btn" data-toggle="modal" data-target="#basicModal">Make a Prediction</a>
-          </div>
-        </li>
-        <li class="dropdown">
-          <a href = "#" class="dropdown-toggle" data-toggle="dropdown">
-            <i class="fa fa-cog fa-lg"></i><span>Settings</span>
-
-            <ul class ="dropdown-menu">
-              <li><a href = "#">placeholder</a></li>
-              <li><a href = "#">placeholder</a></li>
-              <li><a href = "#">Manage My Account</a></li>
-              <li><a href = "#">Setings</a></li>
-            </ul>
-          </a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</div>
- -->
 
 
 
