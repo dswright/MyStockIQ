@@ -14,10 +14,11 @@
       source: function(request, response) {
         $.getJSON("/stocks/"+request.term+".json",
         function(data) {
-          var array = data.ticker_symbols.map(function(m) {
+          var array = data.stock_data.map(function(m) {
             return {
-              label: m,
-              url: "/stocks/" + m + "/"
+              label: m[0],
+              stock_name: m[1],
+              url: "/stocks/" + m[0] + "/"
             }
           });
           response(array);
@@ -36,7 +37,7 @@
     })
 
     .autocomplete("instance")._renderItem = function( ul, item ) {
-        return $( "<li>" ).append( "<a>" + "$" + item.label + " (" + "Apple Inc" + ")" + "</a>" ).appendTo( ul );
+        return $( "<li>" ).append( "<a>" + "$" + item.label + " (" + item.stock_name + ")" + "</a>" ).appendTo( ul );
     };
 
     $(".ui-autocomplete").insertAfter($('#autocomplete'));

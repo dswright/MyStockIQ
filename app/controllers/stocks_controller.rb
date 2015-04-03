@@ -80,20 +80,17 @@ require 'scraper'
       }
       format.json { #this is the json response to the search bar queries.
 
-        ticker_symbols = []
-        stock_names = []
+        stock_data = []
         Stock.where(active:true).where("UPPER(ticker_symbol) like UPPER(?)", "%#{params[:ticker_symbol]}%").limit(10).each do |stock|
-          ticker_symbols << stock.ticker_symbol
+          stock_data << [stock.ticker_symbol, stock.stock]
         end
 
         render json: { #this is data rendered for the the search bar.
-          :ticker_symbols => ticker_symbols       
+          :stock_data => stock_data
         }
       }
 
-      format.js {
-
-      }
+      format.js {} #used to respond to the infinite scroll
     end
 
 	end
