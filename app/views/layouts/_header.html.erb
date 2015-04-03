@@ -1,4 +1,51 @@
 
+<style>
+.ui-helper-hidden-accessible {
+  display:none;
+}
+</style>
+
+
+<script>
+  $(function() {
+    $("#dropdown").autocomplete({
+      delay: 500,
+      minLength:1,
+      source: function(request, response) {
+        $.getJSON("/stocks/"+request.term+".json",
+        function(data) {
+          var array = data.stock_data.map(function(m) {
+            return {
+              label: m[0],
+              stock_name: m[1],
+              url: "/stocks/" + m[0] + "/"
+            }
+          });
+          response(array);
+        });
+      },
+      focus: function(event, ui) {
+        // prevent autocomplete from updating the textbox
+        event.preventDefault();
+      },
+      select: function(event, ui) {
+        // prevent autocomplete from updating the textbox
+        event.preventDefault();
+        // navigate to the selected item's url
+        window.open(ui.item.url);
+      }
+    })
+
+    .autocomplete("instance")._renderItem = function( ul, item ) {
+        return $( "<li>" ).append( "<a>" + "$" + item.label + " (" + item.stock_name + ")" + "</a>" ).appendTo( ul );
+    };
+
+    $(".ui-autocomplete").insertAfter($('#autocomplete'));
+
+  });
+</script>
+
+
 <section class="nav-singed-in">
   <div class="nav-constrainer">
     <div class="nav-logo pull-left">
@@ -26,6 +73,9 @@
         </a>
         -->
       </div>
+      <div class="nav-items-logout pull-right">
+        <%= link_to "Logout", logout_path %>
+      </div>
       <div class="nav-items-user pull-right">
         <%= link_to "/users/#{current_user.username}/" do %>
           <%= image_tag current_user.image %>
@@ -35,6 +85,11 @@
       <div class="nav-items-feed pull-right">
         <%= link_to "Feed", feed_path, id: "feed" %>
       </div>
+
+      <div class="nav-items-feed" id="autocomplete">
+        <input type='text' name='search' class="search-field" id='dropdown' placeholder="Search a ticker"/>
+      </div>
+
     </div>
   </div>
 </section>
@@ -82,7 +137,7 @@
       </div>
     </a>
     -->
-    <%= link_to "/settings/", class: "nav-dropdown-item nav-dropdown-item-last clearfix" do %>
+    <%= link_to "/settings/", class: "nav-dropdown-item clearfix" do %>
       <div class="nav-dropdown-icon pull-left">
         <i class="fa fa-cog"></i>
       </div>
@@ -90,76 +145,17 @@
         <p>Settings</p>
       </div>
     <% end %>
+    <%= link_to "/logout/", {class: "nav-dropdown-item nav-dropdown-item-last clearfix"} do %>
+      <div class="nav-dropdown-icon pull-left">
+        <i class="fa fa-sign-out"></i>
+      </div>
+      <div class="nav-dropdown-label pull-left">
+        <p>Log Out</p>
+      </div>
+    <% end %>
   </div>
 </section>
 
-
-<!-- 
-    <div class = "nav-custom collapse navbar-collapse navHeaderCollapse">
-      <ul class = "nav navbar-nav navbar-right">
-      <li><>Logout</a></li>
-      
-        <li><a href = "/stocks/AAPL/">AAPL</a></li>
-        <li><a href = "/feed/">My Feed</a></li>
-
-        <script>
-$(function() {
-  $("#username").autocomplete({
-    delay: 500,
-    minLength:2,
-    source: function(request, response) {
-      $.getJSON("/stocks/"+request.term+".json",
-      function(data) {
-        var array = data.ticker_symbols.map(function(m) {
-          return {
-            label: m,
-            url: "/stocks/" + m + "/"
-          }
-        });
-        response(array);
-      });
-    },
-    focus: function(event, ui) {
-      // prevent autocomplete from updating the textbox
-      event.preventDefault();
-    },
-    select: function(event, ui) {
-      // prevent autocomplete from updating the textbox
-      event.preventDefault();
-      // navigate to the selected item's url
-      window.open(ui.item.url);
-    }
-  });
-
-  $(".ui-autocomplete").insertAfter($('.autocomplete3'));
-
-
-});
-        </script>
-
-        <li class="autocomplete3"><input type='text' name='search' class="search-field" id='username' placeholder="Search"/></li>
-        <li>
-          <div class = "prediction-btn-container">
-            <a href ="#" class="btn nav-prediction-btn" data-toggle="modal" data-target="#basicModal">Make a Prediction</a>
-          </div>
-        </li>
-        <li class="dropdown">
-          <a href = "#" class="dropdown-toggle" data-toggle="dropdown">
-            <i class="fa fa-cog fa-lg"></i><span>Settings</span>
-
-            <ul class ="dropdown-menu">
-              <li><a href = "#">placeholder</a></li>
-              <li><a href = "#">placeholder</a></li>
-              <li><a href = "#">Manage My Account</a></li>
-              <li><a href = "#">Setings</a></li>
-            </ul>
-          </a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</div>
- -->
 
 
 
