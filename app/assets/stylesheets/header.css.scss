@@ -84,13 +84,17 @@
 
 #mobile-autocomplete input {
   background-color: transparent;
-  padding-left: 15px;
+  padding-left: 0px;
   width: 100%;
   height: 60px;
   font-size: 21px;
   color: #fff;
   z-index: 10;
   border: 0px;
+}
+
+#mobile-autocomplete input:focus {
+  outline: none;
 }
 
 #mobile-autocomplete input::-webkit-input-placeholder {
@@ -116,16 +120,26 @@
 .ui-autocomplete li a {
   display: block;
   cursor: pointer;
-  color: #808080;
-  font-size: 12px;
+  color: rgba(255,255,255,.85);
+  font-size: 21px;
   text-decoration: none;
-  padding-left: 10px;  
-  padding-top: 12px;
-  padding-bottom: 12px;
+  padding-left: 0px;  
+  padding-top: 21px;
+  padding-bottom: 21px;
+  border-bottom: 1px solid #fff;
+
+  -webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+}
+
+.ui-autocomplete li:last-child a {
+  border-bottom: 0px;
 }
 
 .ui-autocomplete li a:hover {
-  background-color: #FAFAFA;
+  color: #fff;
 }
 
 
@@ -220,7 +234,7 @@
 
 .ui-autocomplete {
   background-color: #fff;
-  width: 303px;
+  width: 330px;
   z-index: 10;
   border: 1px solid rgba(0, 0, 0, 0.07);
   border-radius: 3px;
@@ -234,15 +248,16 @@
   display: block;
   cursor: pointer;
   color: #808080;
-  font-size: 12px;
+  font-size: 13px;
   text-decoration: none;
   padding-left: 10px;  
-  padding-top: 12px;
-  padding-bottom: 12px;
+  padding-top: 15px;
+  padding-bottom: 15px;
 }
 
 .ui-autocomplete li a:hover {
   background-color: #FAFAFA;
+  color: #7cb5ec;
 }
 
 .nav-items-feed a {
