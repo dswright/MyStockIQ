@@ -19,7 +19,7 @@ gem 'bcrypt',               '3.1.7'
 
 gem 'faker',				'1.4.2'
 gem 'will_paginate',           '3.0.7'
-
+gem 'figaro' #used to store the AWS keys.
 
 # Use SCSS for stylesheets
 gem "sass", "~> 3.2.5"
@@ -70,7 +70,9 @@ gem 'rails_12factor', '0.0.2'
 gem 'rack-mini-profiler'
 
 #use for uploading user images
-gem 'carrierwave'
+gem 'carrierwave-aws'
+gem 'mini_magick'
+gem 'fog'
 #gem 'rmagick'
 
 gem 'ruby-progressbar', '1.7.5'

@@ -1,4 +1,4 @@
-
+  
 /* STOCKIQ SIGNUP PAGE STYLES */
 
 
@@ -140,23 +140,14 @@ body {
 }
 
 .btn-file input[type=file] {
-  position: absolute;
-  top: 0;
-  right: 0;
-  min-width: 100%;
-  min-height: 100%;
-  font-size: 100px;
-  text-align: right;
+
+  margin-top: -20px;
+  width: 103px;
+  height: 30px;
+  font-size: 12px;
   filter: alpha(opacity=0);
   opacity: 0;
-  outline: none;
-  background: white;
-  cursor: inherit;
-  display: block;
-  color: #7cb5ec;
-  font-weight: 300;
-  border: 1px solid #7cb5ec;
-  border-radius: 3px;
+
 }
 
 .btn-file input {
@@ -169,10 +160,21 @@ body {
 }
 
 .btn-custom {
+<<<<<<< HEAD
   padding: 5px 30px;
   color: #B3B3B3;
   font-size: 11px;
   font-weight: 300px;
+=======
+  display: inline-block;
+  width: 90px;
+  height: 27px;
+  text-align: center;
+  padding-top: 6px;
+  color: #B3B3B3;
+  font-size: 11px;
+  cursor: pointer;
+>>>>>>> origin/master
   background-color: #fff;
   border: solid 1px #C7C7C7;
   border-radius: 3px;
@@ -195,9 +197,11 @@ body {
 }
 
 #signup-label {
+  display: inline-block;
   font-size: 12px;
-  font-weight: 300;
-  margin-left: 15px;
+  margin-left: 20px;
+  padding-top: 6px;
+  height: 27px;
   color: #7cb5ec;
 }
 

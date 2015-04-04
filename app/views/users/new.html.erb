@@ -39,13 +39,16 @@
 
          </div>
 
-        <p class="signup-signin-link">Select a profile image:</p>
 
-        <span class="btn btn-custom btn-file">
+
+        <div class="img-upload-div clearfix">
+          <p class="signup-signin-link">Select a profile image:</p>
+
+          <div class="btn-custom btn-file pull-left">
             Browse <%= f.file_field :image, class: "custom-file-input" %>
-        </span>
-        <span id="signup-label"></span>
-
+          </div>
+          <div id="signup-label" class="pull-left"></div>
+        </div>
 
 
 

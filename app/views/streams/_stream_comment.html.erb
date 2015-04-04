@@ -26,10 +26,11 @@
           <p><%= stream.streamable.replies.count %> Replies</p>
         </div>
 
-        <!-- load partials for each reply -->
-        <% stream.streamable.replies.each do |reply| %>
-          <%= render partial: "streams/stream_reply", locals: {reply: reply}  %>
-        <% end %>
+
+    <!-- load partials for each reply -->
+    <% stream.streamable.replies.reorder('created_at asc').each do |reply| %>
+      <%= render partial: "streams/stream_reply", locals: {reply: reply}  %>
+    <% end %>
 
         <!-- load this reply input everytime -->
         <%= render partial: "streams/stream_reply_form", locals: {repliable_type: stream.streamable.class.name, repliable_id: stream.streamable.id}  %>
