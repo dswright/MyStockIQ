@@ -31,3 +31,18 @@ function WidthChange(mq) {
 
 }
 
+
+/* Toggles mobile search field */
+
+$(document).ready(function() {
+
+  $('#drop-search-expand').click(function(e) {
+    $('#search-dropdown').slideToggle('fast');
+    e.preventDefault();
+  });
+
+});
+
+
+
+

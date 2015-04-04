@@ -51,6 +51,9 @@
     <div class="nav-logo pull-left">
       StockIQ
     </div>
+      <a class="nav-mobile-search-anchor pull-left" id="drop-search-expand">
+        <i class="fa fa-search"></i>
+      </a>
     <div class="nav-mobile-button pull-right">
       <a class="nav-mobile-button-anchor" id="drop-nav-expand">
         <i class="fa fa-chevron-down"></i>
@@ -86,11 +89,17 @@
         <%= link_to "Feed", feed_path, id: "feed" %>
       </div>
 
-      <div class="nav-items-feed" id="autocomplete">
+      <div class="nav-items-search" id="autocomplete">
         <input type='text' name='search' class="search-field" id='dropdown' placeholder="Search a ticker"/>
       </div>
 
     </div>
+  </div>
+</section>
+
+<section id="search-dropdown">
+  <div class="mobile-search" id="autocomplete">
+    <input type='text' name='search' class="search-field" id='dropdown' placeholder="Search a ticker"/>
   </div>
 </section>
 
