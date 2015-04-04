@@ -77,7 +77,6 @@
   position: absolute;
   z-index: 10;
   width: 100%;
-  height: 60px;
   background: #7cb5ec;
   overflow: hidden;
   border-bottom: 1px solid rgba(0,0,0,.07);
@@ -95,19 +94,19 @@
 }
 
 #mobile-autocomplete input::-webkit-input-placeholder {
-   color: #fff;
+   color: rgba(255,255,255,.7);
 }
 
 #mobile-autocomplete input:-moz-placeholder {
-   color: #fff;  
+   color: rgba(255,255,255,.7);
 }
 
 #mobile-autocomplete input::-moz-placeholder {  
-   color: #fff;  
+   color: rgba(255,255,255,.7); 
 }
 
 #mobile-autocomplete input:-ms-input-placeholder {  
-   color: #fff;  
+   color: rgba(255,255,255,.7);
 }
 
 .ui-autocomplete li {
