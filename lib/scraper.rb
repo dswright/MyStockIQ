@@ -284,7 +284,7 @@ class GoogleIntraday
     #if the row[0] is less than 1000000, then its just the integer from the google data, if its greater,
     #then its the actual time stamp, and the correct date.
     if row[0].gsub('a','').to_i <= 1000000
-      time_start = time_start + 3600 + row[0].to_i * @increment*60 #add X minutes per increment. Comes in 1 hour short, so add 3600.
+      time_start = time_start + 3600 + row[0].to_i * @increment*60 #add X minutes per increment. Comes in 1 hour behind, so 3600 is added.
     end
     daily_hash = {
       "ticker_symbol" => ticker_symbol,

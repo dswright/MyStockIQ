@@ -31,12 +31,27 @@
 .settings-top-box-overlay {
 	display: block;
 	position: relative;
-	height: 33px;
+	height: 47px;
 	background: rgba(0,0,0,0.7);
+<<<<<<< HEAD
 	margin-top: -33px;
 	padding-top: 7px;
 }
 
+=======
+	margin-top: -47px;
+	padding-top: 10px;
+}
+
+.settings-top-box-overlay p {
+	color: rgba(255,255,255,.90);
+	font-size: 18px;
+	margin-left: 15px;
+	margin-top: 3px;
+
+}
+
+>>>>>>> origin/master
 .settings-top-box-overlay a {
 	border: solid 1px rgba(255,255,255,.85);
 	border-radius: 2px;
@@ -71,7 +86,6 @@
 .settings-top-box-bio {
 	border: 1px solid rgba(0,0,0,.07);
 	background-color: #fff;
-	height: 186px;
 	margin-left: 20px;
 	padding-left: 15px;
 	padding-right: 15px;
@@ -358,12 +372,15 @@ input.cmn-toggle-round-flat:checked + label:after {
 .settings-page-banner-overlay {
 	display: block;
 	position: relative;
-	height: 33px;
+	height: 47px;
 	background: rgba(0,0,0,0.7);
+<<<<<<< HEAD
 	margin-top: -57px;
+=======
+	margin-top: -47px;
+>>>>>>> origin/master
 	padding-left: 10px;
 	padding-right: 10px;
-	padding-top: 6px;
 }
 
 .change-banner-div a {
@@ -374,7 +391,7 @@ input.cmn-toggle-round-flat:checked + label:after {
 	font-size: 10px;
 	color: rgba(255,255,255,.85);
 	text-decoration: none;
-	margin: auto;
+	margin-top: 14px;
 	padding-left: 11px;
 	padding-right: 11px;
 
@@ -388,6 +405,13 @@ input.cmn-toggle-round-flat:checked + label:after {
 	border: solid 1px rgba(255,255,255,1);
 	color: rgba(255,255,255,1);
 }
+
+
+.settings-page-sidebar-image-overlay p {
+	font-size: 18px;
+}
+
+
 
 
 /******** BODY ***********************/
@@ -450,14 +474,22 @@ input.cmn-toggle-round-flat:checked + label:after {
 
 .settings-page-sidebar-image-overlay {
 	position: relative;
-	height: 33px;
+	height: 47px;
 	background: rgba(0,0,0,0.7);
-	margin-top: -33px;
-	padding-left: 10px;
+	margin-top: -47px;
+	padding-left: 15px;
 	padding-right: 10px;
-	padding-top: 6px;
 }
 
+<<<<<<< HEAD
+=======
+.settings-page-sidebar-image-overlay p {
+	color: rgba(255,255,255,.90);
+	font-size: 18px;
+	padding-top: 13px;
+}
+
+>>>>>>> origin/master
 .settings-sidebar-change-img a {
 	border: solid 1px rgba(255,255,255,.85);
 	border-radius: 2px;

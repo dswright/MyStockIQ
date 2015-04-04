@@ -18,10 +18,15 @@ require 'scraper'
 
         @current_user = current_user
 
+<<<<<<< HEAD
         @streams = @stock.streams.by_popularity_score.paginate(page: params[:page], per_page: 10)
 
         unless @streams == nil
           # @streams.each {|stream| stream.update_stream_popularity_scores}
+=======
+        # unless @streams == nil
+        #   @streams.each {|stream| stream.update_stream_popularity_scores}
+>>>>>>> origin/master
 
         #   #this line makes sorts the stream by popularity score.
         #   @streams = @streams.sort_by {|stream| stream.streamable.popularity.score}
@@ -37,6 +42,7 @@ require 'scraper'
 
       format.html {
         
+        @streams = @stock.streams.by_popularity_score.paginate(page: params[:page], per_page: 10)
 
         #if a stock gets viewed, update the stocks table so that the stock gets real time stock data.
         if (@stock.viewed == false)
@@ -79,22 +85,19 @@ require 'scraper'
         gon.ticker_symbol = @stock.ticker_symbol
         @price_point = {price:@stock.daily_stock_price,date:@stock.date}
       }
-      format.json {
+      format.json { #this is the json response to the search bar queries.
 
-        ticker_symbols = []
-        stock_names = []
+        stock_data = []
         Stock.where(active:true).where("UPPER(ticker_symbol) like UPPER(?)", "%#{params[:ticker_symbol]}%").limit(10).each do |stock|
-          ticker_symbols << stock.ticker_symbol
+          stock_data << [stock.ticker_symbol, stock.stock]
         end
 
         render json: { #this is data rendered for the the search bar.
-          :ticker_symbols => ticker_symbols       
+          :stock_data => stock_data
         }
       }
 
-      format.js {
-
-      }
+      format.js {} #used to respond to the infinite scroll
     end
 
 	end

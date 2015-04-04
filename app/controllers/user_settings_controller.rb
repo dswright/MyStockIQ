@@ -13,7 +13,7 @@ class UserSettingsController < ApplicationController
     #put in password update shit..
     user.save
 
-    redirect_to "/settings"
+    redirect_to "/settings/"
 
   end
 
