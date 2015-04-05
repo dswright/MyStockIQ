@@ -18,15 +18,11 @@ require 'scraper'
 
         @current_user = current_user
 
-<<<<<<< HEAD
+        #STREAMS IS USED BY BOTH FORMAT.HTML AND FORMAT.JS
         @streams = @stock.streams.by_popularity_score.paginate(page: params[:page], per_page: 10)
 
-        unless @streams == nil
+        #unless @streams == nil
           # @streams.each {|stream| stream.update_stream_popularity_scores}
-=======
-        # unless @streams == nil
-        #   @streams.each {|stream| stream.update_stream_popularity_scores}
->>>>>>> origin/master
 
         #   #this line makes sorts the stream by popularity score.
         #   @streams = @streams.sort_by {|stream| stream.streamable.popularity.score}
@@ -38,11 +34,10 @@ require 'scraper'
         #   #will_paginate in view automatically generates params[:page]
         #   @streams = @streams.paginate(page: params[:page], per_page: 5)
         #   #@stream_hash_array = Stream.stream_maker(@streams, 0)
-         end
+         #end
 
       format.html {
         
-        @streams = @stock.streams.by_popularity_score.paginate(page: params[:page], per_page: 10)
 
         #if a stock gets viewed, update the stocks table so that the stock gets real time stock data.
         if (@stock.viewed == false)
