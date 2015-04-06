@@ -146,18 +146,24 @@ function PredictionDetails(graph, chart) {
       currentRange["buttonType"] = "5D";
     }
 
-
-    console.log("bestbutton:" + bestButton);
-
-
     setSeries(bestButton); //set the graphs to start.
     setRange(bestButton);
+
+
+    //update the selected state of the time range for the current range.
+    $('*[data-button-type="'+currentRange["buttonType"]+'"]').switchClass("timeframe-item", "timeframe-item-selected");
+
   }
 
   this.buttonClick = function() {
     var buttonType = $(this).data("button-type");
     setSeries(buttonType); //always set series before range. Resets all series arrays if there is a button type change.
     setRange(buttonType);
+
+    //change the on-hover states based on what has been clicked.
+    $(".timeframe-item-selected").switchClass("timeframe-item-selected", "timeframe-item")
+    $(this).switchClass("timeframe-item", "timeframe-item-selected");
+    
   }
 
   this.endPrediction = function(endTime, endPrice) { //endtime and price are passed by the ajax function.
@@ -244,7 +250,6 @@ function StockGraph(stockGraph, chart) {
       var endTime = stockGraph["my_prediction"].last()[0]; //use the endTime of the users own prediction to get the best range.
       var bestButton = BestRange(endTime);
     }
-    console.log("bestbutton:" + bestButton);
 
     setPredictions(stockGraph); //create the daily and intraday prediction arrays, and the corresponding prediction id arrays.
 
@@ -260,12 +265,18 @@ function StockGraph(stockGraph, chart) {
 
     setSeries(bestButton, stockGraph);
     setRange(bestButton); //always setRange after the setSeries, so the set series can tell if the range has changed. currentRange gets updated in the setRange.
+  
+    $('*[data-button-type="'+currentRange["buttonType"]+'"]').switchClass("timeframe-item", "timeframe-item-selected");
   };
 
   this.buttonClick = function() {
     var buttonType = $(this).data("button-type");
     setSeries(buttonType, stockGraph); //always set series before range. Resets all series arrays if there is a button type change.
     setRange(buttonType);
+
+    //change the on-hover states based on what has been clicked.
+    $(".timeframe-item-selected").switchClass("timeframe-item-selected", "timeframe-item")
+    $(this).switchClass("timeframe-item", "timeframe-item-selected");
   };
 
   this.inputPrediction = function(endTime, endPrice, predictionId) {
