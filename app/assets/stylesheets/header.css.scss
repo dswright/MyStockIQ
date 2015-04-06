@@ -123,7 +123,7 @@
   color: rgba(255,255,255,.85);
   font-size: 21px;
   text-decoration: none;
-  padding-left: 0px;  
+  padding-left: 10px;  
   padding-top: 21px;
   padding-bottom: 21px;
   border-bottom: 1px solid #fff;
@@ -235,7 +235,8 @@
 
 .ui-autocomplete {
   background-color: #fff;
-  width: 330px;
+  width: 390px;
+  padding-left: 0px;
   z-index: 10;
   border: 1px solid rgba(0, 0, 0, 0.07);
   border-radius: 3px;
