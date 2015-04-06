@@ -81,6 +81,9 @@ require 'scraper'
       format.json { #this is the json response to the search bar queries.
 
         stock_data = []
+        Stock.where(active:true).where("UPPER(ticker_symbol) like UPPER(?)", params[:ticker_symbol]).each do |stock|
+          stock_data << [stock.ticker_symbol, stock.stock]
+        end
         Stock.where(active:true).where("UPPER(ticker_symbol) like UPPER(?)", "%#{params[:ticker_symbol]}%").limit(10).each do |stock|
           stock_data << [stock.ticker_symbol, stock.stock]
         end
