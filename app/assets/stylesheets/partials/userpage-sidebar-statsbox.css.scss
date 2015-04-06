@@ -8,7 +8,7 @@
 	margin-left: 10px;
 	margin-right: 10px;
 	padding-top: 14px;
-	border-bottom: 1px solid rgba(0,0,0,.07);
+	border-bottom: 1px solid rgba(0,0,0,.1);
 }
 
 .user-sidebar-image-points i {
@@ -17,7 +17,8 @@
 }
 
 .user-sidebar-stats-box {
-	border: 1px solid rgba(0,0,0,0.07);
+	border: 1px solid rgba(0,0,0,.1);
+	border-radius: 4px;
   	background-color: #fff;
 	font-size: 11px;
 	margin-top: 20px;

@@ -35,7 +35,6 @@ color palette
 /*limited reset*/
 html, body, div, section, article, aside, header, hgroup, footer, nav, h1, h2, h3, h4, h5, h6, blockquote, address, time, span, em, strong, img, ol, ul, li, figure, canvas, video, th, td, tr {
   margin: 0;
-  padding: 0;
   border: 0;
   vertical-align: baseline;
   font: inherit;
@@ -45,7 +44,8 @@ html, body, div, section, article, aside, header, hgroup, footer, nav, h1, h2, h
 
 
 body {
-  background-color: #FAFAFA;
+  background-color: #F2F2F2;
+  padding-bottom: 30px;
 }
 
 
