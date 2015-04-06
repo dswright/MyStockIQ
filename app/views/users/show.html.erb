@@ -95,19 +95,20 @@
   </div>
 
   <div class="col-sm-3 user-page-sidebar">
-    <div class="user-page-sidebar-image">
-      <%= image_tag @user.image %>
-    </div>
-    <div class="user-page-sidebar-image-overlay">
-      <div class="user-sidebar-image-username pull-left">
-        <p><%= @user.username %></p>
+    <div class="user-sidebar-img-box">
+      <div class="user-page-sidebar-image">
+        <%= image_tag @user.image %>
       </div>
-      <div class="follow-btn-div pull-right">
-        <%= render partial: 'shared/follow_form', locals: {target: @target} %>
+      <div class="user-page-sidebar-image-overlay">
+        <div class="user-sidebar-image-username pull-left">
+          <p><%= @user.username %></p>
+        </div>
+        <div class="follow-btn-div pull-right">
+          <%= render partial: 'shared/follow_form', locals: {target: @target} %>
+        </div>
       </div>
-    </div>
-    <div class="user-sidebar-bio">
-      <p class="text-on-white">
+    
+      <p class="user-sidebar-bio">
         <% if @user.bio.nil? %>
           No bio.
         <% else %>

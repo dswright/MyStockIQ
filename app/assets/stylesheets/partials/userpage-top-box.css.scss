@@ -9,6 +9,9 @@
 .user-top-box-img {
 	padding-left: 0px;
 	padding-right: 0px;
+	border: 1px solid rgba(0,0,0,.1);
+	border-radius: 4px;
+	overflow: hidden;
 }
 
 .user-top-box-img img {
@@ -60,7 +63,8 @@
 
 
 .user-top-box-bio {
-	border: 1px solid rgba(0,0,0,.07);
+	border: 1px solid rgba(0,0,0,.1);
+	border-radius: 4px;
 	background-color: #fff;
 	margin-left: 15px;
 	padding-left: 15px;
@@ -80,7 +84,8 @@
 .user-top-box-stats-box {
 	margin-top: 20px;
 	background-color: #fff;
-	border: 1px solid rgba(0,0,0,.07);
+	border: 1px solid rgba(0,0,0,.1);
+	border-radius: 4px;
 }
 
 .user-top-box-data {

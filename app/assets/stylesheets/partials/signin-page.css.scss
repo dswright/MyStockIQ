@@ -2,14 +2,10 @@
 
 /*-----------------SIGNIN PAGE----------------*/
 
-body {
-  background-color: #FAFAFA;
-}
-
 .signin-nav {
   height: 49px;
   background-color: #fff;
-  border-bottom: 1px solid rgba(0,0,0,.07);
+  border-bottom: 1px solid rgba(0,0,0,.1);
 }
 
 .signin-nav-logo {
@@ -49,7 +45,7 @@ body {
   font-weight: 300;
   padding-top: 15px;
   padding-bottom: 15px;
-  border-bottom: 1px solid rgba(0,0,0,.07);
+  border-bottom: 1px solid rgba(0,0,0,.1);
 }
 
 .signin-form-header-txt {
@@ -57,7 +53,7 @@ body {
 }
 
 .signin-form-box {
-  border: 1px solid rgba(0,0,0,.07);
+  border: 1px solid rgba(0,0,0,.1);
   border-radius: 7px;
   background-color: #fff;  
   font-size: 11px;
@@ -99,15 +95,17 @@ body {
   height: 39px;
   padding-left: 10px;
   margin-bottom: 20px;
-  background-color: #FAFAFA;
+  background-color: rgba(124,181,236,.06);
   border: 0px;
   outline: none;
   color: #919191;
   border-radius: 3px;
+  box-shadow: 0 0 0 1pt rgba(0,0,0,0.1);
 }
 
 .signin-form-fields input:focus {
-  outline: 1px solid rgba(0,0,0,0.07);
+  outline: none;
+  box-shadow: 0 0 0 1pt #7cb5ec;
 }
 
 .signin-submit-button-div input {
@@ -116,8 +114,9 @@ body {
   padding-bottom: 12px;
   padding-top: 12px;
   color: #B3B3B3;
-  font-size: 15px;
+  font-size: 13px;
   width: 100%;
+  border-radius: 3px;
   background-color: #FFF;
 
   -webkit-transition: 150ms ease-in;
@@ -127,8 +126,8 @@ body {
 }
 
 .signin-submit-button-div input:hover {
-  border: solid 1px #808080;
-  color: #808080;
+  border: solid 1px #7cb5ec;
+  color: #7cb5ec;
 }
 
 

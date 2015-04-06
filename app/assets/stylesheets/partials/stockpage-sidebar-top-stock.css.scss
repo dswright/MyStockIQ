@@ -6,7 +6,7 @@
 	margin-left: 10px;
 	margin-right: 10px;
 	padding-top: 14px;
-	border-bottom: 1px solid rgba(0,0,0,.07);
+	border-bottom: 1px solid rgba(0,0,0,.1);
 }
 
 .stockpage-sidebar-open-points i {
@@ -15,7 +15,8 @@
 }
 
 .stockpage-sidebar-stocks-box {
-	border: 1px solid rgba(0,0,0,0.07);
+	border: 1px solid rgba(0,0,0,.1);
+	border-radius: 4px;
   	background-color: #fff;
 	font-size: 11px;
 	font-weight: 300;
@@ -48,8 +49,8 @@
 }
 
 .stockpage-sidebar-stocks-item:hover {
-	background-color: #FAFAFA;
-	color: #808080;
+	background-color: rgba(124,181,236,.07);
+	color: #7cb5ec;
 
 }
 
