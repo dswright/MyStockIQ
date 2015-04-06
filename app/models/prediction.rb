@@ -82,7 +82,6 @@ class Prediction < ActiveRecord::Base
     end
   end
 
-
   def exceeds_end_time
     if self.stock.date >= self.prediction_end_time
       self.update(active:false)
