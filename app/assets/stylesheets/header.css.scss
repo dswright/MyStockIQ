@@ -211,7 +211,7 @@
 
 .nav-items-search {
   display: block;
-  margin-left: 118px;
+  margin-left: 69px;
 }
 
 
@@ -220,9 +220,9 @@
   background-color: rgba(124,181,236,.09);
   box-shadow: 0 0 0 1pt rgba(0,0,0,0.1);
   border-radius: 2px;
-  margin-top: 12px;
-  padding-left: 36px;
-  width: 160px;
+  margin-top: 11px;
+  padding-left: 34px;
+  width: 139px;
   height: 27px;
   font-size: 13px;
   color: #919191;
@@ -235,7 +235,7 @@
 
 .ui-autocomplete {
   background-color: #fff;
-  width: 390px;
+  width: 412px;
   padding-left: 0px;
   z-index: 10;
   border: 1px solid rgba(0, 0, 0, 0.07);
@@ -268,7 +268,7 @@
 
 .icon-addon {
     position: relative;
-    display: block;
+    display: inline-block;
 }
 
 .icon-addon:after,
@@ -297,10 +297,6 @@
 .icon-addon {
   color: #919191;
 
-  -webkit-transition: 150ms ease-in;
-  -moz-transition: 150ms ease-in;
-  -o-transition: 150ms ease-in;
-  transition: 150ms ease-in;
 }
 
 .icon-addon input:focus + .glyphicon {
@@ -432,6 +428,15 @@
 @media (min-width: 981px) {
 
 
+.nav-items-search {
+  display: block;
+  margin-left: 230px;
+}
+
+
+.nav-items-search input {
+  width: 190px;
+}
 
 
 }
