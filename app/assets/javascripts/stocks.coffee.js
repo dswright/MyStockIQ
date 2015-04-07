@@ -37,20 +37,23 @@ $(document).ready(function () {
     {
       name : "predictions",
       lineWidth : 0,
+      color: "#90ED7D",
       dataGrouping: {
         enabled: false
       },
       marker : {
         enabled : true,
-        radius : 4
+        radius : 5,
+        symbol: "triangle"
       }
     },
     {
       name:"my_prediction",
+      color: "#f7a35c",      
       marker : {
         enabled : true,
-        radius : 4,
-        color: "#DC143C"
+        radius : 5,
+        symbol: "triangle",
       },
       dataGrouping: {
         enabled: false

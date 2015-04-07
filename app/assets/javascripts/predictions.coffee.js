@@ -70,13 +70,19 @@ $(document).ready(function () {
     },
     {
       name:"myprediction",
+      color: "#9E6534",
+      dashStyle: 'shortdot',
       marker : {
         enabled : true,
         radius : 4,
-        color: "#DC143C"
       },
       dataGrouping: {
         enabled: false
+      },
+      marker : {
+        enabled : true,
+        radius : 5,
+        symbol: "triangle"
       }
     },
     {
@@ -84,7 +90,13 @@ $(document).ready(function () {
       dataGrouping: {
         enabled: false
       },
-      lineWidth: 2
+      lineWidth: 2,
+      color: "#E89A58",
+      marker : {
+        enabled : true,
+        radius : 5,
+        symbol: "triangle"
+      }
     }
   ];
 
