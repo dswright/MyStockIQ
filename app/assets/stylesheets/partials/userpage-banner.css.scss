@@ -17,12 +17,12 @@
 .user-page-banner-overlay {
 	display: block;
 	position: relative;
-	height: 47px;
+	height: 36px;
 	background: rgba(0,0,0,0.7);
-	margin-top: -47px;
+	margin-top: -36px;
 	padding-left: 0px;
 	padding-right: 20px;
-	padding-top: 16px;
+	padding-top: 9px;
 }
 
 .user-page-banner-overlay ul {
@@ -46,10 +46,10 @@
 .user-page-banner-overlay ul li a {
 	margin-left: 15px;
 	color: #E6E6E6;
-	font-size: 15px;
+	font-size: 13px;
 	text-decoration: underline;
 
-	-webkit-transition: 150ms ease-in;
+  -webkit-transition: 150ms ease-in;
   -moz-transition: 150ms ease-in;
   -o-transition: 150ms ease-in;
   transition: 150ms ease-in;
@@ -78,7 +78,29 @@
 	font-size: 17px;
 }
 
+.user-page-banner-overlay {
+	display: block;
+	position: relative;
+	height: 47px;
+	background: rgba(0,0,0,0.7);
+	margin-top: -47px;
+	padding-left: 0px;
+	padding-right: 20px;
+	padding-top: 16px;
+}
 
+.user-page-banner-overlay ul li a {
+	margin-left: 15px;
+	color: #E6E6E6;
+	font-size: 15px;
+	text-decoration: underline;
+
+	-webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+
+}
 
 
 }
