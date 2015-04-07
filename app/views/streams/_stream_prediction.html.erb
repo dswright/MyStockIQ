@@ -11,7 +11,7 @@
         <p class="prediction-item-main-txt">
           <a href ="/predictions/<%= stream.streamable.id %>/">$<%= stream.streamable.stock.ticker_symbol %> Prediction:</a>
           <% percent_change = ((stream.streamable.prediction_end_price / stream.streamable.start_price-1) * 100).round(0) %>
-         $<%= stream.streamable.prediction_end_price %> (<%= percent_change %>%) in <%=distance_of_time_in_words(stream.streamable.start_time, stream.streamable.prediction_end_time) %>
+         $<%= stream.streamable.prediction_end_price %> (<%= percent_change %>%) in <%=distance_of_time_in_words(stream.streamable.created_at, stream.streamable.prediction_end_time) %>
         </p> 
       </div>
       <div class="prediction-item-tweet">

@@ -6,7 +6,7 @@ class PredictionendWorker
   #based on that valid minute stock price.
   def perform(predictionend_id)
     predictionend = Predictionend.find(predictionend_id)
-    if (predictionend.actual_end_time + 1800 <= time.zone.now) #checks to make sure that 30 minutes has passed before searching for the minute price. 
+    if (predictionend.actual_end_time + 1800 <= Time.zone.now) #checks to make sure that 30 minutes has passed before searching for the minute price. 
       minute_array = ScraperPublic.google_minute(predictionend.prediction.stock.ticker_symbol)
       times_ahead = minute_array.select {|minute| minute["date"] >= predictionend.actual_end_time}
       unless times_ahead.empty? 

@@ -63,7 +63,7 @@ class Prediction < ActiveRecord::Base
   def exceeds_end_price
     stock = Stock.find(self.stock_id)
 
-    intraday_prices = Intradayprice.where(ticker_symbol:"AAPL").reorder("date desc").limit(13).reverse #looks 1 hour backwards at the intradayprices
+    intraday_prices = Intradayprice.where(ticker_symbol:stock.ticker_symbol).where("date > ?",self.start_time).reorder("date desc").limit(80).reverse #looks 1 day backwards at the intradayprices
 
     intraday_prices.each do |price|      
 
@@ -81,7 +81,6 @@ class Prediction < ActiveRecord::Base
       end
     end
   end
-
 
   def exceeds_end_time
     if self.stock.date >= self.prediction_end_time
