@@ -210,7 +210,6 @@
 }
 
 .nav-items-search {
-  display: block;
   margin-left: 69px;
 }
 
@@ -369,7 +368,7 @@
   font-size: 13px;
   color: #919191;
   height: 49px;
-  width: 100px;
+  width: 60px;
   margin-right: 0px;
   padding-left: 0px;
   padding-right: 0px;
@@ -430,12 +429,17 @@
 
 .nav-items-search {
   display: block;
-  margin-left: 230px;
+  margin-left: 160px;
 }
 
 
 .nav-items-search input {
   width: 190px;
+}
+
+.icon-addon {
+    position: relative;
+    display: inline-block;
 }
 
 
