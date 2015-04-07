@@ -221,7 +221,7 @@
   box-shadow: 0 0 0 1pt rgba(0,0,0,0.1);
   border-radius: 2px;
   margin-top: 12px;
-  padding-left: 10px;
+  padding-left: 36px;
   width: 160px;
   height: 27px;
   font-size: 13px;
@@ -261,6 +261,56 @@
   background-color: rgba(124,181,236,.07);
   color: #7cb5ec;
 }
+
+
+
+// search icon in field //
+
+.icon-addon {
+    position: relative;
+    display: block;
+}
+
+.icon-addon:after,
+.icon-addon:before {
+    display: table;
+    content: " ";
+}
+
+.icon-addon:after {
+    clear: both;
+}
+
+.icon-addon.addon-sm .glyphicon,
+.icon-addon .glyphicon {
+    position: absolute;
+    z-index: 2;
+    left: 10px;
+    font-size: 12px;
+    width: 20px;
+    margin-left: -2.5px;
+    text-align: center;
+    padding: 17px 0;
+    top: 2px;
+}
+
+.icon-addon {
+  color: #919191;
+
+  -webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+}
+
+.icon-addon input:focus + .glyphicon {
+  color: #7cb5ec
+}
+
+
+
+
+
 
 .nav-items-feed a {
   display: block;
