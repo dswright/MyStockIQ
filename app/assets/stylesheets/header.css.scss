@@ -123,7 +123,7 @@
   color: rgba(255,255,255,.85);
   font-size: 21px;
   text-decoration: none;
-  padding-left: 0px;  
+  padding-left: 10px;  
   padding-top: 21px;
   padding-bottom: 21px;
   border-bottom: 1px solid #fff;
@@ -211,7 +211,7 @@
 
 .nav-items-search {
   display: block;
-  margin-left: 118px;
+  margin-left: 69px;
 }
 
 
@@ -220,9 +220,9 @@
   background-color: rgba(124,181,236,.09);
   box-shadow: 0 0 0 1pt rgba(0,0,0,0.1);
   border-radius: 2px;
-  margin-top: 12px;
-  padding-left: 10px;
-  width: 160px;
+  margin-top: 11px;
+  padding-left: 34px;
+  width: 139px;
   height: 27px;
   font-size: 13px;
   color: #919191;
@@ -235,7 +235,8 @@
 
 .ui-autocomplete {
   background-color: #fff;
-  width: 330px;
+  width: 412px;
+  padding-left: 0px;
   z-index: 10;
   border: 1px solid rgba(0, 0, 0, 0.07);
   border-radius: 3px;
@@ -260,6 +261,52 @@
   background-color: rgba(124,181,236,.07);
   color: #7cb5ec;
 }
+
+
+
+// search icon in field //
+
+.icon-addon {
+    position: relative;
+    display: inline-block;
+}
+
+.icon-addon:after,
+.icon-addon:before {
+    display: table;
+    content: " ";
+}
+
+.icon-addon:after {
+    clear: both;
+}
+
+.icon-addon.addon-sm .glyphicon,
+.icon-addon .glyphicon {
+    position: absolute;
+    z-index: 2;
+    left: 10px;
+    font-size: 12px;
+    width: 20px;
+    margin-left: -2.5px;
+    text-align: center;
+    padding: 17px 0;
+    top: 2px;
+}
+
+.icon-addon {
+  color: #919191;
+
+}
+
+.icon-addon input:focus + .glyphicon {
+  color: #7cb5ec
+}
+
+
+
+
+
 
 .nav-items-feed a {
   display: block;
@@ -381,6 +428,15 @@
 @media (min-width: 981px) {
 
 
+.nav-items-search {
+  display: block;
+  margin-left: 230px;
+}
+
+
+.nav-items-search input {
+  width: 190px;
+}
 
 
 }

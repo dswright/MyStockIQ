@@ -1,11 +1,13 @@
 
+
 .stockpage-sidebar-stocks-header {
+	height: 36px;
 	color: #808080;
-	height: 47px;
-	font-size: 19px;
+	font-size: 13px;
+	font-weight: 300;
 	margin-left: 10px;
 	margin-right: 10px;
-	padding-top: 14px;
+	padding-top: 11px;
 	border-bottom: 1px solid rgba(0,0,0,.1);
 }
 
@@ -51,6 +53,23 @@
 .stockpage-sidebar-stocks-item:hover {
 	background-color: rgba(124,181,236,.07);
 	color: #7cb5ec;
+
+}
+
+
+
+@media (min-width: 991px) {
+
+.stockpage-sidebar-stocks-header {
+	height: 47px;
+	color: #808080;
+	font-size: 18px;
+	font-weight: 300;
+	margin-left: 10px;
+	margin-right: 10px;
+	padding-top: 14px;
+	border-bottom: 1px solid rgba(0,0,0,.1);
+}
 
 }
 

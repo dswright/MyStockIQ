@@ -1,19 +1,20 @@
 /*USER SIDEBAR STATS BOX***************************************************/
 
+
 .user-sidebar-stats-header {
-	height: 47px;
+	height: 36px;
 	color: #808080;
-	font-size: 19px;
+	font-size: 13px;
 	font-weight: 300;
 	margin-left: 10px;
 	margin-right: 10px;
-	padding-top: 14px;
+	padding-top: 11px;
 	border-bottom: 1px solid rgba(0,0,0,.1);
 }
 
 .user-sidebar-image-points i {
-	font-size: 16px;
-	margin-top: 4px;
+	font-size: 13px;
+	margin-top: 2px;
 }
 
 .user-sidebar-stats-box {
@@ -41,4 +42,26 @@
 
 .user-sidebar-stats-box a:hover {
 	background-color: rgba(0,0,0,.07);
+}
+
+
+
+@media (min-width: 991px) {
+
+.user-sidebar-stats-header {
+	height: 47px;
+	color: #808080;
+	font-size: 18px;
+	font-weight: 300;
+	margin-left: 10px;
+	margin-right: 10px;
+	padding-top: 14px;
+	border-bottom: 1px solid rgba(0,0,0,.1);
+}
+
+.user-sidebar-image-points i {
+	font-size: 16px;
+	margin-top: 4px;
+}
+
 }
