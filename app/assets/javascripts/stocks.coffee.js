@@ -37,7 +37,7 @@ $(document).ready(function () {
     {
       name : "predictions",
       lineWidth : 0,
-      color: "#FFF",
+      color: "#90ED7D",
       dataGrouping: {
         enabled: false
       },
