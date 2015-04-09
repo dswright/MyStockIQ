@@ -33,9 +33,14 @@ require 'scraper'
         #   #@stream_hash_array = Stream.stream_maker(@streams, 0)
         # end
 
+        
+
+
       format.html {
         
+       #######   KEEP STREAMS OUTSIDE OF format.html. USED BY format.js AS WELL
         @streams = @stock.streams.by_popularity_score.paginate(page: params[:page], per_page: 10)
+
 
         #if a stock gets viewed, update the stocks table so that the stock gets real time stock data.
         if (@stock.viewed == false)
@@ -93,7 +98,9 @@ require 'scraper'
         }
       }
 
-      format.js {} #used to respond to the infinite scroll
+      format.js {
+        @streams = @stock.streams.by_popularity_score.paginate(page: params[:page], per_page: 10)
+      } #used to respond to the infinite scroll
     end
 
 	end

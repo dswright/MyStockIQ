@@ -4,7 +4,7 @@ class PredictionsController < ApplicationController
 	require 'popularity'
   require 'graph'
 	
-
+  
   def hover_daily
     prediction = Prediction.find(params[:id])
 
@@ -100,6 +100,8 @@ class PredictionsController < ApplicationController
 		@prediction = @user.predictions.build(prediction)
 		@prediction.start_price = stock.daily_stock_price
 
+    @prediction.add_tags(stock.ticker_symbol)
+    
 		@graph_time = prediction_end_time.utc_time_int.graph_time_int
 
 
@@ -130,11 +132,8 @@ class PredictionsController < ApplicationController
 			@prediction.save
       
       #Create the stream inserts for the prediction.
-      @streams = []
-      stream_params_array = stream_params_process(params[:stream_string])
-      stream_params_array.each do |stream_item|
-        @prediction.streams.create(stream_item)
-      end
+      @prediction.streams.create!(targetable_type: @user.class.name, targetable_id: @user.id)
+      @prediction.streams.create!(targetable_type: stock.class.name, targetable_id: stock.id)
 
       @prediction.build_popularity(score:0).save #build the popularity score item for predictions
 			@streams = [Stream.where(streamable_type: 'Prediction', streamable_id: @prediction.id).first]
@@ -228,6 +227,6 @@ class PredictionsController < ApplicationController
 	def prediction_params
 		#Obtains parameters from 'prediction form' in app/views/shared.
 		#Permits adjustment of only the 'content' & 'ticker_symbol' columns in the 'predictions' model.
-		params.require(:prediction).permit(:prediction_end_price, :prediction_comment, :stock_id)
+		params.require(:prediction).permit(:prediction_end_price, :content, :stock_id)
 	end
 end

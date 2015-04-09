@@ -14,7 +14,7 @@ class RepliesController < ApplicationController
 		if @reply.valid?
 			@reply.save
 			@reply.build_popularity(score: 0).save
-
+			@reply.add_tags #Add tickersymbol ('$') and username ('@') tags to reply content
 			response_msgs << "Posted reply!"
 		else 
 			response_msgs << "Invalid post"

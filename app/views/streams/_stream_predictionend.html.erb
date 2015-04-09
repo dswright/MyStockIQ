@@ -15,9 +15,11 @@
         </p>
       </div>
       <div class="close-prediction-item-closing-tweet">
-        <p>
-          <%= stream.streamable.comment %>
-        </p>
+      <% unless stream.streamable.tag == nil %>
+          <p><%= render html: stream.streamable.tag.content.html_safe %></p>
+      <%else %>
+          <p><%= stream.streamable.content %></p>
+      <% end %>
       </div>
       <div class="close-prediction-footer">
         <i class="fa fa-clock-o">&nbsp;<%= distance_of_time_in_words(stream.streamable.created_at, Time.now) %> ago</i><span><%= stream.streamable.prediction.score %> points</span>
