@@ -14,17 +14,25 @@ class Time
   def utc_time_hour
     self.to_s.in_time_zone.strftime("%H:%M:%S")
   end
+  def utc_time_full
+    self.to_s.in_time_zone.strftime("%Y-%m-%d %H:%M:%S")
+  end
 end
 
 class Integer
+  @tz = ActiveSupport::TimeZone.new('America/New_York')
   def utc_time
     Time.at(self).in_time_zone
   end
   def utc_time_int
-    self/1000 + 5*3600
+    tz = ActiveSupport::TimeZone.new('America/New_York')
+    offset = tz.parse(self.utc_time.utc_time_full).utc_offset()
+    self/1000 - offset  #offset is negative, so this will add the offset amount.
   end
   def graph_time_int
-    (self-5*3600) * 1000
+    tz = ActiveSupport::TimeZone.new('America/New_York')
+    offset = tz.parse(self.utc_time.utc_time_full).utc_offset()
+    (self+offset) * 1000  #offset is negative, so this will subtract the offset amount.
   end
 
   #expects to take an int in utc time.

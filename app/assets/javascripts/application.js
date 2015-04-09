@@ -17,6 +17,7 @@
 //= require highstock
 //= require exporting
 //= require moment
+//= require moment-timezone.js
 //= require customdate
 //= require graph
 //= require bootstrap

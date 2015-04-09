@@ -57,12 +57,28 @@ Number.prototype.utcTimeStr = function() {
   return moment.utc(this*1000).format("YYYY-MM-DD HH:mm:ss UTC"); //convert an integer into a utc date string.
 }
 
-Number.prototype.graphTimeInt = function() {
-  return (this-5*3600) * 1000; //converts the time into to milliseconds and EST.
+console.log("moment added");
+Number.prototype.graphTimeInt = function() { //this one only runs about 20 times.
+  moment.tz.add('America/New_York|EST EDT|50 40|0101|1Lz50 1zb0 Op0'); //Ads the NY EST time into the moment.js timezone js data options.
+
+  console.log("time calc ran");
+  var offset = moment.tz.zone('America/New_York').offset(this*1000) * 60; //gets the offset in minutes from the NY/EST time.
+  console.log(offset);
+  return (this-offset) * 1000; //converts the time into to milliseconds and EST.
 }
 
-Number.prototype.utcTimeInt = function() {
-  return this/1000 + 5*3600; //converts the time from graph time to the regular UTC time int.
+Number.prototype.utcTimeInt = function() { //takes a graphtime number and removes milliseconds and converts to est. this one gets run a crap ton of times.
+  moment.tz.add('America/New_York|EST EDT|50 40|0101|1Lz50 1zb0 Op0'); //Ads the NY EST time into the moment.js timezone js data options.
+
+  var offset = 3600*4;
+  var time = this;
+  wrong_set = parseInt(moment.tz.zone('America/New_York').offset(time) * 60);
+
+  if (wrong_set == 18000) {
+    console.log("wrongset:"+wrong_set);
+  }
+
+  return this/1000 + offset; //converts the time from graph time to the regular UTC time int.
 }
 
 //expects to take a date string "YYYY-MM-DD" or the database type "2015-01-26 21:00:00 UTC"
@@ -123,7 +139,6 @@ String.prototype.validStockTime = function() {
       return false;
     }
   }
-
 
   return true;
 }
