@@ -20,6 +20,7 @@
       <%else %>
         <p><%= stream.streamable.content %></p>
       <% end %>
+      </div>
       <div class="prediction-footer">
         <i class="fa fa-clock-o">&nbsp;<%= distance_of_time_in_words(stream.streamable.created_at, Time.now) %> ago</i><span><%= stream.streamable.score %> points</span>
       </div>
