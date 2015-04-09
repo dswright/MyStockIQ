@@ -9,7 +9,11 @@
       <div class="comment-only-item-txt">
         <%= link_to stream.streamable.user.username, "/users/#{stream.streamable.user.username}/", class: "comment-only-item-username" %>
         <p class="comment-only-item-main-txt">
-          <%= stream.streamable.content %>
+          <% unless stream.streamable.tag == nil %>
+              <%= render html: stream.streamable.tag.content.html_safe %>
+          <%else %>
+              <%= stream.streamable.content %>
+      <% end %>
         </p>
       </div>
       <div class="prediction-footer">

@@ -32,8 +32,8 @@ def add_tags(ticker_symbol=nil)
         #Checks word and word minus last character to remove possible punctuation
         if Stock.exists?(ticker_symbol: word)
           word = "<a href = \"/stocks/#{word}/\"> $#{word} </a>"
-        elsif Stock.exists?(ticker_symbol: word.slice(0..sentence.length-2))
-          word = "<a href = \"/stocks/#{word.slice(0..sentence.length-2)}/\"> $#{word.slice(0..sentence.length-2)} </a>"
+        elsif Stock.exists?(ticker_symbol: word[0..word.length-2])
+          word = "<a href = \"/stocks/#{word[0..word.length-2]}/\"> $#{word} </a>"
         else
           word.prepend("$")
         end
@@ -44,8 +44,8 @@ def add_tags(ticker_symbol=nil)
         #Checks word and word minus last character to remove possible punctuation
         if User.exists?(username: word)
           word = "<a href = \"/users/#{word}/\"> @#{word} </a>"
-        elsif User.exists?(username: word.slice(0..sentence.length-2))
-          word = "<a href = \"/users/#{word.slice(0..sentence.length-2)}/\"> @#{word.slice(0..sentence.length-2)} </a>"
+        elsif User.exists?(username: word[0..word.length-2])
+          word = "<a href = \"/users/#{word[0..word.length-2]}/\"> @#{word} </a>"
         else
           word.prepend("@")
         end
