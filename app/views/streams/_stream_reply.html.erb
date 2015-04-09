@@ -7,8 +7,15 @@
     <div class="stream-comments-txt pull-left">
       <p>
         <%= link_to reply.user.username, "/users/#{reply.user.username}/", class: "stream-comments-txt-username" %>:&nbsp;
-        <%= reply.content %>
+
+        <% unless reply.tag == nil %>
+          <%= render html: reply.tag.content.html_safe %>
+        <%else %>
+          <%= reply.content %>
+        <% end %>
       </p>
+
+
       <div class="stream-comments-txt-footer clearfix">
         <i class="fa fa-clock-o">&nbsp;<%= distance_of_time_in_words(reply.created_at, Time.now) %> ago</i>
       </div>

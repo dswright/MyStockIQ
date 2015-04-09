@@ -1,6 +1,6 @@
 class Prediction < ActiveRecord::Base
-  require 'popularity_past'
-  include PopularityPast
+  require 'shared_methods'
+  include SharedMethods
   require 'customdate'
   require 'action_view'
   include ActionView::Helpers::DateHelper
@@ -13,7 +13,8 @@ class Prediction < ActiveRecord::Base
   has_many :replies, as: :repliable
   has_one :predictionend, dependent: :destroy
   has_one :popularity, as: :popularable, dependent: :destroy
-
+  has_one :tag, as: :tagable, dependent: :destroy
+  
   validates :prediction_end_price, presence: true, numericality: true
   validates :stock_id, presence: true, numericality: true
   default_scope -> { order(created_at: :desc) }

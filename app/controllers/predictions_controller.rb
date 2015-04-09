@@ -4,7 +4,7 @@ class PredictionsController < ApplicationController
 	require 'popularity'
   require 'graph'
 	
-
+  
   def hover_daily
     prediction = Prediction.find(params[:id])
 
@@ -130,11 +130,8 @@ class PredictionsController < ApplicationController
 			@prediction.save
       
       #Create the stream inserts for the prediction.
-      @streams = []
-      stream_params_array = stream_params_process(params[:stream_string])
-      stream_params_array.each do |stream_item|
-        @prediction.streams.create(stream_item)
-      end
+      @prediction.streams.create!(targetable_type: @user.class.name, targetable_id: @user.id)
+      @prediction.streams.create!(targetable_type: stock.class.name, targetable_id: stock.id)
 
       @prediction.build_popularity(score:0).save #build the popularity score item for predictions
 			@streams = [Stream.where(streamable_type: 'Prediction', streamable_id: @prediction.id).first]

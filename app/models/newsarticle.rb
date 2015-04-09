@@ -1,6 +1,6 @@
 class Newsarticle < ActiveRecord::Base
-  require 'popularity_past'
-  include PopularityPast
+  	require 'shared_methods'
+  	include SharedMethods
 
   has_many :likes, as: :likable
   has_many :replies, as: :repliable

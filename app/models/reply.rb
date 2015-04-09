@@ -1,13 +1,13 @@
 class Reply < ActiveRecord::Base
 
-	require 'popularity_past'
-	include PopularityPast
+  	require 'shared_methods'
+  	include SharedMethods
 	
 	belongs_to :user
 	belongs_to :repliable, polymorphic: :true #Comment, newsarticle, prediction, predictionend are all repliable types.
 	has_many :likes, as: :likable
 	has_one :popularity, as: :popularable, dependent: :destroy
-
+	has_one :tag, as: :tagable, dependent: :destroy
 
 	validates :user_id, presence: true, numericality: true
 	validates :repliable_id, presence: true, numericality: true

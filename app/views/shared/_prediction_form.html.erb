@@ -19,7 +19,7 @@
 		      <%= text_field_tag 'minutes', nil, class: "prediction-form-mins", placeholder:"minutes" %>
 			  </div>
 		    <div class="stockpage-sidebar-prediction-comment">
-		      <%= f.text_area :prediction_comment, placeholder: "Comment on #{@prediction.stock.ticker_symbol}", class: "prediction-form-comment" %>
+		      <%= f.text_area :content, placeholder: "Comment on #{@prediction.stock.ticker_symbol}", class: "prediction-form-comment" %>
 		    </div>
 		    <%= f.hidden_field :stock_id %>
 				<%= hidden_field_tag :stream_string, @prediction_stream_string %>
