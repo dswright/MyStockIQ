@@ -132,7 +132,7 @@
             Points
           </div>
           <div class="user-sidebar-stats-number pull-right">
-            21k
+            <%= @user.total_score %>
           </div>
         </div>
         <div class="user-sidebar-stats-item clearfix" href="#">
@@ -140,7 +140,7 @@
             Following
           </div>
           <div class="user-sidebar-stats-number pull-right">
-            163
+            <%= @user.followings.count %>
           </div>
         </div>
         <div class="user-sidebar-stats-item clearfix" href="#">
@@ -148,7 +148,7 @@
             Followers
           </div>
           <div class="user-sidebar-stats-number pull-right">
-            63
+            <%= @user.followers.count %>
           </div>
         </div>
         <div class="user-sidebar-stats-item clearfix" href="#">
@@ -156,7 +156,7 @@
             Predictions
           </div>
           <div class="user-sidebar-stats-number pull-right">
-            390
+            <%= @user.predictions.count %>
           </div>
         </div>
       </div>

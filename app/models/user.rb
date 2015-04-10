@@ -76,6 +76,7 @@ class User < ActiveRecord::Base
     BCrypt::Password.new(remember_digest).is_password?(remember_token)
   end
 
+
   #Follows a user
   def follow(object)
     #sets followed id = other_user id and follower id = user id
@@ -114,8 +115,6 @@ class User < ActiveRecord::Base
     end
     return followings
   end
-
-
 
   def likes_this?(object)
     like_type = object.likes.where(user_id: self.id).first.like_type
