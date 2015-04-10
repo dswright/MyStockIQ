@@ -13,10 +13,12 @@ class Stream < ActiveRecord::Base
   ######### STREAM MODEL VALIDATIONS ##########
 
   #Stream.valid? returns TRUE when:
-  validates :streamable_id, presence: true
+  validates :streamable_id, presence: true, numericality: true
   validates :streamable_type, presence: true
-  validates :targetable_id, presence: true
+  validates :targetable_id, presence: true, numericality: true
   validates :targetable_type, presence: true
+  #Validates uniqueness of entire stream record
+  validates :streamable_id, uniqueness: { scope: [:streamable_type, :targetable_id, :targetable_type]}
 
   def self.feed(user)
     following_ids = Array.new
