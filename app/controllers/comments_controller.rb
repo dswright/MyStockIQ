@@ -9,7 +9,7 @@ class CommentsController < ApplicationController
 		comment = @user.comments.build(comment_params)
 		
 		#Add ticker_symbol to content and find '$' and '@' handles in comment content
-		comment.add_tags(stock.ticker_symbol)
+		tags = comment.add_tags(stock.ticker_symbol)
 
 		response_msgs = []
 		if comment.valid?
@@ -21,6 +21,8 @@ class CommentsController < ApplicationController
 			#Build stream items targeting stock and current user
 			comment.streams.create(targetable_id: stock.id, targetable_type: stock.class.name)
 			comment.streams.create(targetable_id: @user.id, targetable_type: @user.class.name)
+			#Build additional stream items for comment targeting other stocks or users
+			tags.each {|tag| comment.streams.create(targetable_id: tag.id, targetable_type: tag.class.name)}
 
 			
 			@streams = [Stream.where(streamable_type: 'Comment', streamable_id: comment.id).first] #get this one stream item.

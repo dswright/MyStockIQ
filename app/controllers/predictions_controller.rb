@@ -100,7 +100,7 @@ class PredictionsController < ApplicationController
 		@prediction = @user.predictions.build(prediction)
 		@prediction.start_price = stock.daily_stock_price
 
-    @prediction.add_tags(stock.ticker_symbol)
+    tags = @prediction.add_tags(stock.ticker_symbol)
     
 		@graph_time = prediction_end_time.utc_time_int.graph_time_int
 
@@ -134,6 +134,8 @@ class PredictionsController < ApplicationController
       #Create the stream inserts for the prediction.
       @prediction.streams.create!(targetable_type: @user.class.name, targetable_id: @user.id)
       @prediction.streams.create!(targetable_type: stock.class.name, targetable_id: stock.id)
+      #Build additional stream items for comment targeting other stocks or users
+      tags.each {|tag| @prediction.streams.create(targetable_id: tag.id, targetable_type: tag.class.name)}
 
       @prediction.build_popularity(score:0).save #build the popularity score item for predictions
 			@streams = [Stream.where(streamable_type: 'Prediction', streamable_id: @prediction.id).first]

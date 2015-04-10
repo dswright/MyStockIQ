@@ -43,15 +43,16 @@ class PredictionendsController < ApplicationController
 
         predictionend.build_popularity(score:0).save #build the popularity score item for predictions
         @predictionend = predictionend
-        predictionend.add_tags(prediction.stock.ticker_symbol) #Add tickersymbol ('$') and username ('@') tags to predictionend content
+        tags = predictionend.add_tags(prediction.stock.ticker_symbol) #Add tickersymbol ('$') and username ('@') tags to predictionend content
 
         @graph_time = @predictionend.actual_end_time.utc_time_int.graph_time_int
 
-        #build a custom stream string for cancellations, which always have the same stream items.
-
+ 
         #target the current user and the stock with stream items.
         predictionend.streams.create!(targetable_type:"Stock", targetable_id:prediction.stock.id)
         predictionend.streams.create!(targetable_type:"User", targetable_id:current_user.id)
+        #Build additional stream items for comment targeting other stocks or users
+        tags.each {|tag| predictionend.streams.create(targetable_id: tag.id, targetable_type: tag.class.name)}
 
         #build stream item to insert to the top of the stream.
         @streams = [Stream.where(streamable_type: 'Predictionend', streamable_id: @predictionend.id).first]
