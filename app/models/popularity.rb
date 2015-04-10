@@ -37,6 +37,11 @@ class Popularity < ActiveRecord::Base
 			score += prediction_score
 		end
 
+		#Prediction end posts should have the same score as predictions
+		if self.popularable.class.name == "Predictionend"
+			predictionend_score = self.popularable.prediction.popularity.score
+			score += predictionend_score
+		end
 		#Reduce popularity score 1 point per half day
 		if self.popularable.class.name == "Newsarticle"
 			#Minus 8 points per day
