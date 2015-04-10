@@ -85,6 +85,97 @@
 
   <div class="col-xs-12 col-sm-9 stockpage-body">
 
+
+
+
+    <!-- PREDICTION FORM BOX -->
+
+    <div class="prediction-form-box" id="tabs">
+      <ul class="prediction-form-box-tabs">
+        <li><a id="prediction-tab" href="#tabs-1"><i class="fa fa-line-chart"></i>&nbsp;&nbsp;&nbsp;Predict AAPL</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#124;</li>
+        <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a id="comment-only-tab" href="#tabs-2"><i class="fa fa-comment"></i>&nbsp;&nbsp;&nbsp;Comment on AAPL</a></li>
+      </ul>
+
+      <div class="prediction-form-div prediction-icon-addon prediction-addon-sm" id="tabs-1">
+        <div class="prediction-field-container clearfix">
+          <div class="prediction-field-col col-sm-4">
+            <input type='text' id='price' placeholder="Prediction price"/>
+            <label for="price" class="glyphicon glyphicon-usd" rel="tooltip"></label>
+          </div>
+          <div class="prediction-field-col col-sm-4">
+            <input type='date' id='date' placeholder="End date"/>
+            <label for="date" class="glyphicon glyphicon-calendar" rel="tooltip"></label>
+          </div>
+          <div class="prediction-field-col col-sm-4">
+            <input type='time' id='time' placeholder="End time"/>
+            <label for="time" class="glyphicon fa fa-clock-o" rel="tooltip"></label>
+          </div>
+        </div>
+        <div class="prediction-comment-field clearfix">
+          <textarea id='comment' placeholder="Comment on your prediction" onkeyup="countChar(this)"/></textarea>
+        </div>
+        <div class="button-counter clearfix">
+          <input class="btn pull-right" value="Submit">
+          <div class="pull-right" id="charNum"></div>
+        </div>
+      </div>
+
+      <div class="comment-only-form-div" id="tabs-2">
+        <div class="comment-only-field">
+          <textarea id='comment-only' placeholder="Comment on AAPL" onkeyup="countCommentChar(this)"/></textarea>
+        </div>
+        <div class="button-counter clearfix">
+          <input class="btn pull-right" value="Submit">
+          <div class="pull-right" id="commentCharNum"></div>
+        </div>
+      </div>
+
+    </div>
+
+
+
+    <!-- OPEN PREDICTION FORM BOX -->
+
+    <div class="open-prediction-form-box" id="open-tabs">
+      <ul class="open-prediction-form-box-tabs">
+        <li><a id="open-prediction-comment-tab" href="#tabs-1"><i class="fa fa-comment"></i>&nbsp;&nbsp;&nbsp;Comment on AAPL</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#124;</li>
+        <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a id="open-prediction-close-tab" href="#tabs-2"><i class="fa fa-line-chart"></i>&nbsp;&nbsp;&nbsp;Close My Prediction</a></li>
+      </ul>
+
+
+      <div class="open-comment-only-form-div" id="tabs-1">
+        <div class="open-comment-only-field">
+          <textarea id='open-comment' placeholder="Comment on AAPL" onkeyup="openCountCommentChar(this)"/></textarea>
+        </div>
+        <div class="button-counter clearfix">
+          <input class="btn pull-right" value="Submit">
+          <div class="pull-right" id="openCommentCharNum"></div>
+        </div>
+      </div>
+
+
+      <div class="close-prediction-form-div" id="tabs-2">
+        <div class="close-prediction-container clearfix">
+          <div class="close-prediction-data">
+            <p class="close-prediction-points">+10.00 Points</p>
+            <p class="close-prediction-date">CLOSING ON APR 8, 11:17AM</p>
+          </div>
+        </div>
+        <div class="close-prediction-comment-field clearfix">
+          <textarea id='close-comment' placeholder="Make a closing comment" onkeyup="openCountChar(this)"/></textarea>
+        </div>
+        <div class="button-counter clearfix">
+          <input class="btn pull-right" value="CLOSE PREDICTION">
+          <div class="pull-right" id="openCharNum"></div>
+        </div>
+      </div>
+
+    </div>
+
+
+
+
+
     <!-- STREAM POSTS -->
     <div class = "stream" >
       <%= render partial: "streams/stream_main", locals: {streams: @streams} %>

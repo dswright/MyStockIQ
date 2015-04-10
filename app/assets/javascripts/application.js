@@ -23,3 +23,4 @@
 //= require pagination
 //= require image-upload
 //= require nav
+//= require prediction-form-box
