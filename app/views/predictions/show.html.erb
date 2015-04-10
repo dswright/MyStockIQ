@@ -68,22 +68,22 @@
 
         <div class="prediction-detail-replies" id="new-reply-container">
 
-        <% unless @prediction.prediction_comment.nil? %>
+        <% unless @prediction.content.nil? %>
           <% unless @prediction.predictionend.nil? %>
-            <% unless @prediction.predictionend.comment.nil? %>
+            <% unless @prediction.predictionend.content.nil? %>
               <div class="prediction-detail-tweet">
                 <div class="prediction-detail-tweet-clear">
-                  <p><%= @prediction.predictionend.comment %></p>
+                  <p><%= @prediction.predictionend.content %></p>
                 </div>
                 <div class="prediction-detail-tweet-clear">
-                  <p><%= @prediction.prediction_comment %></p>
+                  <p><%= @prediction.content %></p>
                 </div>
               </div>
             <% end %>
           <% else %>
             <div class="prediction-detail-tweet">
               <div class="prediction-detail-tweet-clear">
-                <p><%= @prediction.prediction_comment %></p>
+                <p><%= @prediction.content %></p>
               </div>
             </div>
           <% end %>
