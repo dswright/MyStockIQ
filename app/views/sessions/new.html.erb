@@ -1,47 +1,41 @@
+<body class="blue-blur-sign-in">
 
-<section class="signin-nav clearfix">
-  <div class="nav-constrainer">
-    <div class="signin-nav-logo pull-left">
-      StockIQ
-    </div>
-    <div class="signin-nav-link pull-right">
-      <p>Sign In</p>
-    </div>
-  </div>
-</section>
-
-<% if session[:errors] %>
-  <div class="error-box">
-  <% session[:errors].each do |error_message| %>
-    <div><%= error_message %></div>
+  <% if session[:errors] %>
+    <div class="error-box">
+    <% session[:errors].each do |error_message| %>
+      <div><%= error_message %></div>
+    <% end %>
   <% end %>
-<% end %>
-<% session.delete :errors %>
+  <% session.delete :errors %>
 
-<%= form_for(:session, url: login_path) do |f| %>
-  <div class="constrainer">
-    <div class="signin-form-div">
-      <div class="signin-form-box">
-      <div class="signin-form-header">
-        <div class="signin-form-header-txt">
-          Sign In
+  <%= form_for(:session, url: login_path) do |f| %>
+    <div class="constrainer">
+      <div class="signin-logo-container">
+        <%= image_tag ("StockIQ-logo-white.png") %>
+      </div>  
+      <div class="signin-form-div">
+        <div class="signin-form-box">
+          <div class="signin-form-header">
+            <div class="signin-form-header-txt">
+              Sign In
+            </div>
+          </div>
+          <div class="signin-form-fields">
+            <%= f.text_field :email, :placeholder => "Email Address or Username", :class => "signin-email-field", :id => "signin-form-field" %>
+            <%= f.password_field :password, :placeholder => "Password", :class => "signin-email-field", :id => "password" %>
+          </div>
+          <div class="signin-submit-button-div">
+            <%= f.submit "SUBMIT", :class => "btn" %>
+          </div>
         </div>
-      </div>
-        <p class="signin-signin-link">Don't have and account?
-        <%= link_to "Sign up here.", signup_path %></p>
-        <div class="signin-form-fields">
-          <%= f.text_field :email, :placeholder => "Email Address or Username", :class => "signin-email-field", :id => "signin-form-field" %>
-          <%= f.password_field :password, :placeholder => "Password", :class => "signin-email-field", :id => "password" %>
-        </div>
-        <div class="signin-submit-button-div">
-          <%= f.submit "SUBMIT", :class => "btn" %>
-        </div>
+        <p class="signin-signin-link">Don't have and account? <%= link_to "Sign up here.", signup_path %>
+        </p>
       </div>
     </div>
-  </div>
-<% end %>
+  <% end %>
 
 <br>
 <br>
 <br>
 
+</body>
