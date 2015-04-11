@@ -2,24 +2,40 @@
 /* STOCKIQ SIGNUP PAGE STYLES */
 
 
-.signup-title {
-  margin-top: 30px;
-  text-align: center;
-  font-size: 33px;
-  font-weight: 300;
-  color: #919191;
+.blue-blur-sign-up {
+  background-image: asset-url("blue-blur33.png");
+  background-size: cover;
+  max-width: 100%;
+  padding-top: 1px;
+  padding-bottom: 60px;
+  overflow: hidden;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.signup-logo-container {
+  margin-top: 60px;
+  display: block;
+  width: 290px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.signup-logo-container img {
+  width: 100%;
+
 }
 
 .signup-subtitle {
   text-align: center;
-  margin-top: 20px;
+  margin-top: 30px;
   margin-left: auto;
   margin-right: auto;
   max-width: 530px;
   line-height: 30px;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 300;
-  color: #919191;
+  color: #fff;
 }
 
 .signup-form-div {
@@ -36,6 +52,7 @@
   font-weight: 300;
   padding-top: 15px;
   padding-bottom: 15px;
+  margin-bottom: 20px;
   border-bottom: 1px solid rgba(0,0,0,.1);
 }
 
@@ -59,8 +76,8 @@
 .signup-signin-link {
   margin-top: 20px;
   margin-bottom: 15px;
-  color: #919191;
-  font-size: 12px;
+  color: #fff;
+  font-size: 13px;
   font-weight: 300;
 }
 
@@ -101,70 +118,6 @@
   box-shadow: 0 0 0 1pt #7cb5ec;
 }
 
-
-
-.btn-file {
-  position: relative;
-  overflow: hidden;
-}
-
-.btn-file input[type=file] {
-  margin-top: -20px;
-  width: 103px;
-  height: 30px;
-  font-size: 12px;
-  filter: alpha(opacity=0);
-  opacity: 0;
-}
-
-.btn-file input {
-  background-color: #fff;
-  border: none;
-  color: #7cb5ec;
-  font-weight: 300;
-  border: 1px solid #7cb5ec;
-  border-radius: 3px;
-}
-
-.btn-custom {
-  display: inline-block;
-  width: 90px;
-  height: 27px;
-  text-align: center;
-  padding-top: 6px;
-  color: #B3B3B3;
-  font-size: 11px;
-  cursor: pointer;
-  background-color: #fff;
-  border: solid 1px #C7C7C7;
-  border-radius: 3px;
-
-  -webkit-transition: 150ms ease-in;
-  -moz-transition: 150ms ease-in;
-  -o-transition: 150ms ease-in;
-  transition: 150ms ease-in;
-}
-
-.btn-custom:hover {
-  color: #7cb5ec;
-  border: solid 1px #7cb5ec;
-}
-
-.btn-custom input:active {
-  filter: alpha(opacity=0);
-  border-top: 0px;
-  box-shadow: 0px;
-}
-
-#signup-label {
-  display: inline-block;
-  font-size: 12px;
-  margin-left: 20px;
-  padding-top: 6px;
-  height: 27px;
-  color: #7cb5ec;
-}
-
 .password-col1 {
   padding-left: 0px;
   padding-right: 0px;
@@ -176,10 +129,8 @@
 }
 
 
-
 .signup-privacy {
-  margin-top: 0px;
-  margin-top: 15px;
+  margin-top: 10px;
   color: #919191;
   font-size: 12px;
   font-weight: 300;
@@ -204,8 +155,8 @@
 }
 
 .signup-submit-button-div input {
-  margin-top: 15px;
-  border: solid 1px #C7C7C7;
+  margin-top: 5px;
+  box-shadow: 0 0 0 1pt rgba(0,0,0,0.1);
   border-radius: 3px;
   padding-bottom: 12px;
   padding-top: 12px;
@@ -222,7 +173,7 @@
 
 .signup-submit-button-div input:hover {
   color: #7cb5ec;
-  border: solid 1px #7cb5ec;
+  box-shadow: 0 0 0 1pt #7cb5ec;
 }
 
 

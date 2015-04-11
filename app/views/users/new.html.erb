@@ -1,62 +1,57 @@
+<div class="blue-blur-sign-up">
 
-
-<% if session[:errors] %>
-  <div class="error-box">
-  <% session[:errors].each do |error_message| %>
-    <div><%= error_message %></div>
+  <% if session[:errors] %>
+    <div class="error-box">
+    <% session[:errors].each do |error_message| %>
+      <div><%= error_message %></div>
+    <% end %>
   <% end %>
-<% end %>
-<% session.delete :errors %>
+  <% session.delete :errors %>
 
-<%= form_for(:user, url: users_path, :multipart => true) do |f| %>
-  <div class="constrainer">
-    <p class="signup-title">What's your Stock IQ?</p>
-    <p class="signup-subtitle">Find out how good you <i>really</i> are at predicting the market. Follow experts, compete with friends, and raise your Stock IQ.</p>
-    <div class="signup-form-div">
-      <div class="signup-form-box">
-        <div class="signup-form-header">
-          <div class="signup-form-header-txt">
-            Sign Up
-          </div>
-        </div>
-        <p class="signup-signin-link">Already have and account? <%= link_to "Sign in here.", login_path %></p>
-        <div class="signup-form-fields">
-
-          <%= f.text_field :username, class: "signup-email-field", id: "signup-form-field", placeholder: "Username" %>
-
-          <%= f.text_field :email, class: "signup-form-field", id: "signup-form-field", placeholder: "Email address" %>
-
-          <div class="password-col1 col-sm-6">
-            <%= f.password_field :password, class: "signup-email-field", id: "signup-form-field", placeholder: "Password" %>
+  <%= form_for(:user, url: users_path, :multipart => true) do |f| %>
+    <div class="constrainer">
+      <div class="signup-logo-container">
+        <%= image_tag ("StockIQ-logo-white.png") %>
+      </div>
+      <p class="signup-subtitle">Find out how good you <i>really</i> are at predicting the market. Follow experts, compete with friends, and raise your Stock IQ.</p>
+      <div class="signup-form-div">
+        <div class="signup-form-box clearfix">
+          <div class="signup-form-header">
+            <div class="signup-form-header-txt">
+              Sign Up
+            </div>
           </div>
 
-          <div class="password-col2 col-sm-6">
-            <%= f.password_field :password_confirmation, class: "signup-email-field", id: "signup-form-field", placeholder: "Confirm Password" %>
+          <div class="signup-form-fields">
+
+            <%= f.text_field :username, class: "signup-email-field", id: "signup-form-field", placeholder: "Username" %>
+
+            <%= f.text_field :email, class: "signup-form-field", id: "signup-form-field", placeholder: "Email address" %>
+
+            <div class="password-col1 col-sm-6">
+              <%= f.password_field :password, class: "signup-email-field", id: "signup-form-field", placeholder: "Password" %>
+            </div>
+
+            <div class="password-col2 col-sm-6">
+              <%= f.password_field :password_confirmation, class: "signup-email-field", id: "signup-form-field", placeholder: "Confirm Password" %>
+            </div>
+         
+           </div>
+
+            <p class="signup-privacy">StockIQ will never share your information with third parties. See our <a href="#">Privacy Policy</a> for further details.</p>
+            
+            <div class="signup-submit-button-div">
+              <%= f.submit "CREATE ACCOUNT", :class => "btn" %>
+            </div>
+
           </div>
-       
-
-         </div>
-
-        <div class="img-upload-div clearfix">
-          <p class="signup-signin-link">Select a profile image:</p>
-
-          <div class="btn-custom btn-file pull-left">
-            Browse <%= f.file_field :image, class: "custom-file-input" %>
-          </div>
-          <div id="signup-label" class="pull-left"></div>
-        </div>
-
-
-
-        <p class="signup-privacy">StockIQ will never share your information with third parties. See our <a href="#">Privacy Policy</a> for further details.</p>
-        
-        <div class="signup-submit-button-div">
-          <%= f.submit "CREATE ACCOUNT", :class => "btn" %>
+          <p class="signup-signin-link">Already have and account? <%= link_to "Sign in here.", login_path %></p>
         </div>
       </div>
     </div>
-  </div>
-<% end %>
+  <% end %>
+
+</div>
 
 
 
