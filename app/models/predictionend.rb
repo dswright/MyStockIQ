@@ -10,4 +10,11 @@ class Predictionend < ActiveRecord::Base
   has_many :replies, as: :repliable
 
   default_scope -> { order(created_at: :desc) }
+
+
+  def total_replies
+  	replies = self.replies + self.prediction.replies
+  end
+
+
 end

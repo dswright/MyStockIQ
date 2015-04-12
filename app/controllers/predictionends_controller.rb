@@ -37,7 +37,7 @@ class PredictionendsController < ApplicationController
         predictionend = prediction.build_predictionend() #build a prediction end.
         predictionend.actual_end_time = Time.zone.now.utc_time_int.closest_start_time
         predictionend.actual_end_price = prediction.stock.daily_stock_price
-        predictionend.comment = params[:comment]
+        predictionend.content = params[:comment]
         predictionend.end_price_verified = false
         predictionend.save #save the prediction end.
 

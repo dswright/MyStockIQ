@@ -31,11 +31,11 @@
   </div>
   <div class="stream-item-comments" id="new-reply-container">
     <div class="stream-comment-header">
-      <p><%= stream.streamable.replies.count %> replies</p>
+      <p><%= stream.streamable.total_replies.count %> replies</p>
     </div>
 
     <!-- load partials for each reply -->
-    <% stream.streamable.replies.reorder('created_at asc').each do |reply| %>
+    <% stream.streamable.total_replies.sort_by{ |reply| reply[:created_at]}.each do |reply| %>
       <%= render partial: "streams/stream_reply", locals: {reply: reply}  %>
     <% end %>
 
