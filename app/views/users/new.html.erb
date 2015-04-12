@@ -4,16 +4,21 @@
     <div class="error-box">
     <% session[:errors].each do |error_message| %>
       <div><%= error_message %></div>
+      <% end %>
     <% end %>
-  <% end %>
+    </div>
+
   <% session.delete :errors %>
 
-  <%= form_for(:user, url: users_path, :multipart => true) do |f| %>
     <div class="constrainer">
       <div class="signup-logo-container">
         <%= image_tag ("StockIQ-logo-white.png") %>
       </div>
       <p class="signup-subtitle">Find out how good you <i>really</i> are at predicting the market. Follow experts, compete with friends, and raise your Stock IQ.</p>
+
+
+      <!-- INVITED PARTIAL-->
+
       <div class="signup-form-div">
         <div class="signup-form-box clearfix">
           <div class="signup-form-header">
@@ -23,6 +28,7 @@
           </div>
 
           <div class="signup-form-fields">
+            <%= form_for(:user, url: users_path, :multipart => true) do |f| %>
 
             <%= f.text_field :username, class: "signup-email-field", id: "signup-form-field", placeholder: "Username" %>
 
@@ -36,21 +42,47 @@
               <%= f.password_field :password_confirmation, class: "signup-email-field", id: "signup-form-field", placeholder: "Confirm Password" %>
             </div>
          
-           </div>
-
-            <p class="signup-privacy">StockIQ will never share your information with third parties. See our <a href="#">Privacy Policy</a> for further details.</p>
-            
-            <div class="signup-submit-button-div">
-              <%= f.submit "CREATE ACCOUNT", :class => "btn" %>
-            </div>
-
           </div>
-          <p class="signup-signin-link">Already have and account? <%= link_to "Sign in here.", login_path %></p>
-        </div>
-      </div>
-    </div>
-  <% end %>
 
+          <p class="signup-privacy">
+            StockIQ will never share your information with third parties. See our <a href="#">Privacy Policy</a> for further details.
+          </p>
+            
+          <div class="signup-submit-button-div">
+            <%= f.submit "CREATE ACCOUNT", :class => "btn" %>
+          </div>
+
+        </div>
+        <p class="signup-signin-link">
+          Already have an account? <%= link_to "Sign in here.", login_path %>
+        </p>
+      <% end %>
+      </div>
+
+
+      <!-- NOT INVITED PARTIAL-->
+
+      <div class="signup-email-div">
+        <p class="signup-email-txt">
+          Be the first to know when we launch!
+        </p>
+
+
+        <div class="signup-email-inputs clearfix">
+          <div class="email-input-col col-sm-9">
+            <input class="waitlist-email" type="email" placeholder="Email address">
+          </div>
+          <div class="btn-input-col col-sm-3">          
+            <div class="signup-email-submit-button-div">
+              <input class="btn" value="SUBMIT">
+            </div>
+          </div>  
+        </div>
+
+      </div>
+
+
+    </div>
 </body>
 
 
