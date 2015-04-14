@@ -231,8 +231,8 @@ function StockGraph(stockGraph, chart) {
   this.startChart = function() { //set the initial values when the graph prediction is null.
 
     //create these 2 graph arrays using the graph arrays from the server.
-    stockGraph["daily_forward_prices"] = DailyForwardPrices(stockGraph["daily_prices"].last()[0]); //create this array using js function.
-    stockGraph["intraday_forward_prices"] = IntradayForwardPrices(stockGraph["intraday_prices"].last()[0]); //create this array using js function.
+    //stockGraph["daily_forward_prices"] = DailyForwardPrices(stockGraph["daily_prices"].last()[0]); //create this array using js function.
+    //stockGraph["intraday_forward_prices"] = IntradayForwardPrices(stockGraph["intraday_prices"].last()[0]); //create this array using js function.
     
     var activeDailyPredictions = DailyPredictions(stockGraph["predictions"], stockGraph["prediction_ids"]) //Dailypredictions returns just 1 prediction for each day, and the corresponding prediction id array.
     stockGraph["daily_predictions"] = activeDailyPredictions[0];
@@ -386,18 +386,22 @@ function StockGraph(stockGraph, chart) {
         //setMyPrediction(graph["my_prediction"]); //set the daily and intraday my_prediction graph arrays based on my_prediction.
       //okokokokok
 
-      chart.series[0].setData(theGraph["intraday_prices"]);
-      chart.series[1].setData(theGraph["intraday_forward_prices"]);
-      chart.series[2].setData(theGraph["intraday_predictions"]);
-      chart.series[3].setData(theGraph["intraday_my_prediction"]); //this may be null
+      //chart.series[0].setData(theGraph["intraday_prices"]);
+      //chart.series[1].setData(theGraph["intraday_forward_prices"]);
+      //chart.series[2].setData(theGraph["intraday_predictions"]);
+      //chart.series[3].setData(theGraph["intraday_my_prediction"]); //this may be null
 
     }
     if ((button !== "1D" && button !== "5D") && (currentRange["buttonType"] === "1D" || currentRange["buttonType"] === "5D")) { //set daily graph
     //if (button !== "1d" && button !== "5d") {
+      console.log(theGraph["daily_prices"]);
+      theGraph["daily_prices"] = [[1427981400000, 85],[1427981700000, 85]];
+      //theGraph["daily_prices"] = [{"x":1427981400000, "y":85},{"x":1427981700000, "y":85}];
+      console.log(theGraph["daily_prices"]);
       chart.series[0].setData(theGraph["daily_prices"]);
-      chart.series[1].setData(theGraph["daily_forward_prices"]);
-      chart.series[2].setData(theGraph["daily_predictions"]);
-      chart.series[3].setData(theGraph["daily_my_prediction"]);
+      //chart.series[1].setData(theGraph["daily_forward_prices"]);
+      //chart.series[2].setData(theGraph["daily_predictions"]);
+      //chart.series[3].setData(theGraph["daily_my_prediction"]);
     }
     setPredictions(stockGraph); //reset the predictions array. They get unset from running these setData functions, not sure why.
     setMyPrediction(stockGraph["my_prediction"]); //set the daily and intraday my_prediction graph arrays based on my_prediction.
@@ -468,12 +472,12 @@ function IntradayForwardPrices (startTime) {
   var iterations = 390; //5 6.5 hour days of 5 minute itarations. 5 days necessary for the prediction details graph.
   while (i<=iterations) {
     timeSpot = startTime + i*5*60*1000;
-    if (timeSpot.utcTimeInt().utcTimeStr().validStockTime()) {
+    //if (timeSpot.utcTimeInt().utcTimeStr().validStockTime()) {
       forwardArray.push([timeSpot, null]);
-    }
-    else {
-      iterations += 1;
-    }
+    //}
+    //else {
+      //iterations += 1;
+    //}
     i += 1;
   }
   return forwardArray;
@@ -485,12 +489,12 @@ function DailyForwardPrices (startTime) {
   var iterations = 1202; //1200 is 5 years forward.
   while (i<=iterations) {
     timeSpot = startTime + i*24*3600*1000;
-    if (timeSpot.utcTimeInt().utcTimeStr().validStockTime()) {
+    //if (timeSpot.utcTimeInt().utcTimeStr().validStockTime()) {
       forwardArray.push([timeSpot, null]);
-    }
-    else {
-      iterations += 1;
-    }
+    //}
+    //else {
+    //  iterations += 1;
+    //}
     i += 1;
   }
   return forwardArray;
@@ -535,7 +539,7 @@ function DailyPredictions (predictions, predictionIds) { //the predictions array
     if (predictions[i][0] != null) {
       var timeStr = predictions[i][0].utcTimeInt().utcTimeStr(); //convert the graph time into a utc date string.
       var day = timeStr.utcTime().utcTimeStr(); //convert the date string into string 'yyyy-mm-dd'
-      day = day + " 21:00:00"; 
+      day = day + " 20:00:00"; //its 20 because 20 is valid during DST time too.
       var timeCompare = day.utcTime().utcTimeInt().graphTimeInt(); //convert the string to datestamp, then to utc int, then graphtimeint.
        
       if (predictionIds === undefined) { //the predictionIds will be undefined when its the predictiondetails graph. Don't eliminate same time predictions.
@@ -568,9 +572,10 @@ function Button(buttonSettings) {
     iterations = timeLength/settings.timeInterval; //calculate number of iterations
     while (i<=iterations) {
       var time_to_check = (startPoint + i*settings.timeInterval*intervalDirection).utcTimeInt().utcTimeStr(); //convert the graphtime int to utc time int, then to utc time string for processing.
-      if (!time_to_check.validStockTime()) { //validstocktime function expects a string.
-        iterations += 1; //if this time point is invalid, increase the number of iterations to do.
-      }
+      //if (!time_to_check.validStockTime()) { //validstocktime function expects a string.
+      //  iterations += 1; //if this time point is invalid, increase the number of iterations to do.
+      //  console.log("startPoint:"+startPoint);
+      //}
       i+=1; //increase i everytime.
     }
     endPoint = startPoint + settings.timeInterval*iterations*intervalDirection;

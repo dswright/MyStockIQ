@@ -286,11 +286,15 @@ class GoogleIntraday
     if row[0].gsub('a','').to_i <= 1000000
       time_start = time_start + row[0].to_i * @increment*60 #add X minutes per increment.
     end
+
+    graph_time = time_start * 1000
+
     daily_hash = {
       "ticker_symbol" => ticker_symbol,
       "date" =>  time_start.utc_time,
-      "open_price" => row[4].to_f,
-      "close_price" => row[1].to_f
+      "open_price" => row[4].to_f.round(2),
+      "close_price" => row[1].to_f.round(2),
+      "graph_time" => graph_time
     }
     if daily_hash["open_price"] == 0
       return false
@@ -319,14 +323,14 @@ class GoogleIntraday
 
   def all_data_insert(price_array)
     sql = "INSERT INTO intradayprices 
-      (ticker_symbol, date, open_price, close_price, created_at, updated_at)
+      (ticker_symbol, date, open_price, close_price, created_at, updated_at, graph_time)
       VALUES #{price_array.join(", ")}"
   end
 
     #Hash To Insert Strings
   def single_row_insert(price_hash)
     time = Time.zone.now.to_s(:db)
-    price_string = "('#{price_hash["ticker_symbol"]}','#{price_hash["date"]}','#{price_hash["open_price"]}','#{price_hash["close_price"]}','#{time}','#{time}')"
+    price_string = "('#{price_hash["ticker_symbol"]}','#{price_hash["date"]}','#{price_hash["open_price"]}','#{price_hash["close_price"]}','#{time}','#{time}', '#{price_hash["graph_time"]}')"
   end
 
 end
@@ -396,15 +400,25 @@ end
 class GoogleDaily
 
   def data_hash(row, ticker_symbol)
+    tz = ActiveSupport::TimeZone.new('America/New_York') #set the time zone to EST.exi
     unless row[1] == "Open" #this csv file has headers, this ignores the header line.
       date = Time.zone.parse(row[0].to_s).strftime("20%y-%m-%d 21:00:00")
+
+      date_string = DateTime.strptime(row[0].to_s, "%m/%d/%Y") #create a datestring from the date format '1/7/2015'
+      time_string = Time.parse(date_string.to_s) #convert the date format to a time format so that utc_time_full can be used.
+      offset = tz.parse(time_string.utc_time_full).utc_offset() #get the offset amount from EST. Could be 4 or 5 hours depending on DSt
+      adj_time = time_string - offset + 16*3600 #create the final adjusted UTC time.
+
+      graph_time = adj_time.utc_time_int * 1000
+
       return price_hash = {
         "ticker_symbol" => ticker_symbol,
-        "date" => date, #date is in the form "1/7/2015", and it converts to date format OK.
-        "open_price" => row[1].to_f,
-        "close_price" => row[4].to_f,
+        "date" => adj_time, #date is in the form "1/7/2015", and it is converted to "Mon, 30 Mar 2015 21:00:00 UTC +00:00", which saves to the db as a string format
+        "open_price" => row[1].to_f.round(2),
+        "close_price" => row[4].to_f.round(2),
         "volume" => row[5].to_i,
-        "split" => 1
+        "split" => 1,
+        "graph_time" => graph_time
       }
     else
       return false
@@ -421,14 +435,14 @@ class GoogleDaily
 
   def all_data_insert(price_array)
     sql = "INSERT INTO stockprices 
-      (ticker_symbol, date, open_price, close_price, volume, split, created_at, updated_at)
+      (ticker_symbol, date, open_price, close_price, volume, split, created_at, updated_at, graph_time)
       VALUES #{price_array.join(", ")}"
   end
 
     #Hash To Insert Strings
   def single_row_insert(price_hash)
     time = Time.zone.now.strftime('%Y-%m-%d %H:%M:%S')
-    price_string = "('#{price_hash["ticker_symbol"]}','#{price_hash["date"]}','#{price_hash["open_price"]}','#{price_hash["close_price"]}','#{price_hash["volume"]}','#{price_hash["split"]}','#{time}','#{time}')"
+    price_string = "('#{price_hash["ticker_symbol"]}','#{price_hash["date"]}','#{price_hash["open_price"]}','#{price_hash["close_price"]}','#{price_hash["volume"]}','#{price_hash["split"]}','#{time}','#{time}, #{price_hash["graph_time"]}')"
   end
 end
 

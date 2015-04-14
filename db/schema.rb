@@ -11,16 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150321211040) do
+ActiveRecord::Schema.define(version: 20150411201756) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "adminpack"
   enable_extension "plpgsql"
 
   create_table "comments", force: true do |t|
     t.text     "content"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.integer  "user_id"
+    t.string   "tagged_content"
   end
 
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
@@ -30,8 +32,9 @@ ActiveRecord::Schema.define(version: 20150321211040) do
     t.datetime "date"
     t.float    "open_price"
     t.float    "close_price"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "graph_time",    limit: 8
   end
 
   add_index "intradayprices", ["date"], name: "index_intradayprices_on_date", using: :btree
@@ -58,6 +61,7 @@ ActiveRecord::Schema.define(version: 20150321211040) do
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
     t.string   "source"
+    t.string   "tagged_content"
   end
 
   add_index "newsarticles", ["google_news_id", "id"], name: "index_newsarticles_on_google_news_id_and_id", using: :btree
@@ -80,6 +84,7 @@ ActiveRecord::Schema.define(version: 20150321211040) do
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
     t.string   "comment"
+    t.string   "tagged_content"
   end
 
   add_index "predictionends", ["prediction_id"], name: "index_predictionends_on_prediction_id", using: :btree
@@ -97,6 +102,7 @@ ActiveRecord::Schema.define(version: 20150321211040) do
     t.float    "start_price"
     t.datetime "prediction_end_time"
     t.float    "prediction_end_price"
+    t.string   "tagged_content"
   end
 
   add_index "predictions", ["stock_id"], name: "index_predictions_on_stock_id", using: :btree
@@ -138,6 +144,7 @@ ActiveRecord::Schema.define(version: 20150321211040) do
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
     t.float    "daily_percent_change"
+    t.integer  "graph_time",           limit: 8
   end
 
   add_index "stockprices", ["date"], name: "index_stockprices_on_date", using: :btree

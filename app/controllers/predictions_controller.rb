@@ -99,6 +99,7 @@ class PredictionsController < ApplicationController
 		prediction.merge!(prediction_params)
 		@prediction = @user.predictions.build(prediction)
 		@prediction.start_price = stock.daily_stock_price
+    @prediction.prediction_end_price = params[:prediction_end_price].round(2) #make sure the prediction end price is rounded to 2 places.
 
 		@graph_time = prediction_end_time.utc_time_int.graph_time_int
 

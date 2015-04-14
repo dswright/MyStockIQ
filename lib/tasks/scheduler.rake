@@ -94,40 +94,18 @@ end
 
 
 namespace :updates do
-  task :update_popularity => :environment do
-    articles = Newsarticle.find_by_sql("select id from newsarticles")
-    article_ids = articles.map{|n| n.id}
-    popularities = Popularity.find_by_sql("select popularable_id from popularities where popularable_type = 'Newsarticle'")
-    popularity_ids = popularities.map{|n| n.popularable_id}
-    remainings = article_ids - popularity_ids
-    remainings.each do |remainder|
-      HelperWorker.perform_async(remainder)
+  task :price_rounding => :environment do
+    Stock.all.each do |stock|
+      HelperWorker.perform_async(stock.ticker_symbol)
+    end
+  end
+
+  task :update_stockprice_dates => :environment do
+    Stock.all.each do |stock|
+      HelperWorker.perform_async(stock.ticker_symbol)
     end
   end
 
 end
 
-  #run all of this in the same worker and same rake task...
-# 1. Check for predictions to verify start times. Done!
-# 2. Check for predictions to verify end times and end the prediction.
-# 2. Regularly re-score current predictions based on current stock prices.
-# 3. Check for predictions to cancel due to price exceeding.
-# 4. Send prediction confirmation email when prediction is ended.
-
-
-#DEAD RAKE TASKS, NO LONGER IN SERVICE
-#Price Data Rakes
-  #task :fetch_historical_prices => :environment do
-  #  stocks = Stock.where(date:nil, active:true) 
-  #  stocks.each do |stock|
-  #    HistoricalWorker.perform_async(stock.ticker_symbol)
-  #  end
-  #end
-
-  #task :fetch_recent_prices => :environment do
-  #  stocks = Stock.where(active:true)
-  #  stocks.each do |stock|
-  #    LatestWorker.perform_async(stock.ticker_symbol)
-  #  end
-  #end
 

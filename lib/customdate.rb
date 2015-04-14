@@ -20,7 +20,6 @@ class Time
 end
 
 class Integer
-  @tz = ActiveSupport::TimeZone.new('America/New_York')
   def utc_time
     Time.at(self).in_time_zone
   end

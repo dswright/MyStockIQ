@@ -20,7 +20,7 @@ class Graph
     elsif settings[:start_point] == "predictiondetails"
       @start_point = @prediction.start_time
     end
-    @last_daily_date = daily_prices[-2][0] #get the last id from the dailyprices array..
+    #@last_daily_date = daily_prices[-2][0] #get the last id from the dailyprices array..
   end
 
   def prediction #this is used for the predictiondetails graph.
@@ -48,7 +48,7 @@ class Graph
     my_prediction = []
     Prediction.where(stock_id: @stock.id, active:true, user_id: @current_user.id).each do |prediction|
       graph_time = prediction.prediction_end_time.utc_time_int.graph_time_int
-      my_prediction << [graph_time, prediction.prediction_end_price.round(2)]
+      my_prediction << [graph_time, prediction.prediction_end_price]
     end
     if my_prediction.empty?
       my_prediction << [nil, nil]
@@ -60,7 +60,7 @@ class Graph
     predictions_array = []
     Prediction.where(stock_id: @stock.id, active:true).where('user_id not in (?)',[@current_user.id]).limit(1500).reorder('prediction_end_time desc').reverse.each do |prediction|
       graph_time = prediction.prediction_end_time.utc_time_int.graph_time_int
-      predictions_array << [graph_time, prediction.prediction_end_price.round(2)]
+      predictions_array << [graph_time, prediction.prediction_end_price]
     end
     return predictions_array
   end
@@ -93,11 +93,11 @@ class Graph
     end
     daily_price_id_array.reverse!
 
-    stock = Stock.find_by(ticker_symbol: @ticker_symbol)
-    if @last_daily_date < stock.date.utc_time_int.graph_time_int
-      daily_price_id_array << @ticker_symbol
-    end
-    return daily_price_id_array
+    #stock = Stock.find_by(ticker_symbol: @ticker_symbol)
+    #if @last_daily_date < stock.date.utc_time_int.graph_time_int
+    #  daily_price_id_array << @ticker_symbol
+    #end
+    #return daily_price_id_array
   end
 
   def intraday_price_ids
@@ -118,8 +118,7 @@ class Graph
     finish = @start_point + 60*60*24*6 #add 6 days to get at least 3 days of forward looking data.
     price_array = []
     Intradayprice.where(ticker_symbol:@ticker_symbol).where("date > ?", start).where("date < ?", finish).reorder('date desc').reverse.each do |price|    
-      graph_time = price.date.utc_time_int.graph_time_int
-      price_array << [graph_time, price.close_price.round(2)]
+      price_array << [price.graph_time, price.close_price]
     end
     return price_array
   end
@@ -130,17 +129,17 @@ class Graph
     finish = @start_point + 60*60*24*950 #add 2.5 years to get 2.5 years of forward looking data.
     price_array = []
     Stockprice.where(ticker_symbol: @ticker_symbol).where("date > ?", start).where("date < ?", finish).reorder('date desc').each do |price|
-      graph_time = price.date.utc_time_int.graph_time_int #these methods will no longer be available... the database will send a date time stamp over the json api...
-      price_array << [graph_time, price.close_price.round(2)]
+      #price_array << {"x": price.graph_time, "y": price.close_price}
+      price_array << [price.graph_time, price.close_price]
     end
     price_array.reverse!
 
-    stock = Stock.find_by(ticker_symbol: @ticker_symbol)
-    extra_day = stock.date.utc_time_int.graph_time_int
-    if price_array.last[0] < extra_day
-      extra_day = extra_day.utc_time_int.utc_time.beginning_of_day.strftime("%Y-%m-%d 21:00:00").utc_time.utc_time_int.graph_time_int
-      price_array << [extra_day, stock.daily_stock_price.round(2)]
-    end
+    # stock = Stock.find_by(ticker_symbol: @ticker_symbol)
+    # extra_day = stock.date.utc_time_int.graph_time_int
+    # if price_array.last[0] < extra_day
+    #   extra_day = extra_day.utc_time_int.utc_time.beginning_of_day.strftime("%Y-%m-%d 21:00:00").utc_time.utc_time_int.graph_time_int
+    #   price_array << [extra_day, stock.daily_stock_price]
+    # end
     return price_array
   end
 end
