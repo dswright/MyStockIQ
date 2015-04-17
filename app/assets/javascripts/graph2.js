@@ -222,6 +222,56 @@ function PredictionDetails(graph, chart) {
   }
 }
 
+//holds functions that are utilized across graphs.
+
+var graphMediator = (function() {
+
+  var components = {}
+
+  var addComponents = function(name, component) {
+    components[name] = component;
+  }
+
+  // var createGraphLine = function(cb) { //using the callback function here, i can create any new line for the graph, with any conditions.
+  //   var newLine = cb();
+  //   var lineIndex = components.graphlines.count;
+  //   component.graphLines.push({seriesIndex:lineIndex, seriesData:newLine})
+  // }
+
+  var createDateLine = function(startTime, iterations, interval) {
+    var forwardArray = [];
+    var i = 0;
+    var iterations = iterations; //1200 is 5 years forward.
+    while (i<=iterations) {
+      timeSpot = startTime + i*interval;
+      //if (timeSpot.utcTimeInt().utcTimeStr().validStockTime()) {
+        //forwardArray.push([timeSpot, null]);
+        forwardArray.push({"x":timeSpot, "y":null});
+        //}
+      //}
+      //else {
+      //  iterations += 1;
+      //}
+      i += 1;
+    }
+    components.graphLines.push({lineArray:forwardArray, index:1})
+  }
+
+  var setSeries = function() { //setSeries assumes that graphLines have been set in their correct order to align with graph settings.
+    if (components.graphLines && components.chart) {
+      for (i=0;i<components.graphLines.length;i++) {
+        components.chart.series[components.graphLines[i].index].setData(components.graphLines[i].lineArray);
+      }
+    }
+  }
+
+  return {
+    addComponents: addComponents,
+    setSeries: setSeries,
+    createDateLine: createDateLine
+  }
+})();
+
 function StockGraph(stockGraph, chart) {
   //StockGraphButtons sets the ranges based on 4 settings: intradayprices, dailyprices, predictions, and my_prediction.
   //All of these will come from the API.
@@ -234,6 +284,9 @@ function StockGraph(stockGraph, chart) {
     //stockGraph["daily_forward_prices"] = DailyForwardPrices(stockGraph["daily_prices"].last()[0]); //create this array using js function.
     //stockGraph["intraday_forward_prices"] = IntradayForwardPrices(stockGraph["intraday_prices"].last()[0]); //create this array using js function.
     
+
+
+
     var activeDailyPredictions = DailyPredictions(stockGraph["predictions"], stockGraph["prediction_ids"]) //Dailypredictions returns just 1 prediction for each day, and the corresponding prediction id array.
     stockGraph["daily_predictions"] = activeDailyPredictions[0];
     stockGraph["daily_prediction_ids"] = activeDailyPredictions[1];
@@ -264,7 +317,7 @@ function StockGraph(stockGraph, chart) {
     //removeOverlapping(bestButton); //must be used after setMyPrediction.removes predictions overlapping with my_prediction.
 
     //stockChart.series[0].setData(stockGraph["daily_prices"]);
-    setSeries(bestButton, stockGraph);
+    //setSeries(bestButton, stockGraph);
     //setRange(bestButton); //always setRange after the setSeries, so the set series can tell if the range has changed. currentRange gets updated in the setRange.
   
     $('*[data-button-type="'+currentRange["buttonType"]+'"]').switchClass("timeframe-item", "timeframe-item-selected");

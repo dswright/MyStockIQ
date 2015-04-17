@@ -129,8 +129,8 @@ class Graph
     finish = @start_point + 60*60*24*950 #add 2.5 years to get 2.5 years of forward looking data.
     price_array = []
     Stockprice.where(ticker_symbol: @ticker_symbol).where("date > ?", start).where("date < ?", finish).reorder('date desc').each do |price|
-      #price_array << {"x": price.graph_time, "y": price.close_price}
-      price_array << [price.graph_time, price.close_price]
+      price_array << {"id": price.id, "x": price.graph_time, "y": price.close_price}
+      #price_array << [price.graph_time, price.close_price]
     end
     price_array.reverse!
 

@@ -49,15 +49,16 @@ require 'graph'
       format.json {
         settings = {ticker_symbol: @stock.ticker_symbol, current_user: @current_user, start_point:"stocks"}
         graph = Graph.new(settings)
-        render json: {
-          :my_prediction => graph.my_prediction,
-          :predictions => graph.predictions,
-          :my_prediction_id => graph.my_prediction_id,
-          :prediction_ids => graph.prediction_ids,
-          :daily_prices => graph.daily_prices,
-          :daily_price_ids => graph.daily_price_ids,
-          :intraday_price_ids => graph.intraday_price_ids,
-          :intraday_prices => graph.intraday_prices 
+        render json: { #graphLines need to be in the correct numerical order to be set correctly.
+          :daily_prices => graph.daily_prices
+          # :my_prediction => graph.my_prediction,
+          # :predictions => graph.predictions,
+          # :my_prediction_id => graph.my_prediction_id,
+          # :prediction_ids => graph.prediction_ids,
+          
+          # :daily_price_ids => graph.daily_price_ids,
+          # :intraday_price_ids => graph.intraday_price_ids,
+          # :intraday_prices => graph.intraday_prices 
         }
       }
 

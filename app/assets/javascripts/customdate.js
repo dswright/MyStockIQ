@@ -32,9 +32,13 @@ String.prototype.utcTime = function() { //takes date string format of the manual
     dateString = dateString + " 00:00:00";
   }
   arr = dateString.split(/[- :]/);
-  theDate = new Date(arr[0], arr[1]-1, arr[2], arr[3], arr[4], arr[5]); //returns a date stamp.
-  //return new Date(theDate.getUTCFullYear(), theDate.getUTCMonth(), theDate.getUTCDate(), theDate.getUTCHours(), theDate.getUTCMinutes(), theDate.getUTCSeconds()); //returns a datestamp.
-  return new Date(arr[0], arr[1]-1, arr[2], arr[3], arr[4]-theDate.getTimezoneOffset(), arr[5]);
+  var theDate = new Date(arr[0], arr[1]-1, arr[2], arr[3], arr[4], arr[5]); //returns a date stamp.
+  return new Date(arr[0], arr[1]-1, arr[2], arr[3], arr[4]-theDate.getTimezoneOffset(), arr[5]); //this offset is applied to adjust for the UTC offset time that is forced on by the date conversion.
+}
+
+String.prototype.utcInt = function() { //takes string of type "YYYY-MM-DD HH:mm:ss UTC"
+  moment.tz.add('America/New_York|EST EDT|50 40|0101|1Lz50 1zb0 Op0');
+  return moment.utc(this, "YYYY-MM-DD HH:mm:ss UTC").valueOf();
 }
 
 Date.prototype.utcTimeInt = function() {
@@ -53,26 +57,36 @@ Date.prototype.utcTimeHour = function() {
   return moment(this).utc().format("HH:mm:ss"); //convert date type into an hour string.
 }
 
+Date.prototype.utcTimeFull = function() {
+  return moment(this).utc().format("YYYY-MM-DD HH:mm:ss"); //convert date type into a day string.
+}
+
+Number.prototype.someStr = function() {
+  var time_stamp = this;
+  moment.tz.add('America/New_York|EST EDT|50 40|0101|1Lz50 1zb0 Op0');
+  console.log(time_stamp);
+  return moment(time_stamp).format("YYYY-MM-DD HH:mm:ss");
+}
+
 Number.prototype.utcTimeStr = function() {
   return moment.utc(this*1000).format("YYYY-MM-DD HH:mm:ss UTC"); //convert an integer into a utc date string.
 }
 
 Number.prototype.graphTimeInt = function() { //this one only runs about 20 times.
-  moment.tz.add('America/New_York|EST EDT|50 40|0101|1Lz50 1zb0 Op0'); //Ads the NY EST time into the moment.js timezone js data options.
+  //moment.tz.add('America/New_York|EST EDT|50 40|0101|1Lz50 1zb0 Op0'); //Ads the NY EST time into the moment.js timezone js data options.
 
-  console.log("time calc ran");
-  var offset = moment.tz.zone('America/New_York').offset(this*1000) * 60; //gets the offset in minutes from the NY/EST time.
-  return (this-offset) * 1000; //converts the time into to milliseconds and EST.
+  //console.log("time calc ran");
+  //var offset = moment.tz.zone('America/New_York').offset(this*1000) * 60; //gets the offset in minutes from the NY/EST time.
+  return this * 1000; //converts the time into to milliseconds and EST.
 }
 
 Number.prototype.utcTimeInt = function() { //takes a graphtime number and removes milliseconds and converts to est. this one gets run a crap ton of times.
-  moment.tz.add('America/New_York|EST EDT|50 40|0101|1Lz50 1zb0 Op0'); //Ads the NY EST time into the moment.js timezone js data options.
+  //moment.tz.add('America/New_York|EST EDT|50 40|0101|1Lz50 1zb0 Op0'); //Ads the NY EST time into the moment.js timezone js data options.
+  //var offset = 3600*4;
+  //var time = this;
+  //wrong_set = parseInt(moment.tz.zone('America/New_York').offset(time) * 60);
 
-  var offset = 3600*4;
-  var time = this;
-  wrong_set = parseInt(moment.tz.zone('America/New_York').offset(time) * 60);
-
-  return this/1000 + offset; //converts the time from graph time to the regular UTC time int.
+  return this/1000; //converts the time from graph time to the regular UTC time int.
 }
 
 //expects to take a date string "YYYY-MM-DD" or the database type "2015-01-26 21:00:00 UTC"
@@ -110,6 +124,10 @@ String.prototype.validStockTime = function() {
   ];
 
   var utcTime = this.utcTime(); //converts the time string into a time stamp.
+
+  moment.tz.add('America/New_York|EST EDT|50 40|0101|1Lz50 1zb0 Op0');
+  var offset = moment.tz.zone('America/New_York').offset(this*1000) * 60;
+
   var holidayFormat = utcTime.utcTimeStr(); //converts to YYYY-MM-DD
   var hourFormat = utcTime.utcTimeHour(); //converts to "HH:mm:ss" type.
 
