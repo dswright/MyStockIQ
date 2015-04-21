@@ -170,22 +170,14 @@ $(document).ready(function () {
     success: function (data, status) {
       stockGraph = data; //assign the data to the graph var to be used globally. Delete this once debugging is done.
 
-      //stockChart.series[0].setData(data["daily_prices"]);
+      var defaults = {
+        "data": data,
+        "chart": stockChart
+      }
+      graphMediator.addComponents('defaults', defaults);
+      graphMediator.defaultProcessor(); //creates several default components.
 
-      //graphMediator.addGraphLines([
-      //  {seriesIndex:0,seriesData:data["daily_prices"]}
-      //]);
-
-      var graphLines = [
-        {lineArray:data["daily_prices"],index:0} 
-      ];
-
-      graphMediator.addComponents('chart', stockChart);
-      graphMediator.addComponents('graphLines', graphLines);
-
-      graphMediator.createDateLine(data["daily_prices"].last()["x"], 1202, 24*3600*1000);
-
-      graphMediator.setSeries();
+      graphMediator.setSeries("intradayLines");
 
       //stockChartFunctions = new StockGraph(data, stockChart); //data is passed into the stockgraph class so that it is accessible there.
 

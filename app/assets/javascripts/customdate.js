@@ -26,74 +26,51 @@ if (![].includes) {
   };
 }
 
-String.prototype.utcTime = function() { //takes date string format of the manual type "YYYY-MM-DD" or the database type "2015-01-26 21:00:00 UTC". Creates a date stamp.
-  var dateString = this;
-  if (dateString.indexOf(':') === -1) { //if there is no ':', add the minute string.
-    dateString = dateString + " 00:00:00";
+
+
+//NEW FUNCTIONS THAT WORK
+
+//This converts a graphtime number "1360184400000" into a GMT string "Wed, 06 Feb 2013 21:00:00 GMT"
+Number.prototype.gmtString = function() {
+  return new Date(this).toUTCString();
+}
+
+//This takes string of the types:
+//"2013-02-06 21:00:00 GMT" - for manual date input types.
+//Wed, 06 Feb 2013 21:00:00 GMT" - for processing graphtimes turned into datestrings.
+//"2013-02-06T21:00:00.000Z" - for processing datestamps taken straight from the database.
+String.prototype.graphTime = function() {
+  return Date.parse(this);
+}
+
+//add the EST moment as a timezone.
+moment.tz.add('America/New_York|EST EDT|50 40|0101|1Lz50 1zb0 Op0');
+
+//This takes graphtime as the correct intake.
+Number.prototype.validStockTime = function() {
+  
+  //this takes the a string of the form "Wed, 06 Feb 2013 21:00:00 GMT" and returns the format "21:00:00"
+  function hourString(str) {
+    var d = new Date(str); //converts string to JS Date.
+    return moment(d).utc().format("HH:mm:ss"); //converts the JS Date to the hour format.
   }
-  arr = dateString.split(/[- :]/);
-  var theDate = new Date(arr[0], arr[1]-1, arr[2], arr[3], arr[4], arr[5]); //returns a date stamp.
-  return new Date(arr[0], arr[1]-1, arr[2], arr[3], arr[4]-theDate.getTimezoneOffset(), arr[5]); //this offset is applied to adjust for the UTC offset time that is forced on by the date conversion.
-}
 
-String.prototype.utcInt = function() { //takes string of type "YYYY-MM-DD HH:mm:ss UTC"
-  moment.tz.add('America/New_York|EST EDT|50 40|0101|1Lz50 1zb0 Op0');
-  return moment.utc(this, "YYYY-MM-DD HH:mm:ss UTC").valueOf();
-}
+//this takes the a string of the form "Wed, 06 Feb 2013 21:00:00 GMT" and returns the format "2013-02-06"
+  function dayString(str) {
+    var d = new Date(str); //converts string into JS Date.
+    return moment(d).utc().format("YYYY-MM-DD"); //converts the JS Date to the daily format.
+  }
 
-Date.prototype.utcTimeInt = function() {
-  return (this.getTime())/1000; //convert a date type into a UTC int.
-}
+  //this takes a string of the form "Wed, 06 Feb 2013 21:00:00 GMT" and returns the weekday number, like 6 or 7.
+  function weekDay(str) {
+    var d = new Date(str)
+    return moment(d).isoWeekday();
+  }
 
-Date.prototype.weekDay = function() {
-  return moment(this).isoWeekday();
-}
 
-Date.prototype.utcTimeStr = function() {
-  return moment(this).utc().format("YYYY-MM-DD"); //convert date type into a day string.
-}
-
-Date.prototype.utcTimeHour = function() {
-  return moment(this).utc().format("HH:mm:ss"); //convert date type into an hour string.
-}
-
-Date.prototype.utcTimeFull = function() {
-  return moment(this).utc().format("YYYY-MM-DD HH:mm:ss"); //convert date type into a day string.
-}
-
-Number.prototype.someStr = function() {
-  var time_stamp = this;
-  moment.tz.add('America/New_York|EST EDT|50 40|0101|1Lz50 1zb0 Op0');
-  console.log(time_stamp);
-  return moment(time_stamp).format("YYYY-MM-DD HH:mm:ss");
-}
-
-Number.prototype.utcTimeStr = function() {
-  return moment.utc(this*1000).format("YYYY-MM-DD HH:mm:ss UTC"); //convert an integer into a utc date string.
-}
-
-Number.prototype.graphTimeInt = function() { //this one only runs about 20 times.
-  //moment.tz.add('America/New_York|EST EDT|50 40|0101|1Lz50 1zb0 Op0'); //Ads the NY EST time into the moment.js timezone js data options.
-
-  //console.log("time calc ran");
-  //var offset = moment.tz.zone('America/New_York').offset(this*1000) * 60; //gets the offset in minutes from the NY/EST time.
-  return this * 1000; //converts the time into to milliseconds and EST.
-}
-
-Number.prototype.utcTimeInt = function() { //takes a graphtime number and removes milliseconds and converts to est. this one gets run a crap ton of times.
-  //moment.tz.add('America/New_York|EST EDT|50 40|0101|1Lz50 1zb0 Op0'); //Ads the NY EST time into the moment.js timezone js data options.
-  //var offset = 3600*4;
-  //var time = this;
-  //wrong_set = parseInt(moment.tz.zone('America/New_York').offset(time) * 60);
-
-  return this/1000; //converts the time from graph time to the regular UTC time int.
-}
-
-//expects to take a date string "YYYY-MM-DD" or the database type "2015-01-26 21:00:00 UTC"
-String.prototype.validStockTime = function() {
+  //This is the array of holiday dates that the market is closed.
   //standard whole holidays are:
   //new years day, MLK day, Presidents day, Good Friday, Memorial Day, July 4th, Labor Day, Thanksgiving, Christmas
-  
   var holidayArray = [
     "2010-01-01", "2010-01-18", "2010-02-15", "2010-04-02", "2010-05-31", "2010-07-05", "2010-09-06", "2010-11-25", "2010-12-24",
     "2011-01-17", "2011-02-21", "2011-04-22", "2011-05-30", "2011-07-04", "2011-09-05", "2011-11-24", "2011-12-26",
@@ -108,6 +85,7 @@ String.prototype.validStockTime = function() {
     "2020-01-01", "2020-01-20", "2020-02-17", "2020-04-10", "2020-05-25", "2020-07-03", "2020-09-07", "2020-11-26", "2020-12-25"
   ];
 
+  //This is the array of holidays that the market is open until just 1pm.
   //Friday after thanksgiving and Christmas eve, when on a weekday, tend to be half days.
   var halfDayArray = [
     "2010-11-26",
@@ -123,22 +101,26 @@ String.prototype.validStockTime = function() {
     "2020-07-03", "2020-11-25", "2020-12-24"
   ];
 
-  var utcTime = this.utcTime(); //converts the time string into a time stamp.
+  //first thing to do is to detect the offset that exists with this graphtime.
+  //the America/New York timezone is set just outside of this function.
+  var offset = moment.tz.zone('America/New_York').offset(this) * 60 * 1000;
+  var numOffset = 5*3600*1000 - offset; //This will return either 0 or 3600*1000 millisecond offset, depending on DST.
+  var offsetTime = this + numOffset; //this either increases by 1 hour, or not at all.
 
-  moment.tz.add('America/New_York|EST EDT|50 40|0101|1Lz50 1zb0 Op0');
-  var offset = moment.tz.zone('America/New_York').offset(this*1000) * 60;
 
-  var holidayFormat = utcTime.utcTimeStr(); //converts to YYYY-MM-DD
-  var hourFormat = utcTime.utcTimeHour(); //converts to "HH:mm:ss" type.
+  //now use that offsetTime to create the string to run verificaitons against.
+  var gmtStr = offsetTime.gmtString();
 
-  //hourformat uses the utcTime... what is this??? this is the string that the function is applied to..
-  //string is of type '2015-03-10 21:00:00 UTC'
+  
+  var holidayFormat = dayString(gmtStr); //converts to YYYY-MM-DD
+  var hourFormat = hourString(gmtStr); //converts to "HH:mm:ss" type.
 
-  if (utcTime.weekDay() == 6 || utcTime.weekDay() == 7) { //if the day is on a weekend, it is not a valid day.
+
+  if (weekDay(gmtStr) == 6 || weekDay(gmtStr) == 7) { //if the day is on a weekend, its invalid day.
     return false;
   }
 
-  if (hourFormat < "14:30:00" || hourFormat > "21:00:00") { //if its outside of market hours, it invalid. validation times are in utc time, 5 hours ahead of est.
+  if (hourFormat < "14:30:00" || hourFormat > "21:00:00") { //if its outside of market hours, its invalid. validation times are in utc time, 5 hours ahead of est.
     return false;
   }
 

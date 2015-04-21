@@ -228,47 +228,117 @@ var graphMediator = (function() {
 
   var components = {}
 
+  //PUBLIC
+
   var addComponents = function(name, component) {
     components[name] = component;
-  }
+  };
 
-  // var createGraphLine = function(cb) { //using the callback function here, i can create any new line for the graph, with any conditions.
-  //   var newLine = cb();
-  //   var lineIndex = components.graphlines.count;
-  //   component.graphLines.push({seriesIndex:lineIndex, seriesData:newLine})
-  // }
+  var defaultProcessor = function() {
+    var dailyLines = [ //dailyLines is a component that contains the daily graph lines.
+      {lineArray:components.defaults.data.daily_prices,index:0}
+    ];
 
-  var createDateLine = function(startTime, iterations, interval) {
-    var forwardArray = [];
-    var i = 0;
-    var iterations = iterations; //1200 is 5 years forward.
-    while (i<=iterations) {
-      timeSpot = startTime + i*interval;
-      //if (timeSpot.utcTimeInt().utcTimeStr().validStockTime()) {
-        //forwardArray.push([timeSpot, null]);
-        forwardArray.push({"x":timeSpot, "y":null});
-        //}
-      //}
-      //else {
-      //  iterations += 1;
-      //}
-      i += 1;
+    var intradayLines = [ //intradaylines is a component that contains the intraday graph lines.
+      {lineArray:components.defaults.data.intraday_prices, index:0}
+    ];
+
+    addComponents('dailyLines', dailyLines); //this creates a component called dailyLines. 
+    addComponents('intradayLines', intradayLines); //this creates a component called intradayLines.
+  
+    createDateLine("dailyLine"); //adds the forward date array to the dailyLines component.
+    createDateLine("intradayLine");  //adds the forward date array to the intradayLines component.
+  
+  };
+
+  var setSeries = function(component) { //setSeries assumes that graphLines have been set in their correct order to align with graph settings.
+    for (i=0;i<components[component].length;i++) {
+      components.defaults.chart.series[components[component][i].index].setData(components[component][i].lineArray);
     }
-    components.graphLines.push({lineArray:forwardArray, index:1})
-  }
+  };
 
-  var setSeries = function() { //setSeries assumes that graphLines have been set in their correct order to align with graph settings.
-    if (components.graphLines && components.chart) {
-      for (i=0;i<components.graphLines.length;i++) {
-        components.chart.series[components.graphLines[i].index].setData(components.graphLines[i].lineArray);
+  var createPredictionLine = function() {
+    for(var i=0; i < predictions.length; i++ ) {
+      var timeStr = predictions 
+      //it then takes all days and rounds them to the same value using a complex string construction.
+      //that is unncessary. must be a better way to round to the end of the day from graphtime.
+      //oh yeah, the prediction arrays don't have graphtime yet.
+      //I could just convert on the ruby side in the mean time..
+    function DailyPredictions (predictions, predictionIds) { //the predictions array just has times and prices... these need to be converted?
+//these will be in order of time... so just check the one before to see if it is the same day as the current one?
+//If it is the same day... then don't add it. If its a different day, then add it.
+//Should also set the time of the prediction to the 21:00 mark to align with the forward array...
+
+  var predictionsArray = [];
+  var predictionIdsArray = [];
+  for(var i=0; i < predictions.length; i++ ) {
+    if (predictions[i][0] != null) {
+      var timeStr = predictions[i][0].utcTimeInt().utcTimeStr(); //convert the graph time into a utc date string.
+      var day = timeStr.utcTime().utcTimeStr(); //convert the date string into string 'yyyy-mm-dd'
+      day = day + " 20:00:00"; //its 20 because 20 is valid during DST time too.
+      var timeCompare = day.utcTime().utcTimeInt().graphTimeInt(); //convert the string to datestamp, then to utc int, then graphtimeint.
+       
+      if (predictionIds === undefined) { //the predictionIds will be undefined when its the predictiondetails graph. Don't eliminate same time predictions.
+        predictionsArray.push([timeCompare, predictions[i][1]]);
+      }
+      else if (predictionsArray.last() === undefined) {
+        predictionsArray.push([timeCompare, predictions[i][1]]);
+        predictionIdsArray.push(predictionIds[i]);
+      }
+      else if (predictionsArray.last()[0] !== timeCompare ) {
+        predictionsArray.push([timeCompare, predictions[i][1]]);
+        predictionIdsArray.push(predictionIds[i]);
       }
     }
   }
+  return [predictionsArray, predictionIdsArray];
+}
+  }
+
+  //PRIVATE
+
+  var createDateLine = function(lineType) {
+
+    var options = {};
+    console.log (components["defaults"]);
+    options["intradayLine"] = {
+      "startTime": components.defaults.data.intraday_prices.last().x, //this gets the last graphtime from the dailyprices array.
+      "iterations": 234, //this is 3 days forward. (6.5 * 3 * 60/5)
+      "interval": 5*60*1000,
+      "component": "intradayLines",
+      "index": 1 //the index is 1 because it is the second graphLine in the chart.
+    };
+
+    options["dailyLine"] = {
+      "startTime": components.defaults.data.daily_prices.last().x, //this gets the last graphtime from the intradayprices array.
+      "iterations": 780, //this is 3 years forward. (260*3)
+      "interval": 24*3600*1000, //interval of 1 day
+      "component": "dailyLines",
+      "index": 1 //the index is 1 because it is the second graphLine in the chart.
+    };
+
+    var settings = options[lineType];
+
+    var forwardArray = [];
+    var i = 0;
+    var iterations = settings.iterations;
+    while (i<=iterations) {
+      var timeSpot = settings.startTime + i*settings.interval;
+      if (timeSpot.validStockTime()) {
+        forwardArray.push({"x":timeSpot, "y":null});
+      }
+      else {
+        iterations += 1;
+      }
+      i += 1;
+    }
+    components[settings.component].push({lineArray:forwardArray, index:settings.index}) //this adds a new line to the graphLines component.
+  };
 
   return {
     addComponents: addComponents,
     setSeries: setSeries,
-    createDateLine: createDateLine
+    defaultProcessor: defaultProcessor
   }
 })();
 
@@ -519,7 +589,7 @@ function StockGraph(stockGraph, chart) {
   //whether that be the daily array or the intraday array, it gets the last day of data..
 
 }
-
+/*
 function IntradayForwardPrices (startTime) {
   forwardArray = [];
   var i=0;
@@ -537,6 +607,7 @@ function IntradayForwardPrices (startTime) {
   return forwardArray;
 }
 
+
 function DailyForwardPrices (startTime) {
   var forwardArray = [];
   var i = 0;
@@ -553,6 +624,7 @@ function DailyForwardPrices (startTime) {
   }
   return forwardArray;
 }
+*/
 
 function IntradayPredictions (predictions, predictionIds) {
   var predictionsArray = [];

@@ -118,7 +118,7 @@ class Graph
     finish = @start_point + 60*60*24*6 #add 6 days to get at least 3 days of forward looking data.
     price_array = []
     Intradayprice.where(ticker_symbol:@ticker_symbol).where("date > ?", start).where("date < ?", finish).reorder('date desc').reverse.each do |price|    
-      price_array << [price.graph_time, price.close_price]
+      price_array << {"id": price.id, "x": price.graph_time, "y": price.close_price}
     end
     return price_array
   end
