@@ -257,43 +257,44 @@ var graphMediator = (function() {
     }
   };
 
-  var createPredictionLine = function() {
-    for(var i=0; i < predictions.length; i++ ) {
-      var timeStr = predictions 
-      //it then takes all days and rounds them to the same value using a complex string construction.
-      //that is unncessary. must be a better way to round to the end of the day from graphtime.
-      //oh yeah, the prediction arrays don't have graphtime yet.
-      //I could just convert on the ruby side in the mean time..
-    function DailyPredictions (predictions, predictionIds) { //the predictions array just has times and prices... these need to be converted?
-//these will be in order of time... so just check the one before to see if it is the same day as the current one?
-//If it is the same day... then don't add it. If its a different day, then add it.
-//Should also set the time of the prediction to the 21:00 mark to align with the forward array...
+//   var createPredictionLine = function() {
+//     for(var i=0; i < predictions.length; i++ ) {
+//       var timeStr = predictions 
+//       //it then takes all days and rounds them to the same value using a complex string construction.
+//       //that is unncessary. must be a better way to round to the end of the day from graphtime.
+//       //oh yeah, the prediction arrays don't have graphtime yet.
+//       //I could just convert on the ruby side in the mean time.. That's weak. Change it.
+      
+//     function DailyPredictions (predictions, predictionIds) { //the predictions array just has times and prices... these need to be converted?
+// //these will be in order of time... so just check the one before to see if it is the same day as the current one?
+// //If it is the same day... then don't add it. If its a different day, then add it.
+// //Should also set the time of the prediction to the 21:00 mark to align with the forward array...
 
-  var predictionsArray = [];
-  var predictionIdsArray = [];
-  for(var i=0; i < predictions.length; i++ ) {
-    if (predictions[i][0] != null) {
-      var timeStr = predictions[i][0].utcTimeInt().utcTimeStr(); //convert the graph time into a utc date string.
-      var day = timeStr.utcTime().utcTimeStr(); //convert the date string into string 'yyyy-mm-dd'
-      day = day + " 20:00:00"; //its 20 because 20 is valid during DST time too.
-      var timeCompare = day.utcTime().utcTimeInt().graphTimeInt(); //convert the string to datestamp, then to utc int, then graphtimeint.
+//   var predictionsArray = [];
+//   var predictionIdsArray = [];
+//   for(var i=0; i < predictions.length; i++ ) {
+//     if (predictions[i][0] != null) {
+//       var timeStr = predictions[i][0].utcTimeInt().utcTimeStr(); //convert the graph time into a utc date string.
+//       var day = timeStr.utcTime().utcTimeStr(); //convert the date string into string 'yyyy-mm-dd'
+//       day = day + " 20:00:00"; //its 20 because 20 is valid during DST time too.
+//       var timeCompare = day.utcTime().utcTimeInt().graphTimeInt(); //convert the string to datestamp, then to utc int, then graphtimeint.
        
-      if (predictionIds === undefined) { //the predictionIds will be undefined when its the predictiondetails graph. Don't eliminate same time predictions.
-        predictionsArray.push([timeCompare, predictions[i][1]]);
-      }
-      else if (predictionsArray.last() === undefined) {
-        predictionsArray.push([timeCompare, predictions[i][1]]);
-        predictionIdsArray.push(predictionIds[i]);
-      }
-      else if (predictionsArray.last()[0] !== timeCompare ) {
-        predictionsArray.push([timeCompare, predictions[i][1]]);
-        predictionIdsArray.push(predictionIds[i]);
-      }
-    }
-  }
-  return [predictionsArray, predictionIdsArray];
-}
-  }
+//       if (predictionIds === undefined) { //the predictionIds will be undefined when its the predictiondetails graph. Don't eliminate same time predictions.
+//         predictionsArray.push([timeCompare, predictions[i][1]]);
+//       }
+//       else if (predictionsArray.last() === undefined) {
+//         predictionsArray.push([timeCompare, predictions[i][1]]);
+//         predictionIdsArray.push(predictionIds[i]);
+//       }
+//       else if (predictionsArray.last()[0] !== timeCompare ) {
+//         predictionsArray.push([timeCompare, predictions[i][1]]);
+//         predictionIdsArray.push(predictionIds[i]);
+//       }
+//     }
+//   }
+//   return [predictionsArray, predictionIdsArray];
+// }
+//   }
 
   //PRIVATE
 

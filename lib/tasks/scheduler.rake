@@ -59,7 +59,7 @@ namespace :scraper do
     d = Time.zone.now
     #est sets the utc time back 5 hours to get it into est. 
     #Subtract additional 10 minutes to time for Google data to populate.
-    utc_time = d.utc_time_int - 10*60
+    utc_time = d.graph_time - 10*60*1000
     if utc_time.valid_stock_time?
       stocks = Stock.where(viewed:true)
       stocks.each do |stock|

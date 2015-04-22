@@ -400,16 +400,13 @@ end
 class GoogleDaily
 
   def data_hash(row, ticker_symbol)
-    tz = ActiveSupport::TimeZone.new('America/New_York') #set the time zone to EST.exi
     unless row[1] == "Open" #this csv file has headers, this ignores the header line.
-      date = Time.zone.parse(row[0].to_s).strftime("20%y-%m-%d 21:00:00")
 
       date_string = DateTime.strptime(row[0].to_s, "%m/%d/%Y") #create a datestring from the date format '1/7/2015'
-      time_string = Time.parse(date_string.to_s) #convert the date format to a time format so that utc_time_full can be used.
-      offset = tz.parse(time_string.utc_time_full).utc_offset() #get the offset amount from EST. Could be 4 or 5 hours depending on DSt
-      adj_time = time_string - offset + 16*3600 #create the final adjusted UTC time.
+      t = Time.parse(date_string.to_s) #convert the date format to a time format so that utc_time_full can be used.
+      offset = tz.parse(t.to_s).utc_offset() #returns either -18000 or -14400 depending on time of year
+      graph_t = t.graph_time + 16*3600*1000 - offset*1000  #subtracting offset because it comes out as negative. This adds either 4 or 5 hours depending on the offset amount.
 
-      graph_time = adj_time.utc_time_int * 1000
 
       return price_hash = {
         "ticker_symbol" => ticker_symbol,
@@ -418,7 +415,7 @@ class GoogleDaily
         "close_price" => row[4].to_f.round(2),
         "volume" => row[5].to_i,
         "split" => 1,
-        "graph_time" => graph_time
+        "graph_time" => graph_t
       }
     else
       return false

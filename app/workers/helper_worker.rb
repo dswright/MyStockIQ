@@ -65,7 +65,7 @@ class HelperWorker
   #     time_string = old_date.utc_time_str
   #     date_string = DateTime.strptime(time_string, "%Y-%m-%d")
   #     new_time_string = Time.parse(date_string.to_s) #convert the date format to a time format so that utc_time_full can be used.
-  #     offset = tz.parse(new_time_string.utc_time_full).utc_offset() #get the offset amount from EST. Could be 4 or 5 hours depending on DSt
+  #     offset = tz.parse(new_time_string.to_s).utc_offset() #get the offset amount from EST. Could be 4 or 5 hours depending on DSt
   #     new_date = new_time_string - offset + 16*3600 #create the final adjusted UTC time.
 
   #     case_lines << "WHEN date = '#{stockprice.date}' THEN CAST('#{new_date}' AS timestamp)"
@@ -91,7 +91,7 @@ class HelperWorker
     stockprices.each do |stockprice|
       
       old_date = stockprice.date
-      graph_time = old_date.utc_time_int * 1000
+      graph_time = old_date.graph_time
       
       case_lines << "WHEN date = '#{stockprice.date}' THEN #{graph_time}"
     end

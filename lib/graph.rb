@@ -25,8 +25,8 @@ class Graph
 
   def prediction #this is used for the predictiondetails graph.
     prediction = @prediction
-    start_time = prediction.start_time.utc_time_int.graph_time_int
-    end_time = prediction.prediction_end_time.utc_time_int.graph_time_int
+    start_time = prediction.graph_start_time
+    end_time = prediction.graph_end_time
     prediction_graph = [[start_time, prediction.start_price], [end_time, prediction.prediction_end_price]]
     return prediction_graph
   end
@@ -38,7 +38,7 @@ class Graph
 
   def predictionend #used for the prediction details graph.
     if @prediction.predictionend
-      return [[@prediction.start_time.utc_time_int.graph_time_int, @prediction.start_price], [@prediction.predictionend.actual_end_time.utc_time_int.graph_time_int, @prediction.predictionend.actual_end_price]]
+      return [[@prediction.graph_start_time, @prediction.start_price], [@prediction.predictionend.graph_end_time, @prediction.predictionend.actual_end_price]]
     else
       return [[nil, nil]]
     end
@@ -47,7 +47,7 @@ class Graph
   def my_prediction
     my_prediction = []
     Prediction.where(stock_id: @stock.id, active:true, user_id: @current_user.id).each do |prediction|
-      graph_time = prediction.prediction_end_time.utc_time_int.graph_time_int
+      graph_time = prediction.graph_end_time
       my_prediction << [graph_time, prediction.prediction_end_price]
     end
     if my_prediction.empty?
@@ -59,7 +59,7 @@ class Graph
   def predictions #predictions for the stock graph.
     predictions_array = []
     Prediction.where(stock_id: @stock.id, active:true).where('user_id not in (?)',[@current_user.id]).limit(1500).reorder('prediction_end_time desc').reverse.each do |prediction|
-      graph_time = prediction.prediction_end_time.utc_time_int.graph_time_int
+      graph_time = prediction.graph_end_time
       predictions_array << [graph_time, prediction.prediction_end_price]
     end
     return predictions_array
@@ -94,7 +94,7 @@ class Graph
     daily_price_id_array.reverse!
 
     #stock = Stock.find_by(ticker_symbol: @ticker_symbol)
-    #if @last_daily_date < stock.date.utc_time_int.graph_time_int
+    #if @last_daily_date < stock.date.graph_time
     #  daily_price_id_array << @ticker_symbol
     #end
     #return daily_price_id_array
@@ -130,16 +130,9 @@ class Graph
     price_array = []
     Stockprice.where(ticker_symbol: @ticker_symbol).where("date > ?", start).where("date < ?", finish).reorder('date desc').each do |price|
       price_array << {"id": price.id, "x": price.graph_time, "y": price.close_price}
-      #price_array << [price.graph_time, price.close_price]
     end
     price_array.reverse!
 
-    # stock = Stock.find_by(ticker_symbol: @ticker_symbol)
-    # extra_day = stock.date.utc_time_int.graph_time_int
-    # if price_array.last[0] < extra_day
-    #   extra_day = extra_day.utc_time_int.utc_time.beginning_of_day.strftime("%Y-%m-%d 21:00:00").utc_time.utc_time_int.graph_time_int
-    #   price_array << [extra_day, stock.daily_stock_price]
-    # end
     return price_array
   end
 end

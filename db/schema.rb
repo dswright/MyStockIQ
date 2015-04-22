@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150411201756) do
+ActiveRecord::Schema.define(version: 20150421005625) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "adminpack"
@@ -81,10 +81,11 @@ ActiveRecord::Schema.define(version: 20150411201756) do
     t.datetime "actual_end_time"
     t.boolean  "end_price_verified"
     t.integer  "prediction_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
     t.string   "comment"
     t.string   "tagged_content"
+    t.integer  "graph_end_time",     limit: 8
   end
 
   add_index "predictionends", ["prediction_id"], name: "index_predictionends_on_prediction_id", using: :btree
@@ -92,8 +93,8 @@ ActiveRecord::Schema.define(version: 20150411201756) do
   create_table "predictions", force: true do |t|
     t.integer  "user_id"
     t.float    "score"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
     t.string   "prediction_comment"
     t.integer  "stock_id"
     t.datetime "start_time"
@@ -103,6 +104,8 @@ ActiveRecord::Schema.define(version: 20150411201756) do
     t.datetime "prediction_end_time"
     t.float    "prediction_end_price"
     t.string   "tagged_content"
+    t.integer  "graph_start_time",     limit: 8
+    t.integer  "graph_end_time",       limit: 8
   end
 
   add_index "predictions", ["stock_id"], name: "index_predictions_on_stock_id", using: :btree

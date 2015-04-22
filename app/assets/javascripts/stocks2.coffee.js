@@ -177,7 +177,7 @@ $(document).ready(function () {
       graphMediator.addComponents('defaults', defaults);
       graphMediator.defaultProcessor(); //creates several default components.
 
-      graphMediator.setSeries("intradayLines");
+      graphMediator.setSeries("dailyLines");
 
       //stockChartFunctions = new StockGraph(data, stockChart); //data is passed into the stockgraph class so that it is accessible there.
 
