@@ -76,6 +76,10 @@ class User < ActiveRecord::Base
     BCrypt::Password.new(remember_digest).is_password?(remember_token)
   end
 
+  #Adds error message in case of invalid sign in
+  def invalid_sign_in
+    errors[:base] << "Username or password is incorrect."
+  end
 
   #Follows a user
   def follow(object)

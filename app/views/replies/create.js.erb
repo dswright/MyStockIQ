@@ -1,3 +1,9 @@
+$(".stream").prepend("<%= j render partial: 'shared/error_messages', locals: {object: @reply} %>");
+window.setTimeout(function() {
+  $("#error_explanation").fadeTo(500, 0).slideUp(500, function(){
+    $(this).remove(); 
+  });
+}, 3000);
 
 $("<%= j render partial: 'streams/stream_reply', locals: {reply: @reply} %> ").insertBefore("#stream_<%= j @reply.repliable_type.to_s %>_<%= j @reply.repliable_id.to_s %> > #new-reply-container > #new_reply");
 $("#stream_<%= j @reply.repliable_type.to_s %>_<%= j @reply.repliable_id.to_s %>").children(".stream-item-comments").children(".stream-comment-header").html("<%= j @reply.repliable.replies.count.to_s %> Replies");

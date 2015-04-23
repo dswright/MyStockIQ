@@ -13,7 +13,9 @@ class RepliesController < ApplicationController
 
 		if @reply.valid?
 			@reply.save
+			@valid_reply = @reply
 			@reply.build_popularity(score: 0).save
+
 			tags = @reply.add_tags #Add tickersymbol ('$') and username ('@') tags to reply content
 			#Build additional stream items for comment targeting other stocks or users
         	tags.each {|tag| @reply.repliable.streams.create(targetable_id: tag.id, targetable_type: tag.class.name)}
@@ -21,9 +23,10 @@ class RepliesController < ApplicationController
 			response_msgs << "Posted reply!"
 		else 
 			response_msgs << "Invalid post"
+		
 		end
 		@response = response_maker(response_msgs)
-
+		
 		respond_to do |f|
 			f.js
 		end

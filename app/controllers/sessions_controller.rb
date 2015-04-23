@@ -3,7 +3,7 @@ class SessionsController < ApplicationController
     @disable_nav = true
   end
 
-   def create
+  def create
 
     #if the email field contains an '@' symbol its a an email address, otherwise it's a username.
     if params[:session][:email].downcase.include? "@"
@@ -23,12 +23,24 @@ class SessionsController < ApplicationController
       remember @user #this should update the string in the database and
       # place a cookie on the users computer that remembers them.
 
-      redirect_to user_profile
+      respond_to do |format|
+      format.html{ redirect_to user_profile }
+      end
+      #redirect_to user_profile
 
     else
       @disable_nav = true
-      session[:errors] = ["Username or password is incorrect."]
-      redirect_to "/login"
+
+      #need blank user object just in case user sign in is invalid
+      @user = User.new if @user == nil
+
+      #adds error messages to @user object for invalid sign in
+      @user.invalid_sign_in
+
+      respond_to do |format|
+        format.js{}
+      end
+      #redirect_to "/login"
     end
   end
 

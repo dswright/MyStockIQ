@@ -6,26 +6,25 @@ class CommentsController < ApplicationController
 		stock = Stock.find_by(ticker_symbol: params[:ticker_symbol])
 
 		#build the comment for input to the db.
-		comment = @user.comments.build(comment_params)
+		@comment = @user.comments.build(comment_params)
 		
 		#Add ticker_symbol to content and find '$' and '@' handles in comment content
-		tags = comment.add_tags(stock.ticker_symbol)
+		tags = @comment.add_tags(stock.ticker_symbol)
 
 		response_msgs = []
-		if comment.valid?
-			comment.save
+		if @comment.valid?
+			@comment.save
 
 			#Initialize comment's popularity score in Popularity model
-			comment.build_popularity(score:0).save #build the popularity score table item.
+			@comment.build_popularity(score:0).save #build the popularity score table item.
 
 			#Build stream items targeting stock and current user
-			comment.streams.create(targetable_id: stock.id, targetable_type: stock.class.name)
-			comment.streams.create(targetable_id: @user.id, targetable_type: @user.class.name)
+			@comment.streams.create(targetable_id: stock.id, targetable_type: stock.class.name)
+			@comment.streams.create(targetable_id: @user.id, targetable_type: @user.class.name)
 			#Build additional stream items for comment targeting other stocks or users
-			tags.each {|tag| comment.streams.create(targetable_id: tag.id, targetable_type: tag.class.name)}
-
+			tags.each {|tag| @comment.streams.create(targetable_id: tag.id, targetable_type: tag.class.name)}
 			
-			@streams = [Stream.where(streamable_type: 'Comment', streamable_id: comment.id).first] #get this one stream item.
+			@streams = [Stream.where(streamable_type: 'Comment', streamable_id: @comment.id).first] #get this one stream item.
 			response_msgs << "Comment added!" #gets inserted at top of page with ajax.
 		else
 			response_msgs << "Comment invalid." #gets inserted at top of page with ajax.

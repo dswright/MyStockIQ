@@ -19,7 +19,7 @@
 <% end %>
 <% session.delete :errors %>
 
-<%= form_for(:session, url: login_path) do |f| %>
+<%= form_for(:session, url: login_path, remote: true) do |f| %>
   <div class="constrainer">
     <div class="signin-form-div">
       <div class="signin-form-box">
