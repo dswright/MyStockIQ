@@ -33,9 +33,6 @@ $(document).ready(function () {
       lineWidth: 2,
       dataGrouping: {
         enabled: false
-      },
-      line: {
-        enabled:false
       }
     },
     {
@@ -170,14 +167,19 @@ $(document).ready(function () {
     success: function (data, status) {
       stockGraph = data; //assign the data to the graph var to be used globally. Delete this once debugging is done.
 
-      var defaults = {
+
+      var defaults = { //defaults contains the variables that are standard to each graph.
         "data": data,
         "chart": stockChart
       }
       graphMediator.addComponents('defaults', defaults);
-      graphMediator.defaultProcessor(); //creates several default components.
+      graphMediator.defaultProcessor(); //creates several default components automatically for every graph.
 
-      graphMediator.setSeries("dailyLines");
+
+
+      //run all functions that are dependent on what the timeFrame is.
+      graphMediator.frameDependents("stockGraph");
+
 
       //stockChartFunctions = new StockGraph(data, stockChart); //data is passed into the stockgraph class so that it is accessible there.
 

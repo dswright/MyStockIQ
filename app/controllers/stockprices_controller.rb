@@ -3,6 +3,8 @@ require 'graph'
   
   def hover_daily
 
+
+    #what the crap is this passing the ticker_symbol in for?
     the_id = params[:id].to_s =~ /\A[-+]?\d*\.?\d+\z/  #checks to see if the id is number or string. Returns 0 or nil.
     price_data = {}
 

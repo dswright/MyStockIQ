@@ -243,19 +243,79 @@ var graphMediator = (function() {
       {lineArray:components.defaults.data.intraday_prices, index:0}
     ];
 
+    var currentFrame = {timeFrame: "1M", framesHash: ""}; //this will probably require a call back of some kind..
+
     addComponents('dailyLines', dailyLines); //this creates a component called dailyLines. 
     addComponents('intradayLines', intradayLines); //this creates a component called intradayLines.
+    addComponents('currentFrame', currentFrame);
   
     createDateLine("dailyLine"); //adds the forward date array to the dailyLines component.
     createDateLine("intradayLine");  //adds the forward date array to the intradayLines component.
   
   };
 
+  //this function is executed to run all functions that are dependent on whether or not the frame is in the 1d,5d vs 1m,3m,6m,1Yr ect.
+  var frameDependents = function(graph) {
+
+    var options = {};
+    options["stockGraph"] = {};
+    options["stockGraph"]["daily"] = function() {
+      setSeries("dailyLines");
+      setHover("dailyPrices");
+    }
+    options["stockGraph"]["intraday"] = function() {
+      setSeries("intradayLines");
+      setHover("intradayPrices");
+    }
+
+    if (components.currentFrame.timeFrame === "1D" || components.currentFrame.timeFrame === "5D") {
+      options[graph]["intraday"]();
+    }
+    else {
+      options[graph]["daily"]();
+    }
+  }
+
+  //setSeries sets the series' defined in the daily and Intraday Line components.
   var setSeries = function(component) { //setSeries assumes that graphLines have been set in their correct order to align with graph settings.
     for (i=0;i<components[component].length;i++) {
       components.defaults.chart.series[components[component][i].index].setData(components[component][i].lineArray);
     }
   };
+
+  //sets the on-hover respones for each graph line.
+  var setHover = function(line) {
+    var options = {};
+    options["dailyPrices"] = {
+      ajaxUrl:"/stockprices/hover_daily/",
+      seriesIndex:0
+    };
+
+    options["intradayPrices"] = {
+      ajaxUrl:"/stockprices/hover_intraday/",
+      seriesIndex:0
+    };
+
+    var ajaxUrl = options[line].ajaxUrl;
+    var seriesIndex = options[line].seriesIndex;
+    
+    components.defaults.chart.series[seriesIndex].update({ //update the options of the specified series.
+      point: {
+        events: {
+          mouseOver: function(e) {
+            $.ajax({
+              url: ajaxUrl+this.id+"/", //pass the id to the ajaxURL
+              dataType: "script"
+            }).done(function( script, textStatus ) {
+              script //this loads in the html returned from the ajax request.
+            })
+          }
+        }
+      }
+    });
+  }
+
+  
 
 //   var createPredictionLine = function() {
 //     for(var i=0; i < predictions.length; i++ ) {
@@ -339,7 +399,9 @@ var graphMediator = (function() {
   return {
     addComponents: addComponents,
     setSeries: setSeries,
-    defaultProcessor: defaultProcessor
+    defaultProcessor: defaultProcessor,
+    setHover: setHover,
+    frameDependents: frameDependents
   }
 })();
 
