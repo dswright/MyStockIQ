@@ -86,7 +86,7 @@ class PredictionsController < ApplicationController
 		stock = Stock.find(prediction_params[:stock_id])
 
 		#Create the prediction settings.
-		prediction_start_time = Time.zone.now.graph_time.closest_start_time
+		prediction_start_time = Time.zone.now.graph_time.closest_start_time # this returns a timestamp
 		prediction_end_time = (Time.zone.now.graph_time + 
 													(params[:days].to_i * 24* 3600 *1000) + 
 													(params[:hours].to_i * 3600 * 1000) + 
@@ -99,7 +99,7 @@ class PredictionsController < ApplicationController
 		prediction.merge!(prediction_params)
 		@prediction = @user.predictions.build(prediction)
 		@prediction.start_price = stock.daily_stock_price
-    @prediction.prediction_end_price = params[:prediction_end_price].round(2) #make sure the prediction end price is rounded to 2 places.
+    @prediction.prediction_end_price = prediction_params[:prediction_end_price].to_i.round(2) #make sure the prediction end price is rounded to 2 places.
 
 		@graph_time = @prediction.graph_end_time
 

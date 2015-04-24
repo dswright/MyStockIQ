@@ -48,10 +48,7 @@ class Graph
     my_prediction = []
     Prediction.where(stock_id: @stock.id, active:true, user_id: @current_user.id).each do |prediction|
       graph_time = prediction.graph_end_time
-      my_prediction << [graph_time, prediction.prediction_end_price]
-    end
-    if my_prediction.empty?
-      my_prediction << [nil, nil]
+      my_prediction << {"id": prediction.id, "x": graph_time, "y": prediction.prediction_end_price}
     end
     return my_prediction
   end
@@ -59,30 +56,11 @@ class Graph
   def predictions #predictions for the stock graph.
     predictions_array = []
     Prediction.where(stock_id: @stock.id, active:true).where('user_id not in (?)',[@current_user.id]).limit(1500).reorder('prediction_end_time desc').reverse.each do |prediction|
-      graph_time = prediction.graph_end_time
-      predictions_array << [graph_time, prediction.prediction_end_price]
+      predictions_array << {"id": prediction.id, "x": prediction.graph_end_time, "y": prediction.prediction_end_price}
     end
     return predictions_array
   end
 
-  def prediction_ids
-    prediction_ids_array = []
-    Prediction.where(stock_id: @stock.id, active:true).where('user_id not in (?)',[@current_user.id]).limit(1500).reorder('prediction_end_time desc').reverse.each do |prediction|
-      prediction_ids_array << prediction.id
-    end
-    return prediction_ids_array
-  end
-
-  def my_prediction_id
-    my_prediction_id_array = []
-    Prediction.where(stock_id: @stock.id, active:true, user_id: @current_user.id).each do |prediction|
-      my_prediction_id_array << prediction.id
-    end
-    if my_prediction_id_array.empty?
-      my_prediction_id_array << nil
-    end
-    return my_prediction_id_array
-  end
 
   def daily_price_ids #last_date is in graphtime.
     daily_price_id_array = []
@@ -98,16 +76,6 @@ class Graph
     #  daily_price_id_array << @ticker_symbol
     #end
     #return daily_price_id_array
-  end
-
-  def intraday_price_ids
-    start = @start_point - 60*60*24*9 #minus 9 days from the start_time to get at least 5 days of historical intraday data.
-    finish = @start_point + 60*60*24*6 #add 6 days to get at least 3 days of forward looking data.
-    intraday_price_ids = []
-    Intradayprice.where(ticker_symbol:@ticker_symbol).where("date > ?", start).where("date < ?", finish).reorder('date desc').reverse.each do |price|    
-      intraday_price_ids << price.id
-    end
-    return intraday_price_ids
   end
 
 

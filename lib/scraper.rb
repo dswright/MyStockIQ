@@ -291,7 +291,7 @@ class GoogleIntraday
 
     daily_hash = {
       "ticker_symbol" => ticker_symbol,
-      "date" =>  time_start.utc_time,
+      "date" =>  graph_time.utc_time,
       "open_price" => row[4].to_f.round(2),
       "close_price" => row[1].to_f.round(2),
       "graph_time" => graph_time

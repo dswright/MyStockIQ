@@ -41,6 +41,31 @@ $(document).ready(function () {
       dataGrouping: {
         enabled: false
       }
+    },
+    {
+      name : "predictions",
+      lineWidth : 0,
+      color: "#90ED7D",
+      dataGrouping: {
+        enabled: false
+      },
+      marker : {
+        enabled : true,
+        radius : 5,
+        symbol: "triangle"
+      }
+    },
+    {
+      name:"my_prediction",
+      color: "#f7a35c",      
+      marker : {
+        enabled : true,
+        radius : 5,
+        symbol: "triangle",
+      },
+      dataGrouping: {
+        enabled: false
+      }
     }
   ];
 
@@ -175,6 +200,11 @@ $(document).ready(function () {
       graphMediator.addComponents('defaults', defaults);
       graphMediator.defaultProcessor(); //creates several default components automatically for every graph.
 
+      graphMediator.createPredictionLine("daily_predictions"); //create this predictions graph line for the stock graph only.
+      graphMediator.createPredictionLine("intraday_predictions"); //create this predictions graph line for the stock graph only.
+
+      graphMediator.createPredictionLine("daily_my_prediction"); //create this predictions graph line for the stock graph only.
+      graphMediator.createPredictionLine("intraday_my_prediction"); //create this predictions graph line for the stock graph only.
 
 
       //run all functions that are dependent on what the timeFrame is.

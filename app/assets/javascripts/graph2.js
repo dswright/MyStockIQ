@@ -243,9 +243,9 @@ var graphMediator = (function() {
       {lineArray:components.defaults.data.intraday_prices, index:0}
     ];
 
-    var currentFrame = {timeFrame: "1M", framesHash: ""}; //this will probably require a call back of some kind..
+    var currentFrame = {timeFrame: "1M", framesHash: ""}; 
 
-    addComponents('dailyLines', dailyLines); //this creates a component called dailyLines. 
+    addComponents('dailyLines', dailyLines); //this creates a component called dailyLines.
     addComponents('intradayLines', intradayLines); //this creates a component called intradayLines.
     addComponents('currentFrame', currentFrame);
   
@@ -274,12 +274,16 @@ var graphMediator = (function() {
     else {
       options[graph]["daily"]();
     }
-  }
+  };
 
   //setSeries sets the series' defined in the daily and Intraday Line components.
   var setSeries = function(component) { //setSeries assumes that graphLines have been set in their correct order to align with graph settings.
     for (i=0;i<components[component].length;i++) {
-      components.defaults.chart.series[components[component][i].index].setData(components[component][i].lineArray);
+      var lineData = components[component][i].lineArray;
+      var chart = components.defaults.chart;
+      var seriesIndex = components[component][i].index;
+
+      chart.series[seriesIndex].setData(lineData);
     }
   };
 
@@ -313,65 +317,84 @@ var graphMediator = (function() {
         }
       }
     });
-  }
+  };
 
-  
+  var createPredictionLine = function(line) {
 
-//   var createPredictionLine = function() {
-//     for(var i=0; i < predictions.length; i++ ) {
-//       var timeStr = predictions 
-//       //it then takes all days and rounds them to the same value using a complex string construction.
-//       //that is unncessary. must be a better way to round to the end of the day from graphtime.
-//       //oh yeah, the prediction arrays don't have graphtime yet.
-//       //I could just convert on the ruby side in the mean time.. That's weak. Change it.
-      
-//     function DailyPredictions (predictions, predictionIds) { //the predictions array just has times and prices... these need to be converted?
-// //these will be in order of time... so just check the one before to see if it is the same day as the current one?
-// //If it is the same day... then don't add it. If its a different day, then add it.
-// //Should also set the time of the prediction to the 21:00 mark to align with the forward array...
+    var dailyProcessor = function(gT) {
+      var dayStr = gT.gmtString().dayString() + " 00:00:00 GMT"; //convert the graphtime to a gmt string, then convert that to the day string, and then add on 00:00:00 to round to the beginning of the day.
+      var new_g_time = dayStr.graphTime() + gT.offsetTime() + 20*3600*1000; //get the graphtime for the start of the day add the offset time, and 20 hours to get to EOD at either 20 or 21 hours depending on DST.
+      return new_g_time;
+    };
 
-//   var predictionsArray = [];
-//   var predictionIdsArray = [];
-//   for(var i=0; i < predictions.length; i++ ) {
-//     if (predictions[i][0] != null) {
-//       var timeStr = predictions[i][0].utcTimeInt().utcTimeStr(); //convert the graph time into a utc date string.
-//       var day = timeStr.utcTime().utcTimeStr(); //convert the date string into string 'yyyy-mm-dd'
-//       day = day + " 20:00:00"; //its 20 because 20 is valid during DST time too.
-//       var timeCompare = day.utcTime().utcTimeInt().graphTimeInt(); //convert the string to datestamp, then to utc int, then graphtimeint.
-       
-//       if (predictionIds === undefined) { //the predictionIds will be undefined when its the predictiondetails graph. Don't eliminate same time predictions.
-//         predictionsArray.push([timeCompare, predictions[i][1]]);
-//       }
-//       else if (predictionsArray.last() === undefined) {
-//         predictionsArray.push([timeCompare, predictions[i][1]]);
-//         predictionIdsArray.push(predictionIds[i]);
-//       }
-//       else if (predictionsArray.last()[0] !== timeCompare ) {
-//         predictionsArray.push([timeCompare, predictions[i][1]]);
-//         predictionIdsArray.push(predictionIds[i]);
-//       }
-//     }
-//   }
-//   return [predictionsArray, predictionIdsArray];
-// }
-//   }
-
-  //PRIVATE
-
-  var createDateLine = function(lineType) {
+    var intradayProcessor = function(gT) {
+      var coeff = 1000 * 60 * 5;
+      var rounded = Math.round(gT / coeff) * coeff; //get the rounded time.
+      return rounded;
+    };
 
     var options = {};
-    console.log (components["defaults"]);
+    options["daily_predictions"] = {
+      cb: dailyProcessor,
+      component: "dailyLines",
+      predictions: components.defaults.data.predictions,
+      index: 2
+    };
+
+    options["intraday_predictions"] = {
+      cb: intradayProcessor,
+      component: "intradayLines",
+      predictions: components.defaults.data.predictions,
+      index: 2
+    };
+
+    options["daily_my_prediction"] = {
+      cb:dailyProcessor,
+      component: "dailyLines",
+      predictions: components.defaults.data.my_prediction,
+      index: 3
+    };
+
+    options["intraday_my_prediction"] = {
+      cb:intradayProcessor,
+      component: "intradayLines",
+      predictions: components.defaults.data.my_prediction,
+      index: 3
+    };
+
+    var predictions = options[line].predictions;
+
+    var predictionsArray = [];
+
+    for(var i=0; i < predictions.length; i++ ) {
+      var timeCompare = options[line].cb(predictions[i].x);
+      if (predictionsArray.length === 0) { //if there are no predictions in the array, then add the first prediction.
+        predictionsArray.push({"id":predictions[i].id, "x":timeCompare, "y":predictions[i].y})
+      }
+      else if (timeCompare !== predictionsArray.last().x) { //if this date is not the same as the last one, then add it.
+        predictionsArray.push({"id":predictions[i].id, "x":timeCompare, "y":predictions[i].y})
+      }
+    }
+    if (predictionsArray.length !== 0) {
+      components[options[line].component].push({lineArray:predictionsArray, index:options[line].index});
+    }
+  };
+
+//   PRIVATE
+
+  var createDateLine = function(lineType) {
+    var options = {};
     options["intradayLine"] = {
-      "startTime": components.defaults.data.intraday_prices.last().x, //this gets the last graphtime from the dailyprices array.
+      "startTime": components.defaults.data.intraday_prices.last().x, //this gets the last graphtime from the intradayprices array.
       "iterations": 234, //this is 3 days forward. (6.5 * 3 * 60/5)
       "interval": 5*60*1000,
       "component": "intradayLines",
       "index": 1 //the index is 1 because it is the second graphLine in the chart.
     };
 
+
     options["dailyLine"] = {
-      "startTime": components.defaults.data.daily_prices.last().x, //this gets the last graphtime from the intradayprices array.
+      "startTime": components.defaults.data.daily_prices.last().x, //this gets the last graphtime from the dailyprices array.
       "iterations": 780, //this is 3 years forward. (260*3)
       "interval": 24*3600*1000, //interval of 1 day
       "component": "dailyLines",
@@ -393,7 +416,7 @@ var graphMediator = (function() {
       }
       i += 1;
     }
-    components[settings.component].push({lineArray:forwardArray, index:settings.index}) //this adds a new line to the graphLines component.
+    components[settings.component].push({lineArray:forwardArray, index:settings.index}) //this adds a new line to the dailyLines or intradayLines component.
   };
 
   return {
@@ -401,7 +424,8 @@ var graphMediator = (function() {
     setSeries: setSeries,
     defaultProcessor: defaultProcessor,
     setHover: setHover,
-    frameDependents: frameDependents
+    frameDependents: frameDependents,
+    createPredictionLine: createPredictionLine
   }
 })();
 
@@ -489,7 +513,7 @@ function StockGraph(stockGraph, chart) {
 
     //this needs to be reset only once the daily prediction rounder function is set.
     //graph["daily_my_prediction"] = DailyPredictions(graph["my_prediction"], graph["daily_prices"].last()[0]); //reset the value of daily_my_prediction based on the new my_prediction value.
-  }
+  };
 
   this.removePrediction = function() {
     stockGraph["my_prediction"] = [[null,null]];
@@ -689,63 +713,8 @@ function DailyForwardPrices (startTime) {
 }
 */
 
-function IntradayPredictions (predictions, predictionIds) {
-  var predictionsArray = [];
-  var predictionIdsArray = [];
-  for (var i=0; i< predictions.length; i++ ) {
-    if (predictions[i][0] != null) {
-      var dateStamp = predictions[i][0].utcTimeInt().utcTimeStr().utcTime();
-      var coeff = 1000 * 60 * 5;
-      var rounded = new Date(Math.round(dateStamp.getTime() / coeff) * coeff); //get the rounded time.
-      var graphTime = rounded.utcTimeInt().graphTimeInt();
 
-      if (predictionIds === undefined) { //the predictionIds will be undefined when its the predictiondetails graph. Don't eliminate same time predictions.
-        predictionsArray.push([graphTime, predictions[i][1]]);
-      }
-      else if (predictionsArray.last() === undefined) { //if there is nothing on the predictionsArray, its the first element of the array, so push.
-        predictionsArray.push([graphTime, predictions[i][1]]);
-        predictionIdsArray.push(predictionIds[i]);
-      }
-      else { //the predictionIds array will be undefined when the predictiondetails is used.
-        if (predictionsArray.last()[0] !== graphTime ) {  //if there is something, apply the actual condition.
-          predictionsArray.push([graphTime, predictions[i][1]]);
-          predictionIdsArray.push(predictionIds[i]);
-        }
-      }
-    }
-  }
-  return [predictionsArray, predictionIdsArray];
-}
 
-function DailyPredictions (predictions, predictionIds) { //the predictions array just has times and prices... these need to be converted?
-//these will be in order of time... so just check the one before to see if it is the same day as the current one?
-//If it is the same day... then don't add it. If its a different day, then add it.
-//Should also set the time of the prediction to the 21:00 mark to align with the forward array...
-
-  var predictionsArray = [];
-  var predictionIdsArray = [];
-  for(var i=0; i < predictions.length; i++ ) {
-    if (predictions[i][0] != null) {
-      var timeStr = predictions[i][0].utcTimeInt().utcTimeStr(); //convert the graph time into a utc date string.
-      var day = timeStr.utcTime().utcTimeStr(); //convert the date string into string 'yyyy-mm-dd'
-      day = day + " 20:00:00"; //its 20 because 20 is valid during DST time too.
-      var timeCompare = day.utcTime().utcTimeInt().graphTimeInt(); //convert the string to datestamp, then to utc int, then graphtimeint.
-       
-      if (predictionIds === undefined) { //the predictionIds will be undefined when its the predictiondetails graph. Don't eliminate same time predictions.
-        predictionsArray.push([timeCompare, predictions[i][1]]);
-      }
-      else if (predictionsArray.last() === undefined) {
-        predictionsArray.push([timeCompare, predictions[i][1]]);
-        predictionIdsArray.push(predictionIds[i]);
-      }
-      else if (predictionsArray.last()[0] !== timeCompare ) {
-        predictionsArray.push([timeCompare, predictions[i][1]]);
-        predictionIdsArray.push(predictionIds[i]);
-      }
-    }
-  }
-  return [predictionsArray, predictionIdsArray];
-}
 
 function Button(buttonSettings) {
   var beforeDays = buttonSettings["beforeDays"];

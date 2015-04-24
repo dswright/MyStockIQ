@@ -37,12 +37,12 @@ class Integer
 
     #takes a timestamp and returns a simple string with the year, month, and day.
     def utc_time_str(graph_time)
-      t.to_s.in_time_zone.strftime("%Y-%m-%d")
+      graph_time.to_s.in_time_zone.strftime("%Y-%m-%d")
     end
   
     #takes a timestamp and returns a simple string with the hour, minute, and second.
     def utc_time_hour(graph_time)
-      t.to_s.in_time_zone.strftime("%H:%M:%S")
+      graph_time.to_s.in_time_zone.strftime("%H:%M:%S")
     end
 
     #standard whole holidays are:
@@ -77,7 +77,7 @@ class Integer
     adjusted_graph_time = self + offset
     utc_time = adjusted_graph_time.utc_time #adjusts the time to handle DST.
     
-    holiday_format = utc_time_rst(utc_time)
+    holiday_format = utc_time_str(utc_time)
     hour_format = utc_time_hour(utc_time)
 
     if utc_time.wday == 6 || utc_time.wday == 0
@@ -118,7 +118,7 @@ class Integer
     end
 
     #this needs to be 4 hours during DST.
-    forward_graph_time = rounded_graph_time + (3*3600*1000) + rounded_graph_time.offset_num #move forward 3 or 4 hours to move any times in the afternoon to the next morning.
+    forward_graph_time = rounded_graph_time + (3*3600*1000) + rounded_graph_time.utc_time.offset_num #move forward 3 or 4 hours to move any times in the afternoon to the next morning.
 
     #if the number is out of range, then move to the next day, incrementally.
     i=0
@@ -127,8 +127,8 @@ class Integer
       next_utc_time_int = forward_graph_time + i*24*3600*1000
       day_start_utc_time = next_utc_time_int.utc_time.beginning_of_day
       morning_graph_time = day_start_utc_time.graph_time + 13.5*3600*1000 + day_start_utc_time.offset_num
-      if morning_graph_time.valid_stock_time?
-        return morning_graph_time.utc_time
+      if morning_graph_time.to_i.valid_stock_time?
+        return morning_graph_time.to_i.utc_time
       end
       i+=1
     end
