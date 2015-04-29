@@ -530,7 +530,7 @@ var graphMediator = (function() {
         var cbName = element[cbType]; //the callback is retrieved from the options hash via the graphType option, then the timeType (which is passed in through the function.) then it accesses the min or max callback using the 'extreme' setting from the options again.
         var cb = options.limitTypeCbs[cbName]; 
         var comparisonCb = options.extremes[limitType].comparisonCb;
-        var newLimit = cb(element.line); //the callback should take array as an argument and return a limit.
+        var newLimit = cb(limArr); //the callback should take array as an argument and return a limit.
 
         limit = comparisonCb(limit, newLimit); //returns either the old limit or new limit depending on limitype.
       });
@@ -557,7 +557,7 @@ var graphMediator = (function() {
         };
       });
       return frameHash;
-    }
+    };
 
     return graphProcessor(graphType); //returns the rangeHash of buttons.
 
