@@ -216,15 +216,27 @@ $(document).ready(function () {
 
       // sets the daily or intraday lines, depending on the timeFrame in the currentFrame.
       graphMediator.frameDependents("stockGraph");
+
+      // the timeFrame in the currentFrame component must be set before using this. 
       graphMediator.setRange();
 
       //stockChartFunctions = new StockGraph(data, stockChart); //data is passed into the stockgraph class so that it is accessible there.
 
       //stockChartFunctions.startChart();
 
+      var buttonClick = function() {
+        var buttonType = $(this).data("button-type");
+        var callback = function(component) { this.timeFrame = buttonType }; //the cb is called with the .call function, so this gets reset to the component.
+        graphMediator.updateComponent("currentFrame", callback)
+        graphMediator.frameDependents("stockGraph");
+        graphMediator.setRange(); //the current frame must be updated before set range should be used.
 
+        //change the on-hover states based on what has been clicked.
+        $(".timeframe-item-selected").switchClass("timeframe-item-selected", "timeframe-item")
+        $(this).switchClass("timeframe-item", "timeframe-item-selected");
+      }
 
-      // $("div[data-button-type]").click(stockChartFunctions.buttonClick);
+      $("div[data-button-type]").click(buttonClick);
 
       // window.inputPrediction = function(endTime, endPrice, predictionId) {
       //   stockChartFunctions.inputPrediction(endTime, endPrice, predictionId); //when a prediction is input, this function fires from the predicitoninput ajax call.

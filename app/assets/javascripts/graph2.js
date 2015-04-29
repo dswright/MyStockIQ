@@ -221,12 +221,17 @@ function PredictionDetails(graph, chart) {
 
 var graphMediator = (function() {
 
-  var components = {}
+  var components = {};
 
   //PUBLIC
 
   var addComponents = function(name, component) {
     components[name] = component;
+  };
+
+  var updateComponent = function(component, callback) {
+    callback.call(components[component]);
+    console.log(components);
   };
 
   var defaultProcessor = function() {
@@ -657,6 +662,7 @@ var graphMediator = (function() {
 
   return {
     addComponents: addComponents,
+    updateComponent: updateComponent,
     setSeries: setSeries,
     defaultProcessor: defaultProcessor,
     setHover: setHover,
