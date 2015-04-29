@@ -7,6 +7,7 @@ function resizeChart() {
 //Global variables. Move these inside the doc ready after debugging is complete.
 var currentRange = [];
 var stockGraph;
+var stockChart;
 
 $(document).ready(function () {
 
@@ -196,20 +197,26 @@ $(document).ready(function () {
       var defaults = { //defaults contains the variables that are standard to each graph.
         "data": data,
         "chart": stockChart
-      }
+      };
+
       graphMediator.addComponents('defaults', defaults);
       graphMediator.defaultProcessor(); //creates several default components automatically for every graph.
 
-      graphMediator.createPredictionLine("daily_predictions"); //create this predictions graph line for the stock graph only.
-      graphMediator.createPredictionLine("intraday_predictions"); //create this predictions graph line for the stock graph only.
+      graphMediator.createPredictionLine("dailyPredictions"); //create this predictions graph line for the stock graph only.
+      graphMediator.createPredictionLine("intradayPredictions"); //create this predictions graph line for the stock graph only.
 
-      graphMediator.createPredictionLine("daily_my_prediction"); //create this predictions graph line for the stock graph only.
-      graphMediator.createPredictionLine("intraday_my_prediction"); //create this predictions graph line for the stock graph only.
+      graphMediator.createPredictionLine("dailyMyPrediction"); //create this predictions graph line for the stock graph only.
+      graphMediator.createPredictionLine("intradayMyPrediction"); //create this predictions graph line for the stock graph only.
 
+      var currentFrame = {
+        timeFrame: "1Yr", 
+        framesHash: graphMediator.framesHash("stockGraph")
+      };
+      graphMediator.addComponents('currentFrame', currentFrame); //currentframe must be used before setRange is used.
 
-      //run all functions that are dependent on what the timeFrame is.
+      // sets the daily or intraday lines, depending on the timeFrame in the currentFrame.
       graphMediator.frameDependents("stockGraph");
-
+      graphMediator.setRange();
 
       //stockChartFunctions = new StockGraph(data, stockChart); //data is passed into the stockgraph class so that it is accessible there.
 
