@@ -11,11 +11,14 @@ class ScraperPublic
     end_date = Time.zone.now.strftime("%m-%d-%Y")
     url = "http://www.google.com/finance/historical?q=#{ticker_symbol}&startdate=#{start_date}&enddate=#{end_date}&output=csv&head=false"
     encoded_url = URI.encode(url)
+
     begin
       if price_hash_array = Scraper.process_csv_file(encoded_url, GoogleDaily.new, ticker_symbol, dups_allowed)
         #if Scraper.new.enough_volume?(price_hash_array)
         Scraper.new.save_to_db(price_hash_array, GoogleDaily.new)
+        puts price_hash_array
         Scraper.new.update_stock(ticker_symbol, Stockprice)
+        Scraper.new.remove_extra_day(ticker_symbol)
         #Stockprice.split_stock(ticker_symbol, input_prices_array)
         #else
         #  Scraper.new.update_to_inactive(ticker_symbol)
@@ -24,6 +27,7 @@ class ScraperPublic
     rescue Exception => e
       if e.message =~ /400 Bad Request/ || e.message =~ /404 Not Found/
         Scraper.new.update_to_inactive(ticker_symbol)
+        return "errored!"
       end
     end
   end
@@ -285,7 +289,14 @@ class Scraper
       daily_change = ((last_intraday_price["close_price"]/yesterday_price)*100).round(2)-100
       daily_price.update(date: last_intraday_price["date"], graph_time: last_intraday_price["graph_time"], daily_percent_change: daily_change)
     end
-  end             
+  end
+
+  def remove_extra_day(ticker_symbol) #removes the extra day that may be created by the intraday scraper that adds to the daily stock prices.
+    daily_prices = Stockprice.where(ticker_symbol:ticker_symbol).reorder("date Desc").limit(2)
+    if daily_prices[1].graph_time + 12*3600*1000 > daily_prices[0].graph_time
+      daily_prices[1].destroy
+    end
+  end
 end
 
 class GoogleIntraday
@@ -417,11 +428,13 @@ class GoogleDaily
   def data_hash(row, ticker_symbol)
     unless row[1] == "Open" #this csv file has headers, this ignores the header line.
 
-      date_string = DateTime.strptime(row[0].to_s, "%m/%d/%Y") #create a datestring from the date format '1/7/2015'
-      t = Time.parse(date_string.to_s) #convert the date format to a time format so that utc_time_full can be used.
+      tz = ActiveSupport::TimeZone.new('America/New_York') #set the time zone to EST.
+      
+      date_string = DateTime.strptime(row[0].to_s, "%d-%b-%y") #create a datestring from the date format '1/7/2015'
+      t = Time.parse(date_string.to_s) #convert the date format to a time format.
       offset = tz.parse(t.to_s).utc_offset() #returns either -18000 or -14400 depending on time of year
       graph_t = t.graph_time + 16*3600*1000 - offset*1000  #subtracting offset because it comes out as negative. This adds either 4 or 5 hours depending on the offset amount.
-
+      adj_time = graph_t.utc_time
 
       return price_hash = {
         "ticker_symbol" => ticker_symbol,
@@ -454,7 +467,7 @@ class GoogleDaily
     #Hash To Insert Strings
   def single_row_insert(price_hash)
     time = Time.zone.now.strftime('%Y-%m-%d %H:%M:%S')
-    price_string = "('#{price_hash["ticker_symbol"]}','#{price_hash["date"]}','#{price_hash["open_price"]}','#{price_hash["close_price"]}','#{price_hash["volume"]}','#{price_hash["split"]}','#{time}','#{time}, #{price_hash["graph_time"]}')"
+    price_string = "('#{price_hash["ticker_symbol"]}','#{price_hash["date"]}','#{price_hash["open_price"]}','#{price_hash["close_price"]}','#{price_hash["volume"]}','#{price_hash["split"]}','#{time}','#{time}', '#{price_hash["graph_time"]}')"
   end
 end
 
