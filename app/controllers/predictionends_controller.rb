@@ -35,7 +35,8 @@ class PredictionendsController < ApplicationController
         prediction.save #update the prediction to inactive.
 
         predictionend = prediction.build_predictionend() #build a prediction end.
-        predictionend.actual_end_time = Time.zone.now.utc_time_int.closest_start_time
+        predictionend.actual_end_time = Time.zone.now.graph_time.closest_start_time
+        predictionend.graph_end_time = predictionend.actual_end_time.graph_time
         predictionend.actual_end_price = prediction.stock.daily_stock_price
         predictionend.content = params[:comment]
         predictionend.end_price_verified = false
@@ -45,7 +46,7 @@ class PredictionendsController < ApplicationController
         @predictionend = predictionend
         tags = predictionend.add_tags(prediction.stock.ticker_symbol) #Add tickersymbol ('$') and username ('@') tags to predictionend content
 
-        @graph_time = @predictionend.actual_end_time.utc_time_int.graph_time_int
+        @graph_time = @predictionend.graph_end_time
 
  
         #target the current user and the stock with stream items.

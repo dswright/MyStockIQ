@@ -1,34 +1,49 @@
 class String
+  #converts time strings like "2010-06-03" to Times like Thu, 03 Jun 2010 00:00:00 UTC +00:00
   def utc_time
     Time.zone.parse(self)
   end
+
+  #converts time strings like "2010-06-03" to graphtime like 1275523200000
+  def graph_time 
+    self.utc_time.to_time.to_i*1000
+  end
+
 end
 
 class Time
-  def utc_time_int
-    self.to_time.to_i
+
+  #returns the DST offset amount in graphtime milliseconds.
+  #takes a timestamp and returns either 0 or 3600*1000 (1 hour).
+  #returns 1 hour when the time is 20:00 utc, and 0 when the hour is 21:00 utc.
+  def offset_num
+    tz = ActiveSupport::TimeZone.new('America/New_York') #set the time zone to EST.
+    num = (tz.parse(self.to_s).utc_offset().to_i + 18000)*1000 #the utc_offset returns either -18000 or -14400, which results in 1 hour or 0 being returned.
   end
-  def utc_time_str
-    self.to_s.in_time_zone.strftime("%Y-%m-%d")
-  end
-  def utc_time_hour
-    self.to_s.in_time_zone.strftime("%H:%M:%S")
+
+  #converts Time stamps like "Thu, 03 Jun 2010 00:00:00 UTC +00:00" to graphtime like 1275523200000
+  def graph_time
+    self.to_time.to_i*1000
   end
 end
 
 class Integer
   def utc_time
-    Time.at(self).in_time_zone
-  end
-  def utc_time_int
-    self/1000 + 5*3600
-  end
-  def graph_time_int
-    (self-5*3600) * 1000
+    Time.at(self/1000).in_time_zone
   end
 
-  #expects to take an int in utc time.
+  #expects to take a graphtime int.
   def valid_stock_time?
+
+    #takes a timestamp and returns a simple string with the year, month, and day.
+    def utc_time_str(graph_time)
+      graph_time.to_s.in_time_zone.strftime("%Y-%m-%d")
+    end
+  
+    #takes a timestamp and returns a simple string with the hour, minute, and second.
+    def utc_time_hour(graph_time)
+      graph_time.to_s.in_time_zone.strftime("%H:%M:%S")
+    end
 
     #standard whole holidays are:
     #new years day, MLK day, Presidents day, Good Friday, Memorial Day, July 4th, Labor Day, Thanksgiving, Christmas
@@ -57,9 +72,13 @@ class Integer
       "2018-12-24"
     ]
 
-    utc_time = self.utc_time
-    holiday_format = utc_time.utc_time_str
-    hour_format = utc_time.utc_time_hour
+    offset = self.utc_time.offset_num
+
+    adjusted_graph_time = self + offset
+    utc_time = adjusted_graph_time.utc_time #adjusts the time to handle DST.
+    
+    holiday_format = utc_time_str(utc_time)
+    hour_format = utc_time_hour(utc_time)
 
     if utc_time.wday == 6 || utc_time.wday == 0
       return false
@@ -82,77 +101,34 @@ class Integer
     return true
   end
 
-  #these functions are probably best for being graph specific... they're pretty wierd.. no other situation for needing these.
-
   #this function returns a valid end date in the future. It looks a length_of_time ahead, iterating through every point in between
   #to check the validity of each point. If the point is invalid, the length of time looking forward is extended.
-  #utc_time_int: the time to start looking.
-  #interval: amount of time in seconds between checks for a valid date.
-  #length_of_time: the amount of time ahead, in valid stock market time, of the start time to begin looking for valid dates.
 
-
-  #returns the closest end time. Used for a variety of things. probably best as a function of ints.
-  #expects to receieve an int, but returns a date string..
-  
-  #THIS FUNCTION IS NOW OUT OF USE.
-  def closest_end_time
-    #increase the time by 1 minute, since these formulas round down.
-    int_time = self + 60
-    #first, round to the nearest minute
-    rounded_utc_time_int = int_time.utc_time.strftime("%Y-%m-%d %H:%M:00").utc_time.utc_time_int
-
-    #first check if the current time is valid
-    #if this returns false, its in the time frame.
-    if rounded_utc_time_int.valid_stock_time?
-      return rounded_utc_time_int.utc_time #return the datetime format for insert into db.
-    end
-
-    #If its not in the current time frame, the prediction should always move to an EOD price.
-    #If the prediction were to end in the morning of the next day, we need to subtract hours to get to the previous day.
-    #so by default, we will subtract 14.5 hours, so that all times are gauranteed to fall into the previous day.
-    back_dated_utc_time_int = rounded_utc_time_int - 14.5*3600
-
-    i=0
-    while i<= 10 #A valid day should be returned within 10 days.
-      #if the first day is an invalid end day, then we need to iterate onto the next day.
-      next_utc_time_int = (back_dated_utc_time_int - i*24*3600).to_i
-      day_start_utc_time = next_utc_time_int.utc_time.beginning_of_day
-      day_end_utc_time_int = day_start_utc_time.utc_time_int + 21*3600
-      if day_end_utc_time_int.valid_stock_time?
-        return day_end_utc_time_int.utc_time
-      else
-        #if the eod number is invalid, we should check the mid day number to ensure the day is not just a holiday.
-        day_mid_utc_time_int = day_start_utc_time.utc_time_int + 18*3600
-        if day_mid_utc_time_int.valid_stock_time?
-          return day_mid_utc_time_int.utc_time
-        end
-      end
-      i+=1
-    end
-  end
-
+  #This is expecting a graphtime integer to process.
+  #it returns a timestamp.
   def closest_start_time
     #increase the time by 1 minute, since these formulas round down.
-    int_time = self + 60
-    rounded_utc_time_int = int_time.utc_time.strftime("%Y-%m-%d %H:%M:00").utc_time.utc_time_int
+    int_time = self + (60*1000)
+    rounded_graph_time = int_time.utc_time.strftime("%Y-%m-%d %H:%M:00").graph_time
 
     #first check if the current time is valid
     #if this returns false, its in the time frame.
-    if rounded_utc_time_int.valid_stock_time?
-      return rounded_utc_time_int.utc_time
+    if rounded_graph_time.valid_stock_time?
+      return rounded_graph_time.utc_time
     end
 
-    forward_dated_time = rounded_utc_time_int + 3*3600 #move forward 3 hours to move any times in the afternoon to the next morning.
+    #this needs to be 4 hours during DST.
+    forward_graph_time = rounded_graph_time + (3*3600*1000) + rounded_graph_time.utc_time.offset_num #move forward 3 or 4 hours to move any times in the afternoon to the next morning.
 
     #if the number is out of range, then move to the next day, incrementally.
     i=0
     while i<= 10 #A valid day should be returned within 10 days.
       #if the first day is an invalid end day, then we need to iterate onto the next day.
-      next_utc_time_int = forward_dated_time + i*24*3600
+      next_utc_time_int = forward_graph_time + i*24*3600*1000
       day_start_utc_time = next_utc_time_int.utc_time.beginning_of_day
-      morning_utc_time_int = (day_start_utc_time.utc_time_int + 14.5*3600).to_i
-      if morning_utc_time_int.valid_stock_time?
-        return morning_utc_time_int.utc_time
+      morning_graph_time = day_start_utc_time.graph_time + 13.5*3600*1000 + day_start_utc_time.offset_num
+      if morning_graph_time.to_i.valid_stock_time?
+        return morning_graph_time.to_i.utc_time
       end
       i+=1
     end

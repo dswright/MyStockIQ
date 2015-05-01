@@ -35,6 +35,7 @@ class ScraperPublic
       unless daily_hash_array.empty?
         Scraper.new.save_to_db(daily_hash_array, GoogleIntraday.new(5))
         Scraper.new.update_stock(ticker_symbol, Intradayprice)
+        Scraper.new.update_daily(ticker_symbol, daily_hash_array.last ) #this updates the daily table with the latest intraday price. 
       end
     end
   end
@@ -250,7 +251,6 @@ class Scraper
     stock_to_update.update(active:false)
   end
 
-  #need to make this work for the intraday scraper as well
   def update_stock(ticker_symbol, price_class)  #used by the intraday scraper and daily scraper to update the latest stock price.
     price_list = price_class.where(ticker_symbol:ticker_symbol)
     update_complete = false
@@ -271,6 +271,21 @@ class Scraper
       stock_to_update.update(date:latest_hash[:date], daily_stock_price:latest_hash[:close_price])
     end
   end
+
+  def update_daily(ticker_symbol, last_intraday_price)
+    #identify latest price from the scraper
+    daily_price = Stockprice.where(ticker_symbol:ticker_symbol).reorder("date DESC").limit(1)[0]
+    yesterday_price = Stockprice.where(ticker_symbol:ticker_symbol).reorder("date DESC").limit(2)[1].close_price
+
+    if daily_price.graph_time+12*3600*1000 < last_intraday_price["graph_time"] #if the previous record is more than 12 hours old, then make a new record.
+      daily_change = ((last_intraday_price["close_price"]/daily_price["close_price"])*100).round(2) - 100 #since we make a new record, use the daily price to see yesterday's close price.
+      Stockprice.create(ticker_symbol:ticker_symbol, date:last_intraday_price["date"], open_price: last_intraday_price["open_price"],
+      close_price: last_intraday_price["close_price"], volume: last_intraday_price["volume"], split:1, daily_percent_change: daily_change, graph_time: last_intraday_price["graph_time"])
+    elsif daily_price.graph_time < last_intraday_price["graph_time"] #if the new record is more recent than the previous, then update the current daily record.
+      daily_change = ((last_intraday_price["close_price"]/yesterday_price)*100).round(2)-100
+      daily_price.update(date: last_intraday_price["date"], graph_time: last_intraday_price["graph_time"], daily_percent_change: daily_change)
+    end
+  end             
 end
 
 class GoogleIntraday
@@ -284,13 +299,17 @@ class GoogleIntraday
     #if the row[0] is less than 1000000, then its just the integer from the google data, if its greater,
     #then its the actual time stamp, and the correct date.
     if row[0].gsub('a','').to_i <= 1000000
-      time_start = time_start + 3600 + row[0].to_i * @increment*60 #add X minutes per increment. Comes in 1 hour behind, so 3600 is added.
+      time_start = time_start + row[0].to_i * @increment*60 #add X minutes per increment.
     end
+
+    graph_time = time_start * 1000
+
     daily_hash = {
       "ticker_symbol" => ticker_symbol,
-      "date" =>  time_start.utc_time,
-      "open_price" => row[4].to_f,
-      "close_price" => row[1].to_f
+      "date" =>  graph_time.utc_time,
+      "open_price" => row[4].to_f.round(2),
+      "close_price" => row[1].to_f.round(2),
+      "graph_time" => graph_time
     }
     if daily_hash["open_price"] == 0
       return false
@@ -319,14 +338,14 @@ class GoogleIntraday
 
   def all_data_insert(price_array)
     sql = "INSERT INTO intradayprices 
-      (ticker_symbol, date, open_price, close_price, created_at, updated_at)
+      (ticker_symbol, date, open_price, close_price, created_at, updated_at, graph_time)
       VALUES #{price_array.join(", ")}"
   end
 
     #Hash To Insert Strings
   def single_row_insert(price_hash)
     time = Time.zone.now.to_s(:db)
-    price_string = "('#{price_hash["ticker_symbol"]}','#{price_hash["date"]}','#{price_hash["open_price"]}','#{price_hash["close_price"]}','#{time}','#{time}')"
+    price_string = "('#{price_hash["ticker_symbol"]}','#{price_hash["date"]}','#{price_hash["open_price"]}','#{price_hash["close_price"]}','#{time}','#{time}', '#{price_hash["graph_time"]}')"
   end
 
 end
@@ -397,14 +416,21 @@ class GoogleDaily
 
   def data_hash(row, ticker_symbol)
     unless row[1] == "Open" #this csv file has headers, this ignores the header line.
-      date = Time.zone.parse(row[0].to_s).strftime("20%y-%m-%d 21:00:00")
+
+      date_string = DateTime.strptime(row[0].to_s, "%m/%d/%Y") #create a datestring from the date format '1/7/2015'
+      t = Time.parse(date_string.to_s) #convert the date format to a time format so that utc_time_full can be used.
+      offset = tz.parse(t.to_s).utc_offset() #returns either -18000 or -14400 depending on time of year
+      graph_t = t.graph_time + 16*3600*1000 - offset*1000  #subtracting offset because it comes out as negative. This adds either 4 or 5 hours depending on the offset amount.
+
+
       return price_hash = {
         "ticker_symbol" => ticker_symbol,
-        "date" => date, #date is in the form "1/7/2015", and it converts to date format OK.
-        "open_price" => row[1].to_f,
-        "close_price" => row[4].to_f,
+        "date" => adj_time, #date is in the form "1/7/2015", and it is converted to "Mon, 30 Mar 2015 21:00:00 UTC +00:00", which saves to the db as a string format
+        "open_price" => row[1].to_f.round(2),
+        "close_price" => row[4].to_f.round(2),
         "volume" => row[5].to_i,
-        "split" => 1
+        "split" => 1,
+        "graph_time" => graph_t
       }
     else
       return false
@@ -421,14 +447,14 @@ class GoogleDaily
 
   def all_data_insert(price_array)
     sql = "INSERT INTO stockprices 
-      (ticker_symbol, date, open_price, close_price, volume, split, created_at, updated_at)
+      (ticker_symbol, date, open_price, close_price, volume, split, created_at, updated_at, graph_time)
       VALUES #{price_array.join(", ")}"
   end
 
     #Hash To Insert Strings
   def single_row_insert(price_hash)
     time = Time.zone.now.strftime('%Y-%m-%d %H:%M:%S')
-    price_string = "('#{price_hash["ticker_symbol"]}','#{price_hash["date"]}','#{price_hash["open_price"]}','#{price_hash["close_price"]}','#{price_hash["volume"]}','#{price_hash["split"]}','#{time}','#{time}')"
+    price_string = "('#{price_hash["ticker_symbol"]}','#{price_hash["date"]}','#{price_hash["open_price"]}','#{price_hash["close_price"]}','#{price_hash["volume"]}','#{price_hash["split"]}','#{time}','#{time}, #{price_hash["graph_time"]}')"
   end
 end
 

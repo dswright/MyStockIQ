@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150402063429) do
+ActiveRecord::Schema.define(version: 20150421005625) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "adminpack"
@@ -32,8 +32,9 @@ ActiveRecord::Schema.define(version: 20150402063429) do
     t.datetime "date"
     t.float    "open_price"
     t.float    "close_price"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "graph_time",    limit: 8
   end
 
   add_index "intradayprices", ["date"], name: "index_intradayprices_on_date", using: :btree
@@ -80,10 +81,11 @@ ActiveRecord::Schema.define(version: 20150402063429) do
     t.datetime "actual_end_time"
     t.boolean  "end_price_verified"
     t.integer  "prediction_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
-    t.string   "comment"
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.string   "content"
     t.string   "tagged_content"
+    t.integer  "graph_end_time",     limit: 8
   end
 
   add_index "predictionends", ["prediction_id"], name: "index_predictionends_on_prediction_id", using: :btree
@@ -91,9 +93,9 @@ ActiveRecord::Schema.define(version: 20150402063429) do
   create_table "predictions", force: true do |t|
     t.integer  "user_id"
     t.float    "score"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-    t.string   "prediction_comment"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.string   "content"
     t.integer  "stock_id"
     t.datetime "start_time"
     t.boolean  "start_price_verified"
@@ -102,6 +104,8 @@ ActiveRecord::Schema.define(version: 20150402063429) do
     t.datetime "prediction_end_time"
     t.float    "prediction_end_price"
     t.string   "tagged_content"
+    t.integer  "graph_start_time",     limit: 8
+    t.integer  "graph_end_time",       limit: 8
   end
 
   add_index "predictions", ["stock_id"], name: "index_predictions_on_stock_id", using: :btree
@@ -143,6 +147,7 @@ ActiveRecord::Schema.define(version: 20150402063429) do
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
     t.float    "daily_percent_change"
+    t.integer  "graph_time",           limit: 8
   end
 
   add_index "stockprices", ["date"], name: "index_stockprices_on_date", using: :btree
@@ -185,6 +190,16 @@ ActiveRecord::Schema.define(version: 20150402063429) do
 
   add_index "streams", ["streamable_type", "streamable_id"], name: "index_streams_on_streamable_type_and_streamable_id", using: :btree
   add_index "streams", ["targetable_type", "targetable_id"], name: "index_streams_on_targetable_type_and_targetable_id", using: :btree
+
+  create_table "tags", force: true do |t|
+    t.text     "content"
+    t.integer  "tagable_id"
+    t.string   "tagable_type"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "tags", ["tagable_type", "tagable_id"], name: "index_tags_on_tagable_type_and_tagable_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "username"

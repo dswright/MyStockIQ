@@ -26,50 +26,53 @@ if (![].includes) {
   };
 }
 
-String.prototype.utcTime = function() { //takes date string format of the manual type "YYYY-MM-DD" or the database type "2015-01-26 21:00:00 UTC". Creates a date stamp.
-  var dateString = this;
-  if (dateString.indexOf(':') === -1) { //if there is no ':', add the minute string.
-    dateString = dateString + " 00:00:00";
+//This takes string of the types (Must have GMT):
+//"2013-02-06 21:00:00 GMT" - for manual date input types.
+//Wed, 06 Feb 2013 21:00:00 GMT" - for processing graphtimes turned into datestrings.
+//"2013-02-06T21:00:00.000Z" - for processing datestamps taken straight from the database.
+String.prototype.graphTime = function() {
+  return Date.parse(this);
+}
+
+//this takes the a string of the form "Wed, 06 Feb 2013 21:00:00 GMT" and returns the format "2013-02-06"
+String.prototype.dayString = function() {
+  var d = new Date(this); //converts string into JS Date.
+  return moment(d).utc().format("YYYY-MM-DD"); //converts the JS Date to the daily format.
+}
+
+//This converts a graphtime number "1360184400000" into a GMT string "Wed, 06 Feb 2013 21:00:00 GMT"
+Number.prototype.gmtString = function() {
+  return new Date(this).toUTCString();
+}
+
+//add the EST moment as a timezone.
+moment.tz.add('America/New_York|EST EDT|50 40|0101|1Lz50 1zb0 Op0');
+
+//this offsetTime returns an hour if the UTC time is 20:00:00, and returns nothing if the utc time is 21:00:00. (stock market end time is EST)
+Number.prototype.offsetTime = function() {
+  //the America/New York timezone is set just outside of this function.
+  var offset = moment.tz.zone('America/New_York').offset(this) * 60 * 1000; //the offset is returned as a positive number of minutes, which converted to milliseconds.
+  return 5*3600*1000 - offset; //This will return either 0 or 3600*1000 millisecond (1 hour) offset, depending on DST.
+}
+
+//This takes graphtime as the correct intake.
+Number.prototype.validStockTime = function() {
+  
+  //this takes the a string of the form "Wed, 06 Feb 2013 21:00:00 GMT" and returns the format "21:00:00"
+  function hourString(str) {
+    var d = new Date(str); //converts string to JS Date.
+    return moment(d).utc().format("HH:mm:ss"); //converts the JS Date to the hour format.
   }
-  arr = dateString.split(/[- :]/);
-  theDate = new Date(arr[0], arr[1]-1, arr[2], arr[3], arr[4], arr[5]); //returns a date stamp.
-  //return new Date(theDate.getUTCFullYear(), theDate.getUTCMonth(), theDate.getUTCDate(), theDate.getUTCHours(), theDate.getUTCMinutes(), theDate.getUTCSeconds()); //returns a datestamp.
-  return new Date(arr[0], arr[1]-1, arr[2], arr[3], arr[4]-theDate.getTimezoneOffset(), arr[5]);
-}
 
-Date.prototype.utcTimeInt = function() {
-  return (this.getTime())/1000; //convert a date type into a UTC int.
-}
+  //this takes a string of the form "Wed, 06 Feb 2013 21:00:00 GMT" and returns the weekday number, like 6 or 7.
+  function weekDay(str) {
+    var d = new Date(str)
+    return moment(d).isoWeekday();
+  }
 
-Date.prototype.weekDay = function() {
-  return moment(this).isoWeekday();
-}
-
-Date.prototype.utcTimeStr = function() {
-  return moment(this).utc().format("YYYY-MM-DD"); //convert date type into a day string.
-}
-
-Date.prototype.utcTimeHour = function() {
-  return moment(this).utc().format("HH:mm:ss"); //convert date type into an hour string.
-}
-
-Number.prototype.utcTimeStr = function() {
-  return moment.utc(this*1000).format("YYYY-MM-DD HH:mm:ss UTC"); //convert an integer into a utc date string.
-}
-
-Number.prototype.graphTimeInt = function() {
-  return (this-5*3600) * 1000; //converts the time into to milliseconds and EST.
-}
-
-Number.prototype.utcTimeInt = function() {
-  return this/1000 + 5*3600; //converts the time from graph time to the regular UTC time int.
-}
-
-//expects to take a date string "YYYY-MM-DD" or the database type "2015-01-26 21:00:00 UTC"
-String.prototype.validStockTime = function() {
+  //This is the array of holiday dates that the market is closed.
   //standard whole holidays are:
   //new years day, MLK day, Presidents day, Good Friday, Memorial Day, July 4th, Labor Day, Thanksgiving, Christmas
-  
   var holidayArray = [
     "2010-01-01", "2010-01-18", "2010-02-15", "2010-04-02", "2010-05-31", "2010-07-05", "2010-09-06", "2010-11-25", "2010-12-24",
     "2011-01-17", "2011-02-21", "2011-04-22", "2011-05-30", "2011-07-04", "2011-09-05", "2011-11-24", "2011-12-26",
@@ -84,6 +87,7 @@ String.prototype.validStockTime = function() {
     "2020-01-01", "2020-01-20", "2020-02-17", "2020-04-10", "2020-05-25", "2020-07-03", "2020-09-07", "2020-11-26", "2020-12-25"
   ];
 
+  //This is the array of holidays that the market is open until just 1pm.
   //Friday after thanksgiving and Christmas eve, when on a weekday, tend to be half days.
   var halfDayArray = [
     "2010-11-26",
@@ -99,18 +103,23 @@ String.prototype.validStockTime = function() {
     "2020-07-03", "2020-11-25", "2020-12-24"
   ];
 
-  var utcTime = this.utcTime(); //converts the time string into a time stamp.
-  var holidayFormat = utcTime.utcTimeStr(); //converts to YYYY-MM-DD
-  var hourFormat = utcTime.utcTimeHour(); //converts to "HH:mm:ss" type.
+  //first thing to do is to detect the offset that exists with this graphtime.  
+  var offsetTime = this + this.offsetTime(); //this either increases by 1 hour, or not at all.
 
-  //hourformat uses the utcTime... what is this??? this is the string that the function is applied to..
-  //string is of type '2015-03-10 21:00:00 UTC'
 
-  if (utcTime.weekDay() == 6 || utcTime.weekDay() == 7) { //if the day is on a weekend, it is not a valid day.
+  //now use that offsetTime to create the string to run verificaitons against.
+  var gmtStr = offsetTime.gmtString();
+
+  
+  var holidayFormat = gmtStr.dayString(); //converts to YYYY-MM-DD
+  var hourFormat = hourString(gmtStr); //converts to "HH:mm:ss" type.
+
+
+  if (weekDay(gmtStr) == 6 || weekDay(gmtStr) == 7) { //if the day is on a weekend, its invalid day.
     return false;
   }
 
-  if (hourFormat < "14:30:00" || hourFormat > "21:00:00") { //if its outside of market hours, it invalid. validation times are in utc time, 5 hours ahead of est.
+  if (hourFormat < "14:30:00" || hourFormat > "21:00:00") { //if its outside of market hours, its invalid. validation times are in utc time, 5 hours ahead of est.
     return false;
   }
 
@@ -123,7 +132,6 @@ String.prototype.validStockTime = function() {
       return false;
     }
   }
-
 
   return true;
 }

@@ -205,12 +205,7 @@ function PredictionDetails(graph, chart) {
 
   }
 
-  //duplicate function
-  function setRange(button) { //sets the ranges of the graph based on a target button, 1d,5d,1m,3m,6m ect.
-    chart.yAxis[0].setExtremes(rangeHash[button]["yMin"], rangeHash[button]["yMax"]); //set y min and y max values
-    chart.xAxis[0].setExtremes(rangeHash[button]["xMin"], rangeHash[button]["xMax"]); //set x min and x max values
-    currentRange = {rangeHash:rangeHash[button],buttonType:button};
-  }
+
 
   //duplicate.
   function BestRange (endTime) {
@@ -221,6 +216,533 @@ function PredictionDetails(graph, chart) {
     }
   }
 }
+
+//holds functions that are utilized across graphs.
+
+var graphMediator = (function() {
+
+  var components = {};
+
+  //PUBLIC
+
+  var addComponents = function(name, component) {
+    components[name] = component;
+  };
+
+  var updateComponent = function(component, callback) {
+    callback.call(components[component]);
+    console.log(components);
+  };
+
+  var defaultProcessor = function() {
+    var dailyLines = { //dailyLines is a component that contains the daily graph lines.
+      prices: {lineArray:components.defaults.data.daily_prices,index:0}
+    };
+
+    var intradayLines = { //intradaylines is a component that contains the intraday graph lines.
+      prices: {lineArray:components.defaults.data.intraday_prices, index:0}
+    };
+
+    addComponents('dailyLines', dailyLines); //this creates a component called dailyLines.
+    addComponents('intradayLines', intradayLines); //this creates a component called intradayLines.
+  
+    createDateLine("dailyLines"); //adds the forward date array to the dailyLines component.
+    createDateLine("intradayLines");  //adds the forward date array to the intradayLines component.
+  
+  };
+
+  //this function is executed to run all functions that are dependent on whether or not the frame is in the 1d,5d vs 1m,3m,6m,1Yr ect.
+  var frameDependents = function(graph) {
+
+    var options = {
+      stockGraph: {
+        daily: function() {
+          setSeries("dailyLines"),
+          setHover("dailyPrices")
+        },
+        intraday: function() {
+          setSeries("intradayLines"),
+          setHover("intradayPrices")
+        }
+      }
+    };
+
+    if (components.currentFrame.timeFrame === "1D" || components.currentFrame.timeFrame === "5D") {
+      options[graph]["intraday"]();
+    }
+    else {
+      options[graph]["daily"]();
+    }
+  };
+
+  //setSeries sets the series' defined in the daily and Intraday Line components.
+  var setSeries = function(component) {
+    for (var key in components[component]) {
+      if (components[component].hasOwnProperty(key)) {
+        var lineData = components[component][key].lineArray;
+        var chart = components.defaults.chart;
+        var seriesIndex = components[component][key].index;
+        chart.series[seriesIndex].setData(lineData);
+      }
+    }
+  };
+
+  var setRange = function() { //sets the ranges of the graph based on the button in the currentRange component.
+    var chart = components.defaults.chart
+    var button = components.currentFrame.timeFrame;
+    var frameHash = components.currentFrame.framesHash[button]
+    chart.yAxis[0].setExtremes(frameHash.yMin, frameHash.yMax); //set y min and y max values
+    chart.xAxis[0].setExtremes(frameHash.xMin, frameHash.xMax); //set x min and x max values
+    console.log(frameHash);
+  };
+
+  //sets the on-hover respones for each graph line.
+  var setHover = function(line) {
+    var options = {};
+    options["dailyPrices"] = {
+      ajaxUrl:"/stockprices/hover_daily/",
+      seriesIndex:0
+    };
+
+    options["intradayPrices"] = {
+      ajaxUrl:"/stockprices/hover_intraday/",
+      seriesIndex:0
+    };
+
+    var ajaxUrl = options[line].ajaxUrl;
+    var seriesIndex = options[line].seriesIndex;
+    
+    components.defaults.chart.series[seriesIndex].update({ //update the options of the specified series.
+      point: {
+        events: {
+          mouseOver: function(e) {
+            $.ajax({
+              url: ajaxUrl+this.id+"/", //pass the id to the ajaxURL
+              dataType: "script"
+            }).done(function( script, textStatus ) {
+              script //this loads in the html returned from the ajax request.
+            })
+          }
+        }
+      }
+    });
+  };
+
+  var framesHash = function(graphType) { //the rangeHash is an array of buttons with the button name as the key and the value being an object of x and y mins and max.
+    
+    var buttonMin; //used to track the min price of the daily or intraday price array to use to set a max and min values.
+    var buttonMax;
+
+    var options = {
+      limitTypeCbs: {
+        min: function(lineArray) { 
+          var newMin = lineArray.reduce(function (min, obj) {  //this reduce function needs to get the lowest price from the array.
+            return obj.y < min ? obj.y : min; //if obj[1] (price) is less than the min, return obj[1], otherwise return min. 
+          }, Infinity);
+          buttonMin = newMin; //buttonMin is set here to be used in the next function when it gets called next.
+          return newMin;
+        }, //infinity is the value of the first min.
+        limMin: function(lineArray) {
+          var newMin = Infinity;
+          for (var i = 0; i<lineArray.length; i++) {
+            if (lineArray[i].y < newMin) {
+              if (lineArray[i].y > buttonMin * 0.5) { //the min is 50% of the graph min price. The buttonMin is set in the min function.
+                newMin = lineArray[i].y;
+              }
+            }
+          };
+          return newMin;
+        },
+        noLimMin: function(lineArray) {
+          var newMin = Infinity;
+          for (var i=0; i<lineArray.length; i++) {  
+            if (lineArray[i].y < newMin) {
+              newMin = lineArray[i].y;
+            }
+          };
+          return newMin;
+        },
+        max: function(lineArray) {
+          var max = lineArray.reduce(function (max, obj) {
+            return obj.y > max ? obj.y : max;
+          }, 0);
+          buttonMax = max;
+          return max;
+        },
+        limMax: function(lineArray) {
+          var newMax = 0;
+          for (i=0; i<lineArray.length; i++) {
+            if (lineArray[i].y > newMax) {
+              if (lineArray[i].y < buttonMax * 1.5) {
+                newMax = lineArray[i].y;
+              }
+            }
+          }
+        },
+        noLimMax: function(lineArray) {
+          var newMax = 0;
+          for (i=0; i<lineArray.length; i++) {
+            if (lineArray[i].y > newMax) {
+              newMax = lineArray[i].y;
+            }
+          }
+        }
+      },
+      timeIntervals: {
+        intraday: {
+          tInterval: 60*5*1000,
+          tLength: 6.5*3600*1000
+        },
+        daily: {
+          tInterval: 24*3600*1000,
+          tLength: 24*3600*1000
+        }
+      },
+      extremes: {
+        min: {
+          cb: "minCb",
+          comparisonCb: function(limit, new_limit) {
+            if (limit === undefined) {
+              return new_limit;
+            }
+            else if (new_limit < limit) {
+              return new_limit;
+            }
+            else {
+              return limit;
+            }
+          },
+          bufferMaker: function(limit) {
+            return limit - (buttonMin-limit)*0.05; 
+          }
+        },
+        max : {
+          cb: "maxCb",
+          comparisonCb: function(limit, new_limit) {
+            if (limit === undefined) {
+              return new_limit;
+            }
+            else if (new_limit > limit) {
+              return new_limit;
+            }
+            else {
+              return limit;
+            }
+          },
+          bufferMaker: function(limit) {
+            return limit + (limit - buttonMax) * 0.05; //buttonmax will either be equal to or greater than the limit.
+          }
+        }
+      },
+      stockGraph: function() { //this is a function so that it will only execute when called. These lines won't exist for every graph.
+        return {
+          daily: {
+            limitLines: [
+              {
+                line: components.dailyLines.prices.lineArray,
+                minCb: "min",
+                maxCb: "max"
+              },
+              {
+                line: components.dailyLines.predictions.lineArray,
+                minCb: "limMin",
+                maxCb: "limMax"
+              },
+              {
+                line: components.dailyLines.myPrediction.lineArray,
+                minCb: "noLimMin",
+                maxCb: "noLimMax"
+              }
+            ],
+            startPoint: components.dailyLines.prices.lineArray.last().x
+          },
+          intraday: {
+            limitLines: [
+              {
+                line: components.intradayLines.prices.lineArray,
+                minCb: "min",
+                maxCb: "max"
+              },
+              {
+                line: components.intradayLines.predictions.lineArray,
+                minCb: "limMin",
+                maxCb: "limMax"
+              },
+              {
+                line: components.intradayLines.myPrediction.lineArray,
+                minCb: "noLimMin",
+                maxCb: "noLimMax"
+              }
+            ],
+            startPoint: components.intradayLines.prices.lineArray.last().x
+          },
+          buttons: [
+            {name:"1D", beforeDays:1, afterDays:0.5, timeType:"intraday"},
+            {name:"5D", beforeDays:5, afterDays:2.5, timeType:"intraday"},
+            {name:"1M", beforeDays:20, afterDays:10, timeType:"daily"},
+            {name:"3M", beforeDays:60, afterDays:30, timeType:"daily"},
+            {name:"6M", beforeDays:120, afterDays:60, timeType:"daily"},
+            {name:"1Yr", beforeDays:240, afterDays:120, timeType:"daily"},
+            {name:"5Yr", beforeDays:1200, afterDays:600, timeType:"daily"}
+          ]
+        }
+      },
+      predictionGraph: function() { //this is a function so that it will only execute when called. These lines won't exist for every graph.
+        return {
+          daily: {
+            limitLines: [
+              {
+                line: components.dailyLines.prices.lineArray,
+                minCb: "min",
+                maxCb: "max"
+              },
+              {
+                line: components.dailyLines.prediction.lineArray,
+                minCb: "limMin",
+                maxCb: "limMax"
+              },
+              {
+                line: components.dailyLines.predictionend.lineArray,
+                minCb: "noLimMin",
+                maxCb: "noLimMax"
+              }
+            ],
+            startPoint: components.dailyLines.prices.lineArray.last().x
+          },
+          intraday: {
+            limitLines: [
+              {
+                line: components.intradayLines.prices.lineArray,
+                minCb: "min",
+                maxCb: "max"
+              },
+              {
+                line: components.intradayLines.prediction.lineArray,
+                minCb: "limMin",
+                maxCb: "limMax"
+              },
+              {
+                line: components.intradayLines.predictionend.lineArray,
+                minCb: "noLimMin",
+                maxCb: "noLimMax"
+              }
+            ],
+            startPoint: components.intradayLines.prices.lineArray.last().x
+          },
+          buttons: [
+            {name:"1D", beforeDays:1, afterDays:0.5, timeType:"intraday"},
+            {name:"5D", beforeDays:5, afterDays:2.5, timeType:"intraday"},
+            {name:"1M", beforeDays:20, afterDays:10, timeType:"daily"},
+            {name:"3M", beforeDays:60, afterDays:30, timeType:"daily"},
+            {name:"6M", beforeDays:120, afterDays:60, timeType:"daily"},
+            {name:"1Yr", beforeDays:240, afterDays:120, timeType:"daily"},
+            {name:"5Yr", beforeDays:1200, afterDays:600, timeType:"daily"}
+          ]
+        }
+      }
+    };
+
+    var limitedArray = function(graphArray, xMin, xMax) { //this reduces the full array to an array of points between 2 dates.
+      var returnArray = [];
+      returnArray = graphArray.select(function(point) {
+        if (point.x >= xMin && point.x <= xMax){
+          return point;
+        }
+      });
+      return returnArray;
+    };
+
+    var xLimit = function(intervalDirection, startPoint, timeWindow, timeType) { //startPoint is exepcted to be in graphtime.
+
+      var times = options["timeIntervals"][timeType];
+
+      var timeLength = times.tLength * timeWindow; //calculate the total time to iterate over.
+      var i=0;
+      iterations = timeLength/times.tInterval; //calculate number of iterations
+      while (i<=iterations) {
+        var time_to_check = (startPoint + i*times.tInterval*intervalDirection);
+        if (!time_to_check.validStockTime()) { //validstocktime function expects a graph_time and returns true or false.
+          iterations += 1; //if this time point is invalid, increase the number of iterations to do.
+        }
+        i+=1; //increase i everytime.
+      }
+      endPoint = startPoint + times.tInterval*iterations*intervalDirection;
+      return endPoint;
+    }
+
+    var yLimit = function (graphType, timeType, xMin, xMax, limitType) {
+
+      var fullArrays = options[graphType]()[timeType].limitLines; //returns the data arrays above for the target graph and time type.
+
+      var limit; //this is the limit that will be returned from this function.
+
+      fullArrays.forEach(function(element, index, array) { //for each array, get a ymin, and return it and check it.
+        if (element.line != null) { //make sure the array is not set to null.
+          var limArr = limitedArray(element.line, xMin, xMax); //each array is limitted to just the relevant time frame.
+          var cbType = options.extremes[limitType].cb; //returns a string called 'minCb' or 'maxCb' to get the Callback function name.
+          var cbName = element[cbType]; //the callback is retrieved from the options hash via the graphType option, then the timeType (which is passed in through the function.) then it accesses the min or max callback using the 'extreme' setting from the options again.
+          var cb = options.limitTypeCbs[cbName]; 
+          var comparisonCb = options.extremes[limitType].comparisonCb;
+          var newLimit = cb(limArr); //the callback should take array as an argument and return a limit.
+          limit = comparisonCb(limit, newLimit); //returns either the old limit or new limit depending on limitype.
+        }
+      });
+      var pLimit = options.extremes[limitType].bufferMaker(limit); //add an extra 5% to the limit so that the prediction is not on the border.
+      return pLimit;
+    };
+
+
+    var graphProcessor = function(graphType) { //receives the stockGraph or predictionGraph string. The options object outside this function is accessed for option settings.
+
+      var processorOptions = options[graphType]();
+      var frameHash = {};
+      //run this when the xMin, ect functions are created and then this delivers the completed object.
+      processorOptions.buttons.forEach(function(element, index, array) {
+        var sP = processorOptions[element.timeType].startPoint;
+        var xMin = xLimit(-1, sP, element.beforeDays, element.timeType);
+        var xMax = xLimit(1, sP, element.afterDays, element.timeType);
+
+        frameHash[element.name] = {
+          xMin: xMin,
+          xMax: xMax,
+          yMin: yLimit(graphType, element.timeType, xMin, xMax, "min"),
+          yMax: yLimit(graphType, element.timeType, xMin, xMax, "max")
+        };
+      });
+      return frameHash;
+    };
+
+    return graphProcessor(graphType); //returns the rangeHash of buttons.
+
+  };
+
+  var createPredictionLine = function(timeType, line) {
+
+    var dailyProcessor = function(gT) {
+      var dayStr = gT.gmtString().dayString() + " 00:00:00 GMT"; //convert the graphtime to a gmt string, then convert that to the day string, and then add on 00:00:00 to round to the beginning of the day.
+      var new_g_time = dayStr.graphTime() + gT.offsetTime() + 20*3600*1000; //get the graphtime for the start of the day add the offset time, and 20 hours to get to EOD at either 20 or 21 hours depending on DST.
+      return new_g_time;
+    };
+
+    var intradayProcessor = function(gT) {
+      var coeff = 1000 * 60 * 5;
+      var rounded = Math.round(gT / coeff) * coeff; //get the rounded time.
+      return rounded;
+    };
+
+    var options = {
+      daily: {
+        cb: dailyProcessor,
+        component: "dailyLines"
+      },
+      intraday: {
+        cb: intradayProcessor,
+        component: "intradayLines"
+      },
+      lines: {
+        //stockgraph prediction lines.
+        predictions: function() {
+          return {
+            line: components.defaults.data.predictions,
+            index: 2
+          }
+        },
+        myPrediction: function() {
+          return { 
+            line: components.defaults.data.my_prediction,
+            index:3
+          }
+        },
+        prediction: function() {
+          return {
+            line: components.defaults.data.prediction,
+            index:2
+          }
+        },
+        predictionend: function() {
+          return {
+            line: components.defaults.data.predictionend,
+            index:3
+          }
+        }
+      }
+    };
+
+    var predictionLine = options.lines[line]();
+    var predictions = predictionLine.line;
+
+    var predictionsArray = [];
+
+    for(var i=0; i < predictions.length; i++ ) {
+      var timeCompare = options[timeType].cb(predictions[i].x);
+      if (predictionsArray.length === 0) { //if there are no predictions in the array, then add the first prediction.
+        predictionsArray.push({"id":predictions[i].id, "x":timeCompare, "y":predictions[i].y})
+      }
+      else if (timeCompare !== predictionsArray.last().x) { //if this date is not the same as the last one, then add it.
+        predictionsArray.push({"id":predictions[i].id, "x":timeCompare, "y":predictions[i].y})
+      }
+    }
+
+    var componentType = options[timeType].component;
+    console.log(componentType);
+    if (predictionsArray.length !== 0) {
+      components[componentType][line] = {lineArray:predictionsArray, index:predictionLine.index}; //adds a new line to the specified component.
+    }
+    else {
+      components[componentType][line] = {lineArray:null, index:predictionLine.index};
+    }
+  };
+
+//   PRIVATE
+
+  var createDateLine = function(line) {
+    var options = {
+      dailyLines: {
+        startTime: components.defaults.data.intraday_prices.last().x, //this gets the last graphtime from the intradayprices array.
+        iterations: 234, //this is 3 days forward. (6.5 * 3 * 60/5)
+        interval: 5*60*1000,
+        component: "intradayLines",
+        index: 1 //the index is 1 because it is the second graphLine in the chart.
+      },
+      intradayLines: {
+        startTime: components.defaults.data.daily_prices.last().x, //this gets the last graphtime from the dailyprices array.
+        iterations: 780, //this is 3 years forward. (260*3)
+        interval: 24*3600*1000, //interval of 1 day
+        component: "dailyLines",
+        index: 1 //the index is 1 because it is the second graphLine in the chart.
+      }
+    };
+
+    var settings = options[line];
+
+    var forwardArray = [];
+    var i = 0;
+    var iterations = settings.iterations;
+    while (i<=iterations) {
+      var timeSpot = settings.startTime + i*settings.interval;
+      if (timeSpot.validStockTime()) {
+        forwardArray.push({"x":timeSpot, "y":null});
+      }
+      else {
+        iterations += 1;
+      }
+      i += 1;
+    }
+    components[settings.component][line] = {lineArray:forwardArray, index:settings.index} //this adds a new line to the dailyLines or intradayLines component.
+  };
+
+  return {
+    addComponents: addComponents,
+    updateComponent: updateComponent,
+    setSeries: setSeries,
+    defaultProcessor: defaultProcessor,
+    setHover: setHover,
+    frameDependents: frameDependents,
+    createPredictionLine: createPredictionLine,
+    framesHash: framesHash,
+    setRange: setRange
+  }
+})();
 
 function StockGraph(stockGraph, chart) {
   //StockGraphButtons sets the ranges based on 4 settings: intradayprices, dailyprices, predictions, and my_prediction.
@@ -234,14 +756,17 @@ function StockGraph(stockGraph, chart) {
     //stockGraph["daily_forward_prices"] = DailyForwardPrices(stockGraph["daily_prices"].last()[0]); //create this array using js function.
     //stockGraph["intraday_forward_prices"] = IntradayForwardPrices(stockGraph["intraday_prices"].last()[0]); //create this array using js function.
     
-    var activeDailyPredictions = DailyPredictions(stockGraph["predictions"], stockGraph["prediction_ids"]) //Dailypredictions returns just 1 prediction for each day, and the corresponding prediction id array.
-    stockGraph["daily_predictions"] = activeDailyPredictions[0];
-    stockGraph["daily_prediction_ids"] = activeDailyPredictions[1];
 
-    //possibly have some intermediate variable here like above.
-    var activeIntradayPredictions = IntradayPredictions(stockGraph["predictions"], stockGraph["prediction_ids"]);
-    stockGraph["intraday_predictions"] = activeIntradayPredictions[0];
-    stockGraph["intraday_prediction_ids"] = activeIntradayPredictions[1];
+
+
+    // var activeDailyPredictions = DailyPredictions(stockGraph["predictions"], stockGraph["prediction_ids"]) //Dailypredictions returns just 1 prediction for each day, and the corresponding prediction id array.
+    // stockGraph["daily_predictions"] = activeDailyPredictions[0];
+    // stockGraph["daily_prediction_ids"] = activeDailyPredictions[1];
+
+    // //possibly have some intermediate variable here like above.
+    // var activeIntradayPredictions = IntradayPredictions(stockGraph["predictions"], stockGraph["prediction_ids"]);
+    // stockGraph["intraday_predictions"] = activeIntradayPredictions[0];
+    // stockGraph["intraday_prediction_ids"] = activeIntradayPredictions[1];
 
     if (stockGraph["my_prediction"][0][0] === null) {
       var bestButton = "1M"; //sets the x axis ranges to the 1m ranges
@@ -264,8 +789,8 @@ function StockGraph(stockGraph, chart) {
     //removeOverlapping(bestButton); //must be used after setMyPrediction.removes predictions overlapping with my_prediction.
 
     //stockChart.series[0].setData(stockGraph["daily_prices"]);
-    setSeries(bestButton, stockGraph);
-    //setRange(bestButton); //always setRange after the setSeries, so the set series can tell if the range has changed. currentRange gets updated in the setRange.
+    //setSeries(bestButton, stockGraph);
+    setRange(bestButton); //always setRange after the setSeries, so the set series can tell if the range has changed. currentRange gets updated in the setRange.
   
     $('*[data-button-type="'+currentRange["buttonType"]+'"]').switchClass("timeframe-item", "timeframe-item-selected");
   };
@@ -303,7 +828,7 @@ function StockGraph(stockGraph, chart) {
 
     //this needs to be reset only once the daily prediction rounder function is set.
     //graph["daily_my_prediction"] = DailyPredictions(graph["my_prediction"], graph["daily_prices"].last()[0]); //reset the value of daily_my_prediction based on the new my_prediction value.
-  }
+  };
 
   this.removePrediction = function() {
     stockGraph["my_prediction"] = [[null,null]];
@@ -424,140 +949,9 @@ function StockGraph(stockGraph, chart) {
     chart.xAxis[0].setExtremes(rangeHash[button]["xMin"], rangeHash[button]["xMax"]); //set x min and x max values
     currentRange = {rangeHash:rangeHash[button],buttonType:button};
   }
-
-  
-
-  function IntradayMyPrediction (myPrediction) {
-    if (myPrediction[0][0] !== null) {
-      var dateStamp = myPrediction[0][0].utcTimeInt().utcTimeStr().utcTime();
-      var coeff = 1000 * 60 * 5;
-      var rounded = new Date(Math.round(dateStamp.getTime() / coeff) * coeff); //get the rounded time.
-      var graphTime = rounded.utcTimeInt().graphTimeInt();
-      return [[graphTime, myPrediction[0][1]]];
-    }
-    else {
-      return [[null, null]];
-    }
-  }
-
-
-  function DailyMyPrediction (myPrediction) {
-    if (myPrediction[0][0] !== null) {
-      var timeStr = myPrediction[0][0].utcTimeInt().utcTimeStr();
-      var day = timeStr.utcTime().utcTimeStr() +  " 21:00:00";
-      var timeUpdate = day.utcTime().utcTimeInt().graphTimeInt();
-      return [[timeUpdate, myPrediction[0][1]]];
-    }
-    else {
-      return [[null, null]];
-    }
-  }
-
-
-
-  //returns an array of time time and price variables.
-  //used to look into the future on the graph.
-  //intraday forward array currently looks ahead 3 days arbitrarily. The exact ahead time would be 2.5 days.
-  //The actual target setting is controlled with the x axis settings.
-  
-
-  //end time is assumed to be an est number.
-  //the graph start time int is the end of the actual data array.
-  //whether that be the daily array or the intraday array, it gets the last day of data..
-
 }
 
-function IntradayForwardPrices (startTime) {
-  forwardArray = [];
-  var i=0;
-  var iterations = 390; //5 6.5 hour days of 5 minute itarations. 5 days necessary for the prediction details graph.
-  while (i<=iterations) {
-    timeSpot = startTime + i*5*60*1000;
-    //if (timeSpot.utcTimeInt().utcTimeStr().validStockTime()) {
-      forwardArray.push([timeSpot, null]);
-    //}
-    //else {
-      //iterations += 1;
-    //}
-    i += 1;
-  }
-  return forwardArray;
-}
 
-function DailyForwardPrices (startTime) {
-  var forwardArray = [];
-  var i = 0;
-  var iterations = 1202; //1200 is 5 years forward.
-  while (i<=iterations) {
-    timeSpot = startTime + i*24*3600*1000;
-    //if (timeSpot.utcTimeInt().utcTimeStr().validStockTime()) {
-      forwardArray.push([timeSpot, null]);
-    //}
-    //else {
-    //  iterations += 1;
-    //}
-    i += 1;
-  }
-  return forwardArray;
-}
-
-function IntradayPredictions (predictions, predictionIds) {
-  var predictionsArray = [];
-  var predictionIdsArray = [];
-  for (var i=0; i< predictions.length; i++ ) {
-    if (predictions[i][0] != null) {
-      var dateStamp = predictions[i][0].utcTimeInt().utcTimeStr().utcTime();
-      var coeff = 1000 * 60 * 5;
-      var rounded = new Date(Math.round(dateStamp.getTime() / coeff) * coeff); //get the rounded time.
-      var graphTime = rounded.utcTimeInt().graphTimeInt();
-
-      if (predictionIds === undefined) { //the predictionIds will be undefined when its the predictiondetails graph. Don't eliminate same time predictions.
-        predictionsArray.push([graphTime, predictions[i][1]]);
-      }
-      else if (predictionsArray.last() === undefined) { //if there is nothing on the predictionsArray, its the first element of the array, so push.
-        predictionsArray.push([graphTime, predictions[i][1]]);
-        predictionIdsArray.push(predictionIds[i]);
-      }
-      else { //the predictionIds array will be undefined when the predictiondetails is used.
-        if (predictionsArray.last()[0] !== graphTime ) {  //if there is something, apply the actual condition.
-          predictionsArray.push([graphTime, predictions[i][1]]);
-          predictionIdsArray.push(predictionIds[i]);
-        }
-      }
-    }
-  }
-  return [predictionsArray, predictionIdsArray];
-}
-
-function DailyPredictions (predictions, predictionIds) { //the predictions array just has times and prices... these need to be converted?
-//these will be in order of time... so just check the one before to see if it is the same day as the current one?
-//If it is the same day... then don't add it. If its a different day, then add it.
-//Should also set the time of the prediction to the 21:00 mark to align with the forward array...
-
-  var predictionsArray = [];
-  var predictionIdsArray = [];
-  for(var i=0; i < predictions.length; i++ ) {
-    if (predictions[i][0] != null) {
-      var timeStr = predictions[i][0].utcTimeInt().utcTimeStr(); //convert the graph time into a utc date string.
-      var day = timeStr.utcTime().utcTimeStr(); //convert the date string into string 'yyyy-mm-dd'
-      day = day + " 20:00:00"; //its 20 because 20 is valid during DST time too.
-      var timeCompare = day.utcTime().utcTimeInt().graphTimeInt(); //convert the string to datestamp, then to utc int, then graphtimeint.
-       
-      if (predictionIds === undefined) { //the predictionIds will be undefined when its the predictiondetails graph. Don't eliminate same time predictions.
-        predictionsArray.push([timeCompare, predictions[i][1]]);
-      }
-      else if (predictionsArray.last() === undefined) {
-        predictionsArray.push([timeCompare, predictions[i][1]]);
-        predictionIdsArray.push(predictionIds[i]);
-      }
-      else if (predictionsArray.last()[0] !== timeCompare ) {
-        predictionsArray.push([timeCompare, predictions[i][1]]);
-        predictionIdsArray.push(predictionIds[i]);
-      }
-    }
-  }
-  return [predictionsArray, predictionIdsArray];
-}
 
 function Button(buttonSettings) {
   var beforeDays = buttonSettings["beforeDays"];
@@ -611,8 +1005,8 @@ function Button(buttonSettings) {
   var limitedMyPrediction = limitedArray(settings.myPrediction); //myPrediction forces the ranges to include the end point.
 
   
-  function yMin(prices, predictions, myPrediction) { 
-    var min = prices.reduce(function (min, obj) {  //this reduce function needs to get the lowest price from the array.
+  function yMin(prices, predictions, myPrediction) {
+      var min = prices.reduce(function (min, obj) {  //this reduce function needs to get the lowest price from the array.
       return obj[1] < min ? obj[1] : min; //if obj[1] (price) is less than the min, return obj[1], otherwise return min. 
     }, Infinity); //infinity is the value of the first min.
     var minPriceFinal = min;

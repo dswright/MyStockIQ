@@ -53,7 +53,7 @@ class PredictionsController < ApplicationController
 
   end
 
-    def details_hover_daily
+  def details_hover_daily
     params_break = params[:id].split("-")
     prediction = Prediction.find_by(id:params_break[0])
     prediction_custom = {}
@@ -86,23 +86,23 @@ class PredictionsController < ApplicationController
 		stock = Stock.find(prediction_params[:stock_id])
 
 		#Create the prediction settings.
-		prediction_start_time = Time.zone.now.utc_time_int.closest_start_time
-		prediction_end_time = (Time.zone.now.utc_time_int + 
-													(params[:days].to_i * 24* 3600) + 
-													(params[:hours].to_i * 3600) + 
-													(params[:minutes].to_i * 60)).closest_start_time
+		prediction_start_time = Time.zone.now.graph_time.closest_start_time # this returns a timestamp
+		prediction_end_time = (Time.zone.now.graph_time + 
+													(params[:days].to_i * 24* 3600 *1000) + 
+													(params[:hours].to_i * 3600 * 1000) + 
+													(params[:minutes].to_i * 60 * 1000)).closest_start_time #closest_start_time returns a timestamp date.
 		
 		prediction = {stock_id: stock.id, prediction_end_time: prediction_end_time, score: 0, active: true, start_price_verified:false, 
-									start_time: prediction_start_time}
+									start_time: prediction_start_time, graph_start_time: prediction_start_time.graph_time, graph_end_time: prediction_end_time.graph_time}
 
 		#merge the prediction settings with the params from the prediction form.
 		prediction.merge!(prediction_params)
 		@prediction = @user.predictions.build(prediction)
 		@prediction.start_price = stock.daily_stock_price
+    @prediction.prediction_end_price = prediction_params[:prediction_end_price].to_i.round(2) #make sure the prediction end price is rounded to 2 places.
 
     tags = @prediction.add_tags(stock.ticker_symbol)
-    
-		@graph_time = prediction_end_time.utc_time_int.graph_time_int
+		@graph_time = @prediction.graph_end_time
 
 
 		#Create the proper response to the prediciton input.
@@ -206,16 +206,13 @@ class PredictionsController < ApplicationController
       format.html
       format.json {
         settings = {prediction:@prediction, ticker_symbol:@prediction.stock.ticker_symbol, start_point:"predictiondetails"}
-        graph = Graph.new(settings) #send in the owner of the prediction as the user... still not sure if that is correct.
-        #remember these are the ruby functions... that generate the json api.
+        graph = Graph.new(settings)
+        #These functions generate the data for the json api.
         render json: {
           :daily_prices => graph.daily_prices,
+          :intraday_prices => graph.intraday_prices,
           :prediction => graph.prediction, #the specific prediction to be displayed on the graph.
-          :predictionend => graph.predictionend,
-          :intraday_prices => graph.intraday_prices,          
-          :daily_price_ids => graph.daily_price_ids,
-          :intraday_price_ids => graph.intraday_price_ids,
-          :prediction_details_id => graph.prediction_details_id
+          :predictionend => graph.predictionend #the prediction end line, if it exists.
         }
       }
     end

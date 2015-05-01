@@ -16,6 +16,18 @@ $(document).ready(function () {
   resizeChart();
   $(window).bind("orientationchange resize", resizeChart);
 
+  Highcharts.setOptions({
+    global: {
+       timezoneOffset: 7 * 60
+      // getTimezoneOffset: function (timestamp) {
+      //   moment.tz.add('America/New_York|EST EDT|50 40|0101|1Lz50 1zb0 Op0');
+      //   var zone = 'America/New_York';
+      //   timezoneOffset = moment.tz.zone(zone).parse(timestamp);
+      //   return timezoneOffset;
+      // }
+    }
+  });
+
   seriesVar = [
     {
       name : "prices",
@@ -26,6 +38,8 @@ $(document).ready(function () {
       line: {
         enabled:false
       }
+      //data: [[1427981400000, 85],[1427981700000, 85]]
+      //data: [{"x":1427981400000, "y":85},{"x":1427981700000, "y":85}]
     },
     {
       name: "dateseries",
@@ -195,8 +209,7 @@ $(document).ready(function () {
             })
           }
         }
-
-        return false;
+      return this.x.utcTimeInt().utcTimeStr();
       }  
         /*
         else if(this.series.name == 'predictions') {

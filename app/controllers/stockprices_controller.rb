@@ -3,6 +3,8 @@ require 'graph'
   
   def hover_daily
 
+
+    #what the crap is this passing the ticker_symbol in for?
     the_id = params[:id].to_s =~ /\A[-+]?\d*\.?\d+\z/  #checks to see if the id is number or string. Returns 0 or nil.
     price_data = {}
 
@@ -49,15 +51,11 @@ require 'graph'
       format.json {
         settings = {ticker_symbol: @stock.ticker_symbol, current_user: @current_user, start_point:"stocks"}
         graph = Graph.new(settings)
-        render json: {
-          :my_prediction => graph.my_prediction,
-          :predictions => graph.predictions,
-          :my_prediction_id => graph.my_prediction_id,
-          :prediction_ids => graph.prediction_ids,
+        render json: { #graphLines need to be in the correct numerical order to be set correctly.
           :daily_prices => graph.daily_prices,
-          :daily_price_ids => graph.daily_price_ids,
-          :intraday_price_ids => graph.intraday_price_ids,
-          :intraday_prices => graph.intraday_prices 
+          :intraday_prices => graph.intraday_prices,
+          :predictions => graph.predictions,
+          :my_prediction => graph.my_prediction
         }
       }
 
