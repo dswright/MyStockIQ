@@ -10,7 +10,6 @@
   <div id="bg3" data-0="background-position:0px 0px;" data-end="background-position:0px -60px;"></div>
 
   <div class="skrollr-constrainer constrainer">
-
     <div class="skrollr-signin-btn">
       <%= link_to "SIGN IN", login_path, :class => 'skrollr-btn' %>
     </div>
@@ -18,7 +17,6 @@
     <div class="hm-logo">
       <%= image_tag("StockIQ-logo-white.png") %>
     </div>
-
   </div>
 
 </section>
@@ -32,42 +30,11 @@
 
     <div class="col-sm-8 phone-marketing-col">
 
-      <p>Find out how good you really are at predicting the market. Follow experts, compete with friends, and raise your StockIQ. </p>
+      <p>Find out how good you <i>really</i> are at predicting the market. Follow experts, compete with friends, and raise your StockIQ. </p>
 
     </div>
 
   </div>
-
-</section>
-
-
-
-<!-- NOT INVITED PARTIAL -->
-
-<section class="landing-not-invited clearfix">
-  <div class="constrainer">
-
-    <div class="landing-user-icon">
-      <%= image_tag ("plus-user-wt.png") %>
-    </div>
-
-    <p class="signup-email-txt">
-      Be the first to know when we launch!
-    </p>
-
-    <div class="signup-email-inputs clearfix">
-      <div class="email-input-col col-sm-9">
-        <input class="waitlist-email" type="email" placeholder="Email address">
-      </div>
-      <div class="btn-input-col col-sm-3">          
-        <div class="signup-email-submit-button-div">
-          <input class="btn" value="SUBMIT">
-        </div>
-      </div>  
-    </div>
-
-  </div>
-
 </section>
 
 
@@ -75,18 +42,6 @@
 <!-- MARKETING POINS SECTION -->
 
 <section class="landing-marketing-points clearfix">
-
-  <% if session[:errors] %>
-    <div class="error-box">
-    <% session[:errors].each do |error_message| %>
-      <div><%= error_message %></div>
-      <% end %>
-    <% end %>
-    </div>
-  <% session.delete :errors %>
-
-
-
   <div class="marketing-points constrainer">
 
     <div class="marketing-how-title">
@@ -124,11 +79,43 @@
     </div>
 
   </div>
+</section>
+
+
+<!-- NOT INVITED PARTIAL -->
+
+<section class="landing-not-invited clearfix">
+  <div class="constrainer">
+
+    <div class="landing-user-icon">
+      <%= image_tag ("plus-user-blu.png") %>
+    </div>
+
+    <p class="signup-email-txt">
+      Sign up to join our beta test group!
+    </p>
+
+    <div class="signup-email-inputs clearfix">
+      <div class="email-input-col col-sm-9">
+        <input class="waitlist-email" type="email" placeholder="Email address">
+      </div>
+      <div class="btn-input-col col-sm-3">          
+        <div class="signup-email-submit-button-div">
+          <input type="submit" class="btn" value="SUBMIT">
+        </div>
+      </div>  
+    </div>
+
+  </div>
 
 </section>
 
 
+
+
+
 <!-- INVITED PARTIAL-->
+
 <section class="sign-up-section">
     <div class="constrainer">
 
@@ -142,9 +129,12 @@
 
           <% if session[:errors] %>
             <div class="error-box">
-            <% session[:errors].each do |error_message| %>
-              <div><%= error_message %></div>
-              <% end %>
+              <p>Oops, little problem: </p>
+              <ul>
+                <% session[:errors].each do |error_message| %>
+                <li><%= error_message %></li>
+                <% end %>
+              </ul>
             <% end %>
             </div>
           <% session.delete :errors %>
@@ -174,10 +164,12 @@
             <%= f.submit "CREATE ACCOUNT", :class => "btn" %>
           </div>
 
+          <p class="signup-signin-link">
+            Already have an account? <%= link_to "Sign in here.", login_path %>
+          </p>
+
         </div>
-        <p class="signup-signin-link">
-          Already have an account? <%= link_to "Sign in here.", login_path %>
-        </p>
+
       <% end %>
     </div>
 
