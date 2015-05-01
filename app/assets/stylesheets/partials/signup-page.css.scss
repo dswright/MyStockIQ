@@ -44,6 +44,7 @@
 }
 
 .skrollr-signin-btn {
+  display: none;
   position: absolute;
   right: 0px;
   margin-top: 55px;
@@ -423,6 +424,9 @@
 
 @media (min-width: 768px) {
 
+.skrollr-signin-btn {
+  display: block;
+}
 
 .landing-phones-col {
   margin-top: -130px;
