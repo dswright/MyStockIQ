@@ -56,56 +56,59 @@ class HelperWorker
   #   end
   # end
 
-  def perform(ticker_symbol) #update the date string to be correct.
-    stockprices = Stockprice.where(ticker_symbol:ticker_symbol)
-    case_lines = []
+  # def perform(ticker_symbol) #update the date string to be correct.
+  #   stockprices = Stockprice.where(ticker_symbol:ticker_symbol)
+  #   case_lines = []
+  #   tz = ActiveSupport::TimeZone.new('America/New_York')
+
+  #   unless stockprices.empty?
+
+  #     stockprices.each do |stockprice|
+        
+  #       old_date = stockprice.date
+  #       date_string = DateTime.strptime(old_date.to_s, "%Y-%m-%d")
+  #       new_time_string = Time.parse(date_string.to_s) #convert the date format to a time format so that utc_time_full can be used.
+  #       offset = tz.parse(new_time_string.to_s).utc_offset() #get the offset amount from EST. Could be 4 or 5 hours depending on DSt
+  #       new_date = new_time_string - offset + 16*3600 #create the final adjusted UTC time.
+
+  #       case_lines << "WHEN date = '#{stockprice.date}' THEN CAST('#{new_date}' AS timestamp)"
+  #     end
+
+  #     sql = "update stockprices
+  #             SET date = CASE
+  #               #{case_lines.join("\n")}
+  #             END
+  #           WHERE ticker_symbol = '#{ticker_symbol}';" #this is the sql shell that runs. Its contents are based on its 2 arrays.
+  #     ActiveRecord::Base.connection.execute(sql) #this executes the raw sql.
+  #   end
+  # end
+
+
+  def perform(ticker_symbol) #update the graph_time in the daily table.
+
+
     tz = ActiveSupport::TimeZone.new('America/New_York')
 
-    unless stockprices.empty?
+    stockprices = Stockprice.where(ticker_symbol:ticker_symbol)
 
+    unless stockprices.empty?
+      case_lines = []
       stockprices.each do |stockprice|
         
         old_date = stockprice.date
-        date_string = DateTime.strptime(old_date.to_s, "%Y-%m-%d")
-        new_time_string = Time.parse(date_string.to_s) #convert the date format to a time format so that utc_time_full can be used.
-        offset = tz.parse(new_time_string.to_s).utc_offset() #get the offset amount from EST. Could be 4 or 5 hours depending on DSt
-        new_date = new_time_string - offset + 16*3600 #create the final adjusted UTC time.
-
-        case_lines << "WHEN date = '#{stockprice.date}' THEN CAST('#{new_date}' AS timestamp)"
+        graph_time = old_date.graph_time
+        
+        case_lines << "WHEN date = '#{stockprice.date}' THEN #{graph_time}"
       end
 
       sql = "update stockprices
-              SET date = CASE
+              SET graph_time = CASE
                 #{case_lines.join("\n")}
               END
             WHERE ticker_symbol = '#{ticker_symbol}';" #this is the sql shell that runs. Its contents are based on its 2 arrays.
       ActiveRecord::Base.connection.execute(sql) #this executes the raw sql.
     end
   end
-
-
-  # def perform(ticker_symbol) #update the graph_time in the daily table. Delete intraday table to take care of those.
-
-
-  #   tz = ActiveSupport::TimeZone.new('America/New_York')
-
-  #   stockprices = Stockprice.where(ticker_symbol:ticker_symbol)
-  #   case_lines = []
-  #   stockprices.each do |stockprice|
-      
-  #     old_date = stockprice.date
-  #     graph_time = old_date.graph_time
-      
-  #     case_lines << "WHEN date = '#{stockprice.date}' THEN #{graph_time}"
-  #   end
-
-  #   sql = "update stockprices
-  #           SET graph_time = CASE
-  #             #{case_lines.join("\n")}
-  #           END
-  #         WHERE ticker_symbol = '#{ticker_symbol}';" #this is the sql shell that runs. Its contents are based on its 2 arrays.
-  #   ActiveRecord::Base.connection.execute(sql) #this executes the raw sql.
-  # end
 end
 
 
