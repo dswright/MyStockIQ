@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150409040453) do
+ActiveRecord::Schema.define(version: 20150402063429) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "adminpack"
@@ -82,7 +82,7 @@ ActiveRecord::Schema.define(version: 20150409040453) do
     t.integer  "prediction_id"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
-    t.string   "content"
+    t.string   "comment"
     t.string   "tagged_content"
   end
 
@@ -93,7 +93,7 @@ ActiveRecord::Schema.define(version: 20150409040453) do
     t.float    "score"
     t.datetime "created_at",           null: false
     t.datetime "updated_at",           null: false
-    t.string   "content"
+    t.string   "prediction_comment"
     t.integer  "stock_id"
     t.datetime "start_time"
     t.boolean  "start_price_verified"
@@ -185,16 +185,6 @@ ActiveRecord::Schema.define(version: 20150409040453) do
 
   add_index "streams", ["streamable_type", "streamable_id"], name: "index_streams_on_streamable_type_and_streamable_id", using: :btree
   add_index "streams", ["targetable_type", "targetable_id"], name: "index_streams_on_targetable_type_and_targetable_id", using: :btree
-
-  create_table "tags", force: true do |t|
-    t.text     "content"
-    t.integer  "tagable_id"
-    t.string   "tagable_type"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-  end
-
-  add_index "tags", ["tagable_type", "tagable_id"], name: "index_tags_on_tagable_type_and_tagable_id", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "username"
