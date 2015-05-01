@@ -29,30 +29,30 @@ class HelperWorker
   #   end
   # end
 
-  #this rounds all of the open and close price values to 2 decimals. Scraper has been udpated.
-  # def perform(ticker_symbol)
-  #   stockprices = Stockprice.where(ticker_symbol:ticker_symbol)
-  #   case_line_opens = []
-  #   case_line_closes = []
-  #   stockprices.each do |stockprice|
-  #     case_line_opens << "WHEN date = '#{stockprice.date}' THEN #{stockprice.open_price.round(2)}"
-  #     case_line_closes << "WHEN date = '#{stockprice.date}' THEN #{stockprice.close_price.round(2)}"
-  #   end
+  #this rounds all of the open and close price values to 2 decimals. Scraper has been updated.
+  def perform(ticker_symbol)
+    stockprices = Stockprice.where(ticker_symbol:ticker_symbol)
+    case_line_opens = []
+    case_line_closes = []
+    stockprices.each do |stockprice|
+      case_line_opens << "WHEN date = '#{stockprice.date}' THEN #{stockprice.open_price.round(2)}"
+      case_line_closes << "WHEN date = '#{stockprice.date}' THEN #{stockprice.close_price.round(2)}"
+    end
 
-  #   sql = "update stockprices
-  #           SET open_price = CASE
-  #             #{case_line_opens.join("\n")}
-  #           END
-  #         WHERE ticker_symbol = '#{ticker_symbol}';" #this is the sql shell that runs. Its contents are based on its 2 arrays.
-  #   ActiveRecord::Base.connection.execute(sql) #this executes the raw sql.
+    sql = "update stockprices
+            SET open_price = CASE
+              #{case_line_opens.join("\n")}
+            END
+          WHERE ticker_symbol = '#{ticker_symbol}';" #this is the sql shell that runs. Its contents are based on its 2 arrays.
+    ActiveRecord::Base.connection.execute(sql) #this executes the raw sql.
 
-  #   sql = "update stockprices
-  #           SET close_price = CASE
-  #             #{case_line_closes.join("\n")}
-  #           END
-  #         WHERE ticker_symbol = '#{ticker_symbol}';" #this is the sql shell that runs. Its contents are based on its 2 arrays.
-  #   ActiveRecord::Base.connection.execute(sql) #this executes the raw sql.
-  # end
+    sql = "update stockprices
+            SET close_price = CASE
+              #{case_line_closes.join("\n")}
+            END
+          WHERE ticker_symbol = '#{ticker_symbol}';" #this is the sql shell that runs. Its contents are based on its 2 arrays.
+    ActiveRecord::Base.connection.execute(sql) #this executes the raw sql.
+  end
 
   # def perform(ticker_symbol) #update the date string to be correct.
   #   stockprices = Stockprice.where(ticker_symbol:ticker_symbol)
@@ -80,28 +80,28 @@ class HelperWorker
   # end
 
 
-  def perform(ticker_symbol) #update the graph_time in the daily table. Delete intraday table to take care of those.
+  # def perform(ticker_symbol) #update the graph_time in the daily table. Delete intraday table to take care of those.
 
 
-    tz = ActiveSupport::TimeZone.new('America/New_York')
+  #   tz = ActiveSupport::TimeZone.new('America/New_York')
 
-    stockprices = Stockprice.where(ticker_symbol:ticker_symbol)
-    case_lines = []
-    stockprices.each do |stockprice|
+  #   stockprices = Stockprice.where(ticker_symbol:ticker_symbol)
+  #   case_lines = []
+  #   stockprices.each do |stockprice|
       
-      old_date = stockprice.date
-      graph_time = old_date.graph_time
+  #     old_date = stockprice.date
+  #     graph_time = old_date.graph_time
       
-      case_lines << "WHEN date = '#{stockprice.date}' THEN #{graph_time}"
-    end
+  #     case_lines << "WHEN date = '#{stockprice.date}' THEN #{graph_time}"
+  #   end
 
-    sql = "update stockprices
-            SET graph_time = CASE
-              #{case_lines.join("\n")}
-            END
-          WHERE ticker_symbol = '#{ticker_symbol}';" #this is the sql shell that runs. Its contents are based on its 2 arrays.
-    ActiveRecord::Base.connection.execute(sql) #this executes the raw sql.
-  end
+  #   sql = "update stockprices
+  #           SET graph_time = CASE
+  #             #{case_lines.join("\n")}
+  #           END
+  #         WHERE ticker_symbol = '#{ticker_symbol}';" #this is the sql shell that runs. Its contents are based on its 2 arrays.
+  #   ActiveRecord::Base.connection.execute(sql) #this executes the raw sql.
+  # end
 end
 
 
