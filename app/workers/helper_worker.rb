@@ -31,7 +31,7 @@ class HelperWorker
 
   #this rounds all of the open and close price values to 2 decimals. Scraper has been updated.
   def perform(ticker_symbol)
-    stockprices = Stockprice.where(ticker_symbol:ticker_symbol)
+    stockprices = Intradayprice.where(ticker_symbol:ticker_symbol)
     case_line_opens = []
     case_line_closes = []
     stockprices.each do |stockprice|
@@ -39,14 +39,14 @@ class HelperWorker
       case_line_closes << "WHEN date = '#{stockprice.date}' THEN #{stockprice.close_price.round(2)}"
     end
 
-    sql = "update stockprices
+    sql = "update intradayprices
             SET open_price = CASE
               #{case_line_opens.join("\n")}
             END
           WHERE ticker_symbol = '#{ticker_symbol}';" #this is the sql shell that runs. Its contents are based on its 2 arrays.
     ActiveRecord::Base.connection.execute(sql) #this executes the raw sql.
 
-    sql = "update stockprices
+    sql = "update intradayprices
             SET close_price = CASE
               #{case_line_closes.join("\n")}
             END
