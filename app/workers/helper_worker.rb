@@ -39,19 +39,21 @@ class HelperWorker
       case_line_closes << "WHEN date = '#{stockprice.date}' THEN #{stockprice.close_price.round(2)}"
     end
 
-    sql = "update intradayprices
-            SET open_price = CASE
-              #{case_line_opens.join("\n")}
-            END
-          WHERE ticker_symbol = '#{ticker_symbol}';" #this is the sql shell that runs. Its contents are based on its 2 arrays.
-    ActiveRecord::Base.connection.execute(sql) #this executes the raw sql.
+    unless case_line_opens == []
+      sql = "update intradayprices
+              SET open_price = CASE
+                #{case_line_opens.join("\n")}
+              END
+            WHERE ticker_symbol = '#{ticker_symbol}';" #this is the sql shell that runs. Its contents are based on its 2 arrays.
+      ActiveRecord::Base.connection.execute(sql) #this executes the raw sql.
 
-    sql = "update intradayprices
-            SET close_price = CASE
-              #{case_line_closes.join("\n")}
-            END
-          WHERE ticker_symbol = '#{ticker_symbol}';" #this is the sql shell that runs. Its contents are based on its 2 arrays.
-    ActiveRecord::Base.connection.execute(sql) #this executes the raw sql.
+      sql = "update intradayprices
+              SET close_price = CASE
+                #{case_line_closes.join("\n")}
+              END
+            WHERE ticker_symbol = '#{ticker_symbol}';" #this is the sql shell that runs. Its contents are based on its 2 arrays.
+      ActiveRecord::Base.connection.execute(sql) #this executes the raw sql.
+    end
   end
 
   # def perform(ticker_symbol) #update the date string to be correct.
