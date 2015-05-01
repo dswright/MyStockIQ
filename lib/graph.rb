@@ -27,20 +27,20 @@ class Graph
     prediction = @prediction
     start_time = prediction.graph_start_time
     end_time = prediction.graph_end_time
-    prediction_graph = [[start_time, prediction.start_price], [end_time, prediction.prediction_end_price]]
+    prediction_graph = [
+      {"id":prediction.id, "x": start_time, "y": prediction.start_price}, 
+      {"id":prediction.id, "x": end_time, "y": prediction.prediction_end_price}
+    ]
     return prediction_graph
-  end
-
-  def prediction_details_id #used for the prediction details graph.
-    return @prediction.id
   end
 
 
   def predictionend #used for the prediction details graph.
     if @prediction.predictionend
-      return [[@prediction.graph_start_time, @prediction.start_price], [@prediction.predictionend.graph_end_time, @prediction.predictionend.actual_end_price]]
+      return [{"id": @prediction.id, "x": @prediction.graph_start_time, "y": @prediction.start_price}, 
+        {"id": @prediction.id, "x": @prediction.predictionend.graph_end_time, "y": @prediction.predictionend.actual_end_price}]
     else
-      return [[nil, nil]]
+      return []
     end
   end
 
@@ -62,23 +62,6 @@ class Graph
   end
 
 
-  def daily_price_ids #last_date is in graphtime.
-    daily_price_id_array = []
-    start = @start_point - 60*60*24*1825 #minus 5 years from the start_time to get 5 years of historical daily data.
-    finish = @start_point + 60*60*24*950 #add 2.5 years to get 2.5 years of forward looking data.
-    Stockprice.where(ticker_symbol: @ticker_symbol).where("date > ?", start).where("date < ?", finish).reorder('date desc').each do |price|
-      daily_price_id_array << price.id
-    end
-    daily_price_id_array.reverse!
-
-    #stock = Stock.find_by(ticker_symbol: @ticker_symbol)
-    #if @last_daily_date < stock.date.graph_time
-    #  daily_price_id_array << @ticker_symbol
-    #end
-    #return daily_price_id_array
-  end
-
-
   #Limited to 400 5 minute periods, which is 2000 minutes, just over the 975 minutes in 5 6.5 hour days.
 
   def intraday_prices
@@ -96,11 +79,9 @@ class Graph
     start = @start_point - 60*60*24*1825 #minus 5 years from the start_time to get 5 years of historical daily data.
     finish = @start_point + 60*60*24*950 #add 2.5 years to get 2.5 years of forward looking data.
     price_array = []
-    Stockprice.where(ticker_symbol: @ticker_symbol).where("date > ?", start).where("date < ?", finish).reorder('date desc').each do |price|
+    Stockprice.where(ticker_symbol: @ticker_symbol).where("date > ?", start).where("date < ?", finish).reorder('date desc').reverse.each do |price|
       price_array << {"id": price.id, "x": price.graph_time, "y": price.close_price}
     end
-    price_array.reverse!
-
     return price_array
   end
 end

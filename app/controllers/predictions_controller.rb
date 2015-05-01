@@ -210,12 +210,9 @@ class PredictionsController < ApplicationController
         #These functions generate the data for the json api.
         render json: {
           :daily_prices => graph.daily_prices,
+          :intraday_prices => graph.intraday_prices,
           :prediction => graph.prediction, #the specific prediction to be displayed on the graph.
-          :predictionend => graph.predictionend,
-          :intraday_prices => graph.intraday_prices,          
-          :daily_price_ids => graph.daily_price_ids,
-          :intraday_price_ids => graph.intraday_price_ids,
-          :prediction_details_id => graph.prediction_details_id
+          :predictionend => graph.predictionend #the prediction end line, if it exists.
         }
       }
     end

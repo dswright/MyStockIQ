@@ -236,11 +236,11 @@ var graphMediator = (function() {
 
   var defaultProcessor = function() {
     var dailyLines = { //dailyLines is a component that contains the daily graph lines.
-      dailyPrices: {lineArray:components.defaults.data.daily_prices,index:0}
+      prices: {lineArray:components.defaults.data.daily_prices,index:0}
     };
 
     var intradayLines = { //intradaylines is a component that contains the intraday graph lines.
-      intradayPrices: {lineArray:components.defaults.data.intraday_prices, index:0}
+      prices: {lineArray:components.defaults.data.intraday_prices, index:0}
     };
 
     addComponents('dailyLines', dailyLines); //this creates a component called dailyLines.
@@ -439,42 +439,95 @@ var graphMediator = (function() {
           daily: {
             limitLines: [
               {
-                line: components.dailyLines.dailyPrices.lineArray,
+                line: components.dailyLines.prices.lineArray,
                 minCb: "min",
                 maxCb: "max"
               },
               {
-                line: components.dailyLines.dailyPredictions.lineArray,
+                line: components.dailyLines.predictions.lineArray,
                 minCb: "limMin",
                 maxCb: "limMax"
               },
               {
-                line: components.dailyLines.dailyMyPrediction.lineArray,
+                line: components.dailyLines.myPrediction.lineArray,
                 minCb: "noLimMin",
                 maxCb: "noLimMax"
               }
             ],
-            startPoint: components.dailyLines.dailyPrices.lineArray.last().x
+            startPoint: components.dailyLines.prices.lineArray.last().x
           },
           intraday: {
             limitLines: [
               {
-                line: components.intradayLines.intradayPrices.lineArray,
+                line: components.intradayLines.prices.lineArray,
                 minCb: "min",
                 maxCb: "max"
               },
               {
-                line: components.intradayLines.intradayPredictions.lineArray,
+                line: components.intradayLines.predictions.lineArray,
                 minCb: "limMin",
                 maxCb: "limMax"
               },
               {
-                line: components.intradayLines.intradayMyPrediction.lineArray,
+                line: components.intradayLines.myPrediction.lineArray,
                 minCb: "noLimMin",
                 maxCb: "noLimMax"
               }
             ],
-            startPoint: components.intradayLines.intradayPrices.lineArray.last().x
+            startPoint: components.intradayLines.prices.lineArray.last().x
+          },
+          buttons: [
+            {name:"1D", beforeDays:1, afterDays:0.5, timeType:"intraday"},
+            {name:"5D", beforeDays:5, afterDays:2.5, timeType:"intraday"},
+            {name:"1M", beforeDays:20, afterDays:10, timeType:"daily"},
+            {name:"3M", beforeDays:60, afterDays:30, timeType:"daily"},
+            {name:"6M", beforeDays:120, afterDays:60, timeType:"daily"},
+            {name:"1Yr", beforeDays:240, afterDays:120, timeType:"daily"},
+            {name:"5Yr", beforeDays:1200, afterDays:600, timeType:"daily"}
+          ]
+        }
+      },
+      predictionGraph: function() { //this is a function so that it will only execute when called. These lines won't exist for every graph.
+        return {
+          daily: {
+            limitLines: [
+              {
+                line: components.dailyLines.prices.lineArray,
+                minCb: "min",
+                maxCb: "max"
+              },
+              {
+                line: components.dailyLines.prediction.lineArray,
+                minCb: "limMin",
+                maxCb: "limMax"
+              },
+              {
+                line: components.dailyLines.predictionend.lineArray,
+                minCb: "noLimMin",
+                maxCb: "noLimMax"
+              }
+            ],
+            startPoint: components.dailyLines.prices.lineArray.last().x
+          },
+          intraday: {
+            limitLines: [
+              {
+                line: components.intradayLines.prices.lineArray,
+                minCb: "min",
+                maxCb: "max"
+              },
+              {
+                line: components.intradayLines.prediction.lineArray,
+                minCb: "limMin",
+                maxCb: "limMax"
+              },
+              {
+                line: components.intradayLines.predictionend.lineArray,
+                minCb: "noLimMin",
+                maxCb: "noLimMax"
+              }
+            ],
+            startPoint: components.intradayLines.prices.lineArray.last().x
           },
           buttons: [
             {name:"1D", beforeDays:1, afterDays:0.5, timeType:"intraday"},
@@ -524,15 +577,15 @@ var graphMediator = (function() {
       var limit; //this is the limit that will be returned from this function.
 
       fullArrays.forEach(function(element, index, array) { //for each array, get a ymin, and return it and check it.
-        var limArr = limitedArray(element.line, xMin, xMax); //each array is limitted to just the relevant time frame.
-        
-        var cbType = options.extremes[limitType].cb; //returns a string called 'minCb' or 'maxCb' to get the Callback function name.
-        var cbName = element[cbType]; //the callback is retrieved from the options hash via the graphType option, then the timeType (which is passed in through the function.) then it accesses the min or max callback using the 'extreme' setting from the options again.
-        var cb = options.limitTypeCbs[cbName]; 
-        var comparisonCb = options.extremes[limitType].comparisonCb;
-        var newLimit = cb(limArr); //the callback should take array as an argument and return a limit.
-
-        limit = comparisonCb(limit, newLimit); //returns either the old limit or new limit depending on limitype.
+        if (element.line != null) { //make sure the array is not set to null.
+          var limArr = limitedArray(element.line, xMin, xMax); //each array is limitted to just the relevant time frame.
+          var cbType = options.extremes[limitType].cb; //returns a string called 'minCb' or 'maxCb' to get the Callback function name.
+          var cbName = element[cbType]; //the callback is retrieved from the options hash via the graphType option, then the timeType (which is passed in through the function.) then it accesses the min or max callback using the 'extreme' setting from the options again.
+          var cb = options.limitTypeCbs[cbName]; 
+          var comparisonCb = options.extremes[limitType].comparisonCb;
+          var newLimit = cb(limArr); //the callback should take array as an argument and return a limit.
+          limit = comparisonCb(limit, newLimit); //returns either the old limit or new limit depending on limitype.
+        }
       });
       var pLimit = options.extremes[limitType].bufferMaker(limit); //add an extra 5% to the limit so that the prediction is not on the border.
       return pLimit;
@@ -563,7 +616,7 @@ var graphMediator = (function() {
 
   };
 
-  var createPredictionLine = function(line) {
+  var createPredictionLine = function(timeType, line) {
 
     var dailyProcessor = function(gT) {
       var dayStr = gT.gmtString().dayString() + " 00:00:00 GMT"; //convert the graphtime to a gmt string, then convert that to the day string, and then add on 00:00:00 to round to the beginning of the day.
@@ -578,38 +631,50 @@ var graphMediator = (function() {
     };
 
     var options = {
-      dailyPredictions: {
+      daily: {
         cb: dailyProcessor,
-        component: "dailyLines",
-        predictions: components.defaults.data.predictions,
-        index: 2
+        component: "dailyLines"
       },
-      intradayPredictions: {
+      intraday: {
         cb: intradayProcessor,
-        component: "intradayLines",
-        predictions: components.defaults.data.predictions,
-        index: 2
+        component: "intradayLines"
       },
-      dailyMyPrediction: {
-        cb:dailyProcessor,
-        component: "dailyLines",
-        predictions: components.defaults.data.my_prediction,
-        index: 3
-      },
-      intradayMyPrediction: {
-        cb:intradayProcessor,
-        component: "intradayLines",
-        predictions: components.defaults.data.my_prediction,
-        index: 3
+      lines: {
+        //stockgraph prediction lines.
+        predictions: function() {
+          return {
+            line: components.defaults.data.predictions,
+            index: 2
+          }
+        },
+        myPrediction: function() {
+          return { 
+            line: components.defaults.data.my_prediction,
+            index:3
+          }
+        },
+        prediction: function() {
+          return {
+            line: components.defaults.data.prediction,
+            index:2
+          }
+        },
+        predictionend: function() {
+          return {
+            line: components.defaults.data.predictionend,
+            index:3
+          }
+        }
       }
     };
 
-    var predictions = options[line].predictions;
+    var predictionLine = options.lines[line]();
+    var predictions = predictionLine.line;
 
     var predictionsArray = [];
 
     for(var i=0; i < predictions.length; i++ ) {
-      var timeCompare = options[line].cb(predictions[i].x);
+      var timeCompare = options[timeType].cb(predictions[i].x);
       if (predictionsArray.length === 0) { //if there are no predictions in the array, then add the first prediction.
         predictionsArray.push({"id":predictions[i].id, "x":timeCompare, "y":predictions[i].y})
       }
@@ -617,8 +682,14 @@ var graphMediator = (function() {
         predictionsArray.push({"id":predictions[i].id, "x":timeCompare, "y":predictions[i].y})
       }
     }
+
+    var componentType = options[timeType].component;
+    console.log(componentType);
     if (predictionsArray.length !== 0) {
-      components[options[line].component][line] = {lineArray:predictionsArray, index:options[line].index}; //adds a new line to the specified component.
+      components[componentType][line] = {lineArray:predictionsArray, index:predictionLine.index}; //adds a new line to the specified component.
+    }
+    else {
+      components[componentType][line] = {lineArray:null, index:predictionLine.index};
     }
   };
 

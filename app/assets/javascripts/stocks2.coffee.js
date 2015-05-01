@@ -5,9 +5,7 @@ function resizeChart() {
 };
 
 //Global variables. Move these inside the doc ready after debugging is complete.
-var currentRange = [];
 var stockGraph;
-var stockChart;
 
 $(document).ready(function () {
 
@@ -202,11 +200,11 @@ $(document).ready(function () {
       graphMediator.addComponents('defaults', defaults);
       graphMediator.defaultProcessor(); //creates several default components automatically for every graph.
 
-      graphMediator.createPredictionLine("dailyPredictions"); //create this predictions graph line for the stock graph only.
-      graphMediator.createPredictionLine("intradayPredictions"); //create this predictions graph line for the stock graph only.
+      graphMediator.createPredictionLine("daily", "predictions"); //create this predictions graph line for the stock graph only.
+      graphMediator.createPredictionLine("intraday", "predictions"); //create this predictions graph line for the stock graph only.
 
-      graphMediator.createPredictionLine("dailyMyPrediction"); //create this predictions graph line for the stock graph only.
-      graphMediator.createPredictionLine("intradayMyPrediction"); //create this predictions graph line for the stock graph only.
+      graphMediator.createPredictionLine("daily", "myPrediction"); //create this predictions graph line for the stock graph only.
+      graphMediator.createPredictionLine("intraday", "myPrediction"); //create this predictions graph line for the stock graph only.
 
       var currentFrame = {
         timeFrame: "1Yr", 

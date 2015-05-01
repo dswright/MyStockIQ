@@ -35,6 +35,7 @@ class ScraperPublic
       unless daily_hash_array.empty?
         Scraper.new.save_to_db(daily_hash_array, GoogleIntraday.new(5))
         Scraper.new.update_stock(ticker_symbol, Intradayprice)
+        Scraper.new.update_daily(ticker_symbol, daily_hash_array.last ) #this updates the daily table with the latest intraday price. 
       end
     end
   end
@@ -250,7 +251,6 @@ class Scraper
     stock_to_update.update(active:false)
   end
 
-  #need to make this work for the intraday scraper as well
   def update_stock(ticker_symbol, price_class)  #used by the intraday scraper and daily scraper to update the latest stock price.
     price_list = price_class.where(ticker_symbol:ticker_symbol)
     update_complete = false
@@ -271,6 +271,21 @@ class Scraper
       stock_to_update.update(date:latest_hash[:date], daily_stock_price:latest_hash[:close_price])
     end
   end
+
+  def update_daily(ticker_symbol, last_intraday_price)
+    #identify latest price from the scraper
+    daily_price = Stockprice.where(ticker_symbol:ticker_symbol).reorder("date DESC").limit(1)[0]
+    yesterday_price = Stockprice.where(ticker_symbol:ticker_symbol).reorder("date DESC").limit(2)[1].close_price
+
+    if daily_price.graph_time+12*3600*1000 < last_intraday_price["graph_time"] #if the previous record is more than 12 hours old, then make a new record.
+      daily_change = ((last_intraday_price["close_price"]/daily_price["close_price"])*100).round(2) - 100 #since we make a new record, use the daily price to see yesterday's close price.
+      Stockprice.create(ticker_symbol:ticker_symbol, date:last_intraday_price["date"], open_price: last_intraday_price["open_price"],
+      close_price: last_intraday_price["close_price"], volume: last_intraday_price["volume"], split:1, daily_percent_change: daily_change, graph_time: last_intraday_price["graph_time"])
+    elsif daily_price.graph_time < last_intraday_price["graph_time"] #if the new record is more recent than the previous, then update the current daily record.
+      daily_change = ((last_intraday_price["close_price"]/yesterday_price)*100).round(2)-100
+      daily_price.update(date: last_intraday_price["date"], graph_time: last_intraday_price["graph_time"], daily_percent_change: daily_change)
+    end
+  end             
 end
 
 class GoogleIntraday
