@@ -89,7 +89,7 @@ class HelperWorker
 
     tz = ActiveSupport::TimeZone.new('America/New_York')
 
-    stockprices = Stockprice.where(ticker_symbol:ticker_symbol)
+    stockprices = Intradayprice.where(ticker_symbol:ticker_symbol)
 
     unless stockprices.empty?
       case_lines = []
@@ -101,7 +101,7 @@ class HelperWorker
         case_lines << "WHEN date = '#{stockprice.date}' THEN #{graph_time}"
       end
 
-      sql = "update stockprices
+      sql = "update intradayprices
               SET graph_time = CASE
                 #{case_lines.join("\n")}
               END
