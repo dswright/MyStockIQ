@@ -290,36 +290,16 @@
   max-width: 690px;
 }
 
-.signup-form-header {
-  color: #808080;
-  font-size: 27px;
-  font-weight: 300;
-  padding-top: 15px;
-  padding-bottom: 15px;
-  margin-bottom: 20px;
-  border-bottom: 1px solid rgba(0,0,0,.1);
-}
-
-.signup-form-header-txt {
-  text-align: center;
-}
-
 .signup-form-box {
-  border: 1px solid rgba(0,0,0,.1);
-  border-radius: 7px;
-  background-color: #fff;  
-  font-size: 11px;
-  padding-left: 20px;
-  padding-right: 20px;
   padding-top: 0px;
-  padding-bottom: 20px;
-  margin-bottom: 5px;
+  padding-bottom: 5px;
+  margin-bottom: 0px;
 }
 
 .signup-signin-link {
   margin-top: 20px;
   margin-bottom: 30px;
-  color: #fff;
+  color: rgba(255,255,255,.7);
   font-size: 15px;
   font-weight: 300;
 }
@@ -348,14 +328,31 @@
   font-size: 18px;
   padding-left: 10px;
   margin-bottom: 20px;
-  background-color: rgba(124,181,236,.06);
+  background-color: rgba(124,181,236,.2);
   border: 0px;
   outline: none;
-  color: #919191;
+  color: #fff;
   border-radius: 3px;
   outline: none;
   box-shadow: 0 0 0 1pt rgba(0,0,0,0.1);
 }
+
+.signup-form-fields input::-webkit-input-placeholder {
+  color: #7cb5ec;
+}
+
+.signup-form-fields input:-moz-placeholder {
+  color: #7cb5ec;  
+}
+
+.signup-form-fields input::-moz-placeholder {
+  color: #7cb5ec;  
+}
+
+.signup-form-fields input:-ms-input-placeholder {  
+  color: #7cb5ec;  
+}
+
 
 .signup-form-fields input:focus {
   outline: none;
@@ -374,9 +371,9 @@
 
 
 .signup-privacy {
-  margin-top: 10px;
-  margin-bottom: 15px;
-  color: #919191;
+  margin-top: 15px;
+  margin-bottom: 20px;
+  color: rgba(255,255,255,.7);
   font-size: 15px;
   font-weight: 300;
   letter-spacing: .04em;
