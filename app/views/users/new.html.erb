@@ -1,4 +1,80 @@
-<body class="blue-blur-sign-up">
+
+
+<!-- SKROLLR SECTION -->
+
+
+<section class="skrollr-section">
+
+  <div id="bg1" data-0="background-position:0px 0px;" data-end="background-position:0px -230px;"></div>
+  <div id="bg2" data-0="background-position:0px 0px;" data-end="background-position:0px 10px;"></div>
+  <div id="bg3" data-0="background-position:0px 0px;" data-end="background-position:0px -60px;"></div>
+
+  <div class="skrollr-constrainer constrainer">
+
+    <div class="skrollr-signin-btn">
+      <%= link_to "SIGN IN", login_path, :class => 'skrollr-btn' %>
+    </div>
+
+    <div class="hm-logo">
+      <%= image_tag("StockIQ-logo-white.png") %>
+    </div>
+
+  </div>
+
+</section>
+
+<section class="landing-phones clearfix">
+  <div class="constrainer">
+
+    <div class="landing-phones-col col-sm-4">
+      <%= image_tag("phones.png") %>
+    </div>
+
+    <div class="col-sm-8 phone-marketing-col">
+
+      <p>Find out how good you really are at predicting the market. Follow experts, compete with friends, and raise your StockIQ. </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- NOT INVITED PARTIAL -->
+
+<section class="landing-not-invited clearfix">
+  <div class="constrainer">
+
+    <div class="landing-user-icon">
+      <%= image_tag ("plus-user-wt.png") %>
+    </div>
+
+    <p class="signup-email-txt">
+      Be the first to know when we launch!
+    </p>
+
+    <div class="signup-email-inputs clearfix">
+      <div class="email-input-col col-sm-9">
+        <input class="waitlist-email" type="email" placeholder="Email address">
+      </div>
+      <div class="btn-input-col col-sm-3">          
+        <div class="signup-email-submit-button-div">
+          <input class="btn" value="SUBMIT">
+        </div>
+      </div>  
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- MARKETING POINS SECTION -->
+
+<section class="landing-marketing-points clearfix">
 
   <% if session[:errors] %>
     <div class="error-box">
@@ -7,17 +83,59 @@
       <% end %>
     <% end %>
     </div>
-
   <% session.delete :errors %>
 
-    <div class="constrainer">
-      <div class="signup-logo-container">
-        <%= image_tag ("StockIQ-logo-white.png") %>
+
+
+  <div class="marketing-points constrainer">
+
+    <div class="marketing-how-title">
+      <p>How It Works</p>
+    </div>
+
+    <div class="marketing-item clearfix">
+      <div class="marketing-img">
+          <%= image_tag ("perdiction-ico.png") %>
       </div>
-      <p class="signup-subtitle">Find out how good you <i>really</i> are at predicting the market. Follow experts, compete with friends, and raise your Stock IQ.</p>
+      <div class="marketing-txt">
+        <p class="marketing-point-header">Make Predictions</p>
+        <p class="marketing-point-txt">StockIQ graphs your predictions, records them and publishes them to share, discuss and rank</p>
+      </div>
+    </div>
+
+    <div class="marketing-item clearfix">
+      <div class="marketing-img">
+          <%= image_tag ("points-trophy.png") %>
+      </div>
+      <div class="marketing-txt">
+        <p class="marketing-point-header">Earn Points</p>
+        <p class="marketing-point-txt">You receive points for accuracy, and a running total score which indicates your overall strength as an analyst (your StockIQ)</p>
+      </div>
+    </div>
+
+    <div class="marketing-item clearfix">
+      <div class="marketing-img">
+          <%= image_tag ("biz-users.png") %>
+      </div>
+      <div class="marketing-txt">
+        <p class="marketing-point-header">Follow Experts</p>
+        <p class="marketing-point-txt">Easily see who is the best at predicting certain stocks, follow thier positions, discuss thier reasoning and make your own</p>
+      </div>
+    </div>
+
+  </div>
+
+</section>
 
 
-      <!-- INVITED PARTIAL-->
+<!-- INVITED PARTIAL-->
+<section class="sign-up-section">
+    <div class="constrainer">
+
+    <div class="landing-user-icon">
+      <%= image_tag ("plus-user-wt.png") %>
+    </div>
+    <p class="signup-subtitle">You've been invited to enter <span>StockIQ</span>, the first stock predicting app of its kind. This is a private beta group and your feedback is greatly appreciated. See you inside:</p>
 
       <div class="signup-form-div">
         <div class="signup-form-box clearfix">
@@ -45,7 +163,7 @@
           </div>
 
           <p class="signup-privacy">
-            StockIQ will never share your information with third parties. See our <a href="#">Privacy Policy</a> for further details.
+            StockIQ will never share your information with third parties. See our <a href="#">Privacy Policy.</a>
           </p>
             
           <div class="signup-submit-button-div">
@@ -57,34 +175,21 @@
           Already have an account? <%= link_to "Sign in here.", login_path %>
         </p>
       <% end %>
-      </div>
-
-
-      <!-- NOT INVITED PARTIAL-->
-
-      <div class="signup-email-div">
-        <p class="signup-email-txt">
-          Be the first to know when we launch!
-        </p>
-
-
-        <div class="signup-email-inputs clearfix">
-          <div class="email-input-col col-sm-9">
-            <input class="waitlist-email" type="email" placeholder="Email address">
-          </div>
-          <div class="btn-input-col col-sm-3">          
-            <div class="signup-email-submit-button-div">
-              <input class="btn" value="SUBMIT">
-            </div>
-          </div>  
-        </div>
-
-      </div>
-
-
     </div>
-</body>
+
+  </div>
+</section>
 
 
-
+  <script type="text/javascript">
+  var s = skrollr.init({
+    edgeStrategy: 'set',
+    easing: {
+      WTF: Math.random,
+      inverted: function(p) {
+        return 1-p;
+      }
+    }
+  });
+  </script>
 

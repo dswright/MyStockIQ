@@ -47,6 +47,11 @@
   background: #7cb5ec;
 }
 
+.blue-blur-tile-active {
+  background-color: #8EB7ED;
+  border-radius: 3px;
+}
+
 .welcome-col-sq {
   margin-top: 2%;
   margin-right: 1%;
@@ -56,6 +61,15 @@
   width: 31%;
   position: relative;
   float: left;
+
+  -webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+}
+
+.welcome-col-sq:hover {
+  background-color: #8EB7ED;
 }
 
 #welcome-stockbox-sq {
@@ -78,6 +92,7 @@
 #welcome-stockbox-sq input {
   position: absolute;
   margin-top: -30px;
+  opacity: 0;
 }
 
 .check-div {
@@ -102,11 +117,10 @@
 }
 
 .welcome-next-box {
-  display: none;
   position: fixed;
   z-index: 10;
   height: 70px;
-  bottom: 0px;
+  bottom: -90px;
   width: 100%;
   background-color: rgba(0,0,0,.8);
   overflow: hidden;
@@ -160,6 +174,11 @@
 
 
 @media (min-width: 768px) {
+
+.check-div-on img {
+  width: 33px;
+}
+
 
 #welcome-stockbox-sq span {
   line-height: 164px;

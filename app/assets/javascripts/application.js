@@ -24,4 +24,5 @@
 //= require nav
 //= require prediction-form-box
 //= require welcome
+//= require skrollr
 
