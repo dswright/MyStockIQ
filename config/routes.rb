@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   get 'stockprices/update'
 
 #sessions new is the login page. 
-  root  'sessions#new' 
+  root  'users#new' 
   
   #this sends /newuser to the newuser index function in the controller this has to be plural,
   #to fit with Ruby conventions.
@@ -61,6 +61,8 @@ Rails.application.routes.draw do
 
   get     'referrals'                   =>    'referrals#new'
   post    'referrals'                   =>    'referrals#create'
+
+  post    'waitingusers'                =>    'waitingusers#create'
 
   resources :streams
   resources :relationships
