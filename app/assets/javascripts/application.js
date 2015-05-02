@@ -26,4 +26,5 @@
 //= require prediction-form-box
 //= require welcome
 //= require skrollr
+//= require jquery.simple-dtpicker
 

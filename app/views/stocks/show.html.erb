@@ -102,13 +102,16 @@
             <input type='text' id='price' placeholder="Prediction price"/>
             <label for="price" class="glyphicon glyphicon-usd" rel="tooltip"></label>
           </div>
+
+          <script type="text/javascript">
+            $(function(){
+              $('*[name=date]').appendDtpicker();
+            });
+          </script>
+          
           <div class="prediction-field-col col-sm-4">
-            <input type='date' id='date' placeholder="End date"/>
+            <input type='text' name='date' id='date' placeholder="End date"/>
             <label for="date" class="glyphicon glyphicon-calendar" rel="tooltip"></label>
-          </div>
-          <div class="prediction-field-col col-sm-4">
-            <input type='time' id='time' placeholder="End time"/>
-            <label for="time" class="glyphicon fa fa-clock-o" rel="tooltip"></label>
           </div>
         </div>
         <div class="prediction-comment-field clearfix">
