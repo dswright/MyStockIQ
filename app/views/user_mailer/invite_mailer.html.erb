@@ -5,8 +5,9 @@
   </head>
   <body>
     <h3>Hi there!</h3>
-    <div><p>We are Stock IQ, an online community of stock traders.></p></div>
+    <div><p>We are Stock IQ, an online community of stock traders.</p></div>
 
-    <div><p>Your invite code is <%= @referral.referral_code %></p></div>
+    <div><p>Click the link below to sign up now!</p></div>
+    <div><p> <%= "www.mystockiq.com/?ref=#{@referral.referral_code}"%></p></div>
   </body>
 </html>

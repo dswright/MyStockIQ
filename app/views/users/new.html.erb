@@ -109,15 +109,11 @@
         </div>
       <% end %>
       
-
-
-
     </div>
   </section>
-
 <% else %> <!-- INVITED PARTIAL-->
   <section class="sign-up-section">
-      <div class="constrainer">
+    <div class="constrainer">
 
       <div class="landing-user-icon">
         <%= image_tag ("plus-user-blu.png") %>
@@ -142,11 +138,9 @@
             <div class="signup-form-fields">
               <%= form_for(:user, url: users_path, :multipart => true) do |f| %>
 
-              <%= fields_for @referral do |builder| %>
-                        <%= builder.text_field :referral_code, placeholder: "Referral code"%>
-               <% end %>
-
-            <%= f.text_field :username, class: "signup-email-field", id: "signup-form-field", placeholder: "Username" %>
+                <%= fields_for @referral do |builder| %>
+                      <%= builder.hidden_field :referral_code %>
+                <% end %>
 
               <%= f.text_field :username, class: "signup-email-field", id: "signup-form-field", placeholder: "Username" %>
 
