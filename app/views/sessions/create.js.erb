@@ -1,6 +1,1 @@
-$('.constrainer').prepend("<%= j render partial: 'shared/error_messages', locals: {object: @user} %>");
-window.setTimeout(function() {
-  $("#error_explanation").fadeTo(500, 0).slideUp(500, function(){
-    $(this).remove(); 
-  });
-}, 3000);
+$('.signin-form-fields').prepend("<%= j render partial: 'shared/login_error_messages', locals: {object: @user} %>");

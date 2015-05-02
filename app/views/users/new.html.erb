@@ -115,11 +115,6 @@
 
 
 
-
-
-
-
-
 <!-- INVITED PARTIAL-->
 
 
@@ -134,20 +129,8 @@
       <div class="signup-form-div">
         <div class="signup-form-box clearfix">
 
-          <% if session[:errors] %>
-            <div class="error-box">
-              <p>Oops, little problem: </p>
-              <ul>
-                <% session[:errors].each do |error_message| %>
-                <li><%= error_message %></li>
-                <% end %>
-              </ul>
-            <% end %>
-            </div>
-          <% session.delete :errors %>
-
           <div class="signup-form-fields">
-            <%= form_for(:user, url: users_path, :multipart => true) do |f| %>
+            <%= form_for(:user, url: users_path, :multipart => true, remote: true) do |f| %>
 
 
             <%= fields_for @referral do |builder| %>
