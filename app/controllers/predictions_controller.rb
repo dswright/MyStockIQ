@@ -127,30 +127,28 @@ class PredictionsController < ApplicationController
 			invalid_start = true
 		end
 
-		unless invalid_start
-      @prediction_end_input_page = "stockspage" #set this variable for the cancel button form on the stockspage.
-			@prediction.save
-      
-      #Create the stream inserts for the prediction.
-      @prediction.streams.create!(targetable_type: @user.class.name, targetable_id: @user.id)
-      @prediction.streams.create!(targetable_type: stock.class.name, targetable_id: stock.id)
-      #Build additional stream items for comment targeting other stocks or users
-      tags.each {|tag| @prediction.streams.create(targetable_id: tag.id, targetable_type: tag.class.name)}
+    if @prediction.valid?
+  		unless invalid_start
+        @prediction_end_input_page = "stockspage" #set this variable for the cancel button form on the stockspage.
+  			@prediction.save
+        
+        #Create the stream inserts for the prediction.
+        @prediction.streams.create!(targetable_type: @user.class.name, targetable_id: @user.id)
+        @prediction.streams.create!(targetable_type: stock.class.name, targetable_id: stock.id)
+        #Build additional stream items for comment targeting other stocks or users
+        tags.each {|tag| @prediction.streams.create(targetable_id: tag.id, targetable_type: tag.class.name)}
 
-      @prediction.build_popularity(score:0).save #build the popularity score item for predictions
-			@streams = [Stream.where(streamable_type: 'Prediction', streamable_id: @prediction.id).first]
-			response_msgs << "Prediction input!"
-		end
+        @prediction.build_popularity(score:0).save #build the popularity score item for predictions
+  			@streams = [Stream.where(streamable_type: 'Prediction', streamable_id: @prediction.id).first]
+  			response_msgs << "Prediction input!"
+  		end
+    end
 
 		@response = response_maker(response_msgs)
 
 		respond_to do |f|
       f.js { 
-        if invalid_start
-         render 'shared/_error_messages.js.erb'
-        else 
-          render "predictions/create.js.erb"
-        end 
+
       }
     end
 	end

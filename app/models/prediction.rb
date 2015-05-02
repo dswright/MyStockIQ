@@ -17,6 +17,7 @@ class Prediction < ActiveRecord::Base
   
   validates :prediction_end_price, presence: true, numericality: true
   validates :stock_id, presence: true, numericality: true
+
   default_scope -> { order(created_at: :desc) }
 
   def days_remaining

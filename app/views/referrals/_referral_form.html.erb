@@ -1,0 +1,7 @@
+<div class="referral_form">
+<%= form_for(Referral.new) do |f| %>]
+	<%= f.label :email  %>
+  	<%= f.email_field :email %><br />
+  	<%= f.submit "Send", class: "btn btn-primary", style: "float:left; width:50px;" %>
+<% end %>
+</div>

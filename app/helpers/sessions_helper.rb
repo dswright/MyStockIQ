@@ -65,4 +65,8 @@ module SessionsHelper
     "/users/#{current_user.username}/"
   end
 
+  def user_path(user)
+    "/users/#{user.username}/"
+  end
+
 end

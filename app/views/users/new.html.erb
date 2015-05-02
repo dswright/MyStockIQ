@@ -68,6 +68,7 @@
       </div>
     </div>
 
+
     <div class="marketing-item clearfix">
       <div class="marketing-img">
           <%= image_tag ("biz-users.png") %>
@@ -85,6 +86,7 @@
 <!-- NOT INVITED PARTIAL -->
 
 <section class="landing-not-invited clearfix">
+
   <div class="constrainer">
 
     <div class="landing-user-icon">
@@ -106,6 +108,7 @@
       </div>  
     </div>
 
+
   </div>
 
 </section>
@@ -114,7 +117,11 @@
 
 
 
+
+
+
 <!-- INVITED PARTIAL-->
+
 
 <section class="sign-up-section">
     <div class="constrainer">
@@ -141,6 +148,14 @@
 
           <div class="signup-form-fields">
             <%= form_for(:user, url: users_path, :multipart => true) do |f| %>
+
+
+            <%= fields_for @referral do |builder| %>
+                      <%= builder.text_field :referral_code, placeholder: "Referral code"%>
+             <% end %>
+
+
+          <%= f.text_field :username, class: "signup-email-field", id: "signup-form-field", placeholder: "Username" %>
 
             <%= f.text_field :username, class: "signup-email-field", id: "signup-form-field", placeholder: "Username" %>
 

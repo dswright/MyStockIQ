@@ -1,28 +1,30 @@
+<% if reply.valid? %>
+  <div class="stream-comment-item" id="stream-reply-<%= reply.id %>">
+    <div class="stream-comment-col col-xs-11">
+      <div class="stream-comments-img pull-left">
+        <%= link_to image_tag(reply.user.image), "/users/#{reply.user.username}/" %>
+      </div>
+      <div class="stream-comments-txt pull-left">
+        <p>
+          <%= link_to reply.user.username, "/users/#{reply.user.username}/", class: "stream-comments-txt-username" %>:&nbsp;
 
-<div class="stream-comment-item">
-  <div class="stream-comment-col col-xs-11">
-    <div class="stream-comments-img pull-left">
-      <%= link_to image_tag(reply.user.image), "/users/#{reply.user.username}/" %>
-    </div>
-    <div class="stream-comments-txt pull-left">
-      <p>
-        <%= link_to reply.user.username, "/users/#{reply.user.username}/", class: "stream-comments-txt-username" %>:&nbsp;
-
-        <% unless reply.tag == nil %>
-          <%= render html: reply.tag.content.html_safe %>
-        <%else %>
-          <%= reply.content %>
-        <% end %>
-      </p>
+          <% unless reply.tag == nil %>
+            <%= render html: reply.tag.content.html_safe %>
+          <% else %>
+            <%= reply.content %>
+          <% end %>
+        </p>
 
 
-      <div class="stream-comments-txt-footer clearfix">
-        <i class="fa fa-clock-o">&nbsp;<%= distance_of_time_in_words(reply.created_at, Time.now) %> ago</i>
+        <div class="stream-comments-txt-footer clearfix">
+        <i class="fa fa-clock-o">&nbsp;<%= distance_of_time_in_words(reply.created_at, Time.zone.now) %> ago</i>  
+        </div>
       </div>
     </div>
+
+    <div class="stream-comment-vote-col col-xs-1" id="likes-Reply-<%= reply.id %>">
+      <%= render partial: "streams/stream_like", locals: {likable_type:"Reply", likable_id:reply.id} %>
+    </div>
   </div>
 
-  <div class="stream-comment-vote-col col-xs-1" id="likes-Reply-<%= reply.id %>">
-    <%= render partial: "streams/stream_like", locals: {likable_type:"Reply", likable_id:reply.id} %>
-  </div>
-</div>
+<% end %>

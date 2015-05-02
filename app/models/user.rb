@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   has_many :likes
   has_many :replies
   has_many :streams, as: :targetable, dependent: :destroy
-
+  has_one :referral
 
   #Foreign key is the default index that would be used. 
   has_many :active_relationships, class_name: "Relationship",
@@ -75,6 +75,16 @@ class User < ActiveRecord::Base
     #compare the remember token in the cookie to the remember_digest in the users table. Not sure how this works.
     BCrypt::Password.new(remember_digest).is_password?(remember_token)
   end
+
+  #Adds error message in case of invalid sign in
+  def invalid_sign_in
+    errors[:base] << "Username or password is incorrect."
+  end
+
+  def invalid_referral
+      errors[:base] << "Referral code is invalid."
+  end
+
 
 
   #Follows a user

@@ -1,6 +1,6 @@
 <body class="blue-blur-sign-in">
 
-  <%= form_for(:session, url: login_path) do |f| %>
+  <%= form_for(:session, url: login_path, remote: true) do |f| %>
     <div class="constrainer">
       <div class="signin-logo-container">
         <%= image_tag ("StockIQ-logo-white.png") %>
@@ -8,20 +8,7 @@
       <p class="signin-subtitle">Enter the ultimate proving ground where it doesn't matter if you're a complete novice or pro analyst, your skill is all that counts. It's your turn to win. </p>
       <div class="signin-form-div">
         <div class="signin-form-box">
-
-          <% if session[:errors] %>
-            <div class="error-box">
-              <p>Oops, little problem: </p>
-              <ul>
-                <% session[:errors].each do |error_message| %>
-                <li><%= error_message %></li>
-                <% end %>
-              </ul>
-            <% end %>
-            </div>
-          <% session.delete :errors %>
-
-          
+        
           <div class="signin-form-fields">
             <%= f.text_field :email, :placeholder => "Email Address or Username", :class => "signin-email-field", :id => "signin-form-field" %>
             <%= f.password_field :password, :placeholder => "Password", :class => "signin-email-field", :id => "password" %>
@@ -31,6 +18,7 @@
           </div>
           <p class="signin-signin-link">Don't have an account? <%= link_to "Sign up here.", signup_path %>
           </p>
+
         </div>
       </div>
     </div>

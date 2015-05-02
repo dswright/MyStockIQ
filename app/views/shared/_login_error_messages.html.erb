@@ -1,0 +1,11 @@
+          <% if session[:errors] %>
+            <div class="error-box">
+              <p>Oops, little problem: </p>
+              <ul>
+                <% session[:errors].each do |error_message| %>
+                <li><%= error_message %></li>
+                <% end %>
+              </ul>
+            <% end %>
+            </div>
+          <% session.delete :errors %>
