@@ -14,7 +14,6 @@
 ActiveRecord::Schema.define(version: 20150502061202) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "adminpack"
   enable_extension "plpgsql"
 
   create_table "comments", force: true do |t|

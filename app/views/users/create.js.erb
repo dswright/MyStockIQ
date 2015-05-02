@@ -1,1 +1,6 @@
 $('.signup-form-fields').prepend("<%= j render partial: 'shared/login_error_messages', locals: {object: @user} %>");
+window.setTimeout(function() {
+  $(".error-box").fadeTo(500, 0).slideUp(500, function(){
+    $(this).remove(); 
+  });
+}, 3000);

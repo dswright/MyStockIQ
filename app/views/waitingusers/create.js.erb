@@ -1,0 +1,2 @@
+$('.new_waitinguser').prepend("<%= j render partial: 'waitingusers/success_message', locals: {success: @success} %>");
+$('.new_waitinguser').prepend("<%= j render partial: 'shared/login_error_messages', locals: {object: @waiting_user} %>");

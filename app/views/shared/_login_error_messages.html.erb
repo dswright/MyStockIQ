@@ -1,10 +1,14 @@
 <% if object.errors.any? %>
-  <div class="error-box">
-    <p>Oops, little problem: </p>
+  <div class="alert-container">
+  <div class="error-box alert-custom">
+
+  	<span class="close" data-dismiss="alert alert-danger">×</span>
+    <span><p>Oops, little problem: </p></span>
     <ul>
       <% object.errors.full_messages.each do |msg| %>
       <li><%= msg %></li>
       <% end %>
     </ul>
   <% end %>
+</div>
   </div>
