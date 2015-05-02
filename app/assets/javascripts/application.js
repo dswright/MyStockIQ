@@ -13,7 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui
-//= require turbolinks
 //= require highstock
 //= require exporting
 //= require moment
@@ -24,3 +23,7 @@
 //= require pagination
 //= require image-upload
 //= require nav
+//= require prediction-form-box
+//= require welcome
+//= require skrollr
+

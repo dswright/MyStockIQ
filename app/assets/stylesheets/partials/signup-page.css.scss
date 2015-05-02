@@ -2,28 +2,66 @@
 /* STOCKIQ SIGNUP PAGE STYLES */
 
 
+/************ SKROLLR SECTION ************/
 
-.signup-nav {
-  height: 49px;
-  background-color: #fff;
-  border-bottom: 1px solid rgba(0,0,0,.1);
+.skrollr-section {
+  background: asset-url("hm-bnr.png");
+  height: 490px;
+  background-size: cover;
+  max-width: 100%;
+  overflow: hidden;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
-.signup-nav-logo {
-  padding-top: 15px;
-  width: 130px;
-  color: #919191;
+.skrollr-desktop #scrollbar {display:none;}
+
+#bg1, #bg2, #bg3 {
+  z-index: 50;
+  left: 0;
+  width: 100%;
+  height: 490px;
+  background: asset-url("logos1.png");
+  background-repeat: no-repeat;
 }
 
-.signup-nav-link p {
+#bg2 {
+  z-index:49;
+  background-image: asset-url("logos2-blr.png");
+  background-repeat: no-repeat;
+
+}
+
+#bg3 {
+  z-index:48;
+  background-image: asset-url("logos3.png");
+  background-repeat: no-repeat;
+}
+
+.skrollr-constrainer {
+  position: relative;
+  overflow: hidden;
+}
+
+.skrollr-signin-btn {
+  display: none;
+  position: absolute;
+  right: 0px;
+  margin-top: 55px;
+  z-index: 100;
+}
+
+.skrollr-btn {
   display: block;
-  color: #7cb5ec;
-  font-size: 16px;
-  height: 49px;
-  padding-top: 15px;
-  padding-left: 5px;
-  padding-right: 5px;
-  border-bottom: 1px solid #7cb5ec;
+  color: #7bb4eb;
+  font-size: 12px;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border: 1px solid #7bb4eb;
+  border-radius: 3px;
+  text-decoration: none;
 
   -webkit-transition: 150ms ease-in;
   -moz-transition: 150ms ease-in;
@@ -31,66 +69,291 @@
   transition: 150ms ease-in;
 }
 
+.skrollr-signin-btn a:hover {
+  color: #fff;
+  border: 1px solid #fff;
+  text-decoration: none;
+}
 
-.signup-title {
-  margin-top: 30px;
+.hm-logo {
+  z-index: 51;
+  margin-top: 55px;
+  display: block;
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hm-logo img {
+  width: 100%;
+}
+
+.skrollable {
+  position:absolute;
+}
+
+
+/******* LANDING PHONES SECTION *******/
+
+
+.landing-phones {
+  padding-top: 50px;
+  padding-bottom: 40px;
+}
+
+.landing-phones-col {
+  margin-top: -230px;
+  z-index: 60;
+}
+
+.landing-phones-col img {
+  width: 80%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 30px;
+
+}
+
+.phone-marketing-col {
+  padding-left: 30px;
+}
+
+.phone-marketing-col p {
+  font-size: 31px;
+  color: #808080;
+  line-height: 43px;
+}
+
+
+/******** MARKETING POINTS ********/
+
+.landing-marketing-points {
+  padding-top: 60px;
+  padding-bottom: 10px; 
+  background-color: #7cb5ec;
+}
+
+.marketing-how-title {
+  margin-bottom: 50px;
   text-align: center;
+  font-size: 47px;
+  color: #fff;
+}
+
+.marketing-item {
+  margin-bottom: 60px;
+}
+
+.marketing-points {
+  max-width: 690px;
+  margin: auto;
+}
+
+.marketing-img {
+  float: left;
+  width: 20%
+}
+
+.marketing-txt {
+  float: right;
+  width: 78%
+}
+
+.marketing-img img {
+  width: 70%;
+}
+
+.marketing-point-header {
+  font-size: 30px;
+  color: #fff
+}
+
+.marketing-point-txt {
+  font-size: 21px;
+  color: #fff;
+  line-height: 30px; 
+}
+
+
+
+/******** NOT INVITED PARTIAL ********/
+
+.landing-not-invited {
+  display: none;
+  background-image: asset-url("blue-blur33.png");
+  background-size: cover;
+  background-position: center top;
+  padding-top: 65px;
+  padding-bottom: 60px;
+}
+
+.landing-user-icon img {
+  width: 90px;
+  display: block;
+  margin: auto;
+}
+
+.signup-email-div {
+  margin-top: 30px;
+}
+
+.signup-email-txt {
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 50px;
   font-size: 33px;
   font-weight: 300;
+  color: #7cb5ec;
+}
+
+.signup-email-inputs {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  max-width: 670px;
+}
+
+.waitlist-email {
+  width: 100%;
+  height: 50px;
+  font-size: 18px;
+  padding-left: 10px;
+  margin-bottom: 20px;
+  background-color: rgba(124,181,236,.2);
+  border: 0px;
+  outline: none;
   color: #919191;
+  border-radius: 5px;
+}
+
+.waitlist-email::-webkit-input-placeholder {
+  color: #7cb5ec;
+}
+
+.waitlist-email:-moz-placeholder {
+  color: #7cb5ec;  
+}
+
+.waitlist-email::-moz-placeholder {
+  color: #7cb5ec;  
+}
+
+.waitlist-email:-ms-input-placeholder {  
+  color: #7cb5ec;  
+}
+
+.waitlist-email:focus {
+  outline: none;
+  box-shadow: 0 0 0 1pt #7cb5ec;
+}
+
+.signup-email-submit-button-div input {
+  display: block;
+  border: 0px;
+  height: 50px;
+  color: #fff;
+  font-size: 15px;
+  width: 100%;
+  border-radius: 5px;
+  background-color: #90ed7d;
+
+  -webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+}
+
+.signup-email-submit-button-div input:hover {
+  background-color: #82e66e;
+  cursor: pointer;
+  color: #fff;
+}
+
+.signup-email-submit-button-div input:focus {
+  color: #fff;
+  outline: none;
+}
+
+
+/******** INVITED PARTIAL ********/
+
+
+.sign-up-section {
+  display: block;
+  background-image: asset-url("blue-blur33.png");
+  background-size: cover;
+  background-position: center top;
+  padding-top: 60px;
+  padding-bottom: 60px;
 }
 
 .signup-subtitle {
   text-align: center;
-  margin-top: 20px;
+  max-width: 690px;
+  margin-top: 40px;
+  margin-bottom: 40px;
   margin-left: auto;
   margin-right: auto;
-  max-width: 530px;
-  line-height: 30px;
-  font-size: 16px;
+  font-size: 24px;
+  line-height: 39px;
+  letter-spacing: 1px;
   font-weight: 300;
-  color: #919191;
+  color: #7cb5ec;
 }
+
+.signup-subtitle span {
+  color: #fff;
+}
+
 
 .signup-form-div {
   margin-top: 30px;
   margin-left: auto;
   margin-right: auto;
   border-radius: 3px;
-  max-width: 530px;
-}
-
-.signup-form-header {
-  color: #919191;
-  font-size: 15px;
-  font-weight: 300;
-  padding-top: 15px;
-  padding-bottom: 15px;
-  border-bottom: 1px solid rgba(0,0,0,.1);
-}
-
-.signup-form-header-txt {
-  text-align: center;
-
+  max-width: 690px;
 }
 
 .signup-form-box {
-  border: 1px solid rgba(0,0,0,.1);
-  border-radius: 7px;
-  background-color: #fff;  
-  font-size: 11px;
-  padding-left: 20px;
-  padding-right: 20px;
   padding-top: 0px;
-  padding-bottom: 20px;
-  margin-bottom: 5px;
+  padding-bottom: 5px;
+  margin-bottom: 0px;
 }
+
+/*** FORM VALIDATIONS ***/
+
+.error-box {
+  padding-left: 15px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border: 1px solid #fff;
+  border-radius: 5px;
+  margin-bottom: 30px;
+}
+
+.error-box p {
+  font-size: 18px;
+  color: #fff;
+}
+
+.error-box ul {
+  padding-left: 15px;  
+}
+
+.error-box ul li {
+  font-size: 15px;
+  color: #fff;
+  margin-top: 10px;
+}
+
+
 
 .signup-signin-link {
   margin-top: 20px;
-  margin-bottom: 15px;
-  color: #919191;
-  font-size: 12px;
+  margin-bottom: 30px;
+  color: rgba(255,255,255,.7);
+  font-size: 15px;
   font-weight: 300;
 }
 
@@ -114,85 +377,39 @@
 
 .signup-form-fields input {
   width: 100%;
-  height: 39px;
+  height: 50px;
+  font-size: 18px;
   padding-left: 10px;
   margin-bottom: 20px;
-  background-color: rgba(124,181,236,.06);
+  background-color: rgba(124,181,236,.2);
   border: 0px;
   outline: none;
-  color: #919191;
-  border-radius: 3px;
+  color: #fff;
+  border-radius: 5px;
   outline: none;
   box-shadow: 0 0 0 1pt rgba(0,0,0,0.1);
 }
 
+.signup-form-fields input::-webkit-input-placeholder {
+  color: #7cb5ec;
+}
+
+.signup-form-fields input:-moz-placeholder {
+  color: #7cb5ec;  
+}
+
+.signup-form-fields input::-moz-placeholder {
+  color: #7cb5ec;  
+}
+
+.signup-form-fields input:-ms-input-placeholder {  
+  color: #7cb5ec;  
+}
+
+
 .signup-form-fields input:focus {
   outline: none;
   box-shadow: 0 0 0 1pt #7cb5ec;
-}
-
-
-
-.btn-file {
-  position: relative;
-  overflow: hidden;
-}
-
-.btn-file input[type=file] {
-  margin-top: -20px;
-  width: 103px;
-  height: 30px;
-  font-size: 12px;
-  filter: alpha(opacity=0);
-  opacity: 0;
-}
-
-.btn-file input {
-  background-color: #fff;
-  border: none;
-  color: #7cb5ec;
-  font-weight: 300;
-  border: 1px solid #7cb5ec;
-  border-radius: 3px;
-}
-
-.btn-custom {
-  display: inline-block;
-  width: 90px;
-  height: 27px;
-  text-align: center;
-  padding-top: 6px;
-  color: #B3B3B3;
-  font-size: 11px;
-  cursor: pointer;
-  background-color: #fff;
-  border: solid 1px #C7C7C7;
-  border-radius: 3px;
-
-  -webkit-transition: 150ms ease-in;
-  -moz-transition: 150ms ease-in;
-  -o-transition: 150ms ease-in;
-  transition: 150ms ease-in;
-}
-
-.btn-custom:hover {
-  color: #7cb5ec;
-  border: solid 1px #7cb5ec;
-}
-
-.btn-custom input:active {
-  filter: alpha(opacity=0);
-  border-top: 0px;
-  box-shadow: 0px;
-}
-
-#signup-label {
-  display: inline-block;
-  font-size: 12px;
-  margin-left: 20px;
-  padding-top: 6px;
-  height: 27px;
-  color: #7cb5ec;
 }
 
 .password-col1 {
@@ -206,12 +423,11 @@
 }
 
 
-
 .signup-privacy {
-  margin-top: 0px;
   margin-top: 15px;
-  color: #919191;
-  font-size: 12px;
+  margin-bottom: 20px;
+  color: rgba(255,255,255,.7);
+  font-size: 15px;
   font-weight: 300;
   letter-spacing: .04em;
   line-height: 18px;
@@ -234,15 +450,13 @@
 }
 
 .signup-submit-button-div input {
-  margin-top: 15px;
-  border: solid 1px #C7C7C7;
-  border-radius: 3px;
-  padding-bottom: 12px;
-  padding-top: 12px;
-  color: #B3B3B3;
-  font-size: 13px;
+  padding-bottom: 17px;
+  padding-top: 17px;
+  color: #fff;
+  font-size: 18px;
   width: 100%;
-  background-color: #FFF;
+  border-radius: 5px;
+  background-color: #90ed7d;
 
   -webkit-transition: 150ms ease-in;
   -moz-transition: 150ms ease-in;
@@ -251,14 +465,47 @@
 }
 
 .signup-submit-button-div input:hover {
-  color: #7cb5ec;
-  border: solid 1px #7cb5ec;
+  background-color: #82e66e;
+  cursor: pointer;
+  color: #fff;
 }
 
 
 
 @media (min-width: 768px) {
 
+.skrollr-signin-btn {
+  display: block;
+}
+
+.landing-phones-col {
+  margin-top: -130px;
+}
+
+.landing-phones-col img {
+  width: 100%;
+  margin-bottom: 0px;
+}
+
+.email-input-col {
+  padding-right: 0px;
+}
+
+.btn-input-col {
+  padding-left: 0px;
+}
+
+.signup-email-submit-button-div {
+  margin-left: 15px;
+}
+
+.hm-logo {
+  width: 40%;
+}
+
+.signup-logo-container {
+  width: 40%;
+}
 
 .signup-nav-link p {
   padding-top: 20px;
@@ -275,5 +522,35 @@
   padding-left: 10px;
   padding-right: 0px;
 }
+
+}
+
+@media (min-width: 991px) {
+
+.hm-logo {
+  width: 30%;
+}
+
+.marketing-img {
+  float: left;
+  width: 12%
+}
+
+.marketing-txt {
+  float: right;
+  width: 85%;
+}
+
+.landing-phones-col {
+  margin-top: -230px;
+  z-index: 60;
+}
+
+.phone-marketing-col p {
+  font-size: 33px;
+  color: #808080;
+  line-height: 45px;
+}
+
 
 }

@@ -1,60 +1,119 @@
 
 
+<body class="blue-blur-welcome">
+
+<form>
+
 <div class="constrainer">
 
-	<p class="welcome-title">Welcome <%= current_user.username %></p>
-	<p class="welcome-subtitle">Here are some of the most popular stocks being predicted and discussed right now on StockIQ:</p>
+	<p class="welcome-title">Hi <%= current_user.username %>!</p>
+	<p class="welcome-subtitle">Pick some stocks to follow (at least 3) and continue. You may change or add more later:</p> 
 
 
-	<div class="welcome-stocks-div">
+	<div class="welcome-stocks-div clearfix">
 
+		<div class="welcome-col-sq blue-blur-tile">
+			<label id="welcome-stockbox-sq" >
+				<div class="check-div">
+					<%= image_tag("awsm-check1.png", :id => "check-img") %>
+				</div>
+				<span>$TWTR</span>
+				<input type="checkbox" class="welcome-tick">
+  		</label>
+		</div>
 
-		<div class="welcome-col col-xs-4">
-		<%= link_to "/stocks/TWTR", class: "welcome-stock-box blue-blur-tile" do %>
-	  		<span>$TWTR</span>
-	  	<%end%>
-  	</div>
-		<div class="welcome-col col-xs-4">
-		<%= link_to "/stocks/SHAK", class: "welcome-stock-box blue-blur-tile" do %>
-	  		<span>$SHAK</span>
-	  	<%end%>
-  	</div>
-		<div class="welcome-col col-xs-4">
-		<%= link_to "/stocks/AAPL", class: "welcome-stock-box blue-blur-tile" do %>
-	  		<span>$AAPL</span>
-	  	<%end%>
-  	</div>
-		<div class="welcome-col col-xs-4">
-		<%= link_to "/stocks/TSLA", class: "welcome-stock-box blue-blur-tile" do %>
-	  		<span>$TSLA</span>
-	  	<%end%>
-  	</div>
-		<div class="welcome-col col-xs-4">
-		<%= link_to "/stocks/AMZN", class: "welcome-stock-box blue-blur-tile" do %>
-	  		<span>$AMZN</span>
-	  	<%end%>
-  	</div>
-		<div class="welcome-col col-xs-4">
-		<%= link_to "/stocks/GOOG", class: "welcome-stock-box blue-blur-tile" do %>
-	  		<span>$GOOG</span>
-	  	<%end%>
-  	</div>
-		<div class="welcome-col col-xs-4">
-		<%= link_to "/stocks/BABA", class: "welcome-stock-box blue-blur-tile" do %>
-	  		<span>$BABA</span>
-	  	<%end%>
-  	</div>
-		<div class="welcome-col col-xs-4">
-		<%= link_to "/stocks/GPRO", class: "welcome-stock-box blue-blur-tile" do %>
-  		<span>$GPRO</span>
-  	<%end%>
-  	</div>
-		<div class="welcome-col col-xs-4">
-		<%= link_to "/stocks/FB", class: "welcome-stock-box blue-blur-tile" do %>
-	  		<span>$FB</span>
-	  	<%end%>
-  	</div>
+		<div class="welcome-col-sq blue-blur-tile">
+			<label id="welcome-stockbox-sq" >
+				<div class="check-div">
+					<%= image_tag("awsm-check1.png", :id => "check-img") %>
+				</div>
+				<span>$TWTR</span>
+				<input type="checkbox" class="welcome-tick">
+  		</label>
+		</div>
+
+		<div class="welcome-col-sq blue-blur-tile">
+			<label id="welcome-stockbox-sq" >
+				<div class="check-div">
+					<%= image_tag("awsm-check1.png", :id => "check-img") %>
+				</div>
+				<span>$TWTR</span>
+				<input type="checkbox" class="welcome-tick">
+  		</label>
+		</div>
+
+		<div class="welcome-col-sq blue-blur-tile">
+			<label id="welcome-stockbox-sq" >
+				<div class="check-div">
+					<%= image_tag("awsm-check1.png", :id => "check-img") %>
+				</div>
+				<span>$TWTR</span>
+				<input type="checkbox" class="welcome-tick">
+  		</label>
+		</div>
+
+		<div class="welcome-col-sq blue-blur-tile">
+			<label id="welcome-stockbox-sq" >
+				<div class="check-div">
+					<%= image_tag("awsm-check1.png", :id => "check-img") %>
+				</div>
+				<span>$TWTR</span>
+				<input type="checkbox" class="welcome-tick">
+  		</label>
+		</div>
+
+		<div class="welcome-col-sq blue-blur-tile">
+			<label id="welcome-stockbox-sq" >
+				<div class="check-div">
+					<%= image_tag("awsm-check1.png", :id => "check-img") %>
+				</div>
+				<span>$TWTR</span>
+				<input type="checkbox" class="welcome-tick">
+  		</label>
+		</div>
+
+		<div class="welcome-col-sq blue-blur-tile">
+			<label id="welcome-stockbox-sq" >
+				<div class="check-div">
+					<%= image_tag("awsm-check1.png", :id => "check-img") %>
+				</div>
+				<span>$TWTR</span>
+				<input type="checkbox" class="welcome-tick">
+  		</label>
+		</div>
+
+		<div class="welcome-col-sq blue-blur-tile">
+			<label id="welcome-stockbox-sq" >
+				<div class="check-div">
+					<%= image_tag("awsm-check1.png", :id => "check-img") %>
+				</div>
+				<span>$TWTR</span>
+				<input type="checkbox" class="welcome-tick">
+  		</label>
+		</div>
+
+		<div class="welcome-col-sq blue-blur-tile">
+			<label id="welcome-stockbox-sq" >
+				<div class="check-div">
+					<%= image_tag("awsm-check1.png", :id => "check-img") %>
+				</div>
+				<span>$TWTR</span>
+				<input type="checkbox" class="welcome-tick">
+  		</label>
+		</div>
 
 	</div>
-
 </div>
+
+<section class="welcome-next-box">
+
+
+  <div class="welcome-next-btn">
+    <input class="btn pull-right" value="CONTINUE">
+  </div>
+
+</section>	
+
+</form>
+
+<body>
