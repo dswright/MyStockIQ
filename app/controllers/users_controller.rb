@@ -79,7 +79,7 @@ class UsersController < ApplicationController
       @referral.save
 
       #redirect to user profile page
-  		format.html{ redirect_to "/welcome" }
+  		render :js => "window.location = '/welcome'"
 
   	else
       @disable_nav = true

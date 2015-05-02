@@ -8,7 +8,7 @@ class ReferralsController < ApplicationController
 	def create
 		@referral = Referral.new(referral_params)
 		@referral.generate_code
-		
+
 		if @referral.save
 		#Send worker to send out invitation email w/ referral code using 'UserMailer' mailer
 		MailerWorker.perform_async(@referral.id)

@@ -23,9 +23,7 @@ class SessionsController < ApplicationController
       remember @user #this should update the string in the database and
       # place a cookie on the users computer that remembers them.
 
-      respond_to do |format|
-      format.html{ redirect_to user_profile }
-      end
+      render :js => "window.location = '#{user_profile}'"
 
     else
       @disable_nav = true
