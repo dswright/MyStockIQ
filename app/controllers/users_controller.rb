@@ -48,6 +48,9 @@ class UsersController < ApplicationController
     #If referral code in url matches database, then load that referral object
     unless params[:ref] == nil
       @referral = Referral.find_by(referral_code: params[:ref].to_i )
+      #If referral code is not found in database, set to an empty referral object. 
+      @referral = Referral.new if @referral == nil
+
     else
       @referral = Referral.new
     end
@@ -56,7 +59,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    respond_to do |format|
+
     #this uses the result from the user_params function to create a new user.
   	@user = User.new(user_params)
 
@@ -79,6 +82,7 @@ class UsersController < ApplicationController
       @referral.save
 
       #redirect to user profile page
+
   		render :js => "window.location = '/welcome'"
 
   	else
@@ -86,11 +90,11 @@ class UsersController < ApplicationController
 
       #Adds invalid referral code error message to user object if referral code is invalid
       @user.invalid_referral if @referral == nil
-
-      format.js{}
+      respond_to do |format|
+        format.js{}
+      end
       #session[:errors] = @user.errors.full_messages
   		#redirect_to "/signup" #we're in the same template, so it assumes this controller, and this is the method name to go to.
-  	end
     end
 	end
 

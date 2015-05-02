@@ -134,11 +134,9 @@
 
 
             <%= fields_for @referral do |builder| %>
-                      <%= builder.text_field :referral_code, placeholder: "Referral code"%>
+                      <%= builder.hidden_field :referral_code %>
              <% end %>
 
-
-          <%= f.text_field :username, class: "signup-email-field", id: "signup-form-field", placeholder: "Username" %>
 
             <%= f.text_field :username, class: "signup-email-field", id: "signup-form-field", placeholder: "Username" %>
 

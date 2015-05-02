@@ -11,7 +11,7 @@ class ReferralsController < ApplicationController
 
 		if @referral.save
 		#Send worker to send out invitation email w/ referral code using 'UserMailer' mailer
-		MailerWorker.perform_async(@referral.id)
+		MailerWorker.new.perform(@referral.id)
 		redirect_to root_url
 		else
 			redirect_to "/stocks/$AAPL"
