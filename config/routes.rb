@@ -56,6 +56,7 @@ Rails.application.routes.draw do
   post    'settings'                     =>   'user_settings#update'
 
   get     'welcome'                      =>   'welcome#show'
+  post    'welcome'                      =>   'welcome#create'
 
 
   resources :streams
