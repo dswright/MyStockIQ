@@ -14,20 +14,20 @@ class ScraperPublic
 
     begin
       if price_hash_array = Scraper.process_csv_file(encoded_url, GoogleDaily.new, ticker_symbol, dups_allowed)
-        #if Scraper.new.enough_volume?(price_hash_array)
-        Scraper.new.save_to_db(price_hash_array, GoogleDaily.new)
-        puts price_hash_array
-        Scraper.new.update_stock(ticker_symbol, Stockprice)
-        Scraper.new.remove_extra_day(ticker_symbol)
-        #Stockprice.split_stock(ticker_symbol, input_prices_array)
-        #else
-        #  Scraper.new.update_to_inactive(ticker_symbol)
-        #end
+        unless price_hash_array == []
+          #if Scraper.new.enough_volume?(price_hash_array)
+          Scraper.new.save_to_db(price_hash_array, GoogleDaily.new)
+          Scraper.new.update_stock(ticker_symbol, Stockprice)
+          Scraper.new.remove_extra_day(ticker_symbol)
+          #Stockprice.split_stock(ticker_symbol, input_prices_array)
+          #else
+          #  Scraper.new.update_to_inactive(ticker_symbol)
+          #end
+        end
       end
     rescue Exception => e
       if e.message =~ /400 Bad Request/ || e.message =~ /404 Not Found/
         Scraper.new.update_to_inactive(ticker_symbol)
-        return "errored!"
       end
     end
   end
