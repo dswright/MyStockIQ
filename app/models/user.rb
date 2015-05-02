@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   has_many :likes
   has_many :replies
   has_many :streams, as: :targetable, dependent: :destroy
-
+  has_one :referral
 
   #Foreign key is the default index that would be used. 
   has_many :active_relationships, class_name: "Relationship",
@@ -80,6 +80,12 @@ class User < ActiveRecord::Base
   def invalid_sign_in
     errors[:base] << "Username or password is incorrect."
   end
+
+  def invalid_referral
+      errors[:base] << "Referral code is invalid."
+  end
+
+
 
   #Follows a user
   def follow(object)

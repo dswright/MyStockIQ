@@ -26,7 +26,6 @@ class SessionsController < ApplicationController
       respond_to do |format|
       format.html{ redirect_to user_profile }
       end
-      #redirect_to user_profile
 
     else
       @disable_nav = true

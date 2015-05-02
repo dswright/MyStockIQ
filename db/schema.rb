@@ -11,10 +11,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150409040453) do
+ActiveRecord::Schema.define(version: 20150426062303) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "adminpack"
   enable_extension "plpgsql"
 
   create_table "comments", force: true do |t|
@@ -107,6 +106,16 @@ ActiveRecord::Schema.define(version: 20150409040453) do
   add_index "predictions", ["stock_id"], name: "index_predictions_on_stock_id", using: :btree
   add_index "predictions", ["user_id", "created_at"], name: "index_predictions_on_user_id_and_created_at", using: :btree
   add_index "predictions", ["user_id"], name: "index_predictions_on_user_id", using: :btree
+
+  create_table "referrals", force: true do |t|
+    t.integer  "referral_code"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "user_id"
+    t.string   "email"
+  end
+
+  add_index "referrals", ["user_id"], name: "index_referrals_on_user_id", using: :btree
 
   create_table "relationships", force: true do |t|
     t.integer  "follower_id"
@@ -205,6 +214,7 @@ ActiveRecord::Schema.define(version: 20150409040453) do
     t.string   "remember_digest"
     t.string   "image"
     t.string   "bio"
+    t.boolean  "admin",           default: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

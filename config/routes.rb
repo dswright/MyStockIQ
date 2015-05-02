@@ -12,9 +12,10 @@ Rails.application.routes.draw do
   #this sends /newuser to the newuser index function in the controller this has to be plural,
   #to fit with Ruby conventions.
   get     'signup'                       =>   'users#new' 
+  get     'users'                        =>   'users#index'
   post    'users'                        =>   'users#create'
   get     'users/:username'              =>   'users#show'                                              
-
+  delete  'users/:username'              =>   'users#destroy'
 
   get     'login'                        =>   'sessions#new'
   post    'login'                        =>   'sessions#create'
@@ -57,6 +58,8 @@ Rails.application.routes.draw do
 
   get     'welcome'                      =>   'welcome#show'
 
+  get     'referrals'                   =>    'referrals#new'
+  post    'referrals'                   =>    'referrals#create'
 
   resources :streams
   resources :relationships
