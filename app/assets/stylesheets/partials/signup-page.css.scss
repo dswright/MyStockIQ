@@ -67,6 +67,8 @@
   border: 1px solid #7bb4eb;
   border-radius: 3px;
   text-decoration: none;
+  cursor: pointer;
+  cursor: hand;
 
   -webkit-transition: 150ms ease-in;
   -moz-transition: 150ms ease-in;
@@ -78,6 +80,8 @@
   color: #fff;
   border: 1px solid #fff;
   text-decoration: none;
+  cursor: pointer;
+  cursor: hand;
 }
 
 .hm-logo {
@@ -278,6 +282,7 @@
   width: 100%;
   border-radius: 5px;
   background-color: #90ed7d;
+  cursor: pointer;
 
   -webkit-transition: 150ms ease-in;
   -moz-transition: 150ms ease-in;

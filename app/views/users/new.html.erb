@@ -191,10 +191,23 @@
   </section>
 <% end %>
 
-<div id="skrollr-body"></div>
 
-  <script type="text/javascript">
-  var s = skrollr.init({
+<!-- Hides mobile nav menu on viewport wider than 768px -->
+
+<script type="text/javascript">
+
+if (matchMedia) {
+  var mq = window.matchMedia("(min-width: 768px)");
+  mq.addListener(WidthChange);
+  WidthChange(mq);
+}
+
+// media query change
+function WidthChange(mq) {
+
+  if (mq.matches) {
+
+    var s = skrollr.init({
     edgeStrategy: 'set',
     easing: {
       WTF: Math.random,
@@ -202,6 +215,17 @@
         return 1-p;
       }
     }
+
   });
+  }
+
+
+  else {
+    // window width is less than 768px
+  }
+
+}
+
+
   </script>
 
