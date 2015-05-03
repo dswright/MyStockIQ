@@ -4,14 +4,19 @@
 
 /************ SKROLLR SECTION ************/
 
-.skrollr-section {
-  background: asset-url("hm-bnr.png");
+.skrollr-section-mobile {
+  display: block;
+  background: asset-url("hm-static.png");
   height: 490px;
   background-size: cover;
   max-width: 100%;
   overflow: hidden;
   background-repeat: no-repeat;
   background-position: center;
+}
+
+.skrollr-section {
+  display: none;
 }
 
 .skrollr-desktop #scrollbar {display:none;}
@@ -102,12 +107,12 @@
 }
 
 .landing-phones-col {
-  margin-top: -230px;
+  margin-top: -380px;
   z-index: 60;
 }
 
 .landing-phones-col img {
-  width: 80%;
+  width: 70%;
   display: block;
   margin-left: auto;
   margin-right: auto;
@@ -486,6 +491,10 @@
   color: #fff;
 }
 
+.signup-submit-button-div input:focus {
+  color: #fff;
+  outline: none;
+}
 
 
 @media (min-width: 768px) {
@@ -544,6 +553,22 @@
 }
 
 @media (min-width: 991px) {
+
+
+.skrollr-section-mobile {
+  display: none;
+}
+
+.skrollr-section {
+  display: block;
+  background: asset-url("hm-bnr.png");
+  height: 490px;
+  background-size: cover;
+  max-width: 100%;
+  overflow: hidden;
+  background-repeat: no-repeat;
+  background-position: center;
+}
 
 .hm-logo {
   width: 30%;
