@@ -85,128 +85,210 @@
 
   <div class="col-xs-12 col-sm-9 stockpage-body">
 
+  <script type="text/javascript">
+    $(function() {
+      var gDayForTimeSelection;
+
+      var dPM = function() {
+        d = new Date();
+        d.toString().graphTime().gmtString(); //This returns the GMT String...
+        var cT = d.toString().graphTime();
+        var offSet = cT.offsetTime(); //gets the offset of the current time..
+        //to run the gmt time back into est time, we just subtract the offset form the graph time.
+
+        //now I have EST in graphtime, for the current time.
+        var eST = cT - (5*3600*1000-offSet); //offSet is in graphTime.
+
+        //get the hour of this.
+        //if the hour is less than 16:00, show today as the min date.
+        //if the hour is greater than 16:00, show tomorrow as the min date.
+        var hourFormat = eST.hourString();
+
+        var minTime;
+
+        if (hourFormat < "16:00:00") {
+          minTime = Date(eST.gmtString());
+        }
+        else {
+          var t = eST + 3600*8*1000 //adding 8 hours so that after hours predictions end the day after today.
+          minTime = Date(t.gmtString());
+        }
+
+        console.log("min:"+minTime);
 
 
+        return {
+          disable: [
+            1, 7
+          ],
+          min: minTime,
+          onSet: function(context) {
+            gDayForTimeSelection = context.select;
+            console.log("SET:"+gDayForTimeSelection);
+          }
+        };
+      
+      };
 
-    <!-- PREDICTION FORM BOX -->
+      var dPO = dPM();
+      $('#datepicker').pickadate(dPO);
+    
 
-    <div class="prediction-form-box" id="tabs">
-      <ul class="prediction-form-box-tabs">
-        <li><a id="prediction-tab" href="#tabs-1"><i class="fa fa-line-chart"></i>&nbsp;&nbsp;&nbsp;Predict AAPL</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#124;</li>
-        <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a id="comment-only-tab" href="#tabs-2"><i class="fa fa-comment"></i>&nbsp;&nbsp;&nbsp;Comment on AAPL</a></li>
-      </ul>
+      var tOM = function() {
+        var inputTime = gDayForTimeSelection;
+
+        var adjIT;
+        console.log("iT:"+gDayForTimeSelection);
+
+        var minT = new Date((inputTime + 9.5*3600*1000).gmtString());
+        var maxT = new Date((inputTime + 16*3600*1000).gmtString());
+
+        console.log("min: "+minT);
+
+        var rVar = {
+          min: minT,
+          max: maxT
+        };
+        console.log(rVar);
+
+        return rVar;
+
+      };
+      $("#timepicker").click(function() {
+        $('#timepicker').pickatime(tOM());
+      });
+    });
+  </script>
+
+  <!-- PREDICTION FORM BOX -->
+
+  
+
+  <div class="prediction-form-box" id="tabs">
+
+    <ul class="prediction-form-box-tabs">
+      <li><a id="prediction-tab" href="#tabs-1"><i class="fa fa-line-chart"></i>&nbsp;&nbsp;&nbsp;Predict AAPL</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#124;</li>
+      <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a id="comment-only-tab" href="#tabs-2"><i class="fa fa-comment"></i>&nbsp;&nbsp;&nbsp;Comment on AAPL</a></li>
+    </ul>
+
+    <%= form_for @prediction, remote:true do |f| %>
 
       <div class="prediction-form-div prediction-icon-addon prediction-addon-sm" id="tabs-1">
         <div class="prediction-field-container clearfix">
           <div class="prediction-field-col col-sm-4">
-            <input type='text' id='price' placeholder="Prediction price"/>
+            <%= f.text_field :prediction_end_price, placeholder: "Prediction price",id: "price" %>
+            <!-- <input type='text' id='price' placeholder="Prediction price"/> -->
             <label for="price" class="glyphicon glyphicon-usd" rel="tooltip"></label>
           </div>
 
-          <script type="text/javascript">
-            $(function(){
-              $('*[name=date]').appendDtpicker();
-            });
-          </script>
-          
           <div class="prediction-field-col col-sm-4">
-            <input type='text' name='date' id='date' placeholder="End date"/>
+            <%= text_field_tag 'end_day', nil, id: "datepicker", placeholder:"days"  %>
+            <!-- <input type='text' id='datepicker' placeholder="End date" /> -->
             <label for="date" class="glyphicon glyphicon-calendar" rel="tooltip"></label>
           </div>
+        
+          <div class="prediction-field-col col-sm-4">
+            <%= text_field_tag 'end_time', nil, id: "timepicker", placeholder:"End time"  %>
+            <!-- <input type='text' id='timepicker' placeholder="End time" /> -->
+            <label for="time" class="glyphicon fa fa-clock-o" rel="tooltip"></label>
+          </div>
+ 
         </div>
+
         <div class="prediction-comment-field clearfix">
           <textarea id='comment' placeholder="Comment on your prediction" onkeyup="countChar(this)"/></textarea>
         </div>
         <div class="button-counter clearfix">
-          <input class="btn pull-right" value="Submit">
+          <%= f.submit "Predict!", class: "btn pull-right" %>
+          <!-- <input class="btn pull-right" value="Submit"> -->
           <div class="pull-right" id="charNum"></div>
         </div>
       </div>
+    <% end %>
 
-      <div class="comment-only-form-div" id="tabs-2">
-        <div class="comment-only-field">
-          <textarea id='comment-only' placeholder="Comment on AAPL" onkeyup="countCommentChar(this)"/></textarea>
-        </div>
-        <div class="button-counter clearfix">
-          <input class="btn pull-right" value="Submit">
-          <div class="pull-right" id="commentCharNum"></div>
-        </div>
+    <div class="comment-only-form-div" id="tabs-2">
+      <div class="comment-only-field">
+        <textarea id='comment-only' placeholder="Comment on AAPL" onkeyup="countCommentChar(this)"/></textarea>
       </div>
-
-    </div>
-
-
-
-    <!-- OPEN PREDICTION FORM BOX -->
-
-    <div class="open-prediction-form-box" id="open-tabs">
-      <ul class="open-prediction-form-box-tabs">
-        <li><a id="open-prediction-comment-tab" href="#tabs-1"><i class="fa fa-comment"></i>&nbsp;&nbsp;&nbsp;Comment on AAPL</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#124;</li>
-        <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a id="open-prediction-close-tab" href="#tabs-2"><i class="fa fa-line-chart"></i>&nbsp;&nbsp;&nbsp;Close My Prediction</a></li>
-      </ul>
-
-
-      <div class="open-comment-only-form-div" id="tabs-1">
-        <div class="open-comment-only-field">
-          <textarea id='open-comment' placeholder="Comment on AAPL" onkeyup="openCountCommentChar(this)"/></textarea>
-        </div>
-        <div class="button-counter clearfix">
-          <input class="btn pull-right" value="Submit">
-          <div class="pull-right" id="openCommentCharNum"></div>
-        </div>
+      <div class="button-counter clearfix">
+        <input class="btn pull-right" value="Submit">
+        <div class="pull-right" id="commentCharNum"></div>
       </div>
-
-
-      <div class="close-prediction-form-div" id="tabs-2">
-        <div class="close-prediction-container clearfix">
-          <div class="close-prediction-data">
-            <p class="close-prediction-points">+10.00 Points</p>
-            <p class="close-prediction-date">CLOSING ON APR 8, 11:17AM</p>
-          </div>
-        </div>
-        <div class="close-prediction-comment-field clearfix">
-          <textarea id='close-comment' placeholder="Make a closing comment" onkeyup="openCountChar(this)"/></textarea>
-        </div>
-        <div class="button-counter clearfix">
-          <input class="btn pull-right" value="CLOSE PREDICTION">
-          <div class="pull-right" id="openCharNum"></div>
-        </div>
-      </div>
-
-    </div>
-
-
-
-
-
-    <!-- STREAM POSTS -->
-    <div class = "stream" >
-      <%= render partial: "streams/stream_main", locals: {streams: @streams} %>
-    </div>
-    <div id = "infinite-scrolling" >
-      <%= will_paginate @streams %>
     </div>
 
   </div>
 
-  <div class="col-sm-3 stockpage-sidebar">
 
-    <% if @prediction.active %> 
-      <%= render partial: 'shared/prediction_open', locals: {prediction: @prediction} %>
-    <% else %>
-      <%= render 'shared/prediction_form' %>
-    <% end %>
 
-    <%= render partial: 'shared/comment_form', locals: {stock: @stock} %>
-    
-    <%= render partial: 'stocks/ranking', locals: {stock: @stock} %>
+  <!-- OPEN PREDICTION FORM BOX -->
 
-    <%= render partial: 'shared/popular_stocks' %>
-    
-    
+  <div class="open-prediction-form-box" id="open-tabs">
+    <ul class="open-prediction-form-box-tabs">
+      <li><a id="open-prediction-comment-tab" href="#tabs-1"><i class="fa fa-comment"></i>&nbsp;&nbsp;&nbsp;Comment on AAPL</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#124;</li>
+      <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a id="open-prediction-close-tab" href="#tabs-2"><i class="fa fa-line-chart"></i>&nbsp;&nbsp;&nbsp;Close My Prediction</a></li>
+    </ul>
+
+
+    <div class="open-comment-only-form-div" id="tabs-1">
+      <div class="open-comment-only-field">
+        <textarea id='open-comment' placeholder="Comment on AAPL" onkeyup="openCountCommentChar(this)"/></textarea>
+      </div>
+      <div class="button-counter clearfix">
+        <input class="btn pull-right" value="Submit">
+        <div class="pull-right" id="openCommentCharNum"></div>
+      </div>
+    </div>
+
+
+    <div class="close-prediction-form-div" id="tabs-2">
+      <div class="close-prediction-container clearfix">
+        <div class="close-prediction-data">
+          <p class="close-prediction-points">+10.00 Points</p>
+          <p class="close-prediction-date">CLOSING ON APR 8, 11:17AM</p>
+        </div>
+      </div>
+      <div class="close-prediction-comment-field clearfix">
+        <textarea id='close-comment' placeholder="Make a closing comment" onkeyup="openCountChar(this)"/></textarea>
+      </div>
+      <div class="button-counter clearfix">
+        <input class="btn pull-right" value="CLOSE PREDICTION">
+        <div class="pull-right" id="openCharNum"></div>
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+
+  <!-- STREAM POSTS -->
+  <div class = "stream" >
+    <%= render partial: "streams/stream_main", locals: {streams: @streams} %>
+  </div>
+  <div id = "infinite-scrolling" >
+    <%= will_paginate @streams %>
   </div>
 
 </div>
+
+<div class="col-sm-3 stockpage-sidebar">
+
+  <% if @prediction.active %> 
+    <%= render partial: 'shared/prediction_open', locals: {prediction: @prediction} %>
+  <% else %>
+    <%= render 'shared/prediction_form' %>
+  <% end %>
+
+  <%= render partial: 'shared/comment_form', locals: {stock: @stock} %>
+  
+  <%= render partial: 'stocks/ranking', locals: {stock: @stock} %>
+
+  <%= render partial: 'shared/popular_stocks' %>
+  
+  
+</div>
+
 
   
 

@@ -10,6 +10,8 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+
+
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui
@@ -26,5 +28,7 @@
 //= require prediction-form-box
 //= require welcome
 //= require skrollr
-//= require jquery.simple-dtpicker
+
+//= require_tree ./pickadate
+
 
