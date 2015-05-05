@@ -6,7 +6,6 @@ class PredictionendsController < ApplicationController
 
     #make it impossible for another user to cancel another user's prediction. Confirm that the prediction belongs to
     #the user cancelling it.
-
     response_msgs = []
 
     prediction_gone = false
@@ -15,11 +14,16 @@ class PredictionendsController < ApplicationController
       if Predictionend.where(prediction_id:prediction.id).exists? #if the predictionend exists, then the prediction is already ended.
         prediction_gone = true
         response_msgs << "prediction has already been ended."
+
       end
     else #if the prediction does not exist, then the prediction has already been cancelled.
       prediction_gone = true
       response_msgs << "prediction has already been canceled"
+      puts "PREDICTION GONE:#{prediction_gone}"
     end
+
+
+
 
     unless prediction_gone #unless the prediction is already cancelled or ended, do all of this.
       #replies_update. Needs to be changed to replies when replies are available.
@@ -38,7 +42,7 @@ class PredictionendsController < ApplicationController
         predictionend.actual_end_time = Time.zone.now.graph_time.closest_start_time
         predictionend.graph_end_time = predictionend.actual_end_time.graph_time
         predictionend.actual_end_price = prediction.stock.daily_stock_price
-        predictionend.content = params[:comment]
+        predictionend.content = params[:content]
         predictionend.end_price_verified = false
         predictionend.save #save the prediction end.
 

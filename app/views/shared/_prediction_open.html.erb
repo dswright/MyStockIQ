@@ -1,42 +1,49 @@
-<div class="stockpage-sidebar-open">
-  <div class="stockpage-sidebar-open-box">
-    <div class="stockpage-sidebar-open-header">
-      <div class="stockpage-sidebar-open-header-txt pull-left">
-        Open Prediction
-      </div>
-      <div class="stockpage-sidebar-open-points pull-right">
-        <i class="fa fa-line-chart"></i>
-      </div>
-    </div>
+<!-- OPEN PREDICTION FORM BOX -->
 
-    <div class="sidebar-open-item col-md-4">
-      <p class="sidebar-open-figure"><%= pluralize(prediction.days_remaining.round(0), "day") %> </p>
-      <p class="sidebar-open-title">REMAINING</p>
-    </div>
-    <div class="sidebar-open-item col-md-4">
-      <p class="sidebar-open-figure">$<%= prediction.prediction_end_price %></p>
-      <p class="sidebar-open-title">TARGET</p>
-    </div>
-    <div class="sidebar-open-item col-md-4">
-      <p class="sidebar-open-figure"><%= prediction.score %></p>
-      <p class="sidebar-open-title">POINTS</p>
-    </div>
+  <div class="open-prediction-form-box" id="open-tabs">
+    <ul class="open-prediction-form-box-tabs">
+      <li><a id="open-prediction-comment-tab" href="#tabs-1"><i class="fa fa-comment"></i>&nbsp;&nbsp;&nbsp;Comment on <%= @stock.ticker_symbol %></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#124;</li>
+      <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a id="open-prediction-close-tab" href="#tabs-2"><i class="fa fa-line-chart"></i>&nbsp;&nbsp;&nbsp;Close My Prediction</a></li>
+    </ul>
 
-    <% if prediction.user.id == current_user.id %>
 
-      <%= form_for(Predictionend.new, remote:true) do |f| %>
-        <div class="sidebar-open-close-comment-div">
-         <%= text_area_tag 'comment', nil, placeholder: "Make a closing comment", class: "close-comment-textarea" %>
+    <%= form_for(Comment.new, remote:true) do |f| %>
+      <div class="open-comment-only-form-div" id="tabs-1">
+        <div class="open-comment-only-field">
+          <%= f.text_area :content, placeholder:"Comment on #{@stock.ticker_symbol}", class: "comment-form-textarea", id: "open-comment" %>
+          <%= hidden_field_tag :stream_string, @comment_stream_string %>
+          <%= hidden_field_tag :ticker_symbol, @stock.ticker_symbol %>
         </div>
+        <div class="button-counter clearfix">
+          <%= f.submit "SUBMIT", class: "btn pull-right" %>
+        </div>
+      </div>
+    <% end %>
 
+    <%= form_for(Predictionend.new, remote:true) do |f| %>
+      <div class="close-prediction-form-div" id="tabs-2">
+        <div class="close-prediction-container clearfix">
+          <div class="close-prediction-data">
+            <p class="close-prediction-points"><%= @prediction.score %> Points</p>
+            <% 
+              tz = ActiveSupport::TimeZone.new('America/New_York') #set the time zone to EST.
+              p_time = @prediction.prediction_end_time
+              num = tz.parse(p_time.to_s)
+            %>
+
+            <p class="close-prediction-date">CLOSING ON <%= num.strftime("%b %e, %Y") %></p>
+          </div>
+        </div>
+        <div class="close-prediction-comment-field clearfix">
+          <%= text_area_tag 'content', nil, placeholder: "Make a closing comment", class: "close-comment-textarea" %>
+        </div>
         <%= hidden_field_tag :input_page, @prediction_end_input_page %>
         <%= hidden_field_tag :prediction_id, prediction.id %>
-        
-        <div class="sidebar-close-button">
-          <%= f.submit "CLOSE PREDICTION", class: "btn" %>
+        <div class="button-counter clearfix">
+          <%= f.submit "CLOSE NOW", class: "btn pull-right" %>
+          <div class="pull-right" id="openCharNum"></div>
         </div>
-      <% end %>
-      
+      </div>
     <% end %>
+
   </div>
-</div>
