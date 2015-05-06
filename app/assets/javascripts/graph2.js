@@ -248,7 +248,9 @@ var graphMediator = (function() {
   
     createDateLine("dailyLines"); //adds the forward date array to the dailyLines component.
     createDateLine("intradayLines");  //adds the forward date array to the intradayLines component.
-  
+    
+
+
   };
 
   //this function is executed to run all functions that are dependent on whether or not the frame is in the 1d,5d vs 1m,3m,6m,1Yr ect.
@@ -273,6 +275,8 @@ var graphMediator = (function() {
     else {
       options[graph]["daily"]();
     }
+
+    $('*[data-button-type="'+components.currentFrame.timeFrame+'"]').switchClass("timeframe-item", "timeframe-item-selected");
   };
 
   //setSeries sets the series' defined in the daily and Intraday Line components.
@@ -693,6 +697,53 @@ var graphMediator = (function() {
     }
   };
 
+  var bestRange = function(endType) { //endTime is a hash of index, x, and y values.
+    var options = {
+      myPrediction: function() {
+        return components.defaults.data.my_prediction[0];
+      }
+    };
+
+    endTime = options[endType]();
+
+    if (endTime === undefined) { //the endtime will be undefined when the my_prediction array is empty.
+      return "1Yr";
+    }
+    for (var value in components.frameHash) { //loop through the values of the frameHash - 1d, 5d, 1m ect..
+      if (endTime.x < rangeHash[value]["xMax"]) { //if the endTime is less than the x max of the range, then its in range.
+        return value; //return that value, ie, the button name - "1d", "5d" ect.
+      }
+    }
+  }
+
+  var removeOverlapping = function(timeType, lineType) { //not sure if this is still working.
+    var options = {
+      intraday: {
+        myPrediction: {
+          mainLine: components.intradayLines.predictions, 
+          filterPoint: components.intradayLines.myPrediction[0]
+        }
+      },
+      daily: {
+        myPrediction: {
+          mainLine: components.dailyLines.predictions,
+          filterPoint: components.dailyLines.myPrediction[0]
+        }
+      }
+    };
+    var mainLine = options[timeType][lineType];
+    var filterPoint = options[timeType][lineType];
+
+    if (filterPoint !== undefined) {
+      for (var i=0; i<mainLine.length;i++) {
+        if (mainLine[i].indexOf(filterPoint) !== -1) {
+          largeArray.splice(i, 1);
+        }
+      }
+    }
+  }
+
+
 //   PRIVATE
 
   var createDateLine = function(line) {
@@ -740,7 +791,9 @@ var graphMediator = (function() {
     frameDependents: frameDependents,
     createPredictionLine: createPredictionLine,
     framesHash: framesHash,
-    setRange: setRange
+    setRange: setRange,
+    bestRange: bestRange,
+    removeOverlapping: removeOverlapping
   }
 })();
 

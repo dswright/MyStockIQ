@@ -206,17 +206,25 @@ $(document).ready(function () {
       graphMediator.createPredictionLine("daily", "myPrediction"); //create this predictions graph line for the stock graph only.
       graphMediator.createPredictionLine("intraday", "myPrediction"); //create this predictions graph line for the stock graph only.
 
+      var bestRange = graphMediator.bestRange("myPrediction");
+      
       var currentFrame = {
-        timeFrame: "1Yr", 
+        timeFrame: bestRange, 
         framesHash: graphMediator.framesHash("stockGraph")
       };
+
+      graphMediator.removeOverlapping("intraday", "myPrediction");
+      graphMediator.removeOverlapping("daily", "myPrediction");
+
       graphMediator.addComponents('currentFrame', currentFrame); //currentframe must be used before setRange is used.
 
-      // sets the daily or intraday lines, depending on the timeFrame in the currentFrame.
+      // sets the daily or intraday lines, depending on the timeFrame in the currentFrame. Also sets the hover state.
       graphMediator.frameDependents("stockGraph");
 
       // the timeFrame in the currentFrame component must be set before using this. 
       graphMediator.setRange();
+
+
 
       //stockChartFunctions = new StockGraph(data, stockChart); //data is passed into the stockgraph class so that it is accessible there.
 
@@ -236,9 +244,9 @@ $(document).ready(function () {
 
       $("div[data-button-type]").click(buttonClick);
 
-      // window.inputPrediction = function(endTime, endPrice, predictionId) {
-      //   stockChartFunctions.inputPrediction(endTime, endPrice, predictionId); //when a prediction is input, this function fires from the predicitoninput ajax call.
-      // }
+      window.inputPrediction = function(endTime, endPrice, predictionId) {
+        stockChartFunctions.inputPrediction(endTime, endPrice, predictionId); //when a prediction is input, this function fires from the predicitoninput ajax call.
+      }
 
       // window.removePrediction = function() {
       //   stockChartFunctions.removePrediction();
