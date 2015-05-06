@@ -531,19 +531,19 @@ var graphMediator = (function() {
     var options = {
       myPrediction: function() {
         return components.defaults.data.my_prediction[0];
+      },
+      prediction: function() {
+        return components.defaults.data.prediction[0];
       }
     };
 
     var endTime = options[endType](); //endTime is a hash of index, x, and y values.
-    console.log(endTime.x);
 
     if (endTime === undefined) { //the endtime will be undefined when the my_prediction array is empty.
       return "1Yr";
 
     }
-    console.log("FRAMEHASH"+components.currentFrame.framesHash);
     for (var value in components.currentFrame.framesHash) { //loop through the values of the frameHash - 1d, 5d, 1m ect..
-      console.log("HASHVALUE:"+components.currentFrame.framesHash[value]["xMax"]);
       if (endTime.x < components.currentFrame.framesHash[value]["xMax"]) { //if the endTime is less than the x max of the range, then its in range.
         return value; //return that value, ie, the button name - "1d", "5d" ect.
       }

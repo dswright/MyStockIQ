@@ -20,7 +20,6 @@ function BuildStockGraph(defaults, graphName) {
     var bestRange = graphMediator.bestRange("myPrediction");
     graphMediator.updateComponent("currentFrame", function(component) {
       this.timeFrame = bestRange;
-      console.log("bestRange:"+bestRange);
     });
 
     // sets the daily or intraday lines, depending on the timeFrame in the currentFrame. Also sets the hover state.
@@ -46,51 +45,36 @@ function BuildStockGraph(defaults, graphName) {
 
 
 
-function PredictionDetails(graph, chart) {
+function BuildPredictionGraph(defaults, graphName) {
+  this.launch = function() {
+    graphMediator.addComponents('defaults', defaults);
+    graphMediator.defaultProcessor(); //creates the daily and intradayLines components. adds the price and date lines to both of those components.
 
-  graph["intraday_prediction"] = IntradayPredictions(graph["prediction"], undefined)[0]; //the 0 says to return only the first element of the returned value, which is an array of 2 objects.
-  graph["daily_prediction"] = DailyPredictions(graph["prediction"], undefined)[0]; //the extra array of 0s is there for the prediction ids processor, which is an array of 2 objects.
-  graph["intraday_predictionend"] = IntradayPredictions(graph["predictionend"], undefined)[0]; //the undefined indicates that these are for the prediction details page. The undefined normally takes the predictionids_string.
-  graph["daily_predictionend"] = DailyPredictions(graph["predictionend"], undefined)[0];
+    graphMediator.createPredictionLine("daily", "prediction"); //create this predictions graph line for the stock graph only.
+    graphMediator.createPredictionLine("intraday", "prediction"); //create this predictions graph line for the stock graph only.
 
+    graphMediator.createPredictionLine("daily", "predictionend"); //create this predictions graph line for the stock graph only.
+    graphMediator.createPredictionLine("intraday", "predictionend"); //create this predictions graph line for the stock graph only.
 
-  var graphSettings = {intradayPrices: graph["intraday_prices"], dailyPrices:graph["daily_prices"], predictions:[[0,0]], myPrediction:graph["prediction"], intradayPrediction:graph["intraday_prediction"], dailyPrediction:graph["daily_prediction"]};
-  var rangeHash = new PredictionGraphButtons(graphSettings);
+    var currentFrame = {
+      framesHash: graphMediator.framesHash("predictionGraph")
+    };
 
-  this.startChart = function() {
-    graph["daily_forward_prices"] = DailyForwardPrices(graph["daily_prices"].last()[0]);
-    graph["intraday_forward_prices"] = IntradayForwardPrices(graph["intraday_prices"].last()[0]);
+    graphMediator.addComponents('currentFrame', currentFrame); //currentframe must be used before setRange is used.
 
-    var endTime = graph["prediction"].last()[0]; //use the endTime of the users own prediction to get the best range.
-    var bestButton = BestRange(endTime);
+    var bestRange = graphMediator.bestRange("prediction");
+    graphMediator.updateComponent("currentFrame", function(component) {
+      this.timeFrame = bestRange;
+    });
 
-    if (bestButton === "1D" || bestButton === "5D") {
-      currentRange["buttonType"] = "1M";
-    }
-    else {
-      currentRange["buttonType"] = "5D";
-    }
+    // sets the daily or intraday lines, depending on the timeFrame in the currentFrame. Also sets the hover state.
+    graphMediator.frameDependents("stockGraph");
 
-    setSeries(bestButton); //set the graphs to start.
-    setRange(bestButton);
-
-
-    //update the selected state of the time range for the current range.
-    $('*[data-button-type="'+currentRange["buttonType"]+'"]').switchClass("timeframe-item", "timeframe-item-selected");
-
+    // the timeFrame in the currentFrame component must be set before using this. 
+    graphMediator.setRange();
   }
 
-  this.buttonClick = function() {
-    var buttonType = $(this).data("button-type");
-    setSeries(buttonType); //always set series before range. Resets all series arrays if there is a button type change.
-    setRange(buttonType);
-
-    //change the on-hover states based on what has been clicked.
-    $(".timeframe-item-selected").switchClass("timeframe-item-selected", "timeframe-item")
-    $(this).switchClass("timeframe-item", "timeframe-item-selected");
-    
-  }
-
+/*
   this.endPrediction = function(endTime, endPrice) { //endtime and price are passed by the ajax function.
     //need to set the endprediction line.
     //need to change the formatting on the first prediction line.
@@ -127,6 +111,6 @@ function PredictionDetails(graph, chart) {
     graph["daily_prediction"] = DailyPredictions(graph["prediction"], undefined)[0]; //the extra array of 0s is there for the prediction ids processor, which i
     graph["intraday_predictionend"] = IntradayPredictions(graph["predictionend"], undefined)[0];
     graph["daily_predictionend"] = DailyPredictions(graph["predictionend"], undefined)[0];
-
   }
+  */
 }
