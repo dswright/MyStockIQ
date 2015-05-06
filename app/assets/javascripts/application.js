@@ -20,7 +20,6 @@
 //= require moment
 //= require moment-timezone.js
 //= require customdate
-//= require graph2
 //= require bootstrap
 //= require pagination
 //= require image-upload
@@ -28,6 +27,8 @@
 //= require prediction-form-box
 //= require welcome
 //= require skrollr
+//= require graph-mediator
+//= require graph-constructors
 
 //= require_tree ./pickadate
 

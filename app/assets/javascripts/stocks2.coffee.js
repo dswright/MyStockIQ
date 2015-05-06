@@ -191,62 +191,20 @@ $(document).ready(function () {
     success: function (data, status) {
       stockGraph = data; //assign the data to the graph var to be used globally. Delete this once debugging is done.
 
-
       var defaults = { //defaults contains the variables that are standard to each graph.
         "data": data,
         "chart": stockChart
       };
 
-      graphMediator.addComponents('defaults', defaults);
-      graphMediator.defaultProcessor(); //creates several default components automatically for every graph.
+      var newGraph = new BuildStockGraph(defaults);
 
-      graphMediator.createPredictionLine("daily", "predictions"); //create this predictions graph line for the stock graph only.
-      graphMediator.createPredictionLine("intraday", "predictions"); //create this predictions graph line for the stock graph only.
+      newGraph.launch();
 
-      graphMediator.createPredictionLine("daily", "myPrediction"); //create this predictions graph line for the stock graph only.
-      graphMediator.createPredictionLine("intraday", "myPrediction"); //create this predictions graph line for the stock graph only.
+      $("div[data-button-type]").click(newGraph.buttonClick);
 
-      var bestRange = graphMediator.bestRange("myPrediction");
-      
-      var currentFrame = {
-        timeFrame: bestRange, 
-        framesHash: graphMediator.framesHash("stockGraph")
-      };
-
-      graphMediator.removeOverlapping("intraday", "myPrediction");
-      graphMediator.removeOverlapping("daily", "myPrediction");
-
-      graphMediator.addComponents('currentFrame', currentFrame); //currentframe must be used before setRange is used.
-
-      // sets the daily or intraday lines, depending on the timeFrame in the currentFrame. Also sets the hover state.
-      graphMediator.frameDependents("stockGraph");
-
-      // the timeFrame in the currentFrame component must be set before using this. 
-      graphMediator.setRange();
-
-
-
-      //stockChartFunctions = new StockGraph(data, stockChart); //data is passed into the stockgraph class so that it is accessible there.
-
-      //stockChartFunctions.startChart();
-
-      var buttonClick = function() {
-        var buttonType = $(this).data("button-type");
-        var callback = function(component) { this.timeFrame = buttonType }; //the cb is called with the .call function, so this gets reset to the component.
-        graphMediator.updateComponent("currentFrame", callback);
-        graphMediator.frameDependents("stockGraph");
-        graphMediator.setRange(); //the current frame must be updated before set range should be used.
-
-        //change the on-hover states based on what has been clicked.
-        $(".timeframe-item-selected").switchClass("timeframe-item-selected", "timeframe-item");
-        $(this).switchClass("timeframe-item", "timeframe-item-selected");
-      }
-
-      $("div[data-button-type]").click(buttonClick);
-
-      window.inputPrediction = function(endTime, endPrice, predictionId) {
-        stockChartFunctions.inputPrediction(endTime, endPrice, predictionId); //when a prediction is input, this function fires from the predicitoninput ajax call.
-      }
+      //window.inputPrediction = function(endTime, endPrice, predictionId) {
+      //  stockChartFunctions.inputPrediction(endTime, endPrice, predictionId); //when a prediction is input, this function fires from the predicitoninput ajax call.
+      //}
 
       // window.removePrediction = function() {
       //   stockChartFunctions.removePrediction();
