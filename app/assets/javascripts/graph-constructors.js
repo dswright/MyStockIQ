@@ -68,10 +68,11 @@ function BuildPredictionGraph(defaults, graphName) {
     });
 
     // sets the daily or intraday lines, depending on the timeFrame in the currentFrame. Also sets the hover state.
-    graphMediator.frameDependents("stockGraph");
+    graphMediator.frameDependents("predictionGraph");
 
     // the timeFrame in the currentFrame component must be set before using this. 
     graphMediator.setRange();
+
   }
 
 /*

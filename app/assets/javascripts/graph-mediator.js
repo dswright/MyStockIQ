@@ -78,6 +78,8 @@ var graphMediator = (function() {
   
     createDateLine("dailyLines"); //adds the forward date array to the dailyLines component.
     createDateLine("intradayLines");  //adds the forward date array to the intradayLines component.
+  
+    console.log(components);
     
 
 
@@ -88,6 +90,16 @@ var graphMediator = (function() {
 
     var options = {
       stockGraph: {
+        daily: function() {
+          setSeries("dailyLines"),
+          setHover("dailyPrices")
+        },
+        intraday: function() {
+          setSeries("intradayLines"),
+          setHover("intradayPrices")
+        }
+      },
+      predictionGraph: {
         daily: function() {
           setSeries("dailyLines"),
           setHover("dailyPrices")
@@ -212,6 +224,7 @@ var graphMediator = (function() {
               }
             }
           }
+          return newMax
         },
         noLimMax: function(lineArray) {
           var newMax = 0;
@@ -220,6 +233,7 @@ var graphMediator = (function() {
               newMax = lineArray[i].y;
             }
           }
+          return newMax
         }
       },
       timeIntervals: {
@@ -332,8 +346,8 @@ var graphMediator = (function() {
               },
               {
                 line: components.dailyLines.prediction.lineArray,
-                minCb: "limMin",
-                maxCb: "limMax"
+                minCb: "noLimMin",
+                maxCb: "noLimMax"
               },
               {
                 line: components.dailyLines.predictionend.lineArray,
@@ -341,7 +355,9 @@ var graphMediator = (function() {
                 maxCb: "noLimMax"
               }
             ],
-            startPoint: components.dailyLines.prices.lineArray.last().x
+
+            //startPoint: components.dailyLines.prices.lineArray.last().x
+            startPoint: components.dailyLines.prediction.lineArray[0].x
           },
           intraday: {
             limitLines: [
@@ -352,8 +368,8 @@ var graphMediator = (function() {
               },
               {
                 line: components.intradayLines.prediction.lineArray,
-                minCb: "limMin",
-                maxCb: "limMax"
+                minCb: "noLimMin",
+                maxCb: "noLimMax"
               },
               {
                 line: components.intradayLines.predictionend.lineArray,
@@ -361,7 +377,8 @@ var graphMediator = (function() {
                 maxCb: "noLimMax"
               }
             ],
-            startPoint: components.intradayLines.prices.lineArray.last().x
+            //startPoint: components.intradayLines.prices.lineArray.last().x
+            startPoint: components.intradayLines.prediction.lineArray[0].x
           },
           buttons: [
             {name:"1D", beforeDays:1, afterDays:0.5, timeType:"intraday"},
@@ -419,6 +436,7 @@ var graphMediator = (function() {
           var comparisonCb = options.extremes[limitType].comparisonCb;
           var newLimit = cb(limArr); //the callback should take array as an argument and return a limit.
           limit = comparisonCb(limit, newLimit); //returns either the old limit or new limit depending on limitype.
+          console.log("Limit:"+limit);
         }
       });
       var pLimit = options.extremes[limitType].bufferMaker(limit); //add an extra 5% to the limit so that the prediction is not on the border.
@@ -454,7 +472,7 @@ var graphMediator = (function() {
 
     var dailyProcessor = function(gT) {
       var dayStr = gT.gmtString().dayString() + " 00:00:00 GMT"; //convert the graphtime to a gmt string, then convert that to the day string, and then add on 00:00:00 to round to the beginning of the day.
-      var new_g_time = dayStr.graphTime() + gT.offsetTime() + 20*3600*1000; //get the graphtime for the start of the day add the offset time, and 20 hours to get to EOD at either 20 or 21 hours depending on DST.
+      var new_g_time = dayStr.graphTime() + (21*3600*1000 - gT.offsetTime()); //get the graphtime for the start of the day add the offset time, and 20 hours to get to EOD at either 20 or 21 hours depending on DST.
       return new_g_time;
     };
 
@@ -508,6 +526,7 @@ var graphMediator = (function() {
     var predictionsArray = [];
 
     for(var i=0; i < predictions.length; i++ ) {
+      console.log(components);
       var timeCompare = options[timeType].cb(predictions[i].x);
       if (predictionsArray.length === 0) { //if there are no predictions in the array, then add the first prediction.
         predictionsArray.push({"id":predictions[i].id, "x":timeCompare, "y":predictions[i].y})
@@ -582,14 +601,14 @@ var graphMediator = (function() {
 
   var createDateLine = function(line) {
     var options = {
-      dailyLines: {
+      intradayLines: {
         startTime: components.defaults.data.intraday_prices.last().x, //this gets the last graphtime from the intradayprices array.
         iterations: 234, //this is 3 days forward. (6.5 * 3 * 60/5)
         interval: 5*60*1000,
         component: "intradayLines",
         index: 1 //the index is 1 because it is the second graphLine in the chart.
       },
-      intradayLines: {
+      dailyLines: {
         startTime: components.defaults.data.daily_prices.last().x, //this gets the last graphtime from the dailyprices array.
         iterations: 780, //this is 3 years forward. (260*3)
         interval: 24*3600*1000, //interval of 1 day
@@ -613,7 +632,7 @@ var graphMediator = (function() {
       }
       i += 1;
     }
-    components[settings.component][line] = {lineArray:forwardArray, index:settings.index} //this adds a new line to the dailyLines or intradayLines component.
+    components[settings.component]["forward_dates"] = {lineArray:forwardArray, index:settings.index} //this adds a new line to the dailyLines or intradayLines component.
   };
 
   return {
