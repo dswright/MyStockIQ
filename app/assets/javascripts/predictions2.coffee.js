@@ -136,26 +136,12 @@ $(document).ready(function () {
       "data": data,
       "chart": predictionChart
     };
+    
+    var newGraph = new BuildPredictionGraph(defaults);
+    newGraph.launch();
+    $("div[data-button-type]").click(newGraph.buttonClick);
 
-    graphMediator.addComponents('defaults', defaults);
-    graphMediator.defaultProcessor(); //creates the daily and intradayLines components. adds the price and date lines to both of those components.
-
-    graphMediator.createPredictionLine("daily", "prediction"); //create this predictions graph line for the stock graph only.
-    graphMediator.createPredictionLine("intraday", "prediction"); //create this predictions graph line for the stock graph only.
-
-    graphMediator.createPredictionLine("daily", "predictionend"); //create this predictions graph line for the stock graph only.
-    graphMediator.createPredictionLine("intraday", "predictionend"); //create this predictions graph line for the stock graph only.
-
-    var currentFrame = {
-      timeFrame: "1Yr", 
-      framesHash: graphMediator.framesHash("predictionGraph")
-    };
-    graphMediator.addComponents('currentFrame', currentFrame); //currentframe must be used before setRange is used.
-
-    // sets the daily or intraday lines, depending on the timeFrame in the currentFrame.
-    graphMediator.frameDependents("stockGraph");
-
-    graphMediator.setRange();
+    
 
     var buttonClick = function() {
       var buttonType = $(this).data("button-type");
@@ -170,23 +156,6 @@ $(document).ready(function () {
     };
     $("div[data-button-type]").click(buttonClick); //this in my object is now referring to the jquery object?
 
-    //window.endPrediction = function(endTime, endPrice) {
-    //  predictionChartFunctions.endPrediction(endTime, endPrice);
-    //}
-
-    //create prediction arrays where predictions ending that day are rounded to the end of the day to appear nicely on the 1m+ graphs.
-    //graph["prediction"] = DailyPredictions(graph["my_prediction"], graph["daily_prices"].last()[0]);
-    //this is not quite done yet. I need to make it work on prediction input as well.
-    //that will be a bit more complex.
-
-    //create the rangeHash to be used by the buttons.
-    //note that by adding the my_prediction here, it will fall under the limited array filter.
-    //the daily_predictions and daily_my_predictions are used here because the default setting is a monthly graph.
-  
-    //chart.yAxis[0].setExtremes(rangeHash["1m"]["yMin"], rangeHash["1m"]["yMax"]);
-    //chart.xAxis[0].setExtremes(rangeHash["1m"]["xMin"], rangeHash["1m"]["xMax"]);
-
-    //currentRange = {rangeHash:rangeHash["1m"],buttonType:"1m"};
   });
   
   //window.function has the affect of setting the function as a global function, and its available in the ajax function.

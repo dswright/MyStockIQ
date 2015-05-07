@@ -10,6 +10,8 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+
+
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui
@@ -18,7 +20,6 @@
 //= require moment
 //= require moment-timezone.js
 //= require customdate
-//= require graph2
 //= require bootstrap
 //= require pagination
 //= require image-upload
@@ -26,4 +27,9 @@
 //= require prediction-form-box
 //= require welcome
 //= require skrollr
+//= require graph-mediator
+//= require graph-constructors
+
+//= require_tree ./pickadate
+
 
