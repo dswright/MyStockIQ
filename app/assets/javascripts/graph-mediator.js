@@ -552,7 +552,7 @@ var graphMediator = (function() {
         return components.defaults.data.my_prediction[0];
       },
       prediction: function() {
-        return components.defaults.data.prediction[0];
+        return components.defaults.data.prediction[1];
       }
     };
 
