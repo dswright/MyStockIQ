@@ -2,7 +2,7 @@
 
   <div class="open-prediction-form-box" id="open-tabs">
     <ul class="open-prediction-form-box-tabs">
-      <li><a id="open-prediction-comment-tab" href="#tabs-1"><i class="fa fa-comment"></i>&nbsp;&nbsp;&nbsp;Comment on <%= @stock.ticker_symbol %></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#124;</li>
+      <li><a id="open-prediction-comment-tab" href="#tabs-1"><i class="fa fa-comment"></i>&nbsp;&nbsp;&nbsp;Comment on <%= @prediction.stock.ticker_symbol %></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#124;</li>
       <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a id="open-prediction-close-tab" href="#tabs-2"><i class="fa fa-line-chart"></i>&nbsp;&nbsp;&nbsp;Close My Prediction</a></li>
     </ul>
 
@@ -10,9 +10,9 @@
     <%= form_for(Comment.new, remote:true) do |f| %>
       <div class="open-comment-only-form-div" id="tabs-1">
         <div class="open-comment-only-field">
-          <%= f.text_area :content, placeholder:"Comment on #{@stock.ticker_symbol}", class: "comment-form-textarea", id: "open-comment" %>
+          <%= f.text_area :content, placeholder:"Comment on #{@prediction.stock.ticker_symbol}", class: "comment-form-textarea", id: "open-comment" %>
           <%= hidden_field_tag :stream_string, @comment_stream_string %>
-          <%= hidden_field_tag :ticker_symbol, @stock.ticker_symbol %>
+          <%= hidden_field_tag :ticker_symbol, @prediction.stock.ticker_symbol %>
         </div>
         <div class="button-counter clearfix">
           <%= f.submit "SUBMIT", class: "btn pull-right" %>

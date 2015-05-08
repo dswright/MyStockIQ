@@ -202,13 +202,13 @@ $(document).ready(function () {
 
       $("div[data-button-type]").click(newGraph.buttonClick);
 
-      //window.inputPrediction = function(endTime, endPrice, predictionId) {
-      //  stockChartFunctions.inputPrediction(endTime, endPrice, predictionId); //when a prediction is input, this function fires from the predicitoninput ajax call.
-      //}
+      window.inputPrediction = function(endTime, endPrice, predictionId) {
+        newGraph.inputPrediction(endTime, endPrice, predictionId); //when a prediction is input, this function fires from the predicitoninput ajax call.
+      }
 
-      // window.removePrediction = function() {
-      //   stockChartFunctions.removePrediction();
-      // }
+      window.removePrediction = function() {
+        newGraph.removePrediction();
+      }
     }
   });
 

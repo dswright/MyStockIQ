@@ -131,6 +131,8 @@ class PredictionsController < ApplicationController
         @prediction_end_input_page = "stockspage" #set this variable for the cancel button form on the stockspage.
   			@prediction.save
         
+        @comment_stream_string = "Stock:#{@prediction.stock.id},User:#{@current_user.id}" #create stream string used by the new comment box.
+
         #Create the stream inserts for the prediction.
         @prediction.streams.create!(targetable_type: @user.class.name, targetable_id: @user.id)
         @prediction.streams.create!(targetable_type: stock.class.name, targetable_id: stock.id)

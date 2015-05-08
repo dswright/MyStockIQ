@@ -114,7 +114,6 @@
           minTime = Date(t.gmtString());
         }
 
-        console.log("min:"+minTime);
 
 
         return {
@@ -124,7 +123,6 @@
           min: minTime,
           onSet: function(context) {
             gDayForTimeSelection = context.select;
-            console.log("SET:"+gDayForTimeSelection);
           }
         };
       
@@ -138,19 +136,14 @@
         var inputTime = gDayForTimeSelection;
 
         var adjIT;
-        console.log("iT:"+gDayForTimeSelection);
 
         var minT = new Date((inputTime + 9.5*3600*1000).gmtString());
         var maxT = new Date((inputTime + 16*3600*1000).gmtString());
-
-        console.log("min: "+minT);
 
         var rVar = {
           min: minT,
           max: maxT
         };
-        console.log(rVar);
-
         return rVar;
 
       };

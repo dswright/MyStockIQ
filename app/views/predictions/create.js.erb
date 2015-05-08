@@ -1,16 +1,28 @@
 
-
 window.inputPrediction(<%= j @graph_time.to_s %>, <%= j @prediction.prediction_end_price.to_s %>, <%= j @prediction.id.to_s %>);
 
 
-$('.stockpage-sidebar-prediction').first().html("<%= j render partial: 'shared/prediction_open', locals: {prediction: @prediction} %>");
+$('.prediction-form-box').replaceWith("<%= j render partial: 'shared/prediction_open', locals: {prediction: @prediction} %>");
+
+//handle the tabbers.
+$( "#open-tabs" ).tabs();
+
+$('#open-prediction-close-tab').click(function() {
+  $('#close-comment').focus();
+});
+
+$('#open-prediction-comment-tab').click(function() {
+  $('#open-comment').focus();
+});
 
 
 
 
 $('.stream').prepend("<%= j render partial: 'streams/stream_main', locals: {streams: @streams}  %> ");
 
-var responses = $.parseHTML("<%= j raw @response %>");
-$('#response-box').html(responses).fadeIn("slow");
+
+
+//var responses = $.parseHTML("<%= j raw @response %>");
+//$('#response-box').html(responses).fadeIn("slow");
 
 

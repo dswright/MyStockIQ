@@ -136,12 +136,10 @@ $(document).ready(function () {
       "data": data,
       "chart": predictionChart
     };
-    
+
     var newGraph = new BuildPredictionGraph(defaults);
     newGraph.launch();
     $("div[data-button-type]").click(newGraph.buttonClick);
-
-    
 
     var buttonClick = function() {
       var buttonType = $(this).data("button-type");

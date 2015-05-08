@@ -40,6 +40,68 @@ function BuildStockGraph(defaults, graphName) {
     $(".timeframe-item-selected").switchClass("timeframe-item-selected", "timeframe-item");
     $(this).switchClass("timeframe-item", "timeframe-item-selected");
   }
+
+  this.inputPrediction = function(endTime, endPrice, predictionId) {
+
+    var callback = function(component) {
+      this.data.my_prediction = [{id: predictionId, x:endTime, y:endPrice}];
+    };
+    graphMediator.updateComponent("defaults", callback);
+
+
+    //recreate these prediction lines.
+    graphMediator.createPredictionLine("daily", "myPrediction"); //create this predictions graph line for the stock graph only.
+    graphMediator.createPredictionLine("intraday", "myPrediction"); //create this predictions graph line for the stock graph only.
+
+    graphMediator.removeOverlapping("intraday", "myPrediction");
+    graphMediator.removeOverlapping("daily", "myPrediction");
+
+    var currentFrame = {
+      framesHash: graphMediator.framesHash("stockGraph")
+    };
+    graphMediator.addComponents('currentFrame', currentFrame); //currentframe must be used before setRange is used.
+
+    var bestRange = graphMediator.bestRange("myPrediction");
+    graphMediator.updateComponent("currentFrame", function(component) {
+      this.timeFrame = bestRange;
+    });
+
+    // sets the daily or intraday lines, depending on the timeFrame in the currentFrame. Also sets the hover state.
+    graphMediator.frameDependents("stockGraph");
+
+    // the timeFrame in the currentFrame component must be set before using this. 
+    graphMediator.setRange();
+  };
+
+  this.removePrediction = function() {
+    var callback = function(component) {
+      this.data.my_prediction = [];
+    };
+    graphMediator.updateComponent("defaults", callback);
+
+    //recreate these prediction lines.
+    graphMediator.createPredictionLine("daily", "myPrediction"); //create this predictions graph line for the stock graph only.
+    graphMediator.createPredictionLine("intraday", "myPrediction"); //create this predictions graph line for the stock graph only.
+
+    graphMediator.removeOverlapping("intraday", "myPrediction");
+    graphMediator.removeOverlapping("daily", "myPrediction");
+
+    var currentFrame = {
+      framesHash: graphMediator.framesHash("stockGraph")
+    };
+    graphMediator.addComponents('currentFrame', currentFrame); //currentframe must be used before setRange is used.
+
+    var bestRange = graphMediator.bestRange("myPrediction");
+    graphMediator.updateComponent("currentFrame", function(component) {
+      this.timeFrame = bestRange;
+    });
+
+    // sets the daily or intraday lines, depending on the timeFrame in the currentFrame. Also sets the hover state.
+    graphMediator.frameDependents("stockGraph");
+
+    // the timeFrame in the currentFrame component must be set before using this. 
+    graphMediator.setRange();
+  }
 }
 
 

@@ -1,8 +1,0 @@
-window.removePrediction(); //remove the prediction from the graph.
-
-$('.stock-page-prediction-box').html("<%= j render 'shared/prediction_form' %>"); //replace the prediction with the prediction form.
-
-$('#stream-<%= @prediction_css_id %>').remove(); //remove the stream item from the stream.
-
-var responses = $.parseHTML("<%= j raw @response %>");  //show the response messages.
-$('#response-box').html(responses).fadeIn("slow"); 

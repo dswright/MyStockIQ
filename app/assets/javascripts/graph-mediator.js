@@ -61,7 +61,6 @@ var graphMediator = (function() {
 
   var updateComponent = function(component, callback) {
     callback.call(components[component]);
-    console.log(components);
   };
 
   var defaultProcessor = function() {
@@ -77,12 +76,7 @@ var graphMediator = (function() {
     addComponents('intradayLines', intradayLines); //this creates a component called intradayLines.
   
     createDateLine("dailyLines"); //adds the forward date array to the dailyLines component.
-    createDateLine("intradayLines");  //adds the forward date array to the intradayLines component.
-  
-    console.log(components);
-    
-
-
+    createDateLine("intradayLines");  //adds the forward date array to the intradayLines component.    
   };
 
   //this function is executed to run all functions that are dependent on whether or not the frame is in the 1d,5d vs 1m,3m,6m,1Yr ect.
@@ -118,6 +112,7 @@ var graphMediator = (function() {
       options[graph]["daily"]();
     }
 
+    $(".timeframe-item-selected").switchClass("timeframe-item-selected", "timeframe-item");
     $('*[data-button-type="'+components.currentFrame.timeFrame+'"]').switchClass("timeframe-item", "timeframe-item-selected");
   };
 
@@ -139,7 +134,6 @@ var graphMediator = (function() {
     var frameHash = components.currentFrame.framesHash[button]
     chart.yAxis[0].setExtremes(frameHash.yMin, frameHash.yMax); //set y min and y max values
     chart.xAxis[0].setExtremes(frameHash.xMin, frameHash.xMax); //set x min and x max values
-    console.log(frameHash);
   };
 
   //sets the on-hover respones for each graph line.
@@ -436,7 +430,6 @@ var graphMediator = (function() {
           var comparisonCb = options.extremes[limitType].comparisonCb;
           var newLimit = cb(limArr); //the callback should take array as an argument and return a limit.
           limit = comparisonCb(limit, newLimit); //returns either the old limit or new limit depending on limitype.
-          console.log("Limit:"+limit);
         }
       });
       var pLimit = options.extremes[limitType].bufferMaker(limit); //add an extra 5% to the limit so that the prediction is not on the border.
@@ -526,7 +519,6 @@ var graphMediator = (function() {
     var predictionsArray = [];
 
     for(var i=0; i < predictions.length; i++ ) {
-      console.log(components);
       var timeCompare = options[timeType].cb(predictions[i].x);
       if (predictionsArray.length === 0) { //if there are no predictions in the array, then add the first prediction.
         predictionsArray.push({"id":predictions[i].id, "x":timeCompare, "y":predictions[i].y})
@@ -537,7 +529,6 @@ var graphMediator = (function() {
     }
 
     var componentType = options[timeType].component;
-    console.log(componentType);
     if (predictionsArray.length !== 0) {
       components[componentType][line] = {lineArray:predictionsArray, index:predictionLine.index}; //adds a new line to the specified component.
     }
