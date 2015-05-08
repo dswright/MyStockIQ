@@ -25,11 +25,9 @@ class Graph
 
   def prediction #this is used for the predictiondetails graph.
     prediction = @prediction
-    start_time = prediction.graph_start_time
-    end_time = prediction.graph_end_time
     prediction_graph = [
-      {"id":prediction.id, "x": start_time, "y": prediction.start_price}, 
-      {"id":prediction.id, "x": end_time, "y": prediction.prediction_end_price}
+      {"id":prediction.id, "x": prediction.graph_start_time, "y": prediction.start_price}, 
+      {"id":prediction.id, "x": prediction.graph_end_time, "y": prediction.prediction_end_price}
     ]
     return prediction_graph
   end
@@ -60,7 +58,6 @@ class Graph
     end
     return predictions_array
   end
-
 
   #Limited to 400 5 minute periods, which is 2000 minutes, just over the 975 minutes in 5 6.5 hour days.
 

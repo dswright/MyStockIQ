@@ -87,11 +87,10 @@ class PredictionsController < ApplicationController
 
 		#Create the prediction settings.
 		prediction_start_time = Time.zone.now.graph_time.closest_start_time # this returns a timestamp
-		prediction_end_time = (Time.zone.now.graph_time + 
-													(params[:days].to_i * 24* 3600 *1000) + 
-													(params[:hours].to_i * 3600 * 1000) + 
-													(params[:minutes].to_i * 60 * 1000)).closest_start_time #closest_start_time returns a timestamp date.
-		
+		    
+    prediction_end_str = (params[:end_day] + " " + params[:end_time])
+    prediction_end_time = (DateTime.parse(prediction_end_str).utc.to_i*1000).closest_start_time #closest_start_time takes a graphtime and returns a timestamp date.
+
 		prediction = {stock_id: stock.id, prediction_end_time: prediction_end_time, score: 0, active: true, start_price_verified:false, 
 									start_time: prediction_start_time, graph_start_time: prediction_start_time.graph_time, graph_end_time: prediction_end_time.graph_time}
 

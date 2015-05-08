@@ -1,33 +1,53 @@
 
-	<div class="stockpage-sidebar-prediction">
-	<div class="stockpage-sidebar-prediction-box">
-	  <div class="stockpage-sidebar-prediction-header">
-	    <div class="stockpage-sidebar-prediction-header-txt pull-left">
-	      Predict <%= @prediction.stock.ticker_symbol %>
-	    </div>
-	    <div class="stockpage-sidebar-prediction-points pull-right">
-	      <i class="fa fa-line-chart"></i>
-	    </div>
-	  </div>
-	  <%= form_for(@prediction, remote:true) do |f| %>
-		    <div class="stockpage-sidebar-prediction-form">
-		      <span class="pull-left"><%= @prediction.stock.ticker_symbol %> will be</span>
-		      <%= f.text_field :prediction_end_price, placeholder: "$",:class => "prediction-form-price" %><br>
-		      <span class="pull-left">in</span>
-		      <%= text_field_tag 'days', nil, class: "prediction-form-days", placeholder:"days"  %>
-		      <%= text_field_tag 'hours', nil, class: "prediction-form-hrs", placeholder:"hours" %>
-		      <%= text_field_tag 'minutes', nil, class: "prediction-form-mins", placeholder:"minutes" %>
-			  </div>
-		    <div class="stockpage-sidebar-prediction-comment">
-		      <%= f.text_area :content, placeholder: "Comment on #{@prediction.stock.ticker_symbol}", class: "prediction-form-comment" %>
-		    </div>
-		    <%= f.hidden_field :stock_id %>
-				<%= hidden_field_tag :stream_string, @prediction_stream_string %>
-		    <div class="submit-button-div">
-		    	<%= f.submit "SUBMIT", class: "btn" %>
-		    </div>
-  		</div>
-	  <% end %>
-	</div>
+<!-- PREDICTION FORM BOX -->
+
+  <div class="prediction-form-box" id="tabs">
+
+    <ul class="prediction-form-box-tabs">
+      <li><a id="prediction-tab" href="#tabs-1"><i class="fa fa-line-chart"></i>&nbsp;&nbsp;&nbsp;Predict <%= @stock.ticker_symbol %></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#124;</li>
+      <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a id="comment-only-tab" href="#tabs-2"><i class="fa fa-comment"></i>&nbsp;&nbsp;&nbsp;Comment on <%= @stock.ticker_symbol %></a></li>
+    </ul>
+
+    <%= form_for @prediction, remote:true do |f| %>
+      <div class="prediction-form-div prediction-icon-addon prediction-addon-sm" id="tabs-1">
+        <div class="prediction-field-container clearfix">
+          <div class="prediction-field-col col-sm-4">
+            <%= f.text_field :prediction_end_price, placeholder: "Prediction price",id: "price" %>
+            <!-- <input type='text' id='price' placeholder="Prediction price"/> -->
+            <label for="price" class="glyphicon glyphicon-usd" rel="tooltip"></label>
+          </div>
+
+          <div class="prediction-field-col col-sm-4">
+            <%= text_field_tag 'end_day', nil, id: "datepicker", placeholder:"days"  %>
+            <!-- <input type='text' id='datepicker' placeholder="End date" /> -->
+            <label for="date" class="glyphicon glyphicon-calendar" rel="tooltip"></label>
+          </div>
+        
+          <div class="prediction-field-col col-sm-4">
+            <%= text_field_tag 'end_time', nil, id: "timepicker", placeholder:"End time"  %>
+            <!-- <input type='text' id='timepicker' placeholder="End time" /> -->
+            <label for="time" class="glyphicon fa fa-clock-o" rel="tooltip"></label>
+          </div>
+ 
+        </div>
+
+        <div class="prediction-comment-field clearfix">
+          <%= f.text_area :content, placeholder: "Comment on your prediction" %>
+        </div>
+        <%= f.hidden_field :stock_id %>
+        <%= hidden_field_tag :stream_string, @prediction_stream_string %>
+        <div class="button-counter clearfix">
+          <%= f.submit "Predict!", class: "btn pull-right" %>
+          <!-- <input class="btn pull-right" value="Submit"> -->
+          <div class="pull-right" id="charNum"></div>
+        </div>
+      </div>
+    <% end %>
+
+    <%= render partial: 'shared/comment_form', locals: {stock: @stock} %>
+
+
+  </div>
+
 
 

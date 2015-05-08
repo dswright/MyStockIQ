@@ -55,14 +55,14 @@ Number.prototype.offsetTime = function() {
   return 5*3600*1000 - offset; //This will return either 0 or 3600*1000 millisecond (1 hour) offset, depending on DST.
 }
 
+//this takes the a string of the form "Wed, 06 Feb 2013 21:00:00 GMT" and returns the format "21:00:00"
+Number.prototype.hourString = function() {
+  var d = new Date(this); //converts string to JS Date.
+  return moment(d).utc().format("HH:mm:ss"); //converts the JS Date to the hour format.
+}
+
 //This takes graphtime as the correct intake.
 Number.prototype.validStockTime = function() {
-  
-  //this takes the a string of the form "Wed, 06 Feb 2013 21:00:00 GMT" and returns the format "21:00:00"
-  function hourString(str) {
-    var d = new Date(str); //converts string to JS Date.
-    return moment(d).utc().format("HH:mm:ss"); //converts the JS Date to the hour format.
-  }
 
   //this takes a string of the form "Wed, 06 Feb 2013 21:00:00 GMT" and returns the weekday number, like 6 or 7.
   function weekDay(str) {
@@ -112,7 +112,7 @@ Number.prototype.validStockTime = function() {
 
   
   var holidayFormat = gmtStr.dayString(); //converts to YYYY-MM-DD
-  var hourFormat = hourString(gmtStr); //converts to "HH:mm:ss" type.
+  var hourFormat = offsetTime.hourString(); //converts to "HH:mm:ss" type.
 
 
   if (weekDay(gmtStr) == 6 || weekDay(gmtStr) == 7) { //if the day is on a weekend, its invalid day.
