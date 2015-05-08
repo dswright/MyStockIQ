@@ -6,6 +6,8 @@ Rails.application.configure do
   #enable garbagae collector stats
   GC::Profiler.enable
 
+  config.action_controller.asset_host = 'http://localhost:5000'
+  config.action_mailer.asset_host = config.action_controller.asset_host
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
