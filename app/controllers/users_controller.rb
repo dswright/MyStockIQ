@@ -81,11 +81,11 @@ class UsersController < ApplicationController
       @referral.user_id = @user.id
       @referral.save
 
-      UserMailer.welcome_mailer(@user.id)
+      UserMailer.welcome_mailer(@user.id).deliver_now
 
       #redirect to user profile page
 
-  		render :js => "window.location = '/welcome'"
+  		render :js => "window.location = '/welcome'" # have to use a js redirect here because the form has remote:true
 
   	else
       @disable_nav = true
