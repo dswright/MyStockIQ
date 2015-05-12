@@ -8,7 +8,6 @@ class UserMailer < ActionMailer::Base
   end
 
   def invite_mailer(referral_id)
-  	@user = User.find(user_id)
   	@referral = Referral.find(referral_id)
   	mail(to: @referral.email, subject: 'Early access to StockIQ')
   end
