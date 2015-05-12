@@ -7,13 +7,14 @@ class RelationshipsController < ApplicationController
 
 		if followed_type == "User"
 			@target = User.find_by(id: params[:followed_id])
+			UserMailer.follow_mailer(@user.id).deliver_now
 		elsif followed_type == "Stock"
 			@target = Stock.find_by(id: params[:followed_id])
 		else
 			false
 		end
 		
-    	current_user.follow(@target)
+    current_user.follow(@target)
 
 	end
 
@@ -30,9 +31,7 @@ class RelationshipsController < ApplicationController
 		else
 			false
 		end
-
-
-    	current_user.unfollow(@target)
+    current_user.unfollow(@target)
 
 	end
 end
