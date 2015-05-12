@@ -23,7 +23,7 @@ class SessionsController < ApplicationController
       remember @user #this should update the string in the database and
       # place a cookie on the users computer that remembers them.
 
-      render :js => "window.location = '#{user_profile}'"
+      render :js => "window.location = '#{feed_path}'"
 
     else
       @disable_nav = true
