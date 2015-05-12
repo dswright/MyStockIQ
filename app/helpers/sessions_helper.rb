@@ -48,7 +48,7 @@ module SessionsHelper
 
   def user_logged_in?
     unless logged_in?
-      redirect_to login_url
+      redirect_to root_path
       return true
     end
   end
