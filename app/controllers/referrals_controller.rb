@@ -26,7 +26,8 @@ class ReferralsController < ApplicationController
 		end
 
 		def admin_user
-	      redirect_to(root_url) unless current_user.admin?
-	    end
+			return if user_logged_in?
+      redirect_to(root_url) unless current_user.admin?
+    end
 
 end
