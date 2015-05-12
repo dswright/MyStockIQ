@@ -7,7 +7,7 @@ class RelationshipsController < ApplicationController
 
 		if followed_type == "User"
 			@target = User.find_by(id: params[:followed_id])
-			UserMailer.follow_mailer(@user.id).deliver_now
+			UserMailer.follow_mailer(current_user.id, @target.id).deliver_now
 		elsif followed_type == "Stock"
 			@target = Stock.find_by(id: params[:followed_id])
 		else
