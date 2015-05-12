@@ -25,11 +25,10 @@ class UserMailer < ActionMailer::Base
   	mail(to: @followed.email, subject: "#{@follower.username} followed you on StockIQ")
   end
 
-  # def close_mailer(follower_id, followed_id)
-  # 	@follower = User.find(follower_id)
-  # 	@followed = User.find(followed_id)
-  # 	mail(to: @followed.email, subject: '#{@follower.username} followed you on StockIQ')
-  # end
+  def weekly_mailer(user_id)
+    @user = User.find(user_id)
+  	mail(to: @user.email, subject: 'Your Week on StockIQ')
+  end
 
 end
 
