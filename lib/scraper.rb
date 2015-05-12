@@ -85,7 +85,7 @@ class ScraperPublic
   end
 
   def self.quandl_industry(stock_array) #pulls the stock industry, and the exchange!
-    url = "https://s3.amazonaws.com/quandl-static-content/Ticker+CSV's/Stock+Exchanges/stockinfo.csv"
+    url = "http://s3.amazonaws.com/quandl-static-content/Ticker+CSV's/Stock+Exchanges/stockinfo.csv"
     encoded_url = URI.encode(url)
     if industry_hash_array = Scraper.process_csv_file(encoded_url, QuandlIndustry.new, nil, false)
       Scraper.update_db(industry_hash_array, QuandlIndustry.new, 2)
