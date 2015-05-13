@@ -3,7 +3,7 @@ class UserMailer < ActionMailer::Base
   default from: "hello@mystockiq.com"
 
   def waitlist_mailer(user_id)
-  	@user = User.find(user_id)
+  	@user = Waitinguser.find(user_id)
   	mail(to: @user.email, subject: 'StockIQ beta group')
   end
 
@@ -23,9 +23,14 @@ class UserMailer < ActionMailer::Base
   	mail(to: @followed.email, subject: "#{@follower.username} followed you on StockIQ")
   end
 
-  def weekly_mailer(user_id)
+  def weekly_mailer(user_id) #not yet wired up.
     @user = User.find(user_id)
   	mail(to: @user.email, subject: 'Your Week on StockIQ')
+  end
+
+  def predictionend_mailer(predictionend_id)
+    @predictionend = Predictionend.find(predictionend_id)
+    mail(to: @predictionend.prediction.user.email, subject: "#{@predictionend.prediction.stock.ticker_symbol} Prediction Complete!")
   end
 
 end
