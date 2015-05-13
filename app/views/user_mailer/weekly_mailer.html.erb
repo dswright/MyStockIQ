@@ -63,20 +63,43 @@ table.google-plus:hover td { background: #CC0000 !important; }
 
   	<td style="word-break: break-word; -webkit-hyphens: auto; -moz-hyphens: auto; hyphens: auto; border-collapse: collapse !important; vertical-align: top; text-align: left; color: #222222; font-family: 'Helvetica', 'Arial', sans-serif; font-weight: normal; line-height: 19px; font-size: 14px; margin: 0; padding: 0;" align="left" valign="top">&#13;
       <p style="text-align: center; line-height: 30px; color: #919191; font-size: 21px; font-family: Helvetica; font-weight: 300; margin: 30px 0 25px; padding: 0 10px;" align="center">Your Week On StockIQ</p>&#13;
-      <hr style="width: 80px; margin-bottom: 30px; color: #d9d9d9; height: 1px; background-color: #d9d9d9; border: none;" /><div style="padding-left: 10px; padding-right: 10px;">&#13;
-&#13;
-  		  <h4 style="font-size: 21px; color: #919191; font-family: Helvetica; font-weight: 300; line-height: 50px; text-align: left; word-break: normal; margin: 0; padding: 0;" align="left">Open Predictions</h4>&#13;
-&#13;
-        <p style="display: inline; line-height: 27px; color: #919191; font-size: 15px; font-family: Helvetica; font-weight: 300; text-align: left; margin: 10px 0; padding: 0;" align="left">Your $AAPL Prediction ending April 22 is at  </p><span style="display: inline-block; background-color: #7cb5ec; color: #fff; font-family: Helvetica; font-weight: 300; border-radius: 3px; padding: 3px 10px 3px 7px;">+19 points</span><br /><a style="display: block; margin-top: 8px; color: #7cb5ec; font-family: Helvetica; font-weight: 300; cursor: pointer; text-decoration: none;">View →</a>&#13;
-&#13;
-        <h4 style="font-size: 21px; color: #919191; font-family: Helvetica; font-weight: 300; line-height: 50px; text-align: left; word-break: normal; margin: 30px 0 0; padding: 0;" align="left">Closed</h4>&#13;
-&#13;
-        <p style="display: inline; line-height: 27px; color: #919191; font-size: 15px; font-family: Helvetica; font-weight: 300; text-align: left; margin: 10px 0; padding: 0;" align="left">Your $AAPL Prediction closed at  </p><span style="display: inline-block; background-color: #7cb5ec; color: #fff; font-family: Helvetica; font-weight: 300; border-radius: 3px; padding: 3px 10px 3px 7px;">+19 points</span>&#13;
-&#13;
-        <a style="display: block; margin-top: 8px; color: #7cb5ec; font-family: Helvetica; font-weight: 300; cursor: pointer; text-decoration: none;">Make a New Prediction →</a>&#13;
-&#13;
-      </div>&#13;
-&#13;
+      <hr style="width: 80px; margin-bottom: 30px; color: #d9d9d9; height: 1px; background-color: #d9d9d9; border: none;" /><div style="padding-left: 10px; padding-right: 10px;">&#13;&#13;
+  		  <% unless @live_predictions.empty? %>
+          <h4 style="font-size: 21px; color: #919191; font-family: Helvetica; font-weight: 300; line-height: 50px; text-align: left; word-break: normal; margin: 0; padding: 0;" align="left">
+            Open Predictions
+          </h4>&#13;&#13;
+
+          <% @live_predictions.each do |prediction| %>
+            <p style="display: inline; line-height: 27px; color: #919191; font-size: 15px; font-family: Helvetica; font-weight: 300; text-align: left; margin: 10px 0; padding: 0;" align="left">
+              Your $<%= prediction.stock.ticker_symbol %> Prediction ending <%= prediction.prediction_end_time %> is at
+            </p>
+            <span style="display: inline-block; background-color: #7cb5ec; color: #fff; font-family: Helvetica; font-weight: 300; border-radius: 3px; padding: 3px 10px 3px 7px;">
+              <%= prediction.score %> points
+            </span>
+            <br />
+            <a href="http://mystockiq.com/predictions/<%= prediction.id %>/" style="display: block; margin-top: 8px; color: #7cb5ec; font-family: Helvetica; font-weight: 300; cursor: pointer; text-decoration: none;">
+              View →
+            </a>&#13;&#13;
+          <% end %>
+        <% end %>
+
+        <% unless @ended_predictions.empty? %>
+          <h4 style="font-size: 21px; color: #919191; font-family: Helvetica; font-weight: 300; line-height: 50px; text-align: left; word-break: normal; margin: 30px 0 0; padding: 0;" align="left">
+            Closed Predictions
+          </h4>&#13;&#13;
+          <% @ended_predictions.each do |predictionend| %>
+            <p style="display: inline; line-height: 27px; color: #919191; font-size: 15px; font-family: Helvetica; font-weight: 300; text-align: left; margin: 10px 0; padding: 0;" align="left">
+              Your $<%= predictionend.prediction.stock.ticker_symbol %> Prediction closed at 
+            </p>
+            <span style="display: inline-block; background-color: #7cb5ec; color: #fff; font-family: Helvetica; font-weight: 300; border-radius: 3px; padding: 3px 10px 3px 7px;">
+              <%= predictionend.prediction.score %> points
+            </span>&#13;&#13;
+            <a href = "http://mystockiq.com/predictions/<%= predictionend.prediction.id %>/" style="display: block; margin-top: 8px; color: #7cb5ec; font-family: Helvetica; font-weight: 300; cursor: pointer; text-decoration: none;">
+              Make a new <%= predictionend.prediction.stock.ticker_symbol %> Prediction →
+            </a>&#13;&#13;
+          <% end %>
+        <% end %>
+      </div>&#13;&#13;
 		<hr style="width: 94%; margin-bottom: 15px; margin-top: 60px; color: #d9d9d9; height: 1px; background-color: #d9d9d9; border: none;" /><p style="text-align: center; color: #919191; font-family: Helvetica; font-weight: 300; font-size: 12px; line-height: 21px; margin: 20px 0 10px; padding: 0 10px;" align="center">Sent by StockIQ · 225 Pierce Street, San Francisco, CA 94102<br /><a href="#" style="color: #919191; text-decoration: none;"><u>Click here</u></a> to unsubscribe · Privacy policy</p>&#13;
 &#13;
     </td>&#13;

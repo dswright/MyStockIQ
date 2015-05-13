@@ -25,7 +25,11 @@ class UserMailer < ActionMailer::Base
 
   def weekly_mailer(user_id) #not yet wired up.
     @user = User.find(user_id)
-  	mail(to: @user.email, subject: 'Your Week on StockIQ')
+    @ended_predictions = @user.predictionends.where("predictionends.created_at > ?", Time.zone.now-3600*24*7)
+    @live_predictions = @user.predictions.where(active:true)
+    unless @ended_predictions.empty? && @live_predictions.empty?
+  	  mail(to: @user.email, subject: 'Your Week on StockIQ')
+    end
   end
 
   def predictionend_mailer(predictionend_id)

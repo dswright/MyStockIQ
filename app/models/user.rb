@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
   #sets an association that the User will have many comments and predictions associated to it
   has_many :comments
   has_many :predictions
+  has_many :predictionends, through: :predictions
   has_many :stocks, through: :predictions
   has_many :likes
   has_many :replies
@@ -15,6 +16,8 @@ class User < ActiveRecord::Base
   has_many :active_relationships, class_name: "Relationship",
                                   foreign_key: "follower_id",
                                   dependent: :destroy
+
+  scope :predictionends, lambda {|user| where(user_id: user.id)}
 
   #This sets up the relationship such that current_user.followings returns an array of followed objects
   has_many :followings, through: :active_relationships, source: :followed

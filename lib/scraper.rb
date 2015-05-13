@@ -67,7 +67,7 @@ class ScraperPublic
 
   def self.quandl_allstocks(page)
     stock_array = []
-    url = "http://www.quandl.com/api/v2/datasets.csv?source_code=EOD&per_page=300&page=#{page}&auth_token=sVaP2d6ACjxmP-jM_6V-"
+    url = "https://www.quandl.com/api/v2/datasets.csv?source_code=EOD&per_page=300&page=#{page}&auth_token=sVaP2d6ACjxmP-jM_6V-"
     encoded_url = URI.encode(url)
     if stock_hash_array = Scraper.process_csv_file(encoded_url, QuandlAllstocks.new, nil, false)
       unless stock_hash_array.empty?
