@@ -131,9 +131,8 @@ $(document).ready(function() {
 
 
 
-
-
-
-
+$(function() {
+  $('.nav-item-div a[href^="/' + location.pathname.split("/")[1] + '"]').addClass('nav-active');
+});
 
 

@@ -22,7 +22,7 @@
       </a>
     </div>
     <div class="nav-items">
-      <div class="nav-items-icons pull-right">
+      <div class="nav-item-div nav-items-icons pull-right">
         <%= link_to "/settings/", class: "nav-settings pull-right" do %>
           <i class="fa fa-cog"></i>
         <% end %>
@@ -38,16 +38,16 @@
         </a>
         -->
       </div>
-      <div class="nav-items-logout pull-right">
+      <div class="nav-item-div nav-items-logout pull-right">
         <%= link_to "Logout", logout_path %>
       </div>
-      <div class="nav-items-user pull-right">
+      <div class="nav-item-div nav-items-user pull-right">
         <%= link_to "/users/#{current_user.username}/" do %>
           <%= image_tag current_user.image %>
           <p><%= current_user.username %></p>
         <% end %>
       </div>
-      <div class="nav-items-feed pull-right">
+      <div class="nav-item-div nav-items-feed pull-right">
         <%= link_to "Feed", feed_path, id: "feed" %>
       </div>    
 

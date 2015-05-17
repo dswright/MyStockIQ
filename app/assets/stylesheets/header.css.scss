@@ -35,6 +35,11 @@
   position: relative;
 }
 
+.nav-active {
+  color: #7cb5ec;
+  border-bottom: 3px solid #7cb5ec;
+}
+
 .nav-mobile-search-anchor {
   position: absolute;
   display: block;
@@ -317,7 +322,7 @@
 
 .nav-items-feed a {
   display: block;
-  height: 59px;
+  height: 60px;
   font-size: 15px;
   color: #919191;
   text-decoration: none;
@@ -341,7 +346,7 @@
 
 .nav-items-logout a {
   display: block;
-  height: 59px;
+  height: 60px;
   font-size: 15px;
   color: #919191;
   text-decoration: none;
@@ -375,7 +380,7 @@
   display: block;
   font-size: 15px;
   color: #919191;
-  height: 59px;
+  height: 60px;
   width: 90px;
   margin-right: 0px;
   padding-left: 0px;
@@ -408,7 +413,7 @@
 .nav-items-icons a {
   display: block;
   cursor: pointer;
-  height: 59px;
+  height: 60px;
   font-size: 15px;
   color: #919191;
   padding-top: 23px;
