@@ -16,7 +16,7 @@ namespace :scraper do
 
   task :google_daily_recent => :environment do
     dups_allowed = false
-    start_date = 5.days.ago.in_time_zone.strftime("%m-%d-%Y")
+    start_date = 20.days.ago.in_time_zone.strftime("%m-%d-%Y")
     stocks = Stock.where(active:true) 
     stocks.each do |stock|
       GoogledailyWorker.perform_async(stock.ticker_symbol, start_date, dups_allowed)

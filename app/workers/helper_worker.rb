@@ -84,31 +84,43 @@ class HelperWorker
   # end
 
 
-  def perform(ticker_symbol) #update the graph_time in the daily table.
+  # def perform(ticker_symbol) #update the graph_time in the daily table.
 
 
-    tz = ActiveSupport::TimeZone.new('America/New_York')
+  #   tz = ActiveSupport::TimeZone.new('America/New_York')
 
-    stockprices = Intradayprice.where(ticker_symbol:ticker_symbol)
+  #   stockprices = Intradayprice.where(ticker_symbol:ticker_symbol)
 
+  #   unless stockprices.empty?
+  #     case_lines = []
+  #     stockprices.each do |stockprice|
+        
+  #       old_date = stockprice.date
+  #       graph_time = old_date.graph_time
+        
+  #       case_lines << "WHEN date = '#{stockprice.date}' THEN #{graph_time}"
+  #     end
+
+  #     sql = "update intradayprices
+  #             SET graph_time = CASE
+  #               #{case_lines.join("\n")}
+  #             END
+  #           WHERE ticker_symbol = '#{ticker_symbol}';" #this is the sql shell that runs. Its contents are based on its 2 arrays.
+  #     ActiveRecord::Base.connection.execute(sql) #this executes the raw sql.
+  #   end
+  # end
+
+  def perform(ticker_symbol) #delete days including and after may 1st so they can be pulled correctly.
+    stockprices = Stockprice.where(ticker_symbol:ticker_symbol).where("date >= ?", "2015-05-01 00:00:00 UTC")
     unless stockprices.empty?
-      case_lines = []
       stockprices.each do |stockprice|
-        
-        old_date = stockprice.date
-        graph_time = old_date.graph_time
-        
-        case_lines << "WHEN date = '#{stockprice.date}' THEN #{graph_time}"
+        stockprice.delete
       end
-
-      sql = "update intradayprices
-              SET graph_time = CASE
-                #{case_lines.join("\n")}
-              END
-            WHERE ticker_symbol = '#{ticker_symbol}';" #this is the sql shell that runs. Its contents are based on its 2 arrays.
-      ActiveRecord::Base.connection.execute(sql) #this executes the raw sql.
     end
   end
+  #     case_lines = []
+  #     stockprices.each do |stockprice|
+
 end
 
 
