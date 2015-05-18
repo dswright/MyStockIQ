@@ -135,3 +135,8 @@ Number.prototype.validStockTime = function() {
 
   return true;
 }
+
+Number.prototype.closestStartTime = function() {
+  var roundDay = new Date().toJSON().slice(0,10); //gets todays date and rounds to just the day.
+  var gT = roundDay.graphTime() + 10*1000*3600;
+}

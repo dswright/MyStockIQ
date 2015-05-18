@@ -285,9 +285,10 @@ class Scraper
       daily_change = ((last_intraday_price["close_price"]/daily_price["close_price"])*100).round(2) - 100 #since we make a new record, use the daily price to see yesterday's close price.
       Stockprice.create(ticker_symbol:ticker_symbol, date:last_intraday_price["date"], open_price: last_intraday_price["open_price"],
       close_price: last_intraday_price["close_price"], volume: last_intraday_price["volume"], split:1, daily_percent_change: daily_change, graph_time: last_intraday_price["graph_time"])
+      puts "The daily price was input! #{last_intraday_price}"
     elsif daily_price.graph_time < last_intraday_price["graph_time"] #if the new record is more recent than the previous, then update the current daily record.
       daily_change = ((last_intraday_price["close_price"]/yesterday_price)*100).round(2)-100
-      daily_price.update(date: last_intraday_price["date"], graph_time: last_intraday_price["graph_time"], daily_percent_change: daily_change)
+      daily_price.update(date: last_intraday_price["date"], close_price:last_intraday_price["close_price"], graph_time: last_intraday_price["graph_time"], daily_percent_change: daily_change)
     end
   end
 
