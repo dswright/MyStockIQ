@@ -11,10 +11,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150502061202) do
+ActiveRecord::Schema.define(version: 20150517000346) do
 
   # These are extensions that must be enabled in order to support this database
-  enable_extension "adminpack"
   enable_extension "plpgsql"
 
   create_table "comments", force: true do |t|
@@ -118,8 +117,12 @@ ActiveRecord::Schema.define(version: 20150502061202) do
     t.datetime "updated_at",    null: false
     t.integer  "user_id"
     t.string   "email"
+    t.integer  "inviter_id"
+    t.integer  "invited_id"
   end
 
+  add_index "referrals", ["invited_id"], name: "index_referrals_on_invited_id", using: :btree
+  add_index "referrals", ["inviter_id"], name: "index_referrals_on_inviter_id", using: :btree
   add_index "referrals", ["user_id"], name: "index_referrals_on_user_id", using: :btree
 
   create_table "relationships", force: true do |t|

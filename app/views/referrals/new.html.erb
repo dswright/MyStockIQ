@@ -1,4 +1,10 @@
 <h1>Referral</h1>
 
-<%= render partial: "/referrals/referral_form" %>
+<div class="referral_form">
+	<%= form_for(@referral, remote: true) do |f| %>]
+		<%= f.label :email  %>
+	  	<%= f.email_field :email %><br />
+	  	<%= f.submit "Send", class: "btn btn-primary", style: "float:left; width:50px;" %>
+	<% end %>
+</div>
 

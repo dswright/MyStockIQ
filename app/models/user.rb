@@ -10,12 +10,10 @@ class User < ActiveRecord::Base
   has_many :likes
   has_many :replies
   has_many :streams, as: :targetable, dependent: :destroy
-  has_one :referral
+  has_many :referrals, foreign_key: "inviter_id", dependent: :destroy
 
   #Foreign key is the default index that would be used. 
-  has_many :active_relationships, class_name: "Relationship",
-                                  foreign_key: "follower_id",
-                                  dependent: :destroy
+  has_many :active_relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
 
   scope :predictionends, lambda {|user| where(user_id: user.id)}
 
@@ -154,6 +152,5 @@ class User < ActiveRecord::Base
 
     return score
   end
-
 
 end

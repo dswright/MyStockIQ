@@ -12,6 +12,12 @@ class UserMailer < ActionMailer::Base
   	mail(to: @referral.email, subject: 'Early access to StockIQ')
   end
 
+  def invite_friends_mailer(user_id)
+    @user = User.find(user_id)
+    @referral = @user.referrals.first
+    mail(to: @user.email, subject: 'What do you think?')
+  end
+
   def welcome_mailer(user_id)
   	@user = User.find(user_id)
   	mail(to: @user.email, subject: 'Welcome to StockIQ')

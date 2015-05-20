@@ -65,26 +65,28 @@ class UsersController < ApplicationController
 
     referral_hash = referral_params
     
-    #Look to see if referral code matches the one that exists in the database
-    @referral = Referral.find_by(referral_code: referral_hash[:referral_code])
-
-    #Make @referral object invalid (nil) if user_id already exists for that referral code
-    if @referral != nil
-      @referral = nil if @referral.user_id != nil
-    end
+    #Look to see if referral code matches the one that exists in the database, and whether there is an empty slot
+    referral_spots = Referral.where(referral_code: referral_hash[:referral_code], invited_id: nil)
 
     #this saves the new user to the database.
-  	if @user.valid? && @referral != nil 
+  	if @user.valid? && referral_spots.exists?
       @user.save
       log_in @user
 
-      @referral.user_id = @user.id
+      #save user referral
+      @referral = referral_spots.first
+      @referral.invited_id = @user.id
       @referral.save
 
+      #function 'generate_code' returns a random 6 digit code
+      referral_code = generate_code
+      
+      #generate 3 referrals for new user to share with friends
+      3.times { @user.referrals.create!(referral_code: referral_code, email: @user.email) }
+
       UserMailer.welcome_mailer(@user.id).deliver_now
-
+      UserMailer.invite_friends_mailer(@user.id).deliver_later
       #redirect to user profile page
-
   		render :js => "window.location = '/welcome'" # have to use a js redirect here because the form has remote:true
 
   	else
