@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   include StreamsHelper
   include PredictionsHelper
   include FeedsHelper
-
+  include ReferralsHelper
   
   
 end

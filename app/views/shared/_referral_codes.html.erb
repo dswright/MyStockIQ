@@ -1,0 +1,10 @@
+<% if referral != nil && (Time.now - @user.created_at) > 10*60 %>
+  <div id="success">
+    <div class="alert alert-success">
+      <span class="close" data-dismiss="alert alert-success">×</span>
+      <span>What do you think? </br></br>
+      	If you like it, we need you to help us grow this community together! </br></br>
+      	An email was just sent to you with your invite code: <%= referral.referral_code %> Please forward to your friends</span>
+    </div>
+  </div>
+<% end %>
