@@ -7,20 +7,22 @@
 
 
 <section class="nav-singed-in">
-  <div class="nav-constrainer">
+  <div class="nav-constrainer nav-constrainer-relative">
     <div class="nav-logo pull-left">
-      StockIQ
+      <%= image_tag 'StockIQ-logo.png' %>
     </div>
-      <a class="nav-mobile-search-anchor pull-left" id="drop-search-expand">
+    <center>
+      <a class="nav-mobile-search-anchor" id="drop-search-expand">
         <i class="fa fa-search"></i>
       </a>
+    </center>
     <div class="nav-mobile-button pull-right">
       <a class="nav-mobile-button-anchor" id="drop-nav-expand">
         <i class="fa fa-chevron-down"></i>
       </a>
     </div>
     <div class="nav-items">
-      <div class="nav-items-icons pull-right">
+      <div class="nav-item-div nav-items-icons pull-right">
         <%= link_to "/settings/", class: "nav-settings pull-right" do %>
           <i class="fa fa-cog"></i>
         <% end %>
@@ -36,16 +38,16 @@
         </a>
         -->
       </div>
-      <div class="nav-items-logout pull-right">
+      <div class="nav-item-div nav-items-logout pull-right">
         <%= link_to "Logout", logout_path %>
       </div>
-      <div class="nav-items-user pull-right">
+      <div class="nav-item-div nav-items-user pull-right">
         <%= link_to "/users/#{current_user.username}/" do %>
           <%= image_tag current_user.image %>
           <p><%= current_user.username %></p>
         <% end %>
       </div>
-      <div class="nav-items-feed pull-right">
+      <div class="nav-item-div nav-items-feed pull-right">
         <%= link_to "Feed", feed_path, id: "feed" %>
       </div>    
 

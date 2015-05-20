@@ -109,7 +109,7 @@ class Integer
   def closest_start_time
     #increase the time by 1 minute, since these formulas round down.
     int_time = self + (60*1000)
-    rounded_graph_time = int_time.utc_time.strftime("%Y-%m-%d %H:%M:00").graph_time
+    rounded_graph_time = int_time.utc_time.strftime("%Y-%m-%d %H:%M:00").graph_time #round to start of day graph time.
 
     #first check if the current time is valid
     #if this returns false, its in the time frame.

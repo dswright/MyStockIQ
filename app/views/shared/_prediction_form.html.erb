@@ -18,13 +18,13 @@
           </div>
 
           <div class="prediction-field-col col-sm-4">
-            <%= text_field_tag 'end_day', nil, id: "datepicker", placeholder:"days"  %>
+            <%= text_field_tag 'end_day', nil, id: "datepicker", placeholder:"Date"  %>
             <!-- <input type='text' id='datepicker' placeholder="End date" /> -->
             <label for="date" class="glyphicon glyphicon-calendar" rel="tooltip"></label>
           </div>
         
           <div class="prediction-field-col col-sm-4">
-            <%= text_field_tag 'end_time', nil, id: "timepicker", placeholder:"End time"  %>
+            <%= text_field_tag 'end_time', "", id: "timepicker", placeholder:"End time"  %>
             <!-- <input type='text' id='timepicker' placeholder="End time" /> -->
             <label for="time" class="glyphicon fa fa-clock-o" rel="tooltip"></label>
           </div>
@@ -56,8 +56,6 @@
         </div>
       </div>
     <% end %>
-
-
   </div>
 
 
