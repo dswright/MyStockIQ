@@ -81,7 +81,7 @@ require 'scraper'
         #used by the view to generate the html buttons
 
         gon.ticker_symbol = @stock.ticker_symbol
-        @price_point = {price:@stock.daily_stock_price,date:@stock.date}
+        @price_point = Stockprice.where(ticker_symbol:@stock.ticker_symbol).reorder("date desc").limit(1)[0]
       }
       format.json { #this is the json response to the search bar queries.
 
