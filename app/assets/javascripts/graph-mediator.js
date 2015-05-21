@@ -85,22 +85,26 @@ var graphMediator = (function() {
     var options = {
       stockGraph: {
         daily: function() {
-          setSeries("dailyLines"),
-          setHover("dailyPrices")
+          setSeries("dailyLines");
+          setHover("dailyPrices");
+          setHover("dailyPredictions"); //not working yet.
+          setHover("dailyMyPrediction"); //not working yet.
         },
         intraday: function() {
-          setSeries("intradayLines"),
-          setHover("intradayPrices")
+          setSeries("intradayLines");
+          setHover("intradayPrices");
+          setHover("intradayPredictions"); //not working yet.
+          setHover("intradayMyPrediction"); //not working yet.
         }
       },
       predictionGraph: {
         daily: function() {
-          setSeries("dailyLines"),
-          setHover("dailyPrices")
+          setSeries("dailyLines");
+          setHover("dailyPrices");
         },
         intraday: function() {
-          setSeries("intradayLines"),
-          setHover("intradayPrices")
+          setSeries("intradayLines");
+          setHover("intradayPrices");
         }
       }
     };
@@ -138,15 +142,31 @@ var graphMediator = (function() {
 
   //sets the on-hover respones for each graph line.
   var setHover = function(line) {
-    var options = {};
-    options["dailyPrices"] = {
-      ajaxUrl:"/stockprices/hover_daily/",
-      seriesIndex:0
-    };
-
-    options["intradayPrices"] = {
-      ajaxUrl:"/stockprices/hover_intraday/",
-      seriesIndex:0
+    var options = {
+      dailyPrices: {
+        ajaxUrl:"/stockprices/hover_daily/",
+        seriesIndex:0
+      },
+      intradayPrices: {
+        ajaxUrl:"/stockprices/hover_intraday/",
+        seriesIndex:0
+      },
+      dailyPredictions: {
+        ajaxUrl: "/predictions/hover_daily/",
+        seriesIndex:2
+      },
+      intradayPredictions: {
+        ajaxUrl: "predictions/hover_intraday/",
+        seriesIndex:2
+      },
+      dailyMyPrediction: {
+        ajaxUrl: "/predictions/hover_daily/",
+        seriesIndex:3
+      },
+      intradayMyPrediction: {
+        ajaxUrl: "/predictions/hover_intraday/",
+        seriesIndex:3
+      }
     };
 
     var ajaxUrl = options[line].ajaxUrl;

@@ -132,6 +132,7 @@ $(document).ready(function () {
       }
     },
     tooltip: {
+      enabled: false,
       crosshairs: null,
       shared: false
     },
@@ -168,11 +169,11 @@ $(document).ready(function () {
     },
     xAxis: {
       minRange: 3600 * 1000,
-      //labels: {
-      //  enabled: false
-      //},
-      //minorTickLength: 0,
-      //tickLength: 0,
+      labels: {
+        enabled: false
+      },
+      minorTickLength: 0,
+      tickLength: 0,
       lineColor: 'rgba(255, 255, 255, 0.39)',
       lineWidth: 1,
     },
