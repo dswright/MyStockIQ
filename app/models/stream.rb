@@ -79,14 +79,18 @@ class Stream < ActiveRecord::Base
       unless replies.empty?
         replies.each do |reply|
 
-          #Update reply's popularity score
-          reply.popularity.update_score
+        #Update reply's popularity score
+        reply.popularity.update_score
 
-          #Add reply's replies to the array of replies such that its popularity score gets updated later on in the loop
-          reply.replies.each {|reply| replies << reply}
+        #Add reply's replies to the array of replies such that its popularity score gets updated later on in the loop
+        #reply.replies.each {|reply| replies << reply}
 
-        end
-    end
+      end
+
+      return true
+  end
+
+
   end
 
 
