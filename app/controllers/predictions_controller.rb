@@ -81,6 +81,8 @@ class PredictionsController < ApplicationController
 
 
 	def create
+
+    @messages = {}
 		#Obtain user session information from Session Helper function 'current_user'.
 		@user = current_user
 		stock = Stock.find(prediction_params[:stock_id])
@@ -109,20 +111,20 @@ class PredictionsController < ApplicationController
 
 		invalid_start = false
 		if @prediction.invalid?
-			@prediction.errors.full_messages.each do |message|
-        response_msgs << message
-      end
-      response_msgs << "invalid prediction"
+      #adds error message
+      @prediction.invalid_start
 			invalid_start = true
 		end
 
 		if @prediction.active_prediction_exists?
-			response_msgs << "You already have an active prediction on #{stock.ticker_symbol}"
+      #adds error message
+      @prediction.already_exists
 			invalid_start = true
 		end
 
 		if @prediction.prediction_end_time <= @prediction.start_time
-			response_msgs << "Your prediction starts and ends at the same time. Please increase your prediction end time."
+      #adds error message
+			@prediction.invalid_end_time
 			invalid_start = true
 		end
 
@@ -141,11 +143,10 @@ class PredictionsController < ApplicationController
 
         @prediction.build_popularity(score:0).save #build the popularity score item for predictions
   			@streams = [Stream.where(streamable_type: 'Prediction', streamable_id: @prediction.id).first]
-  			response_msgs << "Prediction input!"
+  			
+        @messages[:success] = "Prediction input!"
   		end
     end
-
-		@response = response_maker(response_msgs)
 
 		respond_to do |f|
       f.js { 

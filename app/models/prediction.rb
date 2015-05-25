@@ -20,6 +20,18 @@ class Prediction < ActiveRecord::Base
 
   default_scope -> { order(created_at: :desc) }
 
+  def invalid_start
+    errors[:base] << "Invalid start to prediction"
+  end
+
+  def invalid_end_time
+    errors[:base] << "Your prediction starts and ends at the same time. Please increase your prediction end time."
+  end
+
+  def already_exists(stock)
+    errors[:base] << "You already have an active prediction on #{stock.ticker_symbol}"
+  end
+
   def days_remaining
     days_remaining = (self.prediction_end_time - Time.now)/(60*60*24).round(0)
     
@@ -108,7 +120,6 @@ class Prediction < ActiveRecord::Base
       score = -1*actual_percentage.abs.round(2)
     end
   end
-
 
   def percent_change(new_score, base_score)
     ((new_score - base_score)/base_score*100)

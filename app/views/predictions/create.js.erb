@@ -1,4 +1,5 @@
-
+$('.stockpage-body').prepend("<%= j render partial: 'shared/error_messages', locals: {object: @prediction} %>");
+$('.stockpage-body').prepend("<%= j render partial: 'shared/success_messages', locals: {object: @messages} %>");
 window.inputPrediction(<%= j @graph_time.to_s %>, <%= j @prediction.prediction_end_price.to_s %>, <%= j @prediction.id.to_s %>);
 
 
