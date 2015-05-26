@@ -64,9 +64,16 @@ class UsersController < ApplicationController
   	@user = User.new(user_params)
 
     referral_hash = referral_params
-    
+    referrer = Referral.find_by(referral_code: referral_hash[:referral_code]).inviter
+
+    #create new referral code spot in database if referral code is from admin (to provide unlimited invites from admin)
+    unless referrer == nil
+      referrer.referrals.create!(referral_code: referral_hash[:referral_code], email: "noemail@noemail.com") if referrer.admin
+    end
+
     #Look to see if referral code matches the one that exists in the database, and whether there is an empty slot
     referral_spots = Referral.where(referral_code: referral_hash[:referral_code], invited_id: nil)
+
 
     #this saves the new user to the database.
   	if @user.valid? && referral_spots.exists?
@@ -84,8 +91,10 @@ class UsersController < ApplicationController
       #generate 3 referrals for new user to share with friends
       3.times { @user.referrals.create!(referral_code: referral_code, email: @user.email) }
 
-      UserMailer.welcome_mailer(@user.id).deliver_now
-      UserMailer.invite_friends_mailer(@user.id).deliver_later
+      WelcomemailerWorker.new.perform(@user.id)
+      InvitefriendsmailerWorker.new.perform(@user.id)
+      #UserMailer.welcome_mailer(@user.id).deliver_now
+      #UserMailer.invite_friends_mailer(@user.id).deliver_later
       #redirect to user profile page
   		render :js => "window.location = '/welcome'" # have to use a js redirect here because the form has remote:true
 
@@ -93,7 +102,7 @@ class UsersController < ApplicationController
       @disable_nav = true
 
       #Adds invalid referral code error message to user object if referral code is invalid
-      @user.invalid_referral if @referral == nil
+      @user.invalid_referral if referral_spots.exists? == false
       respond_to do |format|
         format.js{}
       end

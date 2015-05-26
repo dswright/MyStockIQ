@@ -20,6 +20,7 @@ class UserMailer < ActionMailer::Base
 
   def welcome_mailer(user_id)
   	@user = User.find(user_id)
+    @referral = @user.referrals.first
   	mail(to: @user.email, subject: 'Welcome to StockIQ')
   end
 

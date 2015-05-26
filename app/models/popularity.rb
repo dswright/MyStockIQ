@@ -14,17 +14,21 @@ class Popularity < ActiveRecord::Base
 
 	  	net_likes = (self.popularable.likes_count - self.popularable.dislikes_count)
 
-	  	#obtain array of replies to comments
-		replies = self.popularable.replies
+	  	###### Add Popularity Score of Replies ######
 
-		unless replies.empty?
-			replies.each do |reply|
+	  	unless self.popularable.class.name == "Reply"
+	  		#obtain array of replies to comments
+			replies = self.popularable.replies
 
-				#Find all additional replies attached to 'reply', and add them to 'replies' array
-				reply.replies.each {|reply| replies << reply}
+			unless replies.empty?
+				replies.each do |reply|
 
-				net_likes += (reply.likes_count - reply.dislikes_count)
-			end
+					#Find all additional replies attached to 'reply', and add them to 'replies' array
+					#reply.replies.each {|reply| replies << reply}
+
+					net_likes += (reply.likes_count - reply.dislikes_count)
+				end
+		  	end
 	  	end
 
 	  	net_likes = 1 if net_likes <=0

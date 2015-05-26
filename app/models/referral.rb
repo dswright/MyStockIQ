@@ -16,5 +16,7 @@ class Referral < ActiveRecord::Base
 		self.referral_code = 5.times.map{ rand(10) }.join.to_i
 	end
 
-
+	def use_existing_code(user)
+		self.referral_code = user.referrals.first.referral_code
+	end
 end
