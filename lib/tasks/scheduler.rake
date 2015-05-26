@@ -90,6 +90,12 @@ namespace :ten_minute_updates do
       PredictionendWorker.perform_async(predictionend.id) #updates the predictionend to verified status.
     end
   end
+
+  task :update_popularity_scores => :environment do
+    streams = Stream.find_each do |stream|
+      stream.update_popularity_scores
+    end
+  end
 end
 
 
@@ -105,7 +111,6 @@ namespace :updates do
       HelperWorker.perform_async(stock.ticker_symbol)
     end
   end
-
 end
 
 
