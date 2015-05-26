@@ -1,2 +1,12 @@
 $('.referral_form').prepend("<%= j render partial: 'shared/error_messages', locals: {object: @referral} %>");
+window.setTimeout(function() {
+  $("#error_explanation").fadeTo(500, 0).slideUp(500, function(){
+    $(this).remove(); 
+  });
+}, 3000);
 $('.referral_form').prepend("<%= j render partial: 'shared/success_messages', locals: {object: @message} %>");
+window.setTimeout(function() {
+  $("#alert-success").fadeTo(500, 0).slideUp(500, function(){
+    $(this).remove(); 
+  });
+}, 3000);

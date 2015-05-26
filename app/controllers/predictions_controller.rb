@@ -144,7 +144,7 @@ class PredictionsController < ApplicationController
         @prediction.build_popularity(score:0).save #build the popularity score item for predictions
   			@streams = [Stream.where(streamable_type: 'Prediction', streamable_id: @prediction.id).first]
   			
-        @messages[:success] = "Prediction input!"
+        @messages[:success] = "Your prediction has been created!"
   		end
     end
 

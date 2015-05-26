@@ -1,20 +1,25 @@
 class ReferralsController < ApplicationController
 
-	before_action :admin_user, only: :new
+	before_action :admin_user, only: [:new, :create]
 
 	def new
-		@user = current_user
-
-		@referral = @user.referrals.build
 	end
 
+	#Referral code generation for admin users only
 	def create
 		@user = current_user
 
+		#build referral object with email input from form
 		@referral = @user.referrals.build(referral_params)
-		@referral.generate_code
 
-		@message = {success: ""}
+		#If admin already has a referral code, use existing referral code
+		if @user.referrals.exists?
+			@referral.use_existing_code(@user)
+		else			
+			@referral.generate_code
+		end
+
+		@message = {}
 		
 		if @referral.save
 			#Send worker to send out invitation email w/ referral code using 'UserMailer' mailer
@@ -33,7 +38,7 @@ class ReferralsController < ApplicationController
 	private
 
 		def referral_params
-			params.require(:referral).permit(:email, :inviter_id)
+			params.require(:referral).permit(:email)
 		end
 
 		def admin_user
