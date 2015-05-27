@@ -16,5 +16,9 @@ class Reply < ActiveRecord::Base
 
 	default_scope -> { order(created_at: :desc) }
 
+	def invalid_reply
+		self.errors.clear
+		errors[:base] << "You have to say something to leave a reply!"
+	end
 	
 end

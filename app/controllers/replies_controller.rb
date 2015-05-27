@@ -9,7 +9,6 @@ class RepliesController < ApplicationController
 		@reply.repliable_id = params[:repliable_id]
 		@reply.repliable_type = params[:repliable_type]
 
-		response_msgs = []
 
 		if @reply.valid?
 			@reply.save
@@ -20,12 +19,12 @@ class RepliesController < ApplicationController
 			#Build additional stream items for comment targeting other stocks or users
         	tags.each {|tag| @reply.repliable.streams.create(targetable_id: tag.id, targetable_type: tag.class.name)}
 
-			response_msgs << "Posted reply!"
 		else 
-			response_msgs << "Invalid post"
-		
+
+			#Adds error message to reply
+			@reply.invalid_reply
+			
 		end
-		@response = response_maker(response_msgs)
 		
 		respond_to do |f|
 			f.js
