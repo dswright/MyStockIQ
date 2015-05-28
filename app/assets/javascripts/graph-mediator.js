@@ -188,7 +188,7 @@ var graphMediator = (function() {
     });
   };
 
-  var framesHash = function(graphType) { //the rangeHash is an array of buttons with the button name as the key and the value being an object of x and y mins and max.
+  var framesHash = function(graphType) { //the frameHash is an array of buttons with the button name as the key and the value being an object of x and y mins and max.
     
     var buttonMin; //used to track the min price of the daily or intraday price array to use to set a max and min values.
     var buttonMax;
@@ -541,10 +541,10 @@ var graphMediator = (function() {
     for(var i=0; i < predictions.length; i++ ) {
       var timeCompare = options[timeType].cb(predictions[i].x);
       if (predictionsArray.length === 0) { //if there are no predictions in the array, then add the first prediction.
-        predictionsArray.push({"id":predictions[i].id, "x":timeCompare, "y":predictions[i].y})
+        predictionsArray.push({"id":predictions[i].id, "x":timeCompare, "y":predictions[i].y, "marker":predictions[i].marker})
       }
       else if (timeCompare !== predictionsArray.last().x) { //if this date is not the same as the last one, then add it.
-        predictionsArray.push({"id":predictions[i].id, "x":timeCompare, "y":predictions[i].y})
+        predictionsArray.push({"id":predictions[i].id, "x":timeCompare, "y":predictions[i].y, "marker":predictions[i].marker})
       }
     }
 

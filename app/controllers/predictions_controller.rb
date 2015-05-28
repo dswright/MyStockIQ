@@ -132,6 +132,10 @@ class PredictionsController < ApplicationController
   		unless invalid_start
         @prediction_end_input_page = "stockspage" #set this variable for the cancel button form on the stockspage.
   			@prediction.save
+
+        @marker = @prediction.start_price > @prediction.prediction_end_price ? "triangle-down" : "triangle"
+
+        puts "marker #{@marker}"
         
         @comment_stream_string = "Stock:#{@prediction.stock.id},User:#{@current_user.id}" #create stream string used by the new comment box.
 
@@ -145,6 +149,7 @@ class PredictionsController < ApplicationController
   			@streams = [Stream.where(streamable_type: 'Prediction', streamable_id: @prediction.id).first]
   			
         @messages[:success] = "Your prediction has been created!"
+
   		end
     end
 

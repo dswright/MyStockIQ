@@ -9,8 +9,6 @@ var stockGraph;
 
 $(document).ready(function () {
 
-  
-
   resizeChart();
   $(window).bind("orientationchange resize", resizeChart);
 
@@ -54,7 +52,6 @@ $(document).ready(function () {
       marker : {
         enabled : true,
         radius : 5,
-        symbol: "triangle"
       }
     },
     {
@@ -63,7 +60,6 @@ $(document).ready(function () {
       marker : {
         enabled : true,
         radius : 5,
-        symbol: "triangle",
       },
       dataGrouping: {
         enabled: false
@@ -195,6 +191,9 @@ $(document).ready(function () {
     success: function (data, status) {
       stockGraph = data; //assign the data to the graph var to be used globally. Delete this once debugging is done.
 
+      console.log(data.predictions);
+
+
       var defaults = { //defaults contains the variables that are standard to each graph.
         "data": data,
         "chart": stockChart
@@ -206,8 +205,9 @@ $(document).ready(function () {
 
       $("div[data-button-type]").click(newGraph.buttonClick);
 
-      window.inputPrediction = function(endTime, endPrice, predictionId) {
-        newGraph.inputPrediction(endTime, endPrice, predictionId); //when a prediction is input, this function fires from the predicitoninput ajax call.
+      window.inputPrediction = function(endTime, endPrice, predictionId, marker) {
+        console.log("inside the inputPrediction");
+        newGraph.inputPrediction(endTime, endPrice, predictionId, marker); //when a prediction is input, this function fires from the predicitoninput ajax call.
       }
 
       window.removePrediction = function() {
