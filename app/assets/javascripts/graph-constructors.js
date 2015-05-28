@@ -41,10 +41,10 @@ function BuildStockGraph(defaults, graphName) {
     $(this).switchClass("timeframe-item", "timeframe-item-selected");
   }
 
-  this.inputPrediction = function(endTime, endPrice, predictionId) {
-
+  this.inputPrediction = function(endTime, endPrice, predictionId, marker) {
+    console.log("in the input at least...");
     var callback = function(component) {
-      this.data.my_prediction = [{id: predictionId, x:endTime, y:endPrice}];
+      this.data.my_prediction = [{id: predictionId, x:endTime, y:endPrice, marker:{symbol:marker}}];
     };
     graphMediator.updateComponent("defaults", callback);
 
