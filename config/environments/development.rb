@@ -6,6 +6,9 @@ Rails.application.configure do
   #enable garbagae collector stats
   GC::Profiler.enable
 
+  #set errors to be expressed and not surpressed that are returned from ActiveRecord callbacks.
+  config.active_record.raise_in_transactional_callbacks = true
+
   config.action_controller.asset_host = 'http://localhost:5000'
   config.action_mailer.asset_host = config.action_controller.asset_host
 
