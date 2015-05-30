@@ -1,4 +1,11 @@
-$('.stream').prepend("<%= j render partial: 'shared/error_messages', locals: {object: @comment} %>");
+$('.prediction-form-box').before("<%= j render partial: 'shared/success_messages', locals: {object: @messages} %>");
+window.setTimeout(function() {
+  $("#success").fadeTo(500, 0).slideUp(500, function(){
+    $(this).remove(); 
+  });
+}, 3000);
+
+$('.prediction-form-box').before("<%= j render partial: 'shared/error_messages', locals: {object: @comment} %>");
 window.setTimeout(function() {
   $("#error_explanation").fadeTo(500, 0).slideUp(500, function(){
     $(this).remove(); 

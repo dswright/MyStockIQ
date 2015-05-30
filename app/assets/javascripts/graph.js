@@ -34,7 +34,7 @@ if (!Array.prototype.reduce) {
   };
 }
 
-Array.prototype.select = function(closure){
+Array.prototype.select = function(closure) {
   var new_array = [];
   for(var n = 0; n < this.length; n++) {
     if(closure(this[n])){

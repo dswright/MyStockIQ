@@ -11,7 +11,8 @@ class CommentsController < ApplicationController
 		#Add ticker_symbol to content and find '$' and '@' handles in comment content
 		tags = @comment.add_tags(stock.ticker_symbol)
 
-		response_msgs = []
+		@messages = {}
+
 		if @comment.valid?
 			@comment.save
 
@@ -25,12 +26,11 @@ class CommentsController < ApplicationController
 			tags.each {|tag| @comment.streams.create(targetable_id: tag.id, targetable_type: tag.class.name)}
 			
 			@streams = [Stream.where(streamable_type: 'Comment', streamable_id: @comment.id).first] #get this one stream item.
-			response_msgs << "Comment added!" #gets inserted at top of page with ajax.
+			@messages[:success] = "Comment added!" #gets inserted at top of page with ajax.
 		else
-			response_msgs << "Comment invalid." #gets inserted at top of page with ajax.
+			@comment.invalid_content if @comment.content == nil
 		end
-		
-		@response = response_maker(response_msgs)
+	
 
 		respond_to do |f|
 			f.js

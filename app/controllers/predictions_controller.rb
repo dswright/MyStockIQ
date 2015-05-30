@@ -144,6 +144,10 @@ class PredictionsController < ApplicationController
       unless @prediction.invalid
         @prediction_end_input_page = "stockspage" #set this variable for the cancel button form on the stockspage.
   			@prediction.save
+
+        @marker = @prediction.start_price > @prediction.prediction_end_price ? "triangle-down" : "triangle"
+
+        puts "marker #{@marker}"
         
         @comment_stream_string = "Stock:#{@prediction.stock.id},User:#{@current_user.id}" #create stream string used by the new comment box.
 
@@ -158,6 +162,7 @@ class PredictionsController < ApplicationController
   			
         @messages[:success] = "Your prediction has been created!"
 
+
         respond_to do |f|
           f.js {
           }
@@ -167,7 +172,7 @@ class PredictionsController < ApplicationController
           f.js { 
               render "predictions/_invalid.js.erb"
           }
-      end
+        end
       end
 
     else

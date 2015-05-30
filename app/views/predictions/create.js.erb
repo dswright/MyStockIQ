@@ -8,6 +8,10 @@ window.setTimeout(function() {
 
 window.inputPrediction(<%= j @graph_time.to_s %>, <%= j @prediction.prediction_end_price.to_s %>, <%= j @prediction.id.to_s %>);
 
+console.log("inputthe prediction: <%= j @marker.to_s %>");
+window.inputPrediction(<%= j @graph_time.to_s %>, <%= j @prediction.prediction_end_price.to_s %>, <%= j @prediction.id.to_s %>, "<%= j @marker %>");
+console.log("processed");
+
 
 $('.prediction-form-box').replaceWith("<%= j render partial: 'shared/prediction_open', locals: {prediction: @prediction} %>");
 
