@@ -1,6 +1,6 @@
 <div class="graph-stock-stats">
   <div class="graph-stats-date-price">
-    <p class="graph-price">$<%= price[:price].round(2) %></p>
-    <p class="graph-label"><%= price[:date].strftime("%b %d, %Y") %></p>
+    <p class="graph-price">$<%= price.close_price.round(2) %></p>
+    <p class="graph-label"><%= price.date.strftime("%b %d, %Y") %></p>
   </div>
 </div>

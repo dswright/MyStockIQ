@@ -14,17 +14,20 @@ $(document).ready(function () {
   resizeChart();
   $(window).bind("orientationchange resize", resizeChart);
 
+  /* This function should work for setting each data point back 5 hours, but it doesnt. Getting rid of it for now, as the graph times are not critical.
   Highcharts.setOptions({
     global: {
-       timezoneOffset: 7 * 60,
        getTimezoneOffset: function (timestamp) {
+         console.log("here?");
          moment.tz.add('America/New_York|EST EDT|50 40|0101|1Lz50 1zb0 Op0');
          var zone = 'America/New_York';
-         timezoneOffset = moment.tz.zone(zone).parse(timestamp);
+         var timezoneOffset = -moment.tz(timestamp, zone).utcOffset();
+         alert("TZ HERE"+timezoneOffset);
          return timezoneOffset;
        }
     }
   });
+*/
 
   seriesVar = [
     {
@@ -129,6 +132,7 @@ $(document).ready(function () {
       }
     },
     tooltip: {
+      enabled: false,
       crosshairs: null,
       shared: false
     },
@@ -165,11 +169,11 @@ $(document).ready(function () {
     },
     xAxis: {
       minRange: 3600 * 1000,
-      //labels: {
-      //  enabled: false
-      //},
-      //minorTickLength: 0,
-      //tickLength: 0,
+      labels: {
+        enabled: false
+      },
+      minorTickLength: 0,
+      tickLength: 0,
       lineColor: 'rgba(255, 255, 255, 0.39)',
       lineWidth: 1,
     },

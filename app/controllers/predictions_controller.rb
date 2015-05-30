@@ -87,49 +87,61 @@ class PredictionsController < ApplicationController
 		@user = current_user
 		stock = Stock.find(prediction_params[:stock_id])
 
-		#Create the prediction settings.
-		prediction_start_time = Time.zone.now.graph_time.closest_start_time # this returns a timestamp
-		    
-    prediction_end_str = (params[:end_day] + " " + params[:end_time])
-    prediction_end_time = (DateTime.parse(prediction_end_str).utc.to_i*1000).closest_start_time #closest_start_time takes a graphtime and returns a timestamp date.
+    prediction_start_time = Time.zone.now.graph_time.closest_start_time # this returns a timestamp
+		
+    prediction = {  stock_id: stock.id, 
+                    score: 0, 
+                    active: true, 
+                    start_price_verified: false,
+                    start_price: stock.daily_stock_price,
+                    start_time: prediction_start_time,
+                    graph_start_time: prediction_start_time.graph_time
+                  }
 
-		prediction = {stock_id: stock.id, prediction_end_time: prediction_end_time, score: 0, active: true, start_price_verified:false, 
-									start_time: prediction_start_time, graph_start_time: prediction_start_time.graph_time, graph_end_time: prediction_end_time.graph_time}
+    #graph_start_time: prediction_start_time.graph_time, graph_end_time: graph_end_time
+    #Create the prediction settings.
 
-		#merge the prediction settings with the params from the prediction form.
-		prediction.merge!(prediction_params)
-		@prediction = @user.predictions.build(prediction)
-		@prediction.start_price = stock.daily_stock_price
-    @prediction.prediction_end_price = prediction_params[:prediction_end_price].to_i.round(2) #make sure the prediction end price is rounded to 2 places.
+    #merge the prediction settings with the params from the prediction form.
+    prediction.merge!(prediction_params)
+    @prediction = @user.predictions.build(prediction)
+    
+
+    #Check user date and time input and calculate prediction end time
+    unless params[:end_day] == "" || params[:end_time] == ""
+      prediction_end_str = (params[:end_day] + " " + params[:end_time])
+      prediction_end_time = (DateTime.parse(prediction_end_str).utc.to_i*1000).closest_start_time #closest_start_time takes a graphtime and returns a timestamp date.
+      
+      @prediction.prediction_end_time = prediction_end_time
+      @prediction.graph_end_time = prediction_end_time.graph_time
+
+    else
+      @prediction.graph_end_time = nil
+
+    end
+
+
+
+    unless prediction_params[:prediction_end_price].empty?
+      @prediction.prediction_end_price = prediction_params[:prediction_end_price].to_i.round(2) #make sure the prediction end price is rounded to 2 places.
+    else 
+      @prediction.prediction_end_price = nil
+    end
 
     tags = @prediction.add_tags(stock.ticker_symbol)
 		@graph_time = @prediction.graph_end_time
 
+    puts @prediction.user.username
+    puts @prediction.prediction_end_price
 
-		#Create the proper response to the prediciton input.
-		response_msgs = []
+    if @prediction.valid? 
 
-		invalid_start = false
-		if @prediction.invalid?
-      #adds error message
-      @prediction.invalid_start
-			invalid_start = true
-		end
+      #adds custom error messages based on different checks. Sets .invalid to true when one of these errors are found
+      @prediction.already_exists if @prediction.active_prediction_exists? 
+      @prediction.invalid_date if params[:end_day] == ""
+      @prediction.invalid_time if params[:end_time] == ""
+      @prediction.invalid_end_time if @prediction.prediction_end_time <= @prediction.start_time
 
-		if @prediction.active_prediction_exists?
-      #adds error message
-      @prediction.already_exists
-			invalid_start = true
-		end
-
-		if @prediction.prediction_end_time <= @prediction.start_time
-      #adds error message
-			@prediction.invalid_end_time
-			invalid_start = true
-		end
-
-    if @prediction.valid?
-  		unless invalid_start
+      unless @prediction.invalid
         @prediction_end_input_page = "stockspage" #set this variable for the cancel button form on the stockspage.
   			@prediction.save
         
@@ -145,13 +157,29 @@ class PredictionsController < ApplicationController
   			@streams = [Stream.where(streamable_type: 'Prediction', streamable_id: @prediction.id).first]
   			
         @messages[:success] = "Your prediction has been created!"
-  		end
-    end
 
-		respond_to do |f|
-      f.js { 
+        respond_to do |f|
+          f.js {
+          }
+        end
+      else
+        respond_to do |f|
+          f.js { 
+              render "predictions/_invalid.js.erb"
+          }
+      end
+      end
 
-      }
+    else
+      #adds custom error messages based on different checks. Sets .invalid to true when one of these errors are found
+      @prediction.invalid_end_price if @prediction.prediction_end_price == nil
+      @prediction.invalid_date if params[:end_day].empty?
+      @prediction.invalid_time if params[:end_time].empty?
+      respond_to do |f|
+        f.js { 
+              render "predictions/_invalid.js.erb"
+        }
+      end
     end
 	end
 

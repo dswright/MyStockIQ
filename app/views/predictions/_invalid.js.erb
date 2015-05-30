@@ -1,0 +1,6 @@
+$('.stockpage-body').prepend("<%= j render partial: 'shared/error_messages', locals: {object: @prediction} %>");
+window.setTimeout(function() {
+  $("#error_explanation").fadeTo(500, 0).slideUp(500, function(){
+    $(this).remove(); 
+  });
+}, 3000);

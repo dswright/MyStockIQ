@@ -1,4 +1,4 @@
-$(".stream").prepend("<%= j render partial: 'shared/error_messages', locals: {object: @reply} %>");
+$("<%= j render partial: 'shared/error_messages', locals: {object: @reply} %>").insertBefore("#stream_<%= j @reply.repliable_type.to_s %>_<%= j @reply.repliable_id.to_s %>");
 window.setTimeout(function() {
   $("#error_explanation").fadeTo(500, 0).slideUp(500, function(){
     $(this).remove(); 
