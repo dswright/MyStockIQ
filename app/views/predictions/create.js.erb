@@ -1,5 +1,4 @@
 $('.stockpage-body').prepend("<%= j render partial: 'shared/success_messages', locals: {object: @messages} %>");
-
 window.setTimeout(function() {
   $("#success").fadeTo(500, 0).slideUp(500, function(){
     $(this).remove(); 

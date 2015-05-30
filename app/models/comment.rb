@@ -10,11 +10,14 @@ class Comment < ActiveRecord::Base
 	has_one :tag, as: :tagable, dependent: :destroy
 
 	validates :content, presence: true, length: { maximum: 5000}
-	validates :user_id, presence: true, numericality: true
+	validates :user_id, numericality: true
 	default_scope -> { order(created_at: :desc) }
 
 	scope :by_user, lambda {|user| where(user_id: user.id)}
 
-
+	def invalid_content
+		errors[:content].clear
+		errors[:base] << "Oops! You have to say something to post a comment!"
+	end
 
 end
