@@ -1,5 +1,10 @@
-
 $('.stockpage-body').prepend("<%= j render partial: 'shared/success_messages', locals: {object: @messages} %>");
+window.setTimeout(function() {
+  $("#success").fadeTo(500, 0).slideUp(500, function(){
+    $(this).remove(); 
+  });
+}, 3000);
+
 
 window.inputPrediction(<%= j @graph_time.to_s %>, <%= j @prediction.prediction_end_price.to_s %>, <%= j @prediction.id.to_s %>);
 
