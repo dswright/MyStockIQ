@@ -45,8 +45,20 @@ class Graph
   def my_prediction
     my_prediction = []
     Prediction.where(stock_id: @stock.id, active:true, user_id: @current_user.id).each do |prediction|
+      symbol = "triangle"
+      if prediction.prediction_end_price < prediction.start_price
+        symbol = "triangle-down"
+      end
+
       graph_time = prediction.graph_end_time
-      my_prediction << {"id": prediction.id, "x": graph_time, "y": prediction.prediction_end_price}
+      my_prediction << {
+        "id": prediction.id, 
+        "x": graph_time, 
+        "y": prediction.prediction_end_price,
+        marker: {
+          symbol: symbol
+        }
+      };
     end
     return my_prediction
   end
@@ -54,7 +66,19 @@ class Graph
   def predictions #predictions for the stock graph.
     predictions_array = []
     Prediction.where(stock_id: @stock.id, active:true).where('user_id not in (?)',[@current_user.id]).limit(1500).reorder('prediction_end_time desc').reverse.each do |prediction|
-      predictions_array << {"id": prediction.id, "x": prediction.graph_end_time, "y": prediction.prediction_end_price}
+      symbol = "triangle"
+      if prediction.prediction_end_price < prediction.start_price
+        symbol = "triangle-down"
+      end
+
+      predictions_array << {
+        "id": prediction.id, 
+        "x": prediction.graph_end_time, 
+        "y": prediction.prediction_end_price, 
+        marker: {
+          symbol:symbol
+        }
+      }
     end
     return predictions_array
   end
