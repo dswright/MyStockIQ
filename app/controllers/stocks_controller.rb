@@ -50,7 +50,7 @@ require 'scraper'
         end
 
      		#creates prediction variable to be used to set up the prediction creation form (see app/views/shared folder)
-      	@prediction = @current_user.predictions.build(stock_id: @stock.id) #this empty form variable will get overwritten if the page exists.
+      	@prediction = @current_user.predictions.build(stock_id: @stock.id, prediction_end_price: nil) #this empty form variable will get overwritten if the page exists.
 
       	#If active prediction exists, show active prediction
       	if @prediction.active_prediction_exists?

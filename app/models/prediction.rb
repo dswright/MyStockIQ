@@ -15,22 +15,53 @@ class Prediction < ActiveRecord::Base
   has_one :popularity, as: :popularable, dependent: :destroy
   has_one :tag, as: :tagable, dependent: :destroy
   
-  validates :prediction_end_price, presence: true, numericality: true
-  validates :stock_id, presence: true, numericality: true
+  validates :prediction_end_price, numericality: {message: "Make sure to include a prediction price!" }
+  validates :prediction_end_time, presence: true
+  validates :score, numericality: true
+  #validates :start_price_verified, presence: true
+  validates :start_time, presence: true
+  validates :graph_start_time, presence: true
+  validates :graph_end_time, presence: true
+  validates :stock_id, numericality: true
+
 
   default_scope -> { order(created_at: :desc) }
 
-  def invalid_start
-    errors[:base] << "Invalid start to prediction"
+  attr_accessor :invalid
+
+  def invalid_end_price
+    errors[:prediction_end_price].clear
+    errors[:base] << "Make sure to include a prediction price!" 
+    self.invalid = true
   end
+
 
   def invalid_end_time
+    errors[:prediction_end_time].clear
+    errors[:graph_end_time].clear
     errors[:base] << "Your prediction starts and ends at the same time. Please increase your prediction end time."
+    self.invalid = true
   end
 
-  def already_exists(stock)
-    errors[:base] << "You already have an active prediction on #{stock.ticker_symbol}"
+  def invalid_date
+    errors[:prediction_end_time].clear
+    errors[:graph_end_time].clear
+    errors[:base] << "Please select an end date"
+    self.invalid = true
   end
+
+  def invalid_time
+    errors[:prediction_end_time].clear
+    errors[:graph_end_time].clear
+    errors[:base] << "Please select an end time"
+    self.invalid = true
+  end
+
+  def already_exists
+    errors[:base] << "You already have an active prediction on #{self.stock.ticker_symbol}"
+    self.invalid = true
+  end
+  
 
   def days_remaining
     days_remaining = (self.prediction_end_time - Time.now)/(60*60*24).round(0)
