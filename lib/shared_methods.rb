@@ -17,7 +17,6 @@ module SharedMethods
   	end
   end
 
-
   def add_tags(ticker_symbol=nil)
     words = self.content.split
     tags = Array.new

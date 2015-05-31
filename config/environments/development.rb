@@ -1,6 +1,8 @@
 
 
 Rails.application.configure do
+
+  require 'rails_extensions'
   # Settings specified here will take precedence over those in config/application.rb.
 
   #enable garbagae collector stats
