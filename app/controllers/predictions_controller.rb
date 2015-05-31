@@ -122,7 +122,7 @@ class PredictionsController < ApplicationController
 
 
     unless prediction_params[:prediction_end_price].empty?
-      @prediction.prediction_end_price = prediction_params[:prediction_end_price].to_i.round(2) #make sure the prediction end price is rounded to 2 places.
+      @prediction.prediction_end_price = prediction_params[:prediction_end_price].to_f.round(2) #make sure the prediction end price is rounded to 2 places.
     else 
       @prediction.prediction_end_price = nil
     end
