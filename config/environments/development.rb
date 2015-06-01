@@ -1,4 +1,3 @@
-#test
 
 Rails.application.configure do
 
