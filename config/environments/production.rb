@@ -7,7 +7,7 @@ Rails.application.configure do
   #enable garbagae collector stats
   GC::Profiler.enable
 
-  config.action_controller.asset_host = 'http://mystockiq.com'
+  config.action_controller.asset_host = ENV['HOST']
   config.action_mailer.asset_host = config.action_controller.asset_host
 
   #SET MAILER CONFIGURATION
