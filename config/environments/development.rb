@@ -1,5 +1,4 @@
 
-
 Rails.application.configure do
 
   require 'rails_extensions'
