@@ -86,36 +86,24 @@
   <div class="col-xs-12 col-sm-9 stockpage-body">
 
 
-  <% if @prediction.active %>
-    <%= render partial: 'shared/prediction_open', locals: {prediction: @prediction} %>
-  <% else %>
-    <%= render 'shared/prediction_form' %>
-  <% end %>
+    <% if @prediction.active %>
+      <%= render partial: 'shared/prediction_open', locals: {prediction: @prediction} %>
+    <% else %>
+      <%= render 'shared/prediction_form' %>
+    <% end %>
 
-  <!-- STREAM POSTS -->
-  <div class = "stream" >
-    <%= render partial: "streams/stream_main", locals: {streams: @streams} %>
+    <!-- STREAM POSTS -->
+    <div class = "stream" >
+      <%= render partial: "streams/stream_main", locals: {streams: @streams} %>
+    </div>
+    <div id = "infinite-scrolling" >
+      <%= will_paginate @streams %>
+    </div>
+
   </div>
-  <div id = "infinite-scrolling" >
-    <%= will_paginate @streams %>
+
+  <div class="col-sm-3 stockpage-sidebar">
+    <%= render partial: 'stocks/ranking', locals: {stock: @stock} %>
+
+    <%= render partial: 'shared/popular_stocks' %>
   </div>
-
-</div>
-
-<div class="col-sm-3 stockpage-sidebar">
-  <%= render partial: 'stocks/ranking', locals: {stock: @stock} %>
-
-  <%= render partial: 'shared/popular_stocks' %>
-</div>
-
-
-  
-
-
-
-
-
-
-
-
-

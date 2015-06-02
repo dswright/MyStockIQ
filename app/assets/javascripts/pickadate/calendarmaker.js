@@ -151,15 +151,6 @@ var CalendarMaker = function(timePicker) {
   $('#datepicker').pickadate(this.dateObject);
 }
 
-$(function() {
-  var timePicker = $('#timepicker').pickatime({min:[9,30],max:[16,0]}).pickatime('picker');
-  var calendarSettings = new CalendarMaker(timePicker);
-  
-  //set the picker var inside the calendar settings to the timepicker object. The time picker object initially just has defaults. These defaults get updated on select of a calendar day.
-  //this creates the inital settings for the timepicker, and sets the picker inside of the calendarsettings object.
-  console.log(calendarSettings);
-});
-
 
 
 // var tOM = function() { //timeObjectMaker
