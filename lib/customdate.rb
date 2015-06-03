@@ -56,7 +56,9 @@ class Integer
       "2015-01-01", "2015-01-19", "2015-02-16", "2015-04-03", "2015-05-25", "2015-09-07", "2015-11-26", "2015-12-25",
       "2016-01-01", "2016-01-18", "2016-02-15", "2016-03-25", "2016-05-30", "2016-07-04", "2016-09-05", "2016-11-24", "2016-12-26",
       "2017-01-02", "2017-01-16", "2017-02-20", "2017-04-14", "2017-05-29", "2017-07-04", "2017-09-04", "2017-11-23", "2017-12-25",
-      "2018-01-01", "2018-01-15", "2018-02-19", "2018-03-30", "2018-05-28", "2018-07-04", "2018-09-03", "2018-11-22", "2018-12-25"
+      "2018-01-01", "2018-01-15", "2018-02-19", "2018-03-30", "2018-05-28", "2018-07-04", "2018-09-03", "2018-11-22", "2018-12-25",
+      "2019-01-01", "2019-01-21", "2019-02-18", "2019-04-19", "2019-05-27", "2019-07-04", "2019-09-02", "2019-11-28", "2019-12-25",
+      "2020-01-01", "2020-01-20", "2020-02-17", "2020-04-10", "2020-05-25", "2020-07-03", "2020-09-07", "2020-11-26", "2020-12-25"
     ]
 
     #Friday after thanksgiving and Christmas eve, when on a weekday, tend to be half days.
@@ -68,8 +70,10 @@ class Integer
       "2014-04-03", "2014-11-28", "2014-12-24",
       "2015-07-03", "2015-11-27", "2015-12-24", 
       "2016-11-25", "2016-12-23", 
-      "2017-11-24", "2018-11-23", 
-      "2018-12-24"
+      "2017-11-24", "2018-11-23",
+      "2018-12-24",
+      "2019-07-03", "2019-11-29", "2019-12-24",
+      "2020-07-03", "2020-11-25", "2020-12-24"
     ]
 
     offset = self.utc_time.offset_num
@@ -134,3 +138,42 @@ class Integer
     end
   end
 end
+
+
+
+def day_filler
+  start_time = "2015-06-02".utc_time.graph_time + 16*3600*1000
+
+  i = 0
+  while i < 2040
+    test_time = start_time+i*24*3600*1000
+    day_start = test_time - 16*3600*1000
+    day_end = day_start+21*3600*1000 - day_start.utc_time.offset_num 
+    if (test_time).valid_stock_time?
+      day = day_end.utc_time
+      g_t = day_end
+      fd = Futureday.new(day:day, graph_time:g_t)
+      fd.save
+    end
+  end
+end
+
+def day_filler
+  start_time = "2015-06-02".utc_time.graph_time + 16*3600*1000
+  inserts = []
+  i = 1
+  while i <= 2039
+    test_time = start_time+i*24*3600*1000
+    day_start = test_time - 16*3600*1000
+    day_end = day_start+21*3600*1000 - day_start.utc_time.offset_num 
+    if (test_time).valid_stock_time?
+      day = day_end.utc_time
+      inserts.push "(#{i}, '#{day}', #{day_end})"
+    end
+    i += 1
+  end
+  sql = "INSERT INTO futuredays (id, day, graph_time) VALUES #{inserts.join(", ")}"
+  ActiveRecord::Base.connection.execute sql
+end
+  
+

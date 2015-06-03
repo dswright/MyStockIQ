@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150517000346) do
+ActiveRecord::Schema.define(version: 20150602222103) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "adminpack"
@@ -26,6 +26,11 @@ ActiveRecord::Schema.define(version: 20150517000346) do
   end
 
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
+
+  create_table "futuredays", force: true do |t|
+    t.date    "day"
+    t.integer "graph_time", limit: 8
+  end
 
   create_table "intradayprices", force: true do |t|
     t.string   "ticker_symbol"
