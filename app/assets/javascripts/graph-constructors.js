@@ -1,32 +1,42 @@
 function BuildStockGraph(defaults, graphName) {
   this.launch = function() {
     graphMediator.addComponents('defaults', defaults);
+    
+    var t = new Date();
     graphMediator.defaultProcessor(); //creates several default components automatically for every graph.
+    console.log("Time to process 7: " + (new Date() - t) + "ms");
 
     graphMediator.createPredictionLine("daily", "predictions"); //create this predictions graph line for the stock graph only.
     graphMediator.createPredictionLine("intraday", "predictions"); //create this predictions graph line for the stock graph only.
+    console.log("Time to process 11: " + (new Date() - t) + "ms");
 
     graphMediator.createPredictionLine("daily", "myPrediction"); //create this predictions graph line for the stock graph only.
     graphMediator.createPredictionLine("intraday", "myPrediction"); //create this predictions graph line for the stock graph only.
+    console.log("Time to process 15: " + (new Date() - t) + "ms");
 
     graphMediator.removeOverlapping("intraday", "myPrediction");
     graphMediator.removeOverlapping("daily", "myPrediction");
+    console.log("Time to process 19: " + (new Date() - t) + "ms");
 
     var currentFrame = {
       framesHash: graphMediator.framesHash("stockGraph")
     };
     graphMediator.addComponents('currentFrame', currentFrame); //currentframe must be used before setRange is used.
+    console.log("Time to process 25: " + (new Date() - t) + "ms");
 
     var bestRange = graphMediator.bestRange("myPrediction");
     graphMediator.updateComponent("currentFrame", function(component) {
       this.timeFrame = bestRange;
     });
+    console.log("Time to process 31: " + (new Date() - t) + "ms");
 
     // sets the daily or intraday lines, depending on the timeFrame in the currentFrame. Also sets the hover state.
     graphMediator.frameDependents("stockGraph");
+    console.log("Time to process 35: " + (new Date() - t) + "ms");
 
     // the timeFrame in the currentFrame component must be set before using this. 
     graphMediator.setRange();
+    console.log("Time to process 39: " + (new Date() - t) + "ms");
   }
 
   this.buttonClick = function() {
