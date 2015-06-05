@@ -112,7 +112,7 @@ namespace :updates do
     end
   end
 
-  task :update_times => environment do
+  task :update_times => :environment do
     HelperWorker.perform_async()
   end
 end
