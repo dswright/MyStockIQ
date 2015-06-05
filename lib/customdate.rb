@@ -162,18 +162,34 @@ def day_filler
   start_time = "2015-06-02".utc_time.graph_time + 16*3600*1000
   inserts = []
   i = 1
-  while i <= 2039
+  while i <= 2038
     test_time = start_time+i*24*3600*1000
     day_start = test_time - 16*3600*1000
     day_end = day_start+21*3600*1000 - day_start.utc_time.offset_num 
     if (test_time).valid_stock_time?
       day = day_end.utc_time
-      inserts.push "(#{i}, '#{day}', #{day_end})"
+      t = Time.now.utc
+      inserts.push "(#{i}, '#{t}', '#{t}', '#{day}', #{day_end})"
     end
     i += 1
   end
-  sql = "INSERT INTO futuredays (id, day, graph_time) VALUES #{inserts.join(", ")}"
+  sql = "INSERT INTO futuredays (id, created_at, updated_at, date, graph_time) VALUES #{inserts.join(", ")}"
   ActiveRecord::Base.connection.execute sql
 end
-  
 
+def time_filler
+  start_time = "2015-06-03 00:00:00".utc_time.graph_time
+  inserts = []
+  i = 1
+  while i <= 586944
+    t = start_time + i*60*5*1000
+    if t.valid_stock_time?
+      date = t.utc_time
+      now = Time.now.utc
+      inserts.push "(#{i}, '#{now}', '#{now}', '#{date}', #{t})"
+    end
+    i += 1
+  end
+  sql = "INSERT INTO futuretimes (id, created_at, updated_at, time, graph_time) VALUES #{inserts.join(", ")}"
+  ActiveRecord::Base.connection.execute sql
+end
