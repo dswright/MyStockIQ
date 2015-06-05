@@ -110,16 +110,33 @@ class HelperWorker
   #   end
   # end
 
-  def perform(ticker_symbol) #delete days including and after may 1st so they can be pulled correctly.
-    stockprices = Stockprice.where(ticker_symbol:ticker_symbol).where("date >= ?", "2015-05-01 00:00:00 UTC")
-    unless stockprices.empty?
-      stockprices.each do |stockprice|
-        stockprice.delete
-      end
-    end
-  end
+  # def perform(ticker_symbol) #delete days including and after may 1st so they can be pulled correctly.
+  #   stockprices = Stockprice.where(ticker_symbol:ticker_symbol).where("date >= ?", "2015-05-01 00:00:00 UTC")
+  #   unless stockprices.empty?
+  #     stockprices.each do |stockprice|
+  #       stockprice.delete
+  #     end
+  #   end
+  # end
   #     case_lines = []
   #     stockprices.each do |stockprice|
+
+  def perform
+    start_time = "2015-06-03 00:00:00".utc_time.graph_time
+    inserts = []
+    i = 1
+    while i <= 586944
+      t = start_time + i*60*5*1000
+      if t.valid_stock_time?
+        date = t.utc_time
+        now = Time.now.utc
+        inserts.push "(#{i}, '#{now}', '#{now}', '#{date}', #{t})"
+      end
+      i += 1
+    end
+    sql = "INSERT INTO futuretimes (id, created_at, updated_at, time, graph_time) VALUES #{inserts.join(", ")}"
+    ActiveRecord::Base.connection.execute sql
+  end
 
 end
 

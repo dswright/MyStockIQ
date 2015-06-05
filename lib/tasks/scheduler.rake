@@ -99,6 +99,7 @@ namespace :ten_minute_updates do
 end
 
 
+
 namespace :updates do
   task :price_rounding => :environment do
     Stock.all.each do |stock|
@@ -111,6 +112,8 @@ namespace :updates do
       HelperWorker.perform_async(stock.ticker_symbol)
     end
   end
+
+  task :update_times => :environment do
+    HelperWorker.perform_async()
+  end
 end
-
-
