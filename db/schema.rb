@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150604202534) do
+ActiveRecord::Schema.define(version: 20150607164521) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "adminpack"
@@ -198,6 +198,7 @@ ActiveRecord::Schema.define(version: 20150604202534) do
     t.datetime "updated_at"
     t.string   "stock_sector"
     t.boolean  "viewed"
+    t.integer  "active_predictions",             default: 0
   end
 
   add_index "stocks", ["active"], name: "index_stocks_on_active", using: :btree

@@ -145,6 +145,9 @@ class PredictionsController < ApplicationController
         @prediction_end_input_page = "stockspage" #set this variable for the cancel button form on the stockspage.
   			@prediction.save
 
+        stock.count_active_predictions
+        stock.save
+        
         @marker = @prediction.start_price > @prediction.prediction_end_price ? "triangle-down" : "triangle"
 
         puts "marker #{@marker}"

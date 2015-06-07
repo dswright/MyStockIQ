@@ -110,5 +110,5 @@
     <% unless @stock.users.empty? %>
       <%= render partial: 'stocks/ranking', locals: {stock: @stock} %>
     <% end %>
-    <%= render partial: 'shared/popular_stocks' %>
+    <%= render partial: 'shared/popular_stocks', locals: {popular_stocks: @popular_stocks} %>
   </div>

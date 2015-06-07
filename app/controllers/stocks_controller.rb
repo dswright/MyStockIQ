@@ -16,6 +16,9 @@ require 'scraper'
 
         @stock = Stock.find_by(ticker_symbol:params[:ticker_symbol])
 
+        #Picks top 10 stocks with active predictions
+        @popular_stocks = Stock.popular_stocks(10)
+
         @current_user = current_user
 
         # unless @streams == nil
