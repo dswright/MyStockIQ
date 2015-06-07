@@ -92,6 +92,8 @@
       <%= render 'shared/prediction_form' %>
     <% end %>
 
+    <%= render partial: 'streams/empty_stream', locals: {streams: @streams} %>
+
     <!-- STREAM POSTS -->
     <div class = "stream" >
       <%= render partial: "streams/stream_main", locals: {streams: @streams} %>
