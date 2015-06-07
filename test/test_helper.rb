@@ -9,8 +9,13 @@ class ActiveSupport::TestCase
   fixtures :all
 
 	def is_logged_in?
-    !session[:user_id].nil?
-  end
+    	!session[:user_id].nil?
+  	end
+
+  	def assert_presence(model, field)
+		model.valid?
+		assert_match /can't be blank/, mode.errors[field].join
+	end
 
   # Add more helper methods to be used by all tests here...
 end
