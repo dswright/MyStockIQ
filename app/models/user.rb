@@ -15,15 +15,15 @@ class User < ActiveRecord::Base
   #Foreign key is the default index that would be used. 
   has_many :active_relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
 
-  scope :predictionends, lambda {|user| where(user_id: user.id)}
-
   #This sets up the relationship such that current_user.followings returns an array of followed objects
   has_many :followings, through: :active_relationships, source: :followed
+
+  scope :predictionends, lambda {|user| where(user_id: user.id)}
 
 	#form validation for the username
 	before_save { self.email = self.email.downcase } #before inserting the data, make sure it is all downcase.
 	before_save { self.username = self.username.downcase } #before inserting the data, make sure it is all downcase.
-	validates :username,  presence: true, length: { maximum: 25 },
+	validates :username,  presence: true, length: { minimum: 5, maximum: 25 },
                     format: { with: /\A[-a-z0-9]+\z/i }, #this doesn't allow numberals. Should fix.
 										uniqueness: {case_sensitive: false}
 	
@@ -37,6 +37,7 @@ class User < ActiveRecord::Base
   has_secure_password
 
   validates :password, length: { minimum: 6 }, allow_blank: true
+  validates :admin, presence: true
 
 	# Returns the hash digest of the given string.
   def User.digest(string)
@@ -85,8 +86,6 @@ class User < ActiveRecord::Base
   def invalid_referral
       errors[:base] << "Referral code is invalid."
   end
-
-
 
   #Follows a user
   def follow(object)
@@ -146,9 +145,7 @@ class User < ActiveRecord::Base
     end
 
     #If total score is negative, set total score to zero
-    if score < 0
-      score = 0
-    end
+    score = 0 if score < 0
 
     return score
   end
