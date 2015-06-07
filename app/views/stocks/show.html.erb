@@ -92,7 +92,9 @@
       <%= render 'shared/prediction_form' %>
     <% end %>
 
-    <%= render partial: 'streams/empty_stream', locals: {streams: @streams} %>
+    <% if @streams.empty? %>
+      <%= render partial: 'streams/empty_stream', locals: {streams: @streams} %>
+    <%end %>
 
     <!-- STREAM POSTS -->
     <div class = "stream" >
@@ -105,7 +107,8 @@
   </div>
 
   <div class="col-sm-3 stockpage-sidebar">
-    <%= render partial: 'stocks/ranking', locals: {stock: @stock} %>
-
+    <% unless @stock.users.empty? %>
+      <%= render partial: 'stocks/ranking', locals: {stock: @stock} %>
+    <% end %>
     <%= render partial: 'shared/popular_stocks' %>
   </div>
