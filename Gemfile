@@ -77,6 +77,9 @@ gem 'fog'
 
 gem 'ruby-progressbar', '1.7.5'
 
+#URL detection 
+gem 'rails_autolink'
+
 group :development, :test do
 
 	# Use sqlite3 as the database for Active Record
