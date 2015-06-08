@@ -15,7 +15,7 @@
         <%= analyst.username %>
       </div>
       <div class="stockpage-side-analysts-number pull-right">
-        <%= analyst.total_score(stock) %> pts
+        <%= analyst.total_score(stock).round(0) %> pts
       </div>
     <% end %>
   <% end %>
