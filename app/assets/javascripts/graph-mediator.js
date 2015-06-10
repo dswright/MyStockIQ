@@ -140,6 +140,8 @@ var graphMediator = (function() {
     var frameHash = components.currentFrame.framesHash[button]
     chart.yAxis[0].setExtremes(frameHash.yMin, frameHash.yMax); //set y min and y max values
     chart.xAxis[0].setExtremes(frameHash.xMin, frameHash.xMax); //set x min and x max values
+    console.log(frameHash.xMin.gmtString());
+    console.log(frameHash.xMax.gmtString());
   };
 
   //sets the on-hover respones for each graph line.
@@ -440,26 +442,36 @@ var graphMediator = (function() {
     //   // return endPoint;
     // }
 
-    var xLimit = function(timeType, intervals, intervalDirection) {
+    var xLimit = function(timeType, intervals, intervalDirection, startPoint) {
       var options = {
         forward: {
-          daily: components.defaults.data.future_days,
-          intraday: components.defaults.data.future_times,
-          direction: 1
+          daily: function() { return components.defaults.data.future_days },
+          intraday: function() { return components.defaults.data.future_times },
+          processor: function(arr, intervals, startPoint) { //startpoint isnt actually used but it needs to be here anyway.
+            return arr.splice(intervals,1);
+          }
         },
         backward: {
-          daily: components.defaults.data.daily_prices,
-          intraday: components.defaults.data.intraday_prices,
-          direction: -1
+          daily: function() { return components.defaults.data.daily_prices },
+          intraday: function() { return components.defaults.data.intraday_prices },
+          processor: function(arr, intervals, startPoint) {
+            var arrTimes = arr.map(function(element) { return element.x; });
+            var cutOff = arrTimes.indexOf(startPoint);
+            var newArr = arr.slice(0, cutOff);
+            var limit = newArr.splice(intervals*-1, 1);
+            return limit;
+          }
         }
       };
 
-      var arr = options[intervalDirection][timeType];
+      var arr = options[intervalDirection][timeType]();
       console.log(intervalDirection + "" + timeType);
       console.log(arr);
-      var direction = options[intervalDirection]["direction"];
-      
-      var limit = arr.splice(intervals*direction, 1);
+
+      var processor = options[intervalDirection]["processor"];
+      var limit = processor(arr, intervals, startPoint);
+      console.log(limit);
+
 
       console.log(limit[0].x);
 
@@ -500,8 +512,8 @@ var graphMediator = (function() {
         //var xMin = xLimit(-1, sP, element.beforeDays, element.timeType);
         //var xMax = xLimit(1, sP, element.afterDays, element.timeType);
 
-        var xMin = xLimit(element.timeType, element.backInterval, "backward");
-        var xMax = xLimit(element.timeType, element.forwardInterval, "forward");
+        var xMin = xLimit(element.timeType, element.backInterval, "backward", sP);
+        var xMax = xLimit(element.timeType, element.forwardInterval, "forward", sP);
 
         frameHash[element.name] = {
           xMin: xMin,
