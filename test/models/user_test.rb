@@ -94,13 +94,14 @@ class UserTest < ActiveSupport::TestCase
     end
   end
 
-  test "should calculate user's stock total score correctly"
+  test "should calculate user's stock total score correctly" do
     score = @user.predictions.where(stock_id: @stock.id).sum(:score)
     if score > 0
       assert_equal @user.total_score(@stock), score, "Total score is calculated incorrectly"
     else
       assert_equal @user.total_score(@stock), 0
     end
+  end
 
 
 
