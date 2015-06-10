@@ -142,10 +142,10 @@ end
 
 
 def day_filler
-  start_time = "2015-06-02".utc_time.graph_time + 16*3600*1000
+  start_time = "2010-01-01".utc_time.graph_time + 16*3600*1000
 
   i = 0
-  while i < 2040
+  while i < 4017
     test_time = start_time+i*24*3600*1000
     day_start = test_time - 16*3600*1000
     day_end = day_start+21*3600*1000 - day_start.utc_time.offset_num 
@@ -159,17 +159,19 @@ def day_filler
 end
 
 def day_filler
-  start_time = "2015-06-02".utc_time.graph_time + 16*3600*1000
+  start_time = "2010-01-01".utc_time.graph_time + 16*3600*1000
   inserts = []
   i = 1
-  while i <= 2038
+  id_count = 0
+  while i <= 4017
     test_time = start_time+i*24*3600*1000
     day_start = test_time - 16*3600*1000
     day_end = day_start+21*3600*1000 - day_start.utc_time.offset_num 
     if (test_time).valid_stock_time?
       day = day_end.utc_time
       t = Time.now.utc
-      inserts.push "(#{i}, '#{t}', '#{t}', '#{day}', #{day_end})"
+      inserts.push "(#{id_count}, '#{t}', '#{t}', '#{day}', #{day_end})"
+      id_count += 1
     end
     i += 1
   end
@@ -181,12 +183,14 @@ def time_filler
   start_time = "2015-06-03 00:00:00".utc_time.graph_time
   inserts = []
   i = 1
-  while i <= 586944
+  id_count = 0
+  while i <= 1156896 #4017 * 24*60/5 = 1156896
     t = start_time + i*60*5*1000
     if t.valid_stock_time?
       date = t.utc_time
       now = Time.now.utc
-      inserts.push "(#{i}, '#{now}', '#{now}', '#{date}', #{t})"
+      inserts.push "(#{id_count}, '#{now}', '#{now}', '#{date}', #{t})"
+      id_count += 1
     end
     i += 1
   end
