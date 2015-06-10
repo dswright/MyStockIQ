@@ -107,9 +107,9 @@ class Graph
 
   def future_days
     start = @start_point.graph_time
-    finish = start + 1095*3600*24*1000 #this is 3 years forward. (365*3)
     date_array = []
-    Futureday.where("graph_time > ?", start).where("graph_time <= ?", finish).reorder('graph_time asc').each do |date|
+    #need 3 years forward (roughly) which = 365 *5/7 - 10 = 250/year = 750 
+    Futureday.where("graph_time > ?", start).reorder('graph_time asc').limit(750).each do |date|
       date_array << {"x": date.graph_time, "y":nil}
     end
     return date_array
@@ -117,9 +117,9 @@ class Graph
 
   def future_times
     start = @start_point.graph_time
-    finish = start + 3*3600*24*1000 #this is 3 days forward. (24 * 3 * 60). this needs to be in real time, not interval time. Yes.
     date_array = []
-    Futuretime.where("graph_time > ?", start).where("graph_time <= ?", finish).reorder('graph_time asc').each do |date|
+    #need 3 days forward, which is 12*6.5*3 = 234
+    Futuretime.where("graph_time > ?", start).reorder('graph_time asc').limit(234).each do |date|
       date_array << {"x": date.graph_time, "y":nil}
     end
     return date_array
