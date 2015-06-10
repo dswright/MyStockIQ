@@ -122,15 +122,17 @@ class HelperWorker
   #     stockprices.each do |stockprice|
 
   def perform
-    start_time = "2015-06-03 00:00:00".utc_time.graph_time
+    start_time = "2010-01-01 00:00:00".utc_time.graph_time
     inserts = []
     i = 1
-    while i <= 586944
+    id_count = 0
+    while i <= 1156896 #4017 * 24*60/5 = 1156896
       t = start_time + i*60*5*1000
       if t.valid_stock_time?
         date = t.utc_time
         now = Time.now.utc
-        inserts.push "(#{i}, '#{now}', '#{now}', '#{date}', #{t})"
+        inserts.push "(#{id_count}, '#{now}', '#{now}', '#{date}', #{t})"
+        id_count += 1
       end
       i += 1
     end

@@ -20,7 +20,6 @@ class Graph
     elsif settings[:start_point] == "predictiondetails"
       @start_point = @prediction.start_time
     end
-    #@last_daily_date = daily_prices[-2][0] #get the last id from the dailyprices array..
   end
 
   def prediction #this is used for the predictiondetails graph.
@@ -104,5 +103,25 @@ class Graph
       price_array << {"id": price.id, "x": price.graph_time, "y": price.close_price}
     end
     return price_array
+  end
+
+  def future_days
+    start = @start_point.graph_time
+    date_array = []
+    #need 3 years forward (roughly) which = 365 *5/7 - 10 = 250/year = 750 
+    Futureday.where("graph_time > ?", start).reorder('graph_time asc').limit(750).each do |date|
+      date_array << {"x": date.graph_time, "y":nil}
+    end
+    return date_array
+  end
+
+  def future_times
+    start = @start_point.graph_time
+    date_array = []
+    #need 3 days forward, which is 12*6.5*3 = 234
+    Futuretime.where("graph_time > ?", start).reorder('graph_time asc').limit(234).each do |date|
+      date_array << {"x": date.graph_time, "y":nil}
+    end
+    return date_array
   end
 end

@@ -65,18 +65,20 @@ var graphMediator = (function() {
 
   var defaultProcessor = function() {
     var dailyLines = { //dailyLines is a component that contains the daily graph lines.
-      prices: {lineArray:components.defaults.data.daily_prices,index:0}
+      prices: {lineArray:components.defaults.data.daily_prices,index:0},
+      forward_dates: {lineArray:components.defaults.data.future_days,index:1}
     };
 
     var intradayLines = { //intradaylines is a component that contains the intraday graph lines.
-      prices: {lineArray:components.defaults.data.intraday_prices, index:0}
+      prices: {lineArray:components.defaults.data.intraday_prices,index:0},
+      forward_dates: {lineArray:components.defaults.data.future_times,index:1}
     };
 
     addComponents('dailyLines', dailyLines); //this creates a component called dailyLines.
     addComponents('intradayLines', intradayLines); //this creates a component called intradayLines.
   
-    createDateLine("dailyLines"); //adds the forward date array to the dailyLines component.
-    createDateLine("intradayLines");  //adds the forward date array to the intradayLines component.    
+    // createDateLine("dailyLines"); //adds the forward date array to the dailyLines component.
+    // createDateLine("intradayLines");  //adds the forward date array to the intradayLines component.    
   };
 
   //this function is executed to run all functions that are dependent on whether or not the frame is in the 1d,5d vs 1m,3m,6m,1Yr ect.
@@ -138,6 +140,8 @@ var graphMediator = (function() {
     var frameHash = components.currentFrame.framesHash[button]
     chart.yAxis[0].setExtremes(frameHash.yMin, frameHash.yMax); //set y min and y max values
     chart.xAxis[0].setExtremes(frameHash.xMin, frameHash.xMax); //set x min and x max values
+    console.log(frameHash.xMin.gmtString());
+    console.log(frameHash.xMax.gmtString());
   };
 
   //sets the on-hover respones for each graph line.
@@ -339,13 +343,13 @@ var graphMediator = (function() {
             startPoint: components.intradayLines.prices.lineArray.last().x
           },
           buttons: [
-            {name:"1D", beforeDays:1, afterDays:0.5, timeType:"intraday"},
-            {name:"5D", beforeDays:5, afterDays:2.5, timeType:"intraday"},
-            {name:"1M", beforeDays:20, afterDays:10, timeType:"daily"},
-            {name:"3M", beforeDays:60, afterDays:30, timeType:"daily"},
-            {name:"6M", beforeDays:120, afterDays:60, timeType:"daily"},
-            {name:"1Yr", beforeDays:240, afterDays:120, timeType:"daily"},
-            {name:"5Yr", beforeDays:1200, afterDays:600, timeType:"daily"}
+            {name:"1D", backInterval:78, forwardInterval:39, timeType:"intraday"}, //1 day back is 78 intervals (6.5*12)
+            {name:"5D", backInterval:390, forwardInterval:195, timeType:"intraday"}, //5 days back is 78*5 intervals. 
+            {name:"1M", backInterval:20, forwardInterval:10, timeType:"daily"}, 
+            {name:"3M", backInterval:60, forwardInterval:30, timeType:"daily"},
+            {name:"6M", backInterval:120, forwardInterval:60, timeType:"daily"},
+            {name:"1Yr", backInterval:240, forwardInterval:120, timeType:"daily"},
+            {name:"5Yr", backInterval:1200, forwardInterval:600, timeType:"daily"}
           ]
         }
       },
@@ -395,13 +399,13 @@ var graphMediator = (function() {
             startPoint: components.intradayLines.prediction.lineArray[0].x
           },
           buttons: [
-            {name:"1D", beforeDays:1, afterDays:0.5, timeType:"intraday"},
-            {name:"5D", beforeDays:5, afterDays:2.5, timeType:"intraday"},
-            {name:"1M", beforeDays:20, afterDays:10, timeType:"daily"},
-            {name:"3M", beforeDays:60, afterDays:30, timeType:"daily"},
-            {name:"6M", beforeDays:120, afterDays:60, timeType:"daily"},
-            {name:"1Yr", beforeDays:240, afterDays:120, timeType:"daily"},
-            {name:"5Yr", beforeDays:1200, afterDays:600, timeType:"daily"}
+            {name:"1D", backInterval:78, forwardInterval:39, timeType:"intraday"}, //1 day back is 78 intervals (6.5*12)
+            {name:"5D", backInterval:390, forwardInterval:195, timeType:"intraday"}, //5 days back is 78*5 intervals. 
+            {name:"1M", backInterval:20, forwardInterval:10, timeType:"daily"}, 
+            {name:"3M", backInterval:60, forwardInterval:30, timeType:"daily"},
+            {name:"6M", backInterval:120, forwardInterval:60, timeType:"daily"},
+            {name:"1Yr", backInterval:240, forwardInterval:120, timeType:"daily"},
+            {name:"5Yr", backInterval:1200, forwardInterval:600, timeType:"daily"}
           ]
         }
       }
@@ -417,23 +421,64 @@ var graphMediator = (function() {
       return returnArray;
     };
 
-    var xLimit = function(intervalDirection, startPoint, timeWindow, timeType) { //startPoint is exepcted to be in graphtime.
+    // var xLimit = function(intervalDirection, startPoint, timeWindow, timeType) { //startPoint is exepcted to be in graphtime.
 
-      var times = options["timeIntervals"][timeType];
+    //   //just need the array, and the number of iterations to go down.
 
-      var timeLength = times.tLength * timeWindow; //calculate the total time to iterate over.
-      var i=0;
-      iterations = timeLength/times.tInterval; //calculate number of iterations
-      while (i<=iterations) {
-        var time_to_check = (startPoint + i*times.tInterval*intervalDirection);
-        if (!time_to_check.validStockTime()) { //validstocktime function expects a graph_time and returns true or false.
-          iterations += 1; //if this time point is invalid, increase the number of iterations to do.
+
+    //   // var times = options["timeIntervals"][timeType];
+
+    //   // var timeLength = times.tLength * timeWindow; //calculate the total time to iterate over.
+    //   // var i=0;
+    //   // iterations = timeLength/times.tInterval; //calculate number of iterations
+    //   // while (i<=iterations) {
+    //   //   var time_to_check = (startPoint + i*times.tInterval*intervalDirection);
+    //   //   if (!time_to_check.validStockTime()) { //validstocktime function expects a graph_time and returns true or false.
+    //   //     iterations += 1; //if this time point is invalid, increase the number of iterations to do.
+    //   //   }
+    //   //   i+=1; //increase i everytime.
+    //   // }
+    //   // endPoint = startPoint + times.tInterval*iterations*intervalDirection;
+    //   // return endPoint;
+    // }
+
+    var xLimit = function(timeType, intervals, intervalDirection, startPoint) {
+      var options = {
+        forward: {
+          daily: function() { return components.defaults.data.future_days },
+          intraday: function() { return components.defaults.data.future_times },
+          processor: function(arr, intervals, startPoint) { //startpoint isnt actually used but it needs to be here anyway.
+            return arr.splice(intervals,1);
+          }
+        },
+        backward: {
+          daily: function() { return components.defaults.data.daily_prices },
+          intraday: function() { return components.defaults.data.intraday_prices },
+          processor: function(arr, intervals, startPoint) {
+            var arrTimes = arr.map(function(element) { return element.x; });
+            var cutOff = arrTimes.indexOf(startPoint);
+            var newArr = arr.slice(0, cutOff);
+            var limit = newArr.splice(intervals*-1, 1);
+            return limit;
+          }
         }
-        i+=1; //increase i everytime.
-      }
-      endPoint = startPoint + times.tInterval*iterations*intervalDirection;
-      return endPoint;
-    }
+      };
+
+      var arr = options[intervalDirection][timeType]();
+      console.log(intervalDirection + "" + timeType);
+      console.log(arr);
+
+      var processor = options[intervalDirection]["processor"];
+      var limit = processor(arr, intervals, startPoint);
+      console.log(limit);
+
+
+      console.log(limit[0].x);
+
+      return limit[0].x;
+
+      //for getting the forward looking date, slice off the array from the begginning:
+    };
 
     var yLimit = function (graphType, timeType, xMin, xMax, limitType) {
 
@@ -464,8 +509,11 @@ var graphMediator = (function() {
       //run this when the xMin, ect functions are created and then this delivers the completed object.
       processorOptions.buttons.forEach(function(element, index, array) {
         var sP = processorOptions[element.timeType].startPoint;
-        var xMin = xLimit(-1, sP, element.beforeDays, element.timeType);
-        var xMax = xLimit(1, sP, element.afterDays, element.timeType);
+        //var xMin = xLimit(-1, sP, element.beforeDays, element.timeType);
+        //var xMax = xLimit(1, sP, element.afterDays, element.timeType);
+
+        var xMin = xLimit(element.timeType, element.backInterval, "backward", sP);
+        var xMax = xLimit(element.timeType, element.forwardInterval, "forward", sP);
 
         frameHash[element.name] = {
           xMin: xMin,
@@ -609,12 +657,11 @@ var graphMediator = (function() {
 
 
 //   PRIVATE
-
   var createDateLine = function(line) {
     var options = {
       intradayLines: {
         startTime: components.defaults.data.intraday_prices.last().x, //this gets the last graphtime from the intradayprices array.
-        iterations: 234, //this is 3 days forward. (6.5 * 3 * 60/5)
+        iterations: 234, 
         interval: 5*60*1000,
         component: "intradayLines",
         index: 1 //the index is 1 because it is the second graphLine in the chart.

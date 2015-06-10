@@ -40,7 +40,9 @@ require 'graph'
           :daily_prices => graph.daily_prices,
           :intraday_prices => graph.intraday_prices,
           :predictions => graph.predictions,
-          :my_prediction => graph.my_prediction
+          :my_prediction => graph.my_prediction,
+          :future_days => graph.future_days,
+          :future_times => graph.future_times
         }
       }
 
