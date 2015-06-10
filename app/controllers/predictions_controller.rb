@@ -245,7 +245,9 @@ class PredictionsController < ApplicationController
           :daily_prices => graph.daily_prices,
           :intraday_prices => graph.intraday_prices,
           :prediction => graph.prediction, #the specific prediction to be displayed on the graph.
-          :predictionend => graph.predictionend #the prediction end line, if it exists.
+          :predictionend => graph.predictionend, #the prediction end line, if it exists.
+          :future_days => graph.future_days,
+          :future_times => graph.future_times
         }
       }
     end
