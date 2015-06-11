@@ -67,6 +67,8 @@ Rails.application.routes.draw do
   resources :streams
   resources :relationships
 
+  get     'lp'                        =>     'lp#show'
+
   #post      'relationships'              =>   'relationships#create'
   #delete    'relationships/:id'          =>   'relationships#destroy'
 

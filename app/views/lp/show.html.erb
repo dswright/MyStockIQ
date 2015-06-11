@@ -1,0 +1,152 @@
+
+<!-- SKROLLR SECTION -->
+
+
+<section class="skrollr-section-mobile">
+
+  <div class="skrollr-constrainer constrainer">
+
+    <div class="hm-logo">
+      <%= image_tag("StockIQ-logo-white.png") %>
+    </div>
+  </div>
+
+</section>
+
+<section class="skrollr-section">
+
+  <div id="bg1" data-0="background-position:0px 0px;" data-end="background-position:0px -230px;"></div>
+  <div id="bg2" data-0="background-position:0px 0px;" data-end="background-position:0px 10px;"></div>
+  <div id="bg3" data-0="background-position:0px 0px;" data-end="background-position:0px -60px;"></div>
+
+  <div class="skrollr-constrainer constrainer">
+
+    <div class="hm-logo">
+      <%= image_tag("StockIQ-logo-white.png") %>
+    </div>
+  </div>
+
+</section>
+
+<section class="landing-phones clearfix">
+  <div class="constrainer">
+
+    <div class="landing-phones-col col-sm-4">
+      <%= image_tag("phones.png") %>
+    </div>
+
+    <div class="col-sm-8 phone-marketing-col" style="width:650px;">
+      <p>See AAPL stock predictions & analysis!</p><br /><br />
+      <p>Make predictions and measure success!</p>
+
+    </div>
+
+  </div>
+</section>
+
+<section class="landing-marketing-points clearfix">
+  <div class="marketing-points constrainer">
+
+
+    <div class="marketing-item clearfix">
+      <div class="marketing-img">
+          <%= image_tag ("perdiction-ico.png") %>
+      </div>
+      <div class="marketing-txt">
+        <p class="marketing-point-header">See AAPL Stock Predictions</p>
+        <p class="marketing-point-txt">Review AAPL predictions on our interactive stock graph!</p>
+      </div>
+    </div>
+
+    <div class="marketing-item clearfix">
+      <div class="marketing-img">
+          <%= image_tag ("points-trophy.png") %>
+      </div>
+      <div class="marketing-txt">
+        <p class="marketing-point-header">See Analyst Experience</p>
+        <p class="marketing-point-txt">See the historical stock predictions for all analysts and review their performance</p>
+      </div>
+    </div>
+
+
+    <div class="marketing-item clearfix">
+      <div class="marketing-img">
+          <%= image_tag ("biz-users.png") %>
+      </div>
+      <div class="marketing-txt">
+        <p class="marketing-point-header">Follow AAPL Experts</p>
+        <p class="marketing-point-txt">Follow expert analysts to see their latest opinions on AAPL stock. </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+  <section class="landing-not-invited clearfix">
+
+    <div class="constrainer">
+
+      <div class="landing-user-icon">
+        <%= image_tag ("plus-user-blu.png") %>
+      </div>
+
+      <p class="signup-email-txt">
+        Join our community, for free!
+      </p>
+      <%= form_for Waitinguser.new, remote: true do |f| %>
+        <div class="signup-email-inputs clearfix">
+          <div class="email-input-col col-sm-9">
+            <%= f.text_field :email, class: "waitlist-email", placeholder:"Email address"  %>
+            <%= f.hidden_field :source, value:"lp" %>
+          </div>
+          <div class="btn-input-col col-sm-3">          
+            <div class="signup-email-submit-button-div">
+              
+              <%= f.submit "JOIN!", class: "btn" %>
+            </div>
+          </div>  
+        </div>
+      <% end %>
+      
+    </div>
+  </section>
+
+
+<!-- Hides mobile nav menu on viewport wider than 768px -->
+
+<script type="text/javascript">
+
+if (matchMedia) {
+  var mq = window.matchMedia("(min-width: 768px)");
+  mq.addListener(WidthChange);
+  WidthChange(mq);
+}
+
+// media query change
+function WidthChange(mq) {
+
+  if (mq.matches) {
+
+    var s = skrollr.init({
+    edgeStrategy: 'set',
+    easing: {
+      WTF: Math.random,
+      inverted: function(p) {
+        return 1-p;
+      }
+    }
+
+  });
+  }
+
+
+  else {
+    // window width is less than 768px
+  }
+
+}
+
+
+  </script>
+

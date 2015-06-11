@@ -69,9 +69,7 @@ namespace :scraper do
   end
 end
 
-
 namespace :ten_minute_updates do
-
   task :prediction_end => :environment do
     predictions = Prediction.where(start_price_verified:false)
     predictions.each do |prediction|
@@ -97,8 +95,6 @@ namespace :ten_minute_updates do
     end
   end
 end
-
-
 
 namespace :updates do
   task :price_rounding => :environment do
