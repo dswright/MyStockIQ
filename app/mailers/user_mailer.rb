@@ -2,9 +2,9 @@ class UserMailer < ActionMailer::Base
 
   default from: "hello@mystockiq.com"
 
-  def waitlist_mailer(user_id)
-  	@user = Waitinguser.find(user_id)
-  	mail(to: @user.email, subject: 'StockIQ beta group')
+  def waitlist_mailer(waiting_user_id)
+    @user = Waitinguser.find(waiting_user_id)
+    mail(to: @user.email, subject: 'Welcome to StockIQ!', from: "Welcome@mystockiq.com")
   end
 
   def invite_mailer(referral_id)
