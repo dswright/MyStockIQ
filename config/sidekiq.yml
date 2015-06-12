@@ -7,7 +7,7 @@
 # Set timeout to 8 on Heroku, longer if you manage your own systems.
 :logfile: ./log/sidekiq.log
 :timeout: 8
-# :queues:
-#  - [often, 7]
-#  - [default, 5]
-#  - [seldom, 3]
+:queues:
+  - [critical, 8]
+  - [default, 5]
+  - [low, 2]
