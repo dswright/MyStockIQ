@@ -1,0 +1,21 @@
+
+<!-- SKROLLR SECTION -->
+  <section class="landing-not-invited clearfix">
+    <div class="constrainer">
+      <p class="signup-email-txt">
+        Unsubscribe from StockIQ
+      </p>
+      <%= form_tag("/unsubscribe", remote: true) do %>
+        <div class="signup-email-inputs clearfix">
+          <div class="email-input-col col-sm-9">
+            <%= text_field_tag :email, "Email address", class: "waitlist-email" %>
+          </div>
+          <div class="btn-input-col col-sm-3">          
+            <div class="signup-email-submit-button-div">
+              <%= submit_tag "Unsubscribe", class: "btn" %>
+            </div>
+          </div>  
+        </div>
+      <% end %>
+    </div>
+  </section>

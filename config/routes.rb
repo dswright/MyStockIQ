@@ -59,13 +59,18 @@ Rails.application.routes.draw do
   get     'welcome'                      =>   'welcome#show'
   post    'welcome'                      =>   'welcome#create'
 
-  get     'referrals'                   =>    'referrals#new'
-  post    'referrals'                   =>    'referrals#create'
+  get     'referrals'                    =>    'referrals#new'
+  post    'referrals'                    =>    'referrals#create'
 
-  post    'waitingusers'                =>    'waitingusers#create'
+  post    'waitingusers'                 =>    'waitingusers#create'
 
   resources :streams
   resources :relationships
+
+  get     'lp'                           =>    'lp#show'
+  get     'unsubscribe'                  =>    'unsubscribe#show'
+  post    'unsubscribe'                  =>    'unsubscribe#destroy'
+
 
   #post      'relationships'              =>   'relationships#create'
   #delete    'relationships/:id'          =>   'relationships#destroy'
