@@ -29,6 +29,7 @@
 //= require skrollr
 //= require graph-mediator
 //= require graph-constructors
+//= require analytics
 
 //= require_tree ./pickadate
 
