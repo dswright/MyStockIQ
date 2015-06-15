@@ -117,7 +117,7 @@
 <script type="text/javascript">
 
 if (matchMedia) {
-  var mq = window.matchMedia("(min-width: 769px)");
+  var mq = window.matchMedia("(min-width: 1100px)"); //was 768, now 1025 to account for landscape view, which is 1024 pixels.
   mq.addListener(WidthChange);
   WidthChange(mq);
 }
