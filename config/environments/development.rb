@@ -10,7 +10,7 @@ Rails.application.configure do
   #set errors to be expressed and not surpressed that are returned from ActiveRecord callbacks.
   config.active_record.raise_in_transactional_callbacks = true
 
-  config.action_controller.asset_host = 'http://localhost:5000'
+  config.action_controller.asset_host = 'http://10.0.0.2:5000'
   config.action_mailer.asset_host = config.action_controller.asset_host
 
   # In the development environment your application's code is reloaded on
