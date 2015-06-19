@@ -1,23 +1,43 @@
-<div class="prediction-name">
+<div class="prediction-detail-header">
+		
+	<div class="prediction-name-items clearfix">	
 
-	<div class="prediction-name-center clearfix">
-				
-		<div class="prediction-name-items pull-left">	
-			<%= link_to "/predictions/#{prediction.id}/" do %>
-		  	<%= image_tag prediction.user.image %>
-		  <% end %>
-	  	<span class="prediction-name-title">
+		<%= link_to "/predictions/#{prediction.id}/" do %>
+	  	<%= image_tag prediction.user.image %>
+	  <% end %>
+  	
+
+    <!-- display if user viewing other user's prediction -->
+
+	  <div class="prediction-details-name-follow">
+	  	<div class="prediction-name-title">
 	  		<%= link_to "/predictions/#{prediction.id}/" do %>
 		  		<span class="prediction-name-title-name">
 		  			<%= prediction.user.username %>
-		  		</span> Prediction
+		  		</span>
 		  	<% end %>
-		  </span>	
-	  </div>
+		  </div>	
+		  <a href="#" class="follow-btn-white">
 
-		<div class="prediction-name-vote-count pull-left" id ="likes-Prediction-<%= prediction.id %>">
-			 <%= render partial: "streams/stream_like", locals: {likable_type:prediction.class.name, likable_id:prediction.id} %>
+		  	<%= render partial: 'shared/follow_form', locals: {target: prediction.user} %>
+
+		  	<span class="follow-btn-count">10</span>
+			</a>
 		</div>
+
+    <!-- display if user viewing own prediction -->
+
+	  <div class="prediction-my-name-follow">
+	  	<div class="prediction-my-name-title">
+	  		<%= link_to "/predictions/#{prediction.id}/" do %>
+		  		<span class="prediction-name-title-name">
+		  			<%= prediction.user.username %>
+		  		</span>
+		  	<% end %>
+		  </div>	
+		</div>
+
+
 	</div>
 
 </div>

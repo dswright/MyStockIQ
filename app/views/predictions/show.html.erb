@@ -2,7 +2,7 @@
 <%= include_gon(:init => true) %>
 
 <% content_for :title do %>
-  <title><%= @stock[:ticker_symbol] %> Stock Predictions - StockHero.com</title>
+  <title><%= @stock[:ticker_symbol] %> </title>
 <% end %>
 
 
@@ -10,8 +10,32 @@
   <div class="constrainer">
     
     <!-- title of the stock graph -->
+
     <div id = "title-replace-box">
       <%= render partial: "shared/graph/prediction_title", locals: {prediction: @prediction} %>
+    </div>
+
+    <div class="prediction-detail-comment">
+      <% unless @prediction.content.nil? %>
+        <% unless @prediction.predictionend.nil? %>
+          <% unless @prediction.predictionend.content.nil? %>
+            <div class="prediction-detail-tweet">
+              <div class="prediction-detail-tweet-clear">
+                <p><%= @prediction.predictionend.content %></p>
+              </div>
+              <div class="prediction-detail-tweet-clear">
+                <p><%= @prediction.content %></p>
+              </div>
+            </div>
+          <% end %>
+        <% else %>
+          <div class="prediction-detail-tweet">
+            <div class="prediction-detail-tweet-clear">
+              <p><%= @prediction.content %></p>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
     </div>
     
     <div class="col-xs-12 col-sm-9 stockpage-graph-col">
@@ -39,19 +63,128 @@
       </div>
     </div>
 
-    <div class="col-sm-3 stockpage-graph-stats-col">
+    <div class="col-sm-3 detail-graph-stats-mobile">
 
       <div id ="graph-replace-box">
         <%= render partial: "shared/graph/details_daily_prediction.html.erb", locals: {prediction:@prediction, prediction_custom: @prediction_custom} %>
       </div>
+
+      <!-- DETAIL PG COMMENT BUTTON -->
+
+      <div class="prediction-detail-reply-btn">
+        <a href="#" data-toggle="modal" data-target="#detail-comment-modal">COMMENT</a>
+      </div>
+
+      <!-- DETAIL PG COMMENT MODAL -->
+
+      <div class="modal" id="detail-comment-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="constrainer">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel"></h4>
+              </div>
+              <div class="modal-body">
+                <div class="detail-reply-modal-img pull-left">
+                  <%= link_to image_tag(current_user.image), "/users/#{current_user.username}/" %>
+                </div>
+                <div class="detail-reply-modal-user-time-col pull-left">
+                  <p class="detail-reply-modal-username"><%= link_to current_user.username, "/users/#{current_user.username}/", class: "detail-reply-modal-txt-username" %>
+                  </p>
+                  <p class="detail-reply-modal-time">
+                  <i class="fa fa-clock-o">&nbsp;Right now</i>  
+                  </p>
+                </div>
+
+                <%= form_for(Comment.new, remote:true) do |f| %>
+                  <div class="modal-comment-form-div" id="tabs-1">
+                    <div class="modal-comment-field">
+                      <%= f.text_area :content, placeholder:"type your comment on #{@prediction.stock.ticker_symbol} here", id: "open-comment" %>
+                      <%= hidden_field_tag :stream_string, @comment_stream_string %>
+                      <%= hidden_field_tag :ticker_symbol, @prediction.stock.ticker_symbol %>
+                    </div>
+                    <div class="modal-button-counter clearfix">
+                      <%= f.submit "SUBMIT", class: "btn pull-right" %>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- DETAIL PREDICTION CLOSE BUTTON -->
+
+      <div class="prediction-detail-close-btn">
+        <a href="#" data-toggle="modal" data-target="#detail-close-prediction-modal">CLOSE AT -10</a>
+      </div>
+
+      <!-- DETAIL PREDICTION CLOSE MODAL -->
+
+      <div class="modal" id="detail-close-prediction-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="constrainer">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel"></h4>
+              </div>
+              <div class="modal-body">
+                <div class="detail-reply-modal-img pull-left">
+                  <%= link_to image_tag(current_user.image), "/users/#{current_user.username}/" %>
+                </div>
+                <div class="detail-reply-modal-user-time-col pull-left">
+                  <p class="detail-reply-modal-username"><%= link_to current_user.username, "/users/#{current_user.username}/", class: "detail-reply-modal-txt-username" %>
+                  </p>
+                  <p class="detail-reply-modal-time">
+                  <i class="fa fa-clock-o">&nbsp;Right now</i>  
+                  </p>
+                </div>
+
+                <%= form_for(Predictionend.new, remote:true) do |f| %>
+                <div class="close-prediction-form-modal-div" id="tabs-2">
+                  <div class="close-prediction-modal-container clearfix">
+                    <div class="close-prediction-modal-data">
+                      <p class="close-prediction-modal-points"><%= @prediction.score %> Points</p>
+                      <% 
+                        tz = ActiveSupport::TimeZone.new('America/New_York') #set the time zone to EST.
+                        p_time = @prediction.prediction_end_time
+                        num = tz.parse(p_time.to_s)
+                      %>
+
+                      <p class="close-prediction-modal-date">CLOSING ON <%= num.strftime("%b %e, %Y") %></p>
+                    </div>
+                  </div>
+                  <div class="modal-comment-field clearfix">
+                    <%= text_area_tag 'content', nil, placeholder: "Make a closing comment", class: "close-comment-modal-textarea" %>
+                  </div>
+                  <%= hidden_field_tag :input_page, @prediction_end_input_page %>
+                  <%= hidden_field_tag :prediction_id, @prediction.id %>
+                  <div class="modal-button-counter clearfix">
+                    <%= f.submit "CLOSE NOW", class: "btn pull-right" %>
+                    <div class="pull-right" id="openCharNum"></div>
+                  </div>
+                </div>
+              <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="col-sm-12 col-md-9 stockpage-mobile-buttoms-col">
 
+    <div class="col-sm-3 details-graph-stats-col">
+
+      <div id ="graph-replace-box">
+        <%= render partial: "shared/graph/details_prediction_aside.html.erb", locals: {prediction:@prediction, prediction_custom: @prediction_custom} %>
+      </div>
 
     </div>
 
-  </div>
 </section>
 
 
@@ -59,53 +192,38 @@
 
   <div class="col-xs-12 col-sm-9 stockpage-body">
 
+    <div class="stream" >
 
-
-
-    <div class = "stream" >
-
-      <div class="prediction-detail-item" id="stream_Prediction_<%= @prediction.id %>">
-
-        <div class="prediction-detail-replies" id="new-reply-container">
-
-        <% unless @prediction.content.nil? %>
-          <% unless @prediction.predictionend.nil? %>
-            <% unless @prediction.predictionend.content.nil? %>
-              <div class="prediction-detail-tweet">
-                <div class="prediction-detail-tweet-clear">
-                  <p><%= @prediction.predictionend.content %></p>
-                </div>
-                <div class="prediction-detail-tweet-clear">
-                  <p><%= @prediction.content %></p>
-                </div>
-              </div>
-            <% end %>
-          <% else %>
-            <div class="prediction-detail-tweet">
-              <div class="prediction-detail-tweet-clear">
-                <p><%= @prediction.content %></p>
-              </div>
-            </div>
-          <% end %>
-        <% end %>
-    
-          <div class="detail-stream-comment-header">
-            <p><%= pluralize(@prediction.replies.count, "Reply") %></p>
-          </div>
-
-          <!-- load partials for each reply -->
-          <% @prediction.replies.reorder('created_at asc').each do |reply| %>
-            <%= render partial: "streams/stream_reply", locals: {reply: reply}  %>
-          <% end %>
+      <!-- load partials for each reply on mobile -->
+      <% @prediction.replies.reorder('created_at asc').each do |reply| %>
+        <%= render partial: "shared/graph/detail_reply_mobile", locals: {reply: reply}  %>
+      <% end %>
           
-          <!-- load this reply input everytime -->
-          <%= render partial: "streams/stream_reply_form", locals: {repliable_type:"Prediction", repliable_id:@prediction.id}  %>
+    </div>
+
+    <div class="prediction-detail-item" id="stream_Prediction_<%= @prediction.id %>">
+
+      <div class="prediction-detail-replies" id="new-reply-container">
+  
+        <div class="detail-stream-comment-header">
+          <p><%= pluralize(@prediction.replies.count, "Reply") %></p>
+        </div>
+
+        <!-- load partials for each reply -->
+        <% @prediction.replies.reorder('created_at asc').each do |reply| %>
+          <%= render partial: "streams/stream_reply", locals: {reply: reply}  %>
+        <% end %>
+        
+        <!-- load this reply input everytime -->
+        <%= render partial: "streams/stream_reply_form", locals: {repliable_type:"Prediction", repliable_id:@prediction.id}  %>
         </div> 
       </div>
+
     </div>
   
-
   </div>
+
+
   <div class="col-sm-3 stockpage-sidebar">
 
     <%= render partial: 'shared/prediction_open', locals: {prediction: @prediction} %>

@@ -1,0 +1,22 @@
+<div class="details-graph-prediction-stats clearfix">
+  <div class="details-graph-stats-date-price">
+    <p class="details-graph-price">$<%= prediction_custom[:price].round(2) %></p>
+    <p class="details-graph-label"><%= (prediction_custom[:date] + Time.zone_offset("EST")).strftime("%b %d, %Y") %></p>
+  </div>
+  <div class="details-graph-prediction-stats-2">
+    <p class="details-graph-price"><%= prediction_custom[:score].round(2) %></p>
+    <p class="details-graph-label">POINTS</p>
+  </div>
+
+  <div class="details-graph-prediction-votes">
+    <div class="detail-aside-vote-col">
+      <div class="detail-like-arrows pull-left">
+      <%= render partial: "shared/graph/detail_like", locals: {likable_type:prediction.class.name, likable_id:prediction.id} %>
+      </div>
+      <div class="detail-aside-vote-count pull-left">
+        <p>10</p>
+      </div>
+    </div>
+  </div>
+
+</div>
