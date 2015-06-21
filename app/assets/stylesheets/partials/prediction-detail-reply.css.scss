@@ -1,0 +1,176 @@
+
+.detail-reply-item {
+	margin-top: 10px;
+	padding-bottom: 10px;
+	overflow: hidden;
+}
+
+.detail-reply-col {
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+.detail-reply-col {
+	padding-right: 0px;
+	padding-left: 0px;
+}
+
+
+
+.detail-reply-vote-col {
+	margin-top: 12px;
+	padding-right: 0px;
+	padding-left: 0px;
+}
+
+
+.detail-reply-vote-col a {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	color: #C7C7C7;
+	font-size: 18px;
+
+  -webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+}
+
+.detail-reply-vote-col a:hover {
+	color: #7cb5ec;
+}
+
+.detail-reply-vote-col p {
+	text-align: center;
+	font-size: 12px;
+	font-weight: 300;
+	margin-bottom: 0px;
+	line-height: 9px;
+}
+
+.detail-reply-user-time-col {
+	margin-top: 18px;	
+}
+
+.detail-reply-img {
+	width: 24%;
+	margin-top: 12px;
+	padding-left: 0px;
+	padding-right: 15px;
+}
+
+.detail-reply-img img {
+	width: 100%;
+	border-radius: 90px;
+}
+
+.detail-reply-username {
+	margin-bottom: 3px;
+}
+
+.detail-reply-username a {
+	color: #C7C7C7;
+	font-size: 18px;
+	line-height: 21px;
+	text-decoration: none;
+	padding-bottom: 1px;
+	letter-spacing: 0px;
+	text-transform: uppercase;
+
+  -webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+}
+
+.detail-reply-username a:hover {
+	text-decoration: none;
+	cursor: pointer;
+	color: #7cb5ec;
+	border-bottom: 1px solid #7cb5ec;
+}
+
+.detail-reply-time {
+	margin-top: 0px;
+	font-size: 12px;
+	font-weight: 300;
+	color: #C7C7C7;
+}
+
+.detail-reply-time span {
+	margin-left: 20px;
+}
+
+.detail-reply-txt {
+	margin-top: 9px;
+}
+
+.detail-reply-txt p {
+	font-size: 13px;
+	color: #919191;
+	letter-spacing: 1px;
+	line-height: 18px;
+	font-weight: 300;
+	margin-top: 0px;
+	margin-bottom: 3px;
+}
+
+
+@media (min-width: 480px) {
+
+.detail-reply-img {
+	width: 18%;
+	margin-top: 12px;
+	padding-left: 0px;
+	padding-right: 15px;
+}
+
+.detail-reply-img img {
+	width: 100%;
+	border-radius: 90px;
+}
+
+}
+
+@media (min-width: 768px) {
+
+
+.detail-reply-comments {
+	margin-left: 60px;
+	margin-right: 39px;
+}
+
+.detail-reply-img {
+	width: 16%;
+}
+
+
+
+
+}
+
+
+@media (min-width: 991px) {
+
+.detail-reply-img {
+	width: 12%;
+}
+
+
+}
+
+
+@media (min-width: 1050px) {
+
+.detail-reply-img {
+	width: 11%;
+}
+
+
+}
+
+
+
+
