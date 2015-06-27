@@ -1,6 +1,6 @@
 class ReferralsController < ApplicationController
 
-	before_action :admin_user, only: [:new, :create]
+	before_action :redirect_non_admin_user, only: [:new, :create]
 
 	def new
 	end
@@ -40,10 +40,5 @@ class ReferralsController < ApplicationController
 		def referral_params
 			params.require(:referral).permit(:email)
 		end
-
-		def admin_user
-			return if user_logged_in?
-      		redirect_to(root_url) unless current_user.admin?
-    	end
 
 end

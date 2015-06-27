@@ -1,6 +1,9 @@
 class StocksController < ApplicationController
 require 'graph'
 require 'scraper'
+
+  before_action :redirect_non_user, only: :show
+
 	
 	#Function to pull the whole stock file and then update all records.
 	#Run daily
@@ -9,36 +12,15 @@ require 'scraper'
 	#end
 
 	def show
-
-    return if user_logged_in? #redirects the user to the login page if they are not logged in.
-
     respond_to do |format|
 
         @stock = Stock.find_by(ticker_symbol:params[:ticker_symbol])
 
         @current_user = current_user
 
-        # unless @streams == nil
-        #   @streams.each {|stream| stream.update_stream_popularity_scores}
-
-        #   #this line makes sorts the stream by popularity score.
-        #   @streams = @streams.sort_by {|stream| stream.streamable.popularity.score}
-
-        #   #streams = sort_by_popularity(streams)
-        #   @streams = @streams.reverse
-          
-        #   #Stock's posts, comments, and predictions to be shown in the view
-        #   #will_paginate in view automatically generates params[:page]
-        #   @streams = @streams.paginate(page: params[:page], per_page: 5)
-        #   #@stream_hash_array = Stream.stream_maker(@streams, 0)
-        # end
-
-        
-
-
       format.html {
         
-       #######   KEEP STREAMS OUTSIDE OF format.html. USED BY format.js AS WELL
+        #include for format.html and format.js only.
         @streams = @stock.streams.by_popularity_score.paginate(page: params[:page], per_page: 10)
 
 
@@ -83,6 +65,7 @@ require 'scraper'
         gon.ticker_symbol = @stock.ticker_symbol
         @price_point = Stockprice.where(ticker_symbol:@stock.ticker_symbol).reorder("date desc").limit(1)[0]
       }
+      
       format.json { #this is the json response to the search bar queries.
 
         stock_data = []
@@ -99,8 +82,9 @@ require 'scraper'
       }
 
       format.js {
+        #used to respond to the infinite scroll
         @streams = @stock.streams.by_popularity_score.paginate(page: params[:page], per_page: 10)
-      } #used to respond to the infinite scroll
+      }
     end
 
 	end

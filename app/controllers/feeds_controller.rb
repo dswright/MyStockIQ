@@ -1,13 +1,7 @@
 class FeedsController < ApplicationController
-  
-  #Function to pull the whole stock file and then update all records.
-  #Run daily
-  #def create
-  # StocksWorker.perform_async
-  #end
+  before_action :redirect_non_user, only: :show
 
   def show
-    return if user_logged_in? #redirects the user to the login page if they are not logged in.
 
     respond_to do |format| 
 

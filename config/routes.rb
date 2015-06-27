@@ -6,15 +6,12 @@ Rails.application.routes.draw do
 
   get 'stockprices/update'
 
-#sessions new is the login page. 
+  #users new is the landing page with user signup.
   root  'users#new' 
   
-  #this sends /newuser to the newuser index function in the controller this has to be plural,
-  #to fit with Ruby conventions.
-  get     'signup'                       =>   'users#new' 
   get     'users'                        =>   'users#index'
   post    'users'                        =>   'users#create'
-  get     'users/:username'              =>   'users#show'                                              
+  get     'users/:username'              =>   'users#show', as: 'user'                                          
   delete  'users/:username'              =>   'users#destroy'
 
   get     'login'                        =>   'sessions#new'

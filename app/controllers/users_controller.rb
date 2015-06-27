@@ -1,18 +1,9 @@
 class UsersController < ApplicationController
   
-  #only allows admin_user (see private methods) to make delete requests on users
-  before_action :admin_user, only: :destroy
-
-  #this method automatically loads the index view newuser/new.html.erb. 
-  #And all variables with @ are available in the view.
-  #the Newuser.new creates a new user from the model.
-  
-  def index
-    @users = User.all
-  end
+  before_action :redirect_non_admin_user, only: :destroy
+  before_action :redirect_non_user, only: :show
 
   def show
-    return if user_logged_in? #redirects the user to the login page if they are not logged in.
     
     #Logged in user
     @current_user = current_user
@@ -107,14 +98,15 @@ class UsersController < ApplicationController
         format.js{}
       end
       #session[:errors] = @user.errors.full_messages
-  		#redirect_to "/signup" #we're in the same template, so it assumes this controller, and this is the method name to go to.
     end
 	end
 
+
+  #ADMIN CONTROLS
   def destroy
-      User.find_by(username: params[:username]).destroy
-      flash[:success] = "User deleted"
-      redirect_to users_url
+    User.find_by(username: params[:username]).destroy
+    flash[:success] = "User deleted"
+    redirect_to users_url
   end
 
 
@@ -133,10 +125,6 @@ class UsersController < ApplicationController
 
     def referral_params
       params.require(:referral).permit(:referral_code)
-    end
-
-    def admin_user
-      redirect_to(root_url) unless current_user.admin?
     end
 
 

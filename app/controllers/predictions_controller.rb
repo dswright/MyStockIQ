@@ -1,4 +1,5 @@
 class PredictionsController < ApplicationController
+  before_action :redirect_non_user, only: :show
 
 	require 'customdate'
 	require 'popularity'
@@ -189,7 +190,6 @@ class PredictionsController < ApplicationController
 	end
 
 	def show
-  return if user_logged_in? #redirects the user to the login page if they are not logged in.
 
 	@prediction = Prediction.find_by(id:params[:id])
 	@stock = @prediction.stock
@@ -202,10 +202,6 @@ class PredictionsController < ApplicationController
       @prediction.exceeds_end_time #if the current time exceeds the prediction end time, set active:false, create prediction ends, and stream items.
       @prediction.update_score #run an update of the current score.
     end
-		#replies_update. These need to be changed to replies.
-    #stream removed until replies are updated.
-		@streams = Stream.where(targetable_type: "Prediction", targetable_id: @prediction.id).limit(15)
-
     gon.ticker_symbol = @stock.ticker_symbol
 
     @prediction_custom = {}
@@ -213,17 +209,6 @@ class PredictionsController < ApplicationController
     @prediction_custom[:date] = @prediction.prediction_end_time
     @prediction_custom[:score] = @prediction.score
     @prediction_custom[:id] = @prediction.id
-
-    #unless streams == nil
-    #  streams.each {|stream| stream.streamable.update_popularity_score}
-    #end
-
-    #this line makes sorts the stream by popularity score.
-    #streams = streams.sort_by {|stream| stream.streamable.popularity_score}
-    #streams = sort_by_popularity(streams)
-    #@streams = @streams.reverse
-    
-    @streams = @streams.paginate(page: params[:page], per_page: 10)
 
   	@comment_stream_inputs = "Prediction:#{@prediction.id}"
 
