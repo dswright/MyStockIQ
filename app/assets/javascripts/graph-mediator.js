@@ -88,15 +88,15 @@ var graphMediator = (function() {
       stockGraph: {
         daily: function() {
           setSeries("dailyLines");
-          setHover("dailyPrices");
-          setHover("dailyPredictions"); //not working yet.
-          setHover("dailyMyPrediction"); //not working yet.
+          //setHover("dailyPrices");
+          //setHover("dailyPredictions"); //not working yet.
+          //setHover("dailyMyPrediction"); //not working yet.
         },
         intraday: function() {
           setSeries("intradayLines");
-          setHover("intradayPrices");
-          setHover("intradayPredictions"); //not working yet.
-          setHover("intradayMyPrediction"); //not working yet.
+          //setHover("intradayPrices");
+          //setHover("intradayPredictions"); //not working yet.
+          //setHover("intradayMyPrediction"); //not working yet.
         }
       },
       predictionGraph: {
@@ -589,10 +589,10 @@ var graphMediator = (function() {
     for(var i=0; i < predictions.length; i++ ) {
       var timeCompare = options[timeType].cb(predictions[i].x);
       if (predictionsArray.length === 0) { //if there are no predictions in the array, then add the first prediction.
-        predictionsArray.push({"id":predictions[i].id, "x":timeCompare, "y":predictions[i].y, "marker":predictions[i].marker})
+        predictionsArray.push({"id":predictions[i].id, "x":timeCompare, "y":predictions[i].y, "marker":predictions[i].marker, "image_url":predictions[i].image_url})
       }
       else if (timeCompare !== predictionsArray.last().x) { //if this date is not the same as the last one, then add it.
-        predictionsArray.push({"id":predictions[i].id, "x":timeCompare, "y":predictions[i].y, "marker":predictions[i].marker})
+        predictionsArray.push({"id":predictions[i].id, "x":timeCompare, "y":predictions[i].y, "marker":predictions[i].marker, "image_url":predictions[i].image_url})
       }
     }
 

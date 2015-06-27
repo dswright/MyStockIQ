@@ -30,25 +30,16 @@ $(document).ready(function () {
   seriesVar = [
     {
       name : "prices",
-      lineWidth: 2,
-      dataGrouping: {
-        enabled: false
-      }
+      lineWidth: 2
     },
     {
       name: "dateseries",
-      lineWidth : 0,
-      dataGrouping: {
-        enabled: false
-      }
+      lineWidth : 0
     },
     {
       name : "predictions",
       lineWidth : 0,
       color: "#90ED7D",
-      dataGrouping: {
-        enabled: false
-      },
       marker : {
         enabled : true,
         radius : 5,
@@ -60,9 +51,6 @@ $(document).ready(function () {
       marker : {
         enabled : true,
         radius : 5,
-      },
-      dataGrouping: {
-        enabled: false
       }
     }
   ];
@@ -81,6 +69,9 @@ $(document).ready(function () {
     },
     plotOptions: {
       series: {
+        dataGrouping: {
+          enabled: false
+        },
         turboThreshold: 0,
         cursor: 'pointer',
         marker: {
@@ -128,9 +119,18 @@ $(document).ready(function () {
       }
     },
     tooltip: {
-      enabled: false,
-      crosshairs: null,
-      shared: false
+      crosshairs: true,
+      shared: false,
+      useHTML: true,
+      formatter: function() {
+        if (this.series.name == "predictions") {
+          console.log(this.point.image_url);
+          return "<img src='"+this.point.image_url+"' style='float: left; margin-top: 20px; width: 23px; border-radius: 90px;'> dswright";
+        }
+        if (this.series.name == "prices") {
+          return this.point.id + 'prices series';
+        }
+      }
     },
     rangeSelector : {
       enabled: false
@@ -165,11 +165,9 @@ $(document).ready(function () {
     },
     xAxis: {
       minRange: 3600 * 1000,
-      labels: {
-        enabled: false
-      },
+
       minorTickLength: 0,
-      tickLength: 0,
+      tickLength: 4,
       lineColor: 'rgba(255, 255, 255, 0.39)',
       lineWidth: 1,
     },
@@ -217,6 +215,4 @@ $(document).ready(function () {
   });
 
   $("text").remove( ":contains('Highcharts.com')" );
-
-
 });

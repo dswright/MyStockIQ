@@ -56,7 +56,8 @@ class Graph
         "y": prediction.prediction_end_price,
         marker: {
           symbol: symbol
-        }
+        },
+
       };
     end
     return my_prediction
@@ -73,9 +74,10 @@ class Graph
       predictions_array << {
         "id": prediction.id, 
         "x": prediction.graph_end_time, 
-        "y": prediction.prediction_end_price, 
-        marker: {
-          symbol:symbol
+        "y": prediction.prediction_end_price,
+        "image_url": prediction.user.image.url,
+        "marker": {
+          "symbol":symbol
         }
       }
     end
