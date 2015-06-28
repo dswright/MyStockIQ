@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150607164521) do
+ActiveRecord::Schema.define(version: 20150628001502) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "adminpack"
@@ -54,6 +54,13 @@ ActiveRecord::Schema.define(version: 20150607164521) do
 
   add_index "intradayprices", ["date"], name: "index_intradayprices_on_date", using: :btree
   add_index "intradayprices", ["ticker_symbol"], name: "index_intradayprices_on_ticker_symbol", using: :btree
+
+  create_table "koalas", force: true do |t|
+    t.string   "name"
+    t.string   "color"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "likes", force: true do |t|
     t.string   "like_type"
