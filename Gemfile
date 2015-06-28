@@ -80,6 +80,9 @@ gem 'ruby-progressbar', '1.7.5'
 #URL detection 
 gem 'rails_autolink'
 
+gem 'tweet-button'
+gem 'shareable'
+
 group :development, :test do
 
 	# Use sqlite3 as the database for Active Record

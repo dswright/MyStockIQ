@@ -72,13 +72,10 @@ require 'scraper'
         #Determines relationship between current user and target user
         @target = @stock
 
-
+        @tweet = {stock: @stock.ticker_symbol, user: @current_user.username}
 
       	@comment_stream_string = "Stock:#{@stock.id},User:#{@current_user.id}"
       	@prediction_stream_string = "Stock:#{@stock.id},User:#{@current_user.id}"
-
-
-
         
         @graph_buttons = ["1D", "5D", "1M", "3M", "6M", "1Yr", "5Yr"]
         #used by the view to generate the html buttons

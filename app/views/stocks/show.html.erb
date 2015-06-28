@@ -85,6 +85,7 @@
 
   <div class="col-xs-12 col-sm-9 stockpage-body">
 
+   <%= render partial: "shared/tweet", locals: {tweet: @tweet} %>
 
     <% if @prediction.active %>
       <%= render partial: 'shared/prediction_open', locals: {prediction: @prediction} %>

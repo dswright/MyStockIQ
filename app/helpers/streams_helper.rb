@@ -49,4 +49,17 @@ module StreamsHelper
     return popularity_array
   end
 
+  def tweet_link(args={})
+    url = "https://twitter.com/intent/tweet?"
+
+    tweet = {
+      hash_tag: "stockiq"
+    }
+
+    tweet[:text] = html_escape("AAPL stock will go up in 5 days").gsub(/\s+/,"%20")
+    extension = tweet.map { |k, v| "#{k}=#{v}" }.join("&")
+
+    return url + extension
+  end
+
 end
