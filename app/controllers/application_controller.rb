@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   
   require 'rails_autolink'
-
+  require 'uri'
   #these have to be included in this file to have access to the helper files in the controller.
   include SessionsHelper
   include StocksHelper
