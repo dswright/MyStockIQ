@@ -106,10 +106,7 @@
         <%= render partial: "shared/graph/detail_reply_mobile", locals: {reply: reply}  %>
       <% end %>
           
-<<<<<<< HEAD
-          <!-- load this reply input everytime -->
-          <%= render partial: "streams/stream_reply_form", locals: {repliable_type:"Prediction", repliable_id:@prediction.id} %>
-=======
+
     </div>
 
     <div class="prediction-detail-item" id="stream_Prediction_<%= @prediction.id %>">
@@ -127,7 +124,6 @@
         
         <!-- load this reply input everytime -->
         <%= render partial: "streams/stream_reply_form", locals: {repliable_type:"Prediction", repliable_id:@prediction.id}  %>
->>>>>>> new-detail-pg
         </div> 
       </div>
 
