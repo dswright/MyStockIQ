@@ -18,8 +18,6 @@
       </a>
     </div>
     <div class="col-xs-3 detail-toolbar-divide">
-      <a href="#" class="detail-toolbar-buttons" data-toggle="modal" data-target="#detail-tweet-modal">
-        <i class="fa fa-twitter"><span class="detail-btn-label">Share</span></i>
-      </a>
+      <%= render partial: 'shared/tweet', locals: {prediction: @prediction} %>
     </div>
   </div>
