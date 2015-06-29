@@ -58,6 +58,7 @@ class PredictionendsController < ApplicationController
         #target the current user and the stock with stream items.
         predictionend.streams.create!(targetable_type:"Stock", targetable_id:prediction.stock.id)
         predictionend.streams.create!(targetable_type:"User", targetable_id:current_user.id)
+        
         #Build additional stream items for comment targeting other stocks or users
         tags.each {|tag| predictionend.streams.create(targetable_id: tag.id, targetable_type: tag.class.name)}
 
