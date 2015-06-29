@@ -13,7 +13,3 @@ window.setTimeout(function() {
 }, 3000);
 
 $('.stream').prepend("<%= j render partial: 'streams/stream_main', locals: {streams: @streams} %> ");
-
-var responses = $.parseHTML("<%= j raw @response %>");
-$('#response-box').html(responses).fadeIn("slow");
-

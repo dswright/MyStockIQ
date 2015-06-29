@@ -42,7 +42,7 @@
         <%= link_to "Logout", logout_path %>
       </div>
       <div class="nav-item-div nav-items-user pull-right">
-        <%= link_to "/users/#{current_user.username}/" do %>
+        <%= link_to user_path(current_user.username) do %>
           <%= image_tag current_user.image %>
           <p><%= current_user.username %></p>
         <% end %>

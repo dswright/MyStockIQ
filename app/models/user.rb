@@ -137,6 +137,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def active_prediction_exists?(stock)
+    Prediction.where(active: true, user_id: self.id, stock_id: stock.id).exists?
+  end
+
   def total_score(stock=nil)
 
     if stock == nil

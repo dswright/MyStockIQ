@@ -46,10 +46,15 @@ module SessionsHelper
     !current_user.nil?
   end
 
-  def user_logged_in?
+  def redirect_non_user
     unless logged_in?
       redirect_to root_path
-      return true
+    end
+  end
+
+  def redirect_non_admin_user
+    if logged_in?
+      redirect_to(root_url) unless current_user.admin?
     end
   end
 
@@ -58,15 +63,6 @@ module SessionsHelper
     forget(current_user)
     session.delete(:user_id)
     @current_user = nil
-  end
-
-  #Path to user profile page
-  def user_profile
-    "/users/#{current_user.username}/"
-  end
-
-  def user_path(user)
-    "/users/#{user.username}/"
   end
 
 end

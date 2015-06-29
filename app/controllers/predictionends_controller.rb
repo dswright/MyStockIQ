@@ -74,7 +74,6 @@ class PredictionendsController < ApplicationController
       end
     end
 
-    @response = response_maker(response_msgs)
     respond_to do |f|
       f.js {
         if params[:input_page] == "stockspage"

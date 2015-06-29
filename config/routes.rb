@@ -6,15 +6,12 @@ Rails.application.routes.draw do
 
   get 'stockprices/update'
 
-#sessions new is the login page. 
+  #users new is the landing page with user signup.
   root  'users#new' 
   
-  #this sends /newuser to the newuser index function in the controller this has to be plural,
-  #to fit with Ruby conventions.
-  get     'signup'                       =>   'users#new' 
   get     'users'                        =>   'users#index'
   post    'users'                        =>   'users#create'
-  get     'users/:username'              =>   'users#show'                                              
+  get     'users/:username'              =>   'users#show', as: 'user'                                          
   delete  'users/:username'              =>   'users#destroy'
 
   get     'login'                        =>   'sessions#new'
@@ -47,8 +44,6 @@ Rails.application.routes.draw do
   post    'replies'                      =>   'replies#create'
   get     'replies/:id'                  =>   'replies#show'
 
-  post    'predictionends'               =>   'predictionends#create'
-
   get     'graphimages'                  =>   'graphimages#show'
 
   get     'feed'                         =>   'feeds#show'
@@ -66,6 +61,7 @@ Rails.application.routes.draw do
 
   resources :streams
   resources :relationships
+  resources :predictionends
 
   get     'lp'                           =>    'lp#show'
   get     'unsubscribe'                  =>    'unsubscribe#show'

@@ -15,6 +15,3 @@ $('#comment-only').focus();
 });
 
 $('.stream').prepend("<%= j render partial: 'streams/stream_main', locals: {streams: @streams}  %> ");
-
-//var responses = $.parseHTML("<%= j raw @response %>");  //show the response messages.
-//$('#response-box').html(responses).fadeIn("slow"); 

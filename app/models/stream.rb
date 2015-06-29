@@ -32,44 +32,7 @@ class Stream < ActiveRecord::Base
     where(targetable_id: following_ids, targetable_type: following_type)
   end
 
-
-  def self.stream_maker(streams, nest_count)
-
-    stream_hashes = []
-    streams.each do |stream|
-      #begin making the hash immediately, making the parent item the first item in the array? Or just the sub comments?
-      #the original array is just a list of stream items.. can that be sustained?
-      #yes, it could still pass back a significantly different looking array item.
-      #needs a recurrsive loop to go through this.
-      #like [array_item, nest_count, sub_array, popularity_score],[array_item, nest_count, sub_array, popularity_score]
-      sub_stream = []
-      
-      #the streamable_type and streamable_id will be the way to find the children of this stream item.
-
-      sub_stream = Stream.where(targetable_type: stream.streamable_type, targetable_id: stream.streamable_id)
-      unless sub_stream.empty?
-        sub_stream = Stream.stream_maker(sub_stream, nest_count+1)
-      end
-
-      stream_hash = {
-        stream: stream, 
-        nest_count: nest_count, 
-        sub_hash_array: sub_stream, 
-        popularity_score: stream.streamable.popularity.score
-      }
-
-      stream_hashes << stream_hash
-
-      
-    end
-
-    #stream_hashes.sort_by! {|stream| stream[:popularity_score]}
-    #stream_hashes.reverse!
-    #for now make a maximum of 5 recursions... per comment. But modify that later. Must be limited more intelligently than that later.
-    return stream_hashes
-  end
-
-  def update_stream_popularity_scores
+  def update_stream_popularity_score
       #Update stream item's popularity score
       self.streamable.popularity.update_score
 
