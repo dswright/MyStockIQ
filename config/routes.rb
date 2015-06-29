@@ -44,8 +44,6 @@ Rails.application.routes.draw do
   post    'replies'                      =>   'replies#create'
   get     'replies/:id'                  =>   'replies#show'
 
-  post    'predictionends'               =>   'predictionends#create'
-
   get     'graphimages'                  =>   'graphimages#show'
 
   get     'feed'                         =>   'feeds#show'
@@ -63,6 +61,7 @@ Rails.application.routes.draw do
 
   resources :streams
   resources :relationships
+  resources :predictionends
 
   get     'lp'                           =>    'lp#show'
   get     'unsubscribe'                  =>    'unsubscribe#show'

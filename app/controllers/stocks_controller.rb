@@ -4,12 +4,6 @@ require 'scraper'
 
   before_action :redirect_non_user, only: :show
 
-	
-	#Function to pull the whole stock file and then update all records.
-	#Run daily
-	#def create
-	#	StocksWorker.perform_async
-	#end
 
 	def show
     respond_to do |format|
@@ -35,7 +29,7 @@ require 'scraper'
       	@prediction = @current_user.predictions.build(stock_id: @stock.id, prediction_end_price: nil) #this empty form variable will get overwritten if the page exists.
 
       	#If active prediction exists, show active prediction
-      	if @prediction.active_prediction_exists?
+      	if @current_user.active_prediction_exists?(@stock)
       		@prediction = Prediction.find_by(user_id: @current_user.id, stock_id: @stock.id, active: true)
       	  
           #if my_prediction exists, run these updates on the prediction so it is up to date.
@@ -45,7 +39,6 @@ require 'scraper'
 
           @predictionend = @prediction.build_predictionend()
           @prediction_end_input_page = "stockspage" #for the prediction details box, set the input page for the prediction cancel button.
-
         end
 
         #Determines relationship between current user and target user

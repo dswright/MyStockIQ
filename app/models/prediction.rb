@@ -95,16 +95,6 @@ class Prediction < ActiveRecord::Base
   end
 
 
-  def active_prediction_exists?
-	 #Find current user prediction related to that stock
-	 if Prediction.where(active: true, user_id: self.user.id, stock_id: self.stock.id).exists?
-      true
-    else 
-      false
-    end
-  end
-
-
   def exceeds_end_price
     stock = Stock.find(self.stock_id)
 

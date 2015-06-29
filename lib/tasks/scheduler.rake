@@ -91,7 +91,7 @@ namespace :ten_minute_updates do
 
   task :update_popularity_scores => :environment do
     streams = Stream.find_each do |stream|
-      stream.update_popularity_scores
+      stream.update_stream_popularity_score
     end
   end
 end

@@ -13,17 +13,13 @@ class FeedsController < ApplicationController
       @historical_predictions = @current_user.predictions.where(active:false).reorder("score desc").limit(5)
 
 
-      #this is the tricky line. The stream needs to be build well.
-      #first one for now is all things that the user is directly related in, like the user page.
-
+      #this is the tricky line. The stream needs to be built well.
       @streams = Stream.feed(@current_user).by_popularity_score.paginate(page: params[:page], per_page: 10)
 
       format.html{
-
       }
 
       format.js{
-
       }
     end
   end

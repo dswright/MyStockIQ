@@ -117,7 +117,6 @@ class PredictionsController < ApplicationController
 
     else
       @prediction.graph_end_time = nil
-
     end
 
 
@@ -137,7 +136,7 @@ class PredictionsController < ApplicationController
     if @prediction.valid? 
 
       #adds custom error messages based on different checks. Sets .invalid to true when one of these errors are found
-      @prediction.already_exists if @prediction.active_prediction_exists? 
+      @prediction.already_exists if @user.active_prediction_exists?(stock)
       @prediction.invalid_date if params[:end_day] == ""
       @prediction.invalid_time if params[:end_time] == ""
       @prediction.invalid_end_time if @prediction.prediction_end_time <= @prediction.start_time
@@ -147,8 +146,6 @@ class PredictionsController < ApplicationController
   			@prediction.save
 
         @marker = @prediction.start_price > @prediction.prediction_end_price ? "triangle-down" : "triangle"
-
-        puts "marker #{@marker}"
         
         @comment_stream_string = "Stock:#{@prediction.stock.id},User:#{@current_user.id}" #create stream string used by the new comment box.
 
@@ -197,7 +194,7 @@ class PredictionsController < ApplicationController
 		@current_user = current_user
 
     #if the prediction is active, run updates on the prediction so that its data is most up to date
-    if @prediction.active_prediction_exists?
+    if @prediction.active
       @prediction.exceeds_end_price #if the stock price exceeds the prediction price, move date and set to active:false, create prediction end and stream items.
       @prediction.exceeds_end_time #if the current time exceeds the prediction end time, set active:false, create prediction ends, and stream items.
       @prediction.update_score #run an update of the current score.

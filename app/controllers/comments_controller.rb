@@ -39,8 +39,6 @@ class CommentsController < ApplicationController
 
 	private
 		def comment_params
-			#Obtains parameters from 'comment form' in app/views/shared.
-			#Permits adjustment of only the 'content' column in the 'comments' model.
 			params.require(:comment).permit(:content)
 		end
 end
