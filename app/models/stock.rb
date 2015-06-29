@@ -10,8 +10,7 @@ class Stock < ActiveRecord::Base
   validates :ticker_symbol, presence: true,
             uniqueness: {case_sensitive: false}
 
-  scope :with_predictions, -> { where("active_predictions >  0") }
-
+  
   def followers
     Relationship.where(followed_id: self.id, followed_type: self.class.name)
   end
@@ -20,14 +19,5 @@ class Stock < ActiveRecord::Base
   	sorted_analysts = self.users.uniq.sort_by{|user| user.total_score(self)}
   	sorted_analysts.reverse.first(top)
   end
-
-  def self.popular_stocks(max=10)
-    with_predictions.order(active_predictions: :desc).limit(max)
-  end
-
-  def count_active_predictions
-    self.active_predictions = self.predictions.active.count
-  end
-
 end
 

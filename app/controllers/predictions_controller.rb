@@ -145,9 +145,6 @@ class PredictionsController < ApplicationController
         @prediction_end_input_page = "stockspage" #set this variable for the cancel button form on the stockspage.
   			@prediction.save
 
-        stock.count_active_predictions
-        stock.save
-        
         @marker = @prediction.start_price > @prediction.prediction_end_price ? "triangle-down" : "triangle"
 
         puts "marker #{@marker}"
@@ -192,13 +189,10 @@ class PredictionsController < ApplicationController
 	end
 
 	def show
-    return if user_logged_in? #redirects the user to the login page if they are not logged in.
+  return if user_logged_in? #redirects the user to the login page if they are not logged in.
 
-  	@prediction = Prediction.find_by(id:params[:id])
-  	@stock = @prediction.stock
-
-    #Top 10 popular stocks
-    @popular_stocks = Stock.popular_stocks(10)
+	@prediction = Prediction.find_by(id:params[:id])
+	@stock = @prediction.stock
 
 		@current_user = current_user
 

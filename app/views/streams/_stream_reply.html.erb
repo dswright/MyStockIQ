@@ -9,9 +9,9 @@
           <%= link_to reply.user.username, "/users/#{reply.user.username}/", class: "stream-comments-txt-username" %>:&nbsp;
 
           <% unless reply.tag == nil %>
-            <%= auto_link(reply.tag.content) %>
+            <%= render html: reply.tag.content.html_safe %>
           <% else %>
-            <%= auto_link(reply.content) %>
+            <%= reply.content %>
           <% end %>
         </p>
 

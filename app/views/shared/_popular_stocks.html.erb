@@ -7,14 +7,17 @@
       </div>
     </div>
 
-    <% popular_stocks.each do |stock| %>
+    <% popular_stocks = ["TWTR", "SHAK", "AAPL", "TSLA", "AMZN", "GOOG", "WMT", "GPRO", "FB"] %>
+
+    <% popular_stocks.each do |ticker_symbol| %>
+      <% stock = Stock.find_by(ticker_symbol:ticker_symbol) %>
 
       <a class="stockpage-sidebar-stocks-item clearfix" href="/stocks/<%= stock.ticker_symbol %>/">
         <div class="stockpage-sidebar-stocks-label pull-left">
           <%= stock.ticker_symbol %><span>&nbsp;&nbsp;&nbsp;</span>
         </div>
         <div class="stockpage-sidebar-stocks-number pull-right">
-          <i class="fa fa-line-chart"></i><%= stock.active_predictions %>
+          <i class="fa fa-line-chart"></i><%= stock.predictions.where(active:true).count %>
         </div>
       </a>
     <% end %>

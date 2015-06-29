@@ -7,18 +7,6 @@ class PredictionTest < ActiveSupport::TestCase
 		@prediction = Prediction.find_by(user_id:1)
 	end
 
-  should validate_numericality_of(:prediction_end_price)
-  should validate_presence_of(:prediction_end_time)
-  should validate_numericality_of(:score)
-  should validate_presence_of(:start_time)
-  should validate_presence_of(:graph_start_time)
-  should validate_presence_of(:graph_end_time)
-  should validate_numericality_of(:stock_id)
-
-  should have_many(:streams)
-  should have_many(:likes)
-  should have_many(:replies)
-
 	test "should be valid" do 
 		assert @prediction.valid?
 	end

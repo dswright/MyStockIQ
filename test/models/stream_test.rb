@@ -17,6 +17,7 @@ class StreamTest < ActiveSupport::TestCase
 
   test "streamable id should be present" do
   	@stream.streamable_id = nil
+
     assert_not @stream.valid?
   end
 

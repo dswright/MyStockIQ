@@ -239,7 +239,6 @@ GEM
     lumberjack (1.0.9)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
-    metaclass (0.0.4)
     method_source (0.8.2)
     mime-types (2.6.1)
     mini_backtrace (0.1.3)
@@ -253,14 +252,8 @@ GEM
       builder
       minitest (>= 5.0)
       ruby-progressbar
-<<<<<<< HEAD
     multi_json (1.11.1)
     multipart-post (2.0.0)
-=======
-    mocha (1.1.0)
-      metaclass (~> 0.0.1)
-    multi_json (1.11.0)
->>>>>>> popular-stocks
     nenv (0.2.0)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
@@ -313,8 +306,6 @@ GEM
     rails_12factor (0.0.2)
       rails_serve_static_assets
       rails_stdout_logging
-    rails_autolink (1.1.6)
-      rails (> 3.1)
     rails_serve_static_assets (0.0.4)
     rails_stdout_logging (0.0.3)
     railties (4.2.0.beta4)
@@ -350,19 +341,8 @@ GEM
       json (~> 1.8)
       rdoc (~> 4.0, < 5.0)
     shellany (0.0.1)
-<<<<<<< HEAD
     sidekiq (3.4.1)
       celluloid (~> 0.16.0)
-=======
-    shoulda (3.5.0)
-      shoulda-context (~> 1.0, >= 1.0.1)
-      shoulda-matchers (>= 1.4.1, < 3.0)
-    shoulda-context (1.2.1)
-    shoulda-matchers (2.8.0)
-      activesupport (>= 3.0.0)
-    sidekiq (3.3.4)
-      celluloid (>= 0.16.0)
->>>>>>> popular-stocks
       connection_pool (>= 2.1.1)
       json
       redis (>= 3.0.6)
@@ -436,7 +416,6 @@ DEPENDENCIES
   mini_backtrace (= 0.1.3)
   mini_magick
   minitest-reporters (= 1.0.5)
-  mocha
   newrelic_rpm
   oink
   pg (= 0.17.1)
@@ -447,17 +426,15 @@ DEPENDENCIES
   rails-html-sanitizer (= 1.0.1)
   rails4-autocomplete
   rails_12factor (= 0.0.2)
-  rails_autolink
   responders (~> 2.0)
   rest-client (~> 1.7.2)
   ruby-progressbar (= 1.7.5)
   sass (~> 3.2.5)
   sass-rails
   sdoc (= 0.4.0)
-  shoulda
   sidekiq
   sinatra
-  slim (= 3.0.6)
+  slim
   spring (= 1.1.3)
   turbolinks (= 2.3.0)
   uglifier (= 2.5.3)

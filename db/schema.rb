@@ -11,12 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150628001502) do
+ActiveRecord::Schema.define(version: 20150602222103) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "adminpack"
   enable_extension "plpgsql"
-  enable_extension "pg_stat_statements"
 
   create_table "comments", force: true do |t|
     t.text     "content"
@@ -29,17 +28,8 @@ ActiveRecord::Schema.define(version: 20150628001502) do
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
   create_table "futuredays", force: true do |t|
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-    t.datetime "date"
-    t.integer  "graph_time", limit: 8
-  end
-
-  create_table "futuretimes", force: true do |t|
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
-    t.datetime "time"
-    t.integer  "graph_time", limit: 8
+    t.date    "day"
+    t.integer "graph_time", limit: 8
   end
 
   create_table "intradayprices", force: true do |t|
@@ -54,13 +44,6 @@ ActiveRecord::Schema.define(version: 20150628001502) do
 
   add_index "intradayprices", ["date"], name: "index_intradayprices_on_date", using: :btree
   add_index "intradayprices", ["ticker_symbol"], name: "index_intradayprices_on_ticker_symbol", using: :btree
-
-  create_table "koalas", force: true do |t|
-    t.string   "name"
-    t.string   "color"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
 
   create_table "likes", force: true do |t|
     t.string   "like_type"
@@ -157,7 +140,7 @@ ActiveRecord::Schema.define(version: 20150628001502) do
   end
 
   add_index "relationships", ["followed_id"], name: "index_relationships_on_followed_id", using: :btree
-  add_index "relationships", ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", using: :btree
+  add_index "relationships", ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true, using: :btree
   add_index "relationships", ["follower_id"], name: "index_relationships_on_follower_id", using: :btree
 
   create_table "replies", force: true do |t|
@@ -205,7 +188,6 @@ ActiveRecord::Schema.define(version: 20150628001502) do
     t.datetime "updated_at"
     t.string   "stock_sector"
     t.boolean  "viewed"
-    t.integer  "active_predictions",             default: 0
   end
 
   add_index "stocks", ["active"], name: "index_stocks_on_active", using: :btree

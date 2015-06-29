@@ -24,7 +24,7 @@ class ReferralsController < ApplicationController
 		if @referral.save
 			#Send worker to send out invitation email w/ referral code using 'UserMailer' mailer
 			MailerWorker.new.perform(@referral.id)
-			@message[:success] = "Invite referral sent to #{@referral.email}"
+			@message[:success] = "Invite referral sent!"
 		end
  	
 

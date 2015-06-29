@@ -66,7 +66,7 @@ Rails.application.routes.draw do
 
   resources :streams
   resources :relationships
-  resources :koalas
+
   #post      'relationships'              =>   'relationships#create'
   #delete    'relationships/:id'          =>   'relationships#destroy'
 

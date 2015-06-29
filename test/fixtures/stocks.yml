@@ -11,7 +11,6 @@ AAPL:
   exchange: nil
   price_to_earnings: nil
   stock_industry: nil
-  active_predictions: 10
 
 BNNY:
   id: 3
@@ -20,7 +19,6 @@ BNNY:
   stock_industry: nil
   price_to_earnings: nil
   stock_industry: nil
-  active_predictions: 7
 
 #this is used by the graph tests. It should be added to the daily prices array.
 LNKD:
@@ -31,4 +29,3 @@ LNKD:
   price_to_earnings: nil
   daily_stock_price: 100
   date: "2015-01-12 15:00:00" #10 AM
-  active_predictions: 8
