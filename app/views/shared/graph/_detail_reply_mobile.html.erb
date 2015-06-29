@@ -1,0 +1,37 @@
+<div class="prediction-detail-item-mobile" id="stream_Prediction_<%= @prediction.id %>">
+
+  <div class="prediction-detail-replies-mobile" id="new-reply-container-mobile">
+
+  <% if reply.valid? %>
+    <div class="detail-reply-item" id="stream-reply-<%= reply.id %>">
+      <div class="detail-reply-col col-xs-11 clearfix">
+        <div class="detail-reply-img pull-left">
+          <%= link_to image_tag(reply.user.image), "/users/#{reply.user.username}/" %>
+        </div>
+        <div class="detail-reply-user-time-col pull-left">
+          <p class="detail-reply-username"><%= link_to reply.user.username, "/users/#{reply.user.username}/", class: "detail-reply-txt-username" %>
+          </p>
+          <p class="detail-reply-time">
+            <i class="fa fa-clock-o">&nbsp;<%= distance_of_time_in_words(reply.created_at, Time.zone.now) %> ago</i> 
+          </p>
+        </div>
+      </div>
+
+      <div class="detail-reply-vote-col col-xs-1" id="likes-Reply-<%= reply.id %>">
+        <%= render partial: "streams/stream_like", locals: {likable_type:"Reply", likable_id:reply.id} %>
+      </div>
+    </div>
+    <div class="detail-reply-txt">
+      <p>
+        <% unless reply.tag == nil %>
+          <%= render html: reply.tag.content.html_safe %>
+        <% else %>
+          <%= reply.content %>
+        <% end %>
+      </p>
+    </div>
+  <% end %>
+
+</div>
+
+</div>

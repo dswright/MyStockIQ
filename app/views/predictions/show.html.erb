@@ -2,7 +2,7 @@
 <%= include_gon(:init => true) %>
 
 <% content_for :title do %>
-  <title><%= @stock[:ticker_symbol] %> Stock Predictions - StockHero.com</title>
+  <title><%= @stock[:ticker_symbol] %> </title>
 <% end %>
 
 
@@ -10,8 +10,32 @@
   <div class="constrainer">
     
     <!-- title of the stock graph -->
+
     <div id = "title-replace-box">
       <%= render partial: "shared/graph/prediction_title", locals: {prediction: @prediction} %>
+    </div>
+
+    <div class="prediction-detail-comment">
+      <% unless @prediction.content.nil? %>
+        <% unless @prediction.predictionend.nil? %>
+          <% unless @prediction.predictionend.content.nil? %>
+            <div class="prediction-detail-tweet">
+              <div class="prediction-detail-tweet-clear">
+                <p><%= @prediction.predictionend.content %></p>
+              </div>
+              <div class="prediction-detail-tweet-clear">
+                <p><%= @prediction.content %></p>
+              </div>
+            </div>
+          <% end %>
+        <% else %>
+          <div class="prediction-detail-tweet">
+            <div class="prediction-detail-tweet-clear">
+              <p><%= @prediction.content %></p>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
     </div>
     
     <div class="col-xs-12 col-sm-9 stockpage-graph-col">
@@ -39,19 +63,23 @@
       </div>
     </div>
 
-    <div class="col-sm-3 stockpage-graph-stats-col">
+    <div class="col-sm-3 detail-graph-stats-mobile">
 
       <div id ="graph-replace-box">
         <%= render partial: "shared/graph/details_daily_prediction.html.erb", locals: {prediction:@prediction, prediction_custom: @prediction_custom} %>
       </div>
-    </div>
-
-    <div class="col-sm-12 col-md-9 stockpage-mobile-buttoms-col">
-
 
     </div>
 
-  </div>
+
+    <div class="col-sm-3 details-graph-stats-col">
+
+      <div id ="graph-replace-box">
+        <%= render partial: "shared/graph/details_prediction_aside.html.erb", locals: {prediction:@prediction, prediction_custom: @prediction_custom} %>
+      </div>
+
+    </div>
+
 </section>
 
 
@@ -61,58 +89,65 @@
 
 
 
+  <!-- DESKTOP TOOLBAR PARTIALS -->
 
-    <div class = "stream" >
+  <% if @prediction.user == @current_user %>
+    <%= render partial: 'details_desktop_toolbar_mine'%>
+  <% else %>
+    <%= render partial: 'details_desktop_toolbar_not_mine'%>
+  <% end %>
 
-      <div class="prediction-detail-item" id="stream_Prediction_<%= @prediction.id %>">
 
-        <div class="prediction-detail-replies" id="new-reply-container">
 
-        <% unless @prediction.content.nil? %>
-          <% unless @prediction.predictionend.nil? %>
-            <% unless @prediction.predictionend.content.nil? %>
-              <div class="prediction-detail-tweet">
-                <div class="prediction-detail-tweet-clear">
-                  <p><%= @prediction.predictionend.content %></p>
-                </div>
-                <div class="prediction-detail-tweet-clear">
-                  <p><%= @prediction.content %></p>
-                </div>
-              </div>
-            <% end %>
-          <% else %>
-            <div class="prediction-detail-tweet">
-              <div class="prediction-detail-tweet-clear">
-                <p><%= @prediction.content %></p>
-              </div>
-            </div>
-          <% end %>
-        <% end %>
-    
-          <div class="detail-stream-comment-header">
-            <p><%= pluralize(@prediction.replies.count, "Reply") %></p>
-          </div>
+    <div class="stream">
 
-          <!-- load partials for each reply -->
-          <% @prediction.replies.reorder('created_at asc').each do |reply| %>
-            <%= render partial: "streams/stream_reply", locals: {reply: reply}  %>
-          <% end %>
+      <!-- load partials for each reply on mobile -->
+      <% @prediction.replies.reorder('created_at asc').each do |reply| %>
+        <%= render partial: "shared/graph/detail_reply_mobile", locals: {reply: reply}  %>
+      <% end %>
           
-          <!-- load this reply input everytime -->
-          <%= render partial: "streams/stream_reply_form", locals: {repliable_type:"Prediction", repliable_id:@prediction.id}  %>
+
+    </div>
+
+    <div class="prediction-detail-item" id="stream_Prediction_<%= @prediction.id %>">
+
+      <div class="prediction-detail-replies" id="new-reply-container">
+  
+        <div class="detail-stream-comment-header">
+          <p><%= pluralize(@prediction.replies.count, "Reply") %></p>
+        </div>
+
+        <!-- load partials for each reply -->
+        <% @prediction.replies.reorder('created_at asc').each do |reply| %>
+          <%= render partial: "streams/stream_reply", locals: {reply: reply}  %>
+        <% end %>
+        
+        <!-- load this reply input everytime -->
+        <%= render partial: "streams/stream_reply_form", locals: {repliable_type:"Prediction", repliable_id:@prediction.id}  %>
         </div> 
       </div>
-    </div>
-  
 
+    </div>
   </div>
+
+  
+  <!-- MOBILE TOOLBAR PARTIALS -->
+
+  <% if @prediction.user == @current_user %>
+    <%= render partial: 'details_mobile_toolbar_mine'%>
+  <% else %>
+    <%= render partial: 'details_mobile_toolbar_not_mine'%>
+  <% end %>
+
+
+
   <div class="col-sm-3 stockpage-sidebar">
 
     <%= render partial: 'shared/prediction_open', locals: {prediction: @prediction} %>
    
     <%= render partial: 'stocks/ranking', locals: {stock: @stock} %>
 
-    <%= render partial: 'shared/popular_stocks' %>
+    <%= render partial: 'shared/popular_stocks', locals: {popular_stocks: @popular_stocks} %>
     
   </div>
 

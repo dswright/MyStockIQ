@@ -67,7 +67,6 @@ Rails.application.routes.draw do
   get     'unsubscribe'                  =>    'unsubscribe#show'
   post    'unsubscribe'                  =>    'unsubscribe#destroy'
 
-
   #post      'relationships'              =>   'relationships#create'
   #delete    'relationships/:id'          =>   'relationships#destroy'
 

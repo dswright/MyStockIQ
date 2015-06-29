@@ -10,6 +10,9 @@ require 'scraper'
 
         @stock = Stock.find_by(ticker_symbol:params[:ticker_symbol])
 
+        #Picks top 10 stocks with active predictions
+        @popular_stocks = Stock.popular_stocks(10)
+
         @current_user = current_user
 
       format.html {
@@ -44,13 +47,8 @@ require 'scraper'
         #Determines relationship between current user and target user
         @target = @stock
 
-
-
       	@comment_stream_string = "Stock:#{@stock.id},User:#{@current_user.id}"
       	@prediction_stream_string = "Stock:#{@stock.id},User:#{@current_user.id}"
-
-
-
         
         @graph_buttons = ["1D", "5D", "1M", "3M", "6M", "1Yr", "5Yr"]
         #used by the view to generate the html buttons

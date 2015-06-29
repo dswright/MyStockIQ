@@ -1,5 +1,4 @@
 
-
 .prediction-detail-blue-blur {
   background-image: asset-url("blue-blur33.png");
   background-size: cover;
@@ -12,27 +11,59 @@
   background-position: center;
 }
 
-
-/* ----- DETAIL BUTTON ------*/
-
-
-.graph-prediction-detail-btn {
+.detail-graph-stats {
+	display: none;
 }
 
-.graph-prediction-detail-btn a {
+.details-graph-prediction-stats {
+	display: none;
+}
+
+.detail-vote-arrows-mobile a {
+	display: block;
+	width: 30px;
+	height: 30px;
+	padding-top: 3px;
+	padding-right: 5px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	color: #7CB5EC;
+	font-size: 21px;
+
+  -webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+}
+
+.detail-toolbar-mine {
+	display: none;
+}
+
+.detail-toolbar-not-mine {
+	display: none;
+}
+
+/* ----- REPLY BUTTON ------*/
+
+.prediction-detail-reply-btn {
+	margin-top: 5px;
+}
+
+.prediction-detail-reply-btn a {
 	display: inline-block;
-	border: solid 1px rgba(255,255,255,.90);
+	background-color: #BDF271;
 	border-radius: 3px;
 	padding-top: 15px;
 	padding-bottom: 15px;
 	width: 100%;
-	font-size: 10px;
+	font-size: 15px;
 	font-weight: 400;
 	cursor: pointer;
-	color: rgba(255,255,255,.90);
+	color: #3B5998;
 	text-decoration: none;
 	margin-top: 20px;
-	font-size: 11px;
 	text-transform: uppercase;
 	text-align: center;
 
@@ -42,9 +73,61 @@
   transition: 150ms ease-in;
 }
 
-.graph-prediction-detail-btn a:hover {
-	border: solid 1px #7cb5ec;
-	color: #7cb5ec;
+.prediction-detail-reply-btn a:hover {
+	color: #3B5998;
+	background-color: #C1F582;
+	cursor: pointer;
+	outline: none;
+}
+
+.prediction-detail-reply-btn a:focus {
+	color: #3B5998;
+	background-color: #C1F582;
+	cursor: pointer;
+	outline: none;
+}
+
+
+/* ----- DETAIL BUTTON ------*/
+
+.prediction-detail-close-btn {
+	margin-top: 0px;
+}
+
+.prediction-detail-close-btn a {
+	display: inline-block;
+	background-color: #7cb5ec;
+	border-radius: 3px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	width: 100%;
+	font-size: 15px;
+	font-weight: 400;
+	cursor: pointer;
+	color: #fff;
+	text-decoration: none;
+	margin-top: 20px;
+	text-transform: uppercase;
+	text-align: center;
+
+  -webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+}
+
+.prediction-detail-close-btn a:hover {
+	color: #fff;
+	background-color: #8EB7ED;
+	cursor: pointer;
+	outline: none;
+}
+
+.prediction-detail-close-btn a:focus {
+	color: #fff;
+	background-color: #8EB7ED;
+	cursor: pointer;
+	outline: none;
 }
 
 
@@ -67,6 +150,29 @@
 	margin-right: 0px;
 	padding-left: 30px;
 	padding-right: 30px;
+}
+
+/* ----- PREDICTION DETAIL MOBILE REPLIES ------*/
+
+.prediction-detail-item-mobile {
+	display: block;
+	margin-top: 20px;
+	margin-bottom: 30px;
+	overflow: hidden;
+	padding-top: 0px;
+	padding-bottom: 10px;
+	padding-right: 10px;
+	background-color: #fff;
+	border: solid 1px rgba(0,0,0,.07);;
+	color: #919191;
+	text-decoration: none;
+}
+
+
+.prediction-detail-replies-mobile {
+	margin-right: 0px;
+	padding-left: 20px;
+	padding-right: 20px;
 }
 
 
@@ -116,9 +222,11 @@
 	padding-bottom: 2px;
 }
 
-.prediction-detail-tweet-clear {
+.prediction-detail-tweet-clear p {
+	margin-top: 20px;
+	margin-bottom: 0px;
 	line-height: 24px;
-	color: #919191;
+	color: #fff;
 	font-size: 18px;
 }
 
@@ -128,8 +236,6 @@
 	line-height: 24px;
 	font-size: 18px;
 }
-
-
 
 .detail-stream-comment-header {
 	font-size: 18px;
@@ -145,12 +251,178 @@
 }
 
 
+/*------------ DETAIL PG MOBILE TOOLBAR -----------*/
+
+
+/*--- MINE ---*/
+
+.detail-btn-label {
+	display: none;
+}
+
+.detail-btn-label-points {
+	display: none;
+}
+
+.detail-mobile-toolbar-mine {
+	position: fixed;
+	width: 100%;
+	bottom: 0;
+	display: block;
+	overflow: hidden;
+	background-color: #fff;
+	border: solid 1px rgba(0,0,0,.07);;
+	color: #7cb5ec;
+	text-decoration: none;
+}
+
+.detail-mobile-toolbar-buttons-points {
+	display: inline-block;
+	width: 100%;
+	text-align: center;
+	padding-top: 20px;
+	padding-bottom: 19px;
+	color: #7cb5ec;
+
+  -webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+}
+
+.detail-mobile-toolbar-buttons-points .points {
+	display: inline-block;
+	background-color: #7cb5ec;
+	color: #fff;
+	font-size: 14px;
+	border-radius: 3px;
+	padding: 2px 6px 2px 6px
+}
+
+.detail-mobile-toolbar-buttons-points:hover {
+	color: #7cb5ec;
+	text-decoration: none;
+}
+
+.detail-mobile-toolbar-buttons-points:focus {
+	color: #7cb5ec;
+	outline: none;
+	text-decoration: none;
+}
+
+
+
+/*--- NOT MINE ---*/
+
+.detail-mobile-toolbar-not-mine {
+	position: fixed;
+	width: 100%;
+	bottom: 0;
+	display: block;
+	overflow: hidden;
+	background-color: #fff;
+	border: solid 1px rgba(0,0,0,.07);;
+	color: #7cb5ec;
+	text-decoration: none;
+}
+
+.detail-mobile-toolbar-buttons {
+	display: inline-block;
+	width: 100%;
+	text-align: center;
+	padding-top: 20px;
+	padding-bottom: 21px;
+	color: #7cb5ec;
+}
+
+.detail-mobile-toolbar-buttons i {
+	font-size: 18px;
+}
+
+.detail-mobile-toolbar-buttons:hover {
+	color: #7cb5ec;
+	text-decoration: none;
+}
+
+.detail-mobile-toolbar-buttons:focus {
+	color: #7cb5ec;
+	outline: none;
+	text-decoration: none;
+}
+
+.detail-toolbar-divide {
+	border-left: 1px solid rgba(0,0,0,.07);
+}
+
+.detail-mobile-toolbar-buttons i:before {
+	padding-right: 10px;
+}
 
 @media (min-width: 768px) {
 
+.detail-graph-stats-mobile {
+	display: none;
+}
+
+.detail-graph-stats {
+	display: block;
+}
+
 .prediction-detail-blue-blur {
   padding-bottom: 0px;
+}
 
+.detail-mobile-toolbar-mine {
+	display: none;
+}
+
+.detail-mobile-toolbar-not-mine {
+	display: none;
+}
+
+
+/*------------ DETAIL PG STATS ASIDE -----------*/
+
+.details-graph-stats-col {
+	margin-top: 18px;
+	padding-left: 0px;
+	padding-right: 0px;
+	clear: none;
+}
+
+.details-graph-prediction-stats {
+	display: block;
+	text-align: center;
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+.details-graph-price {
+	font-size: 36px;
+	line-height: 18px;
+	color: #fff;
+	margin-top: 27px;
+}
+
+.details-graph-label {
+	font-size: 12px;
+	color: rgba(255, 255, 255, 0.39);
+	text-transform: uppercase;
+	margin-bottom: 0px;
+}
+
+.detail-vote-arrows-mobile {
+	margin-top: 12px;
+	padding-right: 0px;
+	padding-left: 0px;
+}
+
+.detail-vote-arrows-mobile a {
+	display: none;
+}
+
+.details-graph-prediction-stats-2 {
+	margin-top: 7px;
 }
 
 .graph-prediction-detail-btn a {
@@ -168,10 +440,206 @@
 	padding-bottom: 6px;
 }
 
+
+
+/* ----- REPLY BUTTON ------*/
+
+.prediction-detail-reply-btn {
+	margin-top: 5px;
+}
+
+.prediction-detail-reply-btn a {
+	display: inline-block;
+	background-color: #BDF271;
+	border-radius: 3px;
+	padding-top: 12px;
+	padding-bottom: 12px;
+	width: 100%;
+	font-size: 12px;
+	font-weight: 400;
+	cursor: pointer;
+	color: #3B5998;
+	text-decoration: none;
+	margin-top: 20px;
+	text-transform: uppercase;
+	text-align: center;
+
+  -webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+}
+
+.prediction-detail-reply-btn a:hover {
+	color: #3B5998;
+	background-color: #C1F582;
+	cursor: pointer;
+	outline: none;
+}
+
+.prediction-detail-reply-btn a:focus {
+	color: #3B5998;
+	background-color: #C1F582;
+	cursor: pointer;
+	outline: none;
 }
 
 
-@media (min-width: 981px) {
+/* ----- DETAIL BUTTON ------*/
+
+.prediction-detail-close-btn {
+	margin-top: 0px;
+}
+
+.prediction-detail-close-btn a {
+	display: inline-block;
+	background-color: #7cb5ec;
+	border-radius: 3px;
+	padding-top: 15px;
+	padding-bottom: 12px;
+	width: 100%;
+	font-size: 12px;
+	font-weight: 400;
+	cursor: pointer;
+	color: #fff;
+	text-decoration: none;
+	margin-top: 10px;
+	text-transform: uppercase;
+	text-align: center;
+
+  -webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+}
+
+.prediction-detail-close-btn a:hover {
+	color: #fff;
+	background-color: #8EB7ED;
+	cursor: pointer;
+	outline: none;
+}
+
+.prediction-detail-close-btn a:focus {
+	color: #fff;
+	background-color: #8EB7ED;
+	cursor: pointer;
+	outline: none;
+}
+
+
+.prediction-detail-item {
+	display: block;
+	margin-top: 20px;
+	margin-bottom: 30px;
+	overflow: hidden;
+	padding-top: 0px;
+	padding-bottom: 10px;
+	padding-right: 10px;
+	background-color: #fff;
+	border: solid 1px rgba(0,0,0,.07);;
+	color: #919191;
+	text-decoration: none;
+}
+
+
+.prediction-detail-replies {
+	margin-right: 0px;
+	padding-left: 30px;
+	padding-right: 30px;
+}
+
+
+/*------------ DETAIL PG DESKTOP TOOLBAR -----------*/
+
+
+/*--- MINE ---*/
+
+.detail-toolbar-mine {
+	display: block;
+	margin-top: 20px;
+	overflow: hidden;
+	background-color: #fff;
+	border: solid 1px rgba(0,0,0,.07);;
+	color: #919191;
+	text-decoration: none;
+}
+
+.detail-toolbar-buttons-points .point {
+	display: inline-block;
+	background-color: #7cb5ec;
+	color: #fff;
+	border-radius: 3px;
+	padding: 2px 6px 2px 6px;
+}
+
+.detail-toolbar-buttons-points {
+	display: inline-block;
+	width: 100%;
+	text-align: center;
+	padding-top: 19px;
+	padding-bottom: 18px;
+	font-weight: 500px;
+	color: #7cb5ec;
+}
+
+.detail-toolbar-buttons-points:hover {
+	color: #7cb5ec;
+	text-decoration: none;
+}
+
+.detail-toolbar-buttons-points:focus {
+	color: #7cb5ec;
+	outline: none;
+	text-decoration: none;
+}
+
+
+
+/*--- NOT MINE ---*/
+
+.detail-toolbar-not-mine {
+	display: block;
+	margin-top: 20px;
+	overflow: hidden;
+	background-color: #fff;
+	border: solid 1px rgba(0,0,0,.07);;
+	color: #919191;
+	text-decoration: none;
+}
+
+.detail-toolbar-buttons {
+	display: inline-block;
+	width: 100%;
+	text-align: center;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	color: #7cb5ec;
+}
+
+.detail-toolbar-buttons:hover {
+	color: #7cb5ec;
+	text-decoration: none;
+}
+
+.detail-toolbar-buttons:focus {
+	color: #7cb5ec;
+	outline: none;
+	text-decoration: none;
+}
+
+.detail-toolbar-divide {
+	border-left: 1px solid rgba(0,0,0,.07);
+}
+
+.detail-toolbar-buttons i:before {
+	padding-right: 10px;
+}
+
+}
+
+
+@media (min-width: 991px) {
 
 .graph-prediction-detail-btn a {
 	margin-top: 24px;
@@ -182,5 +650,16 @@
 	padding-top: 9px;
 	padding-bottom: 9px;
 }
+
+.detail-btn-label {
+	display: inline-block;
+	font-weight: 500;
+}
+
+.detail-btn-label-points {
+	display: inline-block;
+}
+
+
 
 }

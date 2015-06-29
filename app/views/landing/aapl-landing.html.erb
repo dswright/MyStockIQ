@@ -1,0 +1,206 @@
+
+<!-- SKROLLR SECTION -->
+
+
+<section class="skrollr-section-mobile">
+
+  <div class="skrollr-constrainer constrainer">
+    <div class="skrollr-signin-btn">
+      <%= link_to "SIGN IN", login_path, :class => 'skrollr-btn' %>
+    </div>
+
+    <div class="hm-logo">
+      <%= image_tag("StockIQ-logo-white.png") %>
+    </div>
+  </div>
+
+</section>
+
+<section class="skrollr-section">
+
+  <div id="bg1" data-0="background-position:0px 0px;" data-end="background-position:0px -230px;"></div>
+  <div id="bg2" data-0="background-position:0px 0px;" data-end="background-position:0px 10px;"></div>
+  <div id="bg3" data-0="background-position:0px 0px;" data-end="background-position:0px -60px;"></div>
+
+  <div class="skrollr-constrainer constrainer">
+    <div class="skrollr-signin-btn">
+      <%= link_to "SIGN IN", login_path, :class => 'skrollr-btn' %>
+    </div>
+
+    <div class="hm-logo">
+      <%= image_tag("StockIQ-logo-white.png") %>
+    </div>
+  </div>
+
+</section>
+
+<section class="landing-phones clearfix">
+  <div class="constrainer">
+
+    <div class="landing-phones-col col-sm-4">
+      <%= image_tag("phones.png") %>
+    </div>
+
+    <div class="col-sm-8 phone-marketing-col">
+
+      <p>Share your stock predictions with the world. Compete with friends, follow experts, and raise your StockIQ. </p>
+
+    </div>
+
+  </div>
+</section>
+
+
+
+<!-- MARKETING POINTS SECTION -->
+
+<section class="landing-marketing-points clearfix">
+  <div class="marketing-points constrainer">
+
+    <div class="marketing-item clearfix">
+      <div class="marketing-img">
+          <%= image_tag ("perdiction-ico.png") %>
+      </div>
+      <div class="marketing-txt">
+        <p class="marketing-point-header">Make Predictions</p>
+        <p class="marketing-point-txt">StockIQ graphs your predictions, records them, and publishes them to share, discuss and rank</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<% if @referral.referral_code == nil %> <!-- NOT INVITED PARTIAL -->
+  <section class="landing-not-invited clearfix <%= @referral.referral_code%>">
+
+    <div class="constrainer">
+
+      <div class="landing-user-icon">
+        <%= image_tag ("plus-user-blu.png") %>
+      </div>
+
+      <p class="signup-email-txt">
+        Sign up to join our beta test group!
+      </p>
+      <%= form_for Waitinguser.new, remote: true do |f| %>
+        <div class="signup-email-inputs clearfix">
+          <div class="email-input-col col-sm-9">
+            <%= f.text_field :email, class: "waitlist-email", placeholder:"Email address"  %>
+          </div>
+          <div class="btn-input-col col-sm-3">          
+            <div class="signup-email-submit-button-div">
+              
+              <%= f.submit "SUBMIT", class: "btn" %>
+            </div>
+          </div>  
+        </div>
+      <% end %>
+      
+    </div>
+  </section>
+
+<% else %> <!-- INVITED PARTIAL-->
+  <section class="sign-up-section">
+    <div class="constrainer">
+
+      <div class="landing-user-icon">
+        <%= image_tag ("plus-user-blu.png") %>
+      </div>
+      <p class="signup-subtitle">You've been invited to enter <span>StockIQ</span>, the first stock predicting app of its kind. This is a private beta group and your feedback is greatly appreciated. See you inside:</p>
+
+        <div class="signup-form-div">
+          <div class="signup-form-box clearfix">
+
+            <% if session[:errors] %>
+              <div class="error-box">
+                <p>Oops, little problem: </p>
+                <ul>
+                  <% session[:errors].each do |error_message| %>
+                  <li><%= error_message %></li>
+                  <% end %>
+                </ul>
+              <% end %>
+              </div>
+            <% session.delete :errors %>
+
+            <div class="signup-form-fields">
+              <%= form_for(:user, url: users_path, :multipart => true, remote:true) do |f| %>
+
+                <%= fields_for @referral do |builder| %>
+                      <%= builder.hidden_field :referral_code %>
+                <% end %>
+
+              <%= f.text_field :username, class: "signup-email-field", id: "signup-form-field", placeholder: "Username" %>
+
+              <%= f.text_field :email, class: "signup-form-field", id: "signup-form-field", placeholder: "Email address" %>
+
+              <div class="password-col1 col-sm-6">
+                <%= f.password_field :password, class: "signup-email-field", id: "signup-form-field", placeholder: "Password" %>
+              </div>
+
+              <div class="password-col2 col-sm-6">
+                <%= f.password_field :password_confirmation, class: "signup-email-field", id: "signup-form-field", placeholder: "Confirm Password" %>
+              </div>
+           
+            </div>
+
+            <p class="signup-privacy">
+              StockIQ will never share your information with third parties. See our <a href="#">Privacy Policy.</a>
+            </p>
+              
+            <div class="signup-submit-button-div">
+              <%= f.submit "CREATE ACCOUNT", :class => "btn" %>
+            </div>
+
+            <p class="signup-signin-link">
+              Already have an account? <%= link_to "Sign in here.", login_path %>
+            </p>
+
+          </div>
+
+        <% end %>
+      </div>
+
+    </div>
+  </section>
+<% end %>
+
+
+<!-- Hides mobile nav menu on viewport wider than 768px -->
+
+<script type="text/javascript">
+
+if (matchMedia) {
+  var mq = window.matchMedia("(min-width: 768px)");
+  mq.addListener(WidthChange);
+  WidthChange(mq);
+}
+
+// media query change
+function WidthChange(mq) {
+
+  if (mq.matches) {
+
+    var s = skrollr.init({
+    edgeStrategy: 'set',
+    easing: {
+      WTF: Math.random,
+      inverted: function(p) {
+        return 1-p;
+      }
+    }
+
+  });
+  }
+
+
+  else {
+    // window width is less than 768px
+  }
+
+}
+
+
+  </script>
+

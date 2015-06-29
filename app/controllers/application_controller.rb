@@ -3,7 +3,10 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   
-  #these have to be included in this file to have access to the helper files in the controller.
+  require 'rails_autolink'
+  require 'uri'
+
+  #give access to these helper files across all controllers.
   include SessionsHelper
   include ReferralsHelper
   

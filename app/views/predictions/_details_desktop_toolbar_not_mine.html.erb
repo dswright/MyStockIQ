@@ -1,0 +1,17 @@
+  <!-- TOOLBAR DESKTOP NOT MINE -->
+
+    <div class="detail-toolbar-not-mine">
+      <div class="col-xs-4">
+        <a class="detail-toolbar-buttons">
+          <i class="fa fa-heart">Like</i>
+        </a>
+      </div>
+      <div class="col-xs-4 detail-toolbar-divide">
+        <a href="#" class="detail-toolbar-buttons" data-toggle="modal" data-target="#detail-comment-modal">
+          <i class="fa fa-comment">Comment</i>
+        <a>
+      </div>
+      <div class="col-xs-4 detail-toolbar-divide">
+          <%= render partial: 'shared/tweet', locals: {prediction: @prediction} %>
+      </div>
+    </div>

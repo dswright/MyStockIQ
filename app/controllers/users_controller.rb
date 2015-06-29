@@ -21,6 +21,9 @@ class UsersController < ApplicationController
     #Determines relationship between current user and target user
     @target = @user
 
+    #Top 10 most popular stocks
+    @popular_stocks = Stock.popular_stocks(10)
+
     @comment_header = "Comment on #{params[:username]}"
     @comment_stream_inputs = "User:#{@user.id}"
 

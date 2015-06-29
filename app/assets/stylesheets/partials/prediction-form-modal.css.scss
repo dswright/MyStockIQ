@@ -1,0 +1,359 @@
+
+.modal-dialog {
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.modal-content {
+  border-radius: 3px 3px 3px 3px;
+  box-shadow: 0px;
+
+}
+
+.modal-header {
+  border-bottom: 0px;
+  min-height: 40px;
+  border-radius: 3px 3px 0px 0px;
+  padding-right: 20px;
+
+}
+
+.modal-header .close {
+  margin-top: -5px;
+}
+
+
+.modal-header span {
+  font-size: 33px;
+  padding-right: 0px;
+}
+
+.modal-body {
+  background-color: #fff;
+  border-radius: 0px 0px 3px 3px;
+  padding: 0px 20px 20px 20px;
+}
+
+// MAKE A PREDICTION BOX //
+
+// .prediction-form-div {
+// 	margin-top: 20px;
+// }
+
+// .prediction-field-col {
+// 	padding-left: 0px;
+// }
+
+// .prediction-field-col input {
+//   border: 0px;
+//   background-color: rgba(124,181,236,.09);
+//   box-shadow: 0 0 0 1pt rgba(0,0,0,0.1);
+//   border-radius: 2px;
+//   padding-left: 36px;
+//   width: 100%;
+//   height: 36px;
+//   font-size: 15px;
+//   color: #919191;
+// }
+
+// .prediction-field-col input:focus {
+//   outline: none;
+//   box-shadow: 0 0 0 1pt #7cb5ec;
+// }
+
+// .prediction-comment-field {
+//   margin-top: 15px;
+//   margin-right: 15px;
+// }
+
+// .prediction-comment-field textarea {
+//   border: 0px;
+//   background-color: rgba(124,181,236,.09);
+//   box-shadow: 0 0 0 1pt rgba(0,0,0,0.1);
+//   border-radius: 2px;
+//   padding-left: 12px;
+//   padding-top: 7px;
+//   width: 100%;
+//   height: 60px;
+//   font-size: 15px;
+//   color: #919191;
+//   resize: none;
+// }
+
+// .prediction-comment-field textarea:focus {
+//   outline: none;
+//   box-shadow: 0 0 0 1pt #7cb5ec;
+// }
+
+// // icon in field //
+
+// .prediction-icon-addon {
+// 	display: block;
+//     position: relative;
+// }
+
+// .prediction-icon-addon.prediction-addon-sm .glyphicon,
+// .prediction-icon-addon .glyphicon {
+//     position: absolute;
+//     z-index: 2;
+//     font-size: 12px;
+//     width: 15px;
+//     margin-left: 10px;
+//     text-align: center;
+//     padding: 10px 0;
+//     top: 2px;
+// }
+
+// .prediction-icon-addon {
+//   color: #919191;
+// }
+
+// .prediction-icon-addon input:focus + .glyphicon {
+//   color: #7cb5ec
+// }
+
+
+
+
+// reply modal //
+
+.detail-reply-modal-img {
+  width: 18%;
+  margin-top: 0px;
+  padding-left: 0px;
+  padding-right: 15px;
+}
+
+.detail-reply-modal-img img {
+  width: 100%;
+  border-radius: 90px;
+}
+
+.detail-reply-modal-user-time-col {
+  margin-top: 3px; 
+}
+
+.detail-reply-modal-username {
+  margin-bottom: 3px;
+}
+
+.detail-reply-modal-username a {
+  color: #C7C7C7;
+  font-size: 18px;
+  line-height: 21px;
+  text-decoration: none;
+  padding-bottom: 1px;
+  letter-spacing: 0px;
+  text-transform: uppercase;
+
+  -webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+}
+
+.detail-reply-modal-username a:hover {
+  text-decoration: none;
+  cursor: pointer;
+  color: #7cb5ec;
+  border-bottom: 1px solid #7cb5ec;
+}
+
+.detail-reply-modal-time {
+  margin-top: 0px;
+  font-size: 12px;
+  font-weight: 300;
+  color: #C7C7C7;
+}
+
+.detail-reply-modal-time span {
+  margin-left: 20px;
+}
+
+.detail-reply-modal-txt {
+  margin-top: 9px;
+}
+
+.detail-reply-txt p {
+  font-size: 13px;
+  color: #919191;
+  letter-spacing: 1px;
+  line-height: 18px;
+  font-weight: 300;
+  margin-top: 0px;
+  margin-bottom: 3px;
+}
+
+
+
+// MAKE A COMMENT BOX //
+
+.modal-comment-form-div {
+	margin-top: 0px;
+}
+
+.modal-comment-field {
+	margin-right: 0px;
+}
+
+.modal-comment-field textarea {
+  margin-top: 21px;
+  border: 0px;
+  background-color: #fff;
+  box-shadow: #fff;
+  padding-left: 0px;
+  padding-top: 3px;
+  width: 100%;
+  height: 120px;
+  font-size: 18px;
+  color: #919191;
+  resize: none;
+}
+
+.modal-comment-field textarea:focus {
+  outline: none;
+  box-shadow: #fff;
+}
+
+
+#commentCharNum {
+	padding-top: 10px;
+	margin-right: 20px;
+	font-size: 12px;
+	color: #7cb5ec;
+}
+
+
+// submit button //
+
+.modal-button-counter {
+  margin-top: 12px;
+}
+
+.modal-button-counter input {
+  border: 0px;
+  margin-right: 0px;
+  border-radius: 3px;
+  padding-bottom: 15px;
+  padding-top: 15px;
+  padding-left: 18px;
+  padding-right: 18px;
+  color: #fff;
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 15px;
+  font-weight: 300;
+  width: 100%;
+  background-color: #7cb5ec;
+
+  -webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+}
+
+.modal-button-counter input:hover {
+  background-color: #8EB7ED;
+  color: #fff;
+  cursor: pointer;
+}
+
+#charNum {
+  padding-top: 10px;
+  margin-right: 20px;
+  font-size: 12px;
+  color: #7cb5ec;
+}
+
+
+
+// CLOSE PREDICTION BOX //
+
+.close-prediction-form-modal-div {
+  margin-top: 20px;
+}
+
+.close-prediction-modal-data {
+  margin-top: 20px;
+}
+
+.close-prediction-modal-points {
+  display: inline-block;
+  color: #fff;
+  background-color: #7cb5ec;
+  border-radius: 2px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.close-prediction-modal-date {
+  display: inline-block;
+  margin-left: 10px;
+  color: #919191;
+}
+
+.close-prediction-comment-modal-field {
+  margin-top: 10px;
+  margin-right: 15px;
+}
+
+.close-prediction-comment-modal-field textarea {
+  border: 0px;
+  background-color: rgba(124,181,236,.09);
+  box-shadow: 0 0 0 1pt rgba(0,0,0,0.1);
+  border-radius: 2px;
+  padding-left: 12px;
+  padding-top: 7px;
+  width: 100%;
+  height: 60px;
+  font-size: 15px;
+  color: #919191;
+  resize: none;
+}
+
+.close-prediction-comment-modal-field textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 1pt #7cb5ec;
+}
+
+
+
+@media (min-width: 480px) {
+
+.detail-reply-modal-user-time-col {
+  margin-top: 22px; 
+}
+
+.detail-reply-modal-img {
+  width: 18%;
+  margin-top: 12px;
+  padding-left: 0px;
+  padding-right: 15px;
+}
+
+.detail-reply-modal-img img {
+  width: 100%;
+  border-radius: 90px;
+}
+
+}
+
+
+
+
+@media (min-width: 768px) {
+
+.modal-dialog {
+  margin-top: 20%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.detail-reply-modal-img {
+  width: 13%;
+}
+
+}
