@@ -10,7 +10,7 @@ class Comment < ActiveRecord::Base
 	has_one :tag, as: :tagable, dependent: :destroy
 
 	validates :content, presence: true, length: { maximum: 5000}
-	validates :user_id, numericality: true
+	validates :user_id, presence: true, numericality: true
 	default_scope -> { order(created_at: :desc) }
 
 	scope :by_user, lambda {|user| where(user_id: user.id)}

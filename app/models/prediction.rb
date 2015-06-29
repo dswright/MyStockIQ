@@ -24,8 +24,11 @@ class Prediction < ActiveRecord::Base
   validates :graph_end_time, presence: true
   validates :stock_id, numericality: true
 
-
   default_scope -> { order(created_at: :desc) }
+  scope :active, -> { where(active: true) }
+
+  after_save :update_stock_prediction_count
+
 
   attr_accessor :invalid
 
@@ -150,6 +153,11 @@ class Prediction < ActiveRecord::Base
       #Lose points based on actual percentage change
       score = -1*actual_percentage.abs.round(2)
     end
+  end
+
+  def update_stock_prediction_count
+    self.stock.active_predictions = self.stock.predictions.count
+    stock.save
   end
 
   def percent_change(new_score, base_score)

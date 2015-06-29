@@ -1,5 +1,3 @@
-
-
 <div class="comment-only-item" id="stream_<%= stream.streamable.class.name %>_<%= stream.streamable.id %>">
   <div class="comment-only-vote-count-container clearfix">
     <div class="comment-only-item-body col-xs-11 clearfix">
@@ -10,9 +8,9 @@
         <%= link_to stream.streamable.user.username, "/users/#{stream.streamable.user.username}/", class: "comment-only-item-username" %>
         <p class="comment-only-item-main-txt">
           <% unless stream.streamable.tag == nil %>
-              <%= render html: stream.streamable.tag.content.html_safe %>
+              <%= auto_link(stream.streamable.tag.content) %>
           <%else %>
-              <%= stream.streamable.content %>
+              <%= auto_link(stream.streamable.content) %>
           <% end %>
         </p>
       </div>

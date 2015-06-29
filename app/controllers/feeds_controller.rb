@@ -18,6 +18,8 @@ class FeedsController < ApplicationController
       #sets @predictions for the view, and for making stream.
       @historical_predictions = @current_user.predictions.where(active:false).reorder("score desc").limit(5)
 
+      #Top 10 popular stocks
+      @popular_stocks = Stock.popular_stocks(10)
 
       #this is the tricky line. The stream needs to be build well.
       #first one for now is all things that the user is directly related in, like the user page.

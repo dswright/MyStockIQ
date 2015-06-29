@@ -7,3 +7,18 @@
 #two:
 #  follower_id: MyString
 #  followed_id: MyString
+
+sean_following_stock:
+  follower_id: 2
+  followed_id: 2
+  followed_type: "Stock"
+
+dylan_following_sean:
+  follower_id: 1
+  followed_id: 2
+  followed_type: "User"
+
+sean_following_dylan:
+  follower_id: 2
+  followed_id: 1
+  followed_type: "User"

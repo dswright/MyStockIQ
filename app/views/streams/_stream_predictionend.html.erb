@@ -16,9 +16,9 @@
       </div>
       <div class="close-prediction-item-closing-tweet">
       <% unless stream.streamable.tag == nil %>
-          <p><%= render html: stream.streamable.tag.content.html_safe %></p>
+          <p><%= auto_link(stream.streamable.tag.content) %></p>
       <%else %>
-          <p><%= stream.streamable.content %></p>
+          <p><%= auto_link(stream.streamable.content) %></p>
       <% end %>
       </div>
       <div class="close-prediction-footer">

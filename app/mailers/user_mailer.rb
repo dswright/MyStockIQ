@@ -1,6 +1,6 @@
 class UserMailer < ActionMailer::Base
 
-  default from: "hello@mystockiq.com"
+  default from: "StockIQ@mystockiq.com"
 
   def waitlist_mailer(user_id)
   	@user = Waitinguser.find(user_id)
@@ -10,6 +10,11 @@ class UserMailer < ActionMailer::Base
   def invite_mailer(referral_id)
   	@referral = Referral.find(referral_id)
   	mail(to: @referral.email, subject: 'Early access to StockIQ')
+  end
+
+  def founder_invite_mailer(referral_id)
+    @referral = Referral.find(referral_id)
+    mail(to: @referral.email, subject: 'Our traders are predicting which stocks are bullish and bearish. Which one do you have?')
   end
 
   def invite_friends_mailer(user_id)

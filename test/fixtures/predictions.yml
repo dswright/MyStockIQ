@@ -6,7 +6,7 @@ LNKD1:
   id: 1
   user_id: 1
   score: 0
-  prediction_comment: ""
+  content: ""
   stock_id: 1
   start_time: "2015-01-21 14:30:00"
   start_price_verified: false
@@ -18,8 +18,8 @@ LNKD1:
 LNKD2:
   id: 2
   user_id: 2
-  score: 0
-  prediction_comment: ""
+  score: 10
+  content: ""
   stock_id: 1
   start_time: "2015-01-21 16:30:00"
   start_price_verified: false
@@ -32,7 +32,7 @@ LNKD3: #this is used to test the exceeded price.
   id: 3
   user_id: 3
   score: 0
-  prediction_comment: ""
+  content: ""
   stock_id: 1
   start_time: "2015-01-21 16:30:00"
   start_price_verified: false
@@ -45,7 +45,7 @@ LNKD4: #this is used to test the exceeded time. The time has to be set back a bi
   id: 4
   user_id: 4
   score: 0
-  prediction_comment: ""
+  content: ""
   stock_id: 1
   start_time: "2015-01-02 16:30:00"
   start_price_verified: false
@@ -58,7 +58,7 @@ LNKD5: #this is used to test the score update.
   id: 5
   user_id: 5
   score: 0
-  prediction_comment: ""
+  content: ""
   stock_id: 1
   start_time: "2015-01-02 16:30:00"
   start_price_verified: true #start price verified will be true for these..
@@ -71,7 +71,7 @@ LNKD6: #used to test the prediction end worker.
   id: 6
   user_id: 6
   score: 0
-  prediction_comment: ""
+  content: ""
   stock_id: 1
   start_time: "2015-01-02 16:30:00"
   start_price_verified: true #start price verified will be true for these..
@@ -85,7 +85,7 @@ LNKD7:
   id: 7
   user_id: 7
   score: 0
-  prediction_comment: ""
+  content: ""
   stock_id: 1
   start_time: "2015-01-02 16:30:00"
   start_price_verified: true #start price verified will be true for these..
