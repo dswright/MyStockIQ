@@ -253,14 +253,10 @@ GEM
       builder
       minitest (>= 5.0)
       ruby-progressbar
-<<<<<<< HEAD
-    multi_json (1.11.1)
-    multipart-post (2.0.0)
-=======
     mocha (1.1.0)
       metaclass (~> 0.0.1)
-    multi_json (1.11.0)
->>>>>>> popular-stocks
+    multi_json (1.11.1)
+    multipart-post (2.0.0)
     nenv (0.2.0)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
@@ -350,19 +346,14 @@ GEM
       json (~> 1.8)
       rdoc (~> 4.0, < 5.0)
     shellany (0.0.1)
-<<<<<<< HEAD
-    sidekiq (3.4.1)
-      celluloid (~> 0.16.0)
-=======
     shoulda (3.5.0)
       shoulda-context (~> 1.0, >= 1.0.1)
       shoulda-matchers (>= 1.4.1, < 3.0)
     shoulda-context (1.2.1)
     shoulda-matchers (2.8.0)
       activesupport (>= 3.0.0)
-    sidekiq (3.3.4)
+    sidekiq (3.4.1)
       celluloid (>= 0.16.0)
->>>>>>> popular-stocks
       connection_pool (>= 2.1.1)
       json
       redis (>= 3.0.6)
