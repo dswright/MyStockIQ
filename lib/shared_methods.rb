@@ -66,7 +66,8 @@ module SharedMethods
       end
     end
 
-     self.create_tag!( content: tagged_words.join(" ") )
+    tagged_content = tagged_words.join(" ")
+    self.create_tag!(content: tagged_content)
 
      return tags
   end   

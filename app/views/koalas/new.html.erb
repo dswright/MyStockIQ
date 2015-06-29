@@ -1,0 +1,11 @@
+
+<div class = "New_Koala">
+<%= form_for @koala, remote: true do |f|%>
+  <%= f.label :name %>:
+  <%= f.text_field :name %><br />
+  <%= f.hidden_field :color, value: @koala.color %> 
+  <%= f.hidden_field :source, value: "Stock Page" %>
+  <%= f.submit %>	
+<% end %>
+
+</div>
