@@ -15,22 +15,15 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui
-//= require highstock
-//= require exporting
-//= require moment
-//= require moment-timezone.js
-//= require customdate
 //= require bootstrap
 //= require pagination
-//= require image-upload
 //= require nav
 //= require prediction-form-box
 //= require welcome
 //= require skrollr
-//= require graph-mediator
-//= require graph-constructors
-//= require analytics
 
+//= require_tree ./date-times
 //= require_tree ./pickadate
+//= require_tree ./highcharts
 
 

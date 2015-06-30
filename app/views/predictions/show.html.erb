@@ -1,5 +1,5 @@
-<%= javascript_include_tag "predictions2.coffee.js" %>
 <%= include_gon(:init => true) %>
+<%= javascript_include_tag "prediction-graph.js" %>
 
 <% content_for :title do %>
   <title><%= @stock[:ticker_symbol] %> </title>
