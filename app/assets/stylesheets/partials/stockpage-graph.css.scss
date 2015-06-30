@@ -142,105 +142,75 @@
   transition: 150ms ease-in;
 }
 
-a.follow-btn-white:hover .follow-btn-follow {
-  -webkit-transition: 90ms ease-in;
-  -moz-transition: 90ms ease-in;
-  -o-transition: 90ms ease-in;
-  transition: 90ms ease-in;
-	color: #fff;
-	background-color: #7CB5EC;
-	border: 1px solid #7CB5EC;
-}
-
-a.follow-btn-white:hover > .follow-btn-count {
-  -webkit-transition: 90ms ease-in;
-  -moz-transition: 90ms ease-in;
-  -o-transition: 90ms ease-in;
-  transition: 90ms ease-in;
-	color: #7CB5EC;
-	border: 1px solid #7CB5EC;
-}
+// a.follow-btn-white:hover {
+//   -webkit-transition: 90ms ease-in;
+//   -moz-transition: 90ms ease-in;
+//   -o-transition: 90ms ease-in;
+//   transition: 90ms ease-in;
+// 	color: #fff;
+// 	background-color: #7CB5EC;
+// 	border: 1px solid #7CB5EC;
+// }
 
 .follow-btn-white form {
 	display: inline-block;
 }
 
-.follow-btn-follow {
-	width: 66px;
+a.follow-btn-white .follow-btn-follow {
 	text-align: center;
 	margin-left: 1px;
+	margin-top: 5px;
 	padding-top: 5px;
 	padding-bottom: 5px;
-	border: 1px solid #fff;
-	border-radius: 3px 0px 0px 3px;
+	padding-left: 10px;
+	padding-right: 10px;
+	border: 1px solid #7CB5EC;
+	border-radius: 3px 3px 3px 3px;
 	font-size: 11px;
 	color: #2A3744;
 	background-color: #fff;
 }
 
-.follow-btn-count {
-	position: relative;
+a.follow-btn-white .follow-btn-follow:hover {
+	-webkit-transition: 90ms ease-in;
+	-moz-transition: 90ms ease-in;
+	-o-transition: 90ms ease-in;
+	transition: 90ms ease-in;
+	color: #fff;
+	background-color: #7CB5EC;
+	border: 1px solid #7CB5EC;
+}
+
+.follow-btn-follow:focus {
+	outline: none;
+}
+
+.follow-btn-blue form {
 	display: inline-block;
+}
+
+a.follow-btn-blue .follow-btn-follow {
 	text-align: center;
-	margin-left: -4px;
+	margin-left: 1px;
 	margin-top: 5px;
-	padding-left: 6px;
-	padding-right: 6px;
 	padding-top: 5px;
 	padding-bottom: 5px;
-	border: 1px solid #fff;
-	border-radius: 0px 3px 3px 0px;
+	border: 1px solid #7CB5EC;
+	border-radius: 3px 3px 3px 3px;
 	font-size: 11px;
+	font-weight: 500;
 	color: #fff;
+	background-color: #7CB5EC;
 }
 
-.follow-btn-white span:before {
-  content: '';
-  position: absolute;
-  top: 8px;
-  left: -7px;
-  border-top: 6px solid #2A3744;
-  border-left: 6px solid transparent;
-  border-right: 6px solid transparent;
-  -ms-transform: rotate(90deg);
-  -webkit-transform: rotate(90deg);
-  transform: rotate(90deg);  
+a.follow-btn-blue .follow-btn-follow:hover {
+	text-decoration: none;
+	outline: none;
 }
 
-
-
-.prediction-name-vote-count {
-  margin-left: 10px;
-  margin-top: -13px;
-  padding-left: 0px;
-  padding-right: 0px;
-}
-
-.prediction-name-vote-count a {
-	display: block;
-	margin: auto;
-	text-align: center;
-	color: rgba(255,255,255,.90);
-	font-size: 24px;
-
-  -webkit-transition: 150ms ease-in;
-  -moz-transition: 150ms ease-in;
-  -o-transition: 150ms ease-in;
-  transition: 150ms ease-in;
-}
-
-.prediction-name-vote-count a:hover {
-	color: #7cb5ec;
-}
-
-.prediction-name-vote-count p {
-	text-align: center;
-	color: #fff;
-	line-height: 3px;
-	font-size: 18px;
-	font-weight: 300;
-	margin-bottom: 0px;
-	margin-top: 2px;
+a.follow-btn-blue .follow-btn-follow:focus {
+	text-decoration: none;
+	outline: none;
 }
 
 
@@ -472,78 +442,6 @@ a.detail-aside-vote-white:hover > .detail-like-arrows {
 	border: 1px solid #fff;
 	border-radius: 3px 0px 0px 3px;
 }
-
-.detail-aside-vote-count {
-	position: relative;
-}
-
-.detail-aside-vote-count p:before {
-  content: '';
-  position: absolute;
-  top: 12px;
-  left: -7px;
-  border-top: 6px solid #2A3744;
-  border-left: 6px solid transparent;
-  border-right: 6px solid transparent;
-  -ms-transform: rotate(90deg);
-  -webkit-transform: rotate(90deg);
-  transform: rotate(90deg);  
-}
-
-.detail-like-arrows a {
-	display: block;
-	width: 30px;
-	height: 13px;
-	margin-left: auto;
-	margin-right: auto;
-	text-align: center;
-	color: #7CB5EC;
-	font-size: 16px;
-
-  -webkit-transition: 150ms ease-in;
-  -moz-transition: 150ms ease-in;
-  -o-transition: 150ms ease-in;
-  transition: 150ms ease-in;
-}
-
-
-.detail-aside-vote-count {
-	margin-top: 0px;
-	display: block;
-	color: #fff;
-	width: 40px;
-	border: 1px solid #fff;
-	border-radius: 0px 3px 3px 0px;
-}
-
-.detail-aside-vote-count p {
-	margin-top: 0px;
-	margin-bottom: 0px;
-	padding-top: 6px;
-	padding-bottom: 6px;
-	font-size: 16px;
-
-}
-
-.detail-aside-vote-count span:before {
-  content: '';
-  position: absolute;
-  top: 8px;
-  left: -7px;
-  border-top: 6px solid #2A3744;
-  border-left: 6px solid transparent;
-  border-right: 6px solid transparent;
-  -ms-transform: rotate(90deg);
-  -webkit-transform: rotate(90deg);
-  transform: rotate(90deg);  
-}
-
-
-
-
-
-
-
 
 
 

@@ -16,13 +16,10 @@
 		  			<%= prediction.user.username %>
 		  		</span>
 		  	<% end %>
-		  </div>	
-		  <a href="#" class="follow-btn-white">
+		  </div>
 
 		  	<%= render partial: 'shared/follow_form', locals: {target: prediction.user} %>
 
-		  	<span class="follow-btn-count">10</span>
-			</a>
 		</div>
 
     <!-- display if user viewing own prediction -->
@@ -34,10 +31,12 @@
 		  			<%= prediction.user.username %>
 		  		</span>
 		  	<% end %>
+		  	<span class="prediction-name-prediction">
+
+		  	</span>
 		  </div>	
 		</div>
 
-
-	</div>
+	  </div>
 
 </div>

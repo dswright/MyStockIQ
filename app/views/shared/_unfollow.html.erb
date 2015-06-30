@@ -1,7 +1,13 @@
-<%= form_for(current_user.active_relationships.find_by(followed_id: target.id, followed_type: target.class.name),
-						html: { method: :delete },
-										remote: true) do |f| %>
-  <%= hidden_field_tag :followed_id, target.id %>
-  <%= hidden_field_tag :followed_type, target.class.name%>
-  <%= f.submit "Unfollow", class: "follow-btn-follow" %>
-<% end %>
+<a href="#" class="follow-btn-ajax follow-btn-blue">
+
+	<%= form_for(current_user.active_relationships.find_by(followed_id: target.id, followed_type: target.class.name),
+							html: { method: :delete },
+											remote: true) do |f| %>
+	  <%= hidden_field_tag :followed_id, target.id %>
+	  <%= hidden_field_tag :followed_type, target.class.name%>
+	  <%= button_tag(type:"submit", class: "follow-btn-follow") do %>
+	  	<i class="fa fa-check"></i>
+	  <%end%>
+	<% end %> 
+		
+</a>
