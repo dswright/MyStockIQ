@@ -44,8 +44,6 @@ Rails.application.routes.draw do
   post    'replies'                      =>   'replies#create'
   get     'replies/:id'                  =>   'replies#show'
 
-  get     'graphimages'                  =>   'graphimages#show'
-
   get     'feed'                         =>   'feeds#show'
 
   get     'settings'                     =>   'user_settings#show'
