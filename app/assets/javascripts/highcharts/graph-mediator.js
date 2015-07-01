@@ -343,13 +343,13 @@ var graphMediator = (function() {
             startPoint: components.intradayLines.prices.lineArray.last().x
           },
           buttons: [
-            {name:"1D", backInterval:78, forwardInterval:39, timeType:"intraday"}, //1 day back is 78 intervals (6.5*12)
-            {name:"5D", backInterval:390, forwardInterval:195, timeType:"intraday"}, //5 days back is 78*5 intervals. 
-            {name:"1M", backInterval:20, forwardInterval:10, timeType:"daily"}, 
-            {name:"3M", backInterval:60, forwardInterval:30, timeType:"daily"},
-            {name:"6M", backInterval:120, forwardInterval:60, timeType:"daily"},
-            {name:"1Yr", backInterval:240, forwardInterval:120, timeType:"daily"},
-            {name:"5Yr", backInterval:1200, forwardInterval:600, timeType:"daily"}
+            {name:"1D", backInterval:78, forwardInterval:78, timeType:"intraday"}, //1 day back is 78 intervals (6.5*12)
+            {name:"5D", backInterval:390, forwardInterval:390, timeType:"intraday"}, //5 days back is 78*5 intervals. 
+            {name:"1M", backInterval:20, forwardInterval:20, timeType:"daily"}, 
+            {name:"3M", backInterval:60, forwardInterval:60, timeType:"daily"},
+            {name:"6M", backInterval:120, forwardInterval:120, timeType:"daily"},
+            {name:"1Yr", backInterval:240, forwardInterval:240, timeType:"daily"},
+            {name:"5Yr", backInterval:1200, forwardInterval:1200, timeType:"daily"}
           ]
         }
       },

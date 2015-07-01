@@ -86,7 +86,7 @@ class Graph
 
   def intraday_prices
     start = @start_point - 60*60*24*9 #minus 9 days from the start_time to get at least 5 days of historical intraday data.
-    finish = @start_point + 60*60*24*6 #add 6 days to get at least 3 days of forward looking data.
+    finish = @start_point + 60*60*24*9 #add 9 days to get at least 5 days of forward looking data.
     price_array = []
     Intradayprice.where(ticker_symbol:@ticker_symbol).where("date > ?", start).where("date < ?", finish).reorder('date desc').reverse.each do |price|    
       price_array << {"id": price.id, "x": price.graph_time, "y": price.close_price}
@@ -97,7 +97,7 @@ class Graph
   #this function forms a full 5 year array. The actual control is done with the x axis settings of the graph.
   def daily_prices
     start = @start_point - 60*60*24*1825 #minus 5 years from the start_time to get 5 years of historical daily data.
-    finish = @start_point + 60*60*24*950 #add 2.5 years to get 2.5 years of forward looking data.
+    finish = @start_point + 60*60*24*1825 #add 5 years to get 5 years of forward looking data.
     price_array = []
     Stockprice.where(ticker_symbol: @ticker_symbol).where("date > ?", start).where("date < ?", finish).reorder('date desc').reverse.each do |price|
       price_array << {"id": price.id, "x": price.graph_time, "y": price.close_price}
@@ -108,8 +108,8 @@ class Graph
   def future_days
     start = @start_point.graph_time
     date_array = []
-    #need 3 years forward (roughly) which = 365 *5/7 - 10 = 250/year = 750 
-    Futureday.where("graph_time > ?", start).reorder('graph_time asc').limit(750).each do |date|
+    #need 5 years forward (roughly) which = 365 *5/7 - 5 = 255/year = 1275 
+    Futureday.where("graph_time > ?", start).reorder('graph_time asc').limit(1300).each do |date|
       date_array << {"x": date.graph_time, "y":nil}
     end
     return date_array
@@ -118,8 +118,8 @@ class Graph
   def future_times
     start = @start_point.graph_time
     date_array = []
-    #need 3 days forward, which is 12*6.5*3 = 234
-    Futuretime.where("graph_time > ?", start).reorder('graph_time asc').limit(234).each do |date|
+    #need 5 days forward, which is 12*6.5*3 = 390
+    Futuretime.where("graph_time > ?", start).reorder('graph_time asc').limit(400).each do |date|
       date_array << {"x": date.graph_time, "y":nil}
     end
     return date_array

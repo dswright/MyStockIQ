@@ -1,5 +1,5 @@
 function resizeChart() {
-  var height = $("#stock-div").width()/3+30;
+  var height = $("#stock-div").width()/2.25+30;
   $("#stock-div").css("height", height);
   $(".stockpage-graph").css("height", height+10);
 };
@@ -73,8 +73,10 @@ $(document).ready(function () {
       renderTo: 'stock-div',
       panning: false, //disables time frame dragging on desktop
       pinchType: false, //disable time frame dragging on mobile.
-      spacingLeft: 0,
-      spacingRight: 1
+      spacingLeft: 50,
+      spacingRight: 1,
+      plotBorderWidth: 1,
+      plotBorderColor: 'rgba(255, 255, 255, 0.1)'
     },
     exporting: {
       enabled: false
@@ -145,33 +147,35 @@ $(document).ready(function () {
       gridLineColor: 'rgba(255, 255, 255, 0.39)',
       gridLineWidth: 0,
       lineWidth: 1,
-      lineColor: 'rgba(255, 255, 255, 0.39)',
-      tickColor: 'rgba(255, 255, 255, 0.39)',
-      tickLength: 5,
+      lineColor: 'rgba(255, 255, 255, 0.1)',
+      tickColor: 'rgba(255, 255, 255, 0.2)',
+      tickLength: 0,
       tickWidth: 1,
-      tickPosition: "inside",
+      tickPosition: "outside",
       showFirstLabel: false,
       showLastLabel: false,
       startOnTick: true,
       endOnTick: true,
       labels: {
-        style: {color:"rgba(255, 255, 255, 0.39)", "font-size": "11px", "font-family":"Lato", "font-weight": "300"},
+        style: {color:"#FFFFFF", "font-size": "11px", "font-family":"Lato", "font-weight": "300"},
         formatter: function() {
           return "$" + this.value;
         },
-        x: -10,
-        y: 5
-      }
+        align:'left',
+        x: -38,
+        y: 4
+      },
+      opposite:false
     },
     xAxis: {
       minRange: 3600 * 1000,
-      labels: {
-        enabled: false
-      },
       minorTickLength: 0,
       tickLength: 0,
-      lineColor: 'rgba(255, 255, 255, 0.39)',
+      lineColor: 'rgba(255, 255, 255, 0.1)',
       lineWidth: 1,
+      labels: {
+        style: {color:"#FFFFFF", "font-size": "11px", "font-family":"Lato", "font-weight": "300"}
+      }
     },
 
     series: seriesVar
@@ -190,9 +194,6 @@ $(document).ready(function () {
     dataType: 'json',
     success: function (data, status) {
       stockGraph = data; //assign the data to the graph var to be used globally. Delete this once debugging is done.
-
-      console.log(data.predictions);
-
 
       var defaults = { //defaults contains the variables that are standard to each graph.
         "data": data,
@@ -217,6 +218,4 @@ $(document).ready(function () {
   });
 
   $("text").remove( ":contains('Highcharts.com')" );
-
-
 });
