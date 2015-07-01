@@ -88,15 +88,15 @@ var graphMediator = (function() {
       stockGraph: {
         daily: function() {
           setSeries("dailyLines");
-          setHover("dailyPrices");
-          setHover("dailyPredictions"); //not working yet.
-          setHover("dailyMyPrediction"); //not working yet.
+          //setHover("dailyPrices");
+          //setHover("dailyPredictions"); //not working yet.
+          //setHover("dailyMyPrediction"); //not working yet.
         },
         intraday: function() {
           setSeries("intradayLines");
-          setHover("intradayPrices");
-          setHover("intradayPredictions"); //not working yet.
-          setHover("intradayMyPrediction"); //not working yet.
+          //setHover("intradayPrices");
+          //setHover("intradayPredictions"); //not working yet.
+          //setHover("intradayMyPrediction"); //not working yet.
         }
       },
       predictionGraph: {
