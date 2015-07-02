@@ -2,22 +2,22 @@
 <!-- TOOLBAR DESKTOP MINE -->
 
   <div class="detail-toolbar-mine">
-    <div class="col-xs-3">
-      <a href="#" class="detail-toolbar-buttons">
+    <div class="col-xs-3 detail-toolbar-col">
+      <a href="#" class="detail-toolbar-buttons detail-toolbar-hover">
         <i class="fa fa-heart"><span class="detail-btn-label">Fav</span></i>
       <a>
     </div>
     <div class="col-xs-3 detail-toolbar-divide">
-      <a href="#" class="detail-toolbar-buttons" data-toggle="modal" data-target="#detail-comment-modal">
+      <a href="#" class="detail-toolbar-buttons detail-toolbar-hover" data-toggle="modal" data-target="#detail-comment-modal">
         <i class="fa fa-comment"><span class="detail-btn-label">Comment</span></i>
       <a>
     </div>
     <div class="col-xs-3 detail-toolbar-divide">
-      <a href="#" class="detail-toolbar-buttons-points" data-toggle="modal" data-target="#detail-close-prediction-modal">
+      <a href="#" class="detail-toolbar-buttons-points detail-toolbar-hover" data-toggle="modal" data-target="#detail-close-prediction-modal">
         <span class="detail-btn-label-points">Close at</span> <span class="point">-10</span>
       </a>
     </div>
-    <div class="col-xs-3 detail-toolbar-divide">
+    <div class="col-xs-3 detail-toolbar-divide detail-toolbar-hover">
       <%= render partial: 'shared/tweet', locals: {prediction: @prediction} %>
     </div>
   </div>
