@@ -33,7 +33,8 @@ $(document).ready(function () {
       lineWidth: 2,
       dataGrouping: {
         enabled: false
-      }
+      },
+      dateType:"none"
     },
     {
       name: "dateseries",
@@ -130,9 +131,20 @@ $(document).ready(function () {
       }
     },
     tooltip: {
-      enabled: false,
-      crosshairs: null,
-      shared: false
+      crosshairs: false,
+      shared: false,
+      useHTML: true,
+      borderWidth: 1,
+      backgroundColor: 'rgba(255,255,255,1)',
+      formatter: function() {
+        if (this.series.name == "predictions" || this.series.name == "my_prediction") {
+          return "<div style='width:150px; text-align:center; margin-right:4px;'><img src='"+this.point.image_url+"' style='display:inline-block; width: 30px; border-radius: 90px;'><div style='display:inline-block;font-size:20px;text-decoration:underline;'>"+this.point.username+"</div><div style='margin-top:5px; font-size:14px;'>AAPL Prediction</div><div style='margin-top:5px; font-size:14px;'><b>$82.50</b> by May 25, 2015</div><a href='#'><div style='border:1px solid #FFFFFF; width:70px; display:inline-block; height:30px;'>See Commentary</div></a></div>";
+        }
+        if (this.series.name == "prices") {
+          console.log(this.series.options.dateType);
+          return "<div style='width:auto;'><b>$"+this.point.y+"</b> "+this.point.x.shortFormat();
+        }
+      }
     },
     rangeSelector : {
       enabled: false

@@ -51,8 +51,14 @@ moment.tz.add('America/New_York|EST EDT|50 40|0101|1Lz50 1zb0 Op0');
 //this offsetTime returns an hour if the UTC time is 20:00:00, and returns nothing if the utc time is 21:00:00. (stock market end time is EST)
 Number.prototype.offsetTime = function() {
   //the America/New York timezone is set just outside of this function.
-  var offset = moment.tz.zone('America/New_York').offset(this) * 60 * 1000; //the offset is returned as a positive number of minutes, which converted to milliseconds.
-  return 5*3600*1000 - offset; //This will return either 0 or 3600*1000 millisecond (1 hour) offset, depending on DST.
+  var offset = moment.tz.zone('America/New_York').offset(this) * 60 * 1000; //This will return either 0 or 3600*1000 millisecond (1 hour) offset, depending on DST. 0 when the 21:00 is the end of day time.
+  return 5*3600*1000 - offset; //return either 5 hours when 
+}
+
+Number.prototype.shortFormat = function() {
+  var now = moment(this);
+  var offset = moment.tz.zone('America/New_York').offset(this) * 60 * 1000;
+  return moment(this-offset).format("MMMM D, YYYY");
 }
 
 //this takes the a string of the form "Wed, 06 Feb 2013 21:00:00 GMT" and returns the format "21:00:00"
@@ -140,3 +146,5 @@ Number.prototype.closestStartTime = function() {
   var roundDay = new Date().toJSON().slice(0,10); //gets todays date and rounds to just the day.
   var gT = roundDay.graphTime() + 10*1000*3600;
 }
+
+

@@ -54,6 +54,8 @@ class Graph
         "id": prediction.id, 
         "x": graph_time, 
         "y": prediction.prediction_end_price,
+        "image_url": prediction.user.image.url,
+        "username": prediction.user.username,
         marker: {
           symbol: symbol
         }
@@ -73,7 +75,9 @@ class Graph
       predictions_array << {
         "id": prediction.id, 
         "x": prediction.graph_end_time, 
-        "y": prediction.prediction_end_price, 
+        "y": prediction.prediction_end_price,
+        "image_url": prediction.user.image.url,
+        "username": prediction.user.username,
         marker: {
           symbol:symbol
         }

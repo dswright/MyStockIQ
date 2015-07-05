@@ -130,6 +130,9 @@ var graphMediator = (function() {
         var chart = components.defaults.chart;
         var seriesIndex = components[component][key].index;
         chart.series[seriesIndex].setData(lineData);
+        chart.series[seriesIndex].update({dateType:"blah"})
+        console.log("blah");
+        console.log(chart.series[seriesIndex].options.dateType);
       }
     }
   };
@@ -589,10 +592,10 @@ var graphMediator = (function() {
     for(var i=0; i < predictions.length; i++ ) {
       var timeCompare = options[timeType].cb(predictions[i].x);
       if (predictionsArray.length === 0) { //if there are no predictions in the array, then add the first prediction.
-        predictionsArray.push({"id":predictions[i].id, "x":timeCompare, "y":predictions[i].y, "marker":predictions[i].marker})
+        predictionsArray.push({"id":predictions[i].id, "x":timeCompare, "y":predictions[i].y, "marker":predictions[i].marker, "image_url": predictions[i].image_url, "username": predictions[i].username})
       }
       else if (timeCompare !== predictionsArray.last().x) { //if this date is not the same as the last one, then add it.
-        predictionsArray.push({"id":predictions[i].id, "x":timeCompare, "y":predictions[i].y, "marker":predictions[i].marker})
+        predictionsArray.push({"id":predictions[i].id, "x":timeCompare, "y":predictions[i].y, "marker":predictions[i].marker, "image_url": predictions[i].image_url, "username": predictions[i].username})
       }
     }
 
