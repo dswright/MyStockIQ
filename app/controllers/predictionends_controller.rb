@@ -38,23 +38,24 @@ class PredictionendsController < ApplicationController
         prediction.active = false
         prediction.save #update the prediction to inactive.
 
-        predictionend = prediction.build_predictionend() #build a prediction end.
-        predictionend.actual_end_time = Time.zone.now.graph_time.closest_start_time
-        predictionend.graph_end_time = predictionend.actual_end_time.graph_time
-        predictionend.actual_end_price = prediction.stock.daily_stock_price
-        predictionend.content = params[:content]
-        predictionend.end_price_verified = false
-        predictionend.save #save the prediction end.
+        @predictionend = prediction.build_predictionend( #build a prediction end.
+                                    actual_end_time:  Time.zone.now.graph_time.closest_start_time,
+                                    graph_end_time: predictionend.actual_end_time.graph_time,
+                                    actual_end_price: prediction.stock.daily_stock_price,
+                                    content: params[:content],
+                                    end_price_verified: false
+        )
+        
+        @predictionend.save #save the prediction end.
 
-        predictionend.build_popularity(score:0).save #build the popularity score item for predictions
-        @predictionend = predictionend
+        @predictionend.build_popularity(score:0).save #build the popularity score item for predictions
+
         tags = predictionend.add_tags(prediction.stock.ticker_symbol) #Add tickersymbol ('$') and username ('@') tags to predictionend content
 
         @graph_time = @predictionend.graph_end_time
 
         @stock = @predictionend.prediction.stock
 
- 
         #target the current user and the stock with stream items.
         predictionend.streams.create!(targetable_type:"Stock", targetable_id:prediction.stock.id)
         predictionend.streams.create!(targetable_type:"User", targetable_id:current_user.id)
