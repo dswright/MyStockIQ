@@ -31,6 +31,7 @@ Rails.application.routes.draw do
   put     'like_create'                  =>   'likes#create'
   put     'like_destroy'                 =>   'likes#destroy'
 
+  get     'comments'                     =>   'comments#index'
   post    'comments'                     =>   'comments#create'
   delete  'comments/:id'                 =>   'comments#destroy'
   get     'comments'                     =>   'comments#show'
