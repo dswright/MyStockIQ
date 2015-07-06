@@ -1,5 +1,15 @@
 class CommentsController < ApplicationController
 
+	def show
+		respond_to do |f|
+			f.json {
+				render json: {
+					comments: Comment.where(user_id:1)
+				}
+			}
+		end
+	end
+
 	def create
 		#Obtain user session information from Session Helper function 'current_user'.
 		@user = current_user

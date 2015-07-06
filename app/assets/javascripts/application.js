@@ -21,9 +21,18 @@
 //= require prediction-form-box
 //= require welcome
 //= require skrollr
+//= require underscore
+//= require mustache
+//= require backbone
+//= require app
+
 
 //= require_tree ./date-times
 //= require_tree ./pickadate
 //= require_tree ./highcharts
 
-
+window.App = {
+  Models: {},
+  Collections: {},
+  Views: {}
+}

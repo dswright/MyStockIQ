@@ -33,6 +33,7 @@ Rails.application.routes.draw do
 
   post    'comments'                     =>   'comments#create'
   delete  'comments/:id'                 =>   'comments#destroy'
+  get     'comments'                     =>   'comments#show'
 
   post    'predictions'                  =>   'predictions#create'
   get     'predictions/:id'              =>   'predictions#show'
