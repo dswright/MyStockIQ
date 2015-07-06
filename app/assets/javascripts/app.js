@@ -20,7 +20,7 @@ $(function() {
   App.albums = new App.Collections.Albums();
   App.albums.fetch({
     success: function() {
-      var tempInputs = App.albums.first().get('comments')[0];
+      var view = App.albums.first().get('comments')[0];
       var output = Mustache.render("{{content}} spends {{created_at}}", view);
       console.log(output);
     }
