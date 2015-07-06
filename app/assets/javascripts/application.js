@@ -27,8 +27,32 @@
 //= require app
 
 
+//= require underscore
+//= require backbone
+//= require ruby2
+//= require_tree ../templates
+//= require_tree ./models
+//= require_tree ./collections
+//= require_tree ./views
+//= require_tree ./routers
 //= require_tree ./date-times
+//= require underscore
+//= require backbone
+//= require ruby2
+//= require_tree ../templates
+//= require_tree ./models
+//= require_tree ./collections
+//= require_tree ./views
+//= require_tree ./routers
 //= require_tree ./pickadate
+//= require underscore
+//= require backbone
+//= require ruby2
+//= require_tree ../templates
+//= require_tree ./models
+//= require_tree ./collections
+//= require_tree ./views
+//= require_tree ./routers
 //= require_tree ./highcharts
 
 window.App = {

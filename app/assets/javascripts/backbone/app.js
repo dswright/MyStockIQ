@@ -17,11 +17,23 @@ $(function() {
     url: "/comments"
   });
 
+  function loadComment() {
+    $.get('template.mst', function(template) {
+      var rendered = Mustache.render(template, {name:"Luke"});
+      $('#target').html(rendered);
+    });
+  }
+
   App.albums = new App.Collections.Albums();
   App.albums.fetch({
     success: function() {
       var view = App.albums.first().get('comments')[0];
       var output = Mustache.render("{{content}} spends {{created_at}}", view);
+      $.get('template.mst', function(template) {
+        var rendered = Mustache.render(template, view);
+        $('#stream').html(rendered);
+      });
+
       console.log(output);
     }
   });

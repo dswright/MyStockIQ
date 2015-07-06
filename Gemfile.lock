@@ -267,6 +267,7 @@ GEM
       metaclass (~> 0.0.1)
     multi_json (1.11.2)
     multipart-post (2.0.0)
+    mustache (1.0.2)
     nenv (0.2.0)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
@@ -440,6 +441,7 @@ DEPENDENCIES
   mini_magick
   minitest-reporters (= 1.0.5)
   mocha
+  mustache
   newrelic_rpm
   oink
   pg (= 0.17.1)

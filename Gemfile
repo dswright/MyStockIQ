@@ -78,6 +78,7 @@ gem 'fog'
 gem 'underscore-rails'
 
 gem 'backbone-on-rails'
+gem 'mustache'
 
 
 gem 'ruby-progressbar', '1.7.5'
