@@ -214,12 +214,12 @@ class PredictionsController < ApplicationController
 
     gon.ticker_symbol = @stock.ticker_symbol
 
-    @prediction_custom = {}
-    @prediction_custom[:price] = @prediction.prediction_end_price
-    @prediction_custom[:date] = @prediction.prediction_end_time
-    @prediction_custom[:score] = @prediction.score
-    @prediction_custom[:id] = @prediction.id
-
+    @prediction_custom = {
+        price: @prediction.prediction_end_price,
+        date: @prediction.prediction_end_time,
+        score: @prediction.score,
+        id: @prediction.id
+    }
     #unless streams == nil
     #  streams.each {|stream| stream.streamable.update_popularity_score}
     #end
