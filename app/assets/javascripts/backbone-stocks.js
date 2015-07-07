@@ -8,9 +8,9 @@ $(document).ready(function () {
   App.comments.fetch(
     {
       success: function() {
-        App.comments.data = App.comments.first().get('comments')[0];
-        commentView = new CommentView({model:App.Models.Comment});
-        commentView.render();
+        App.Models.Comment.data = App.comments.first().get('comments')[0];
+        App.comment = new App.Views.Comment();
+        App.comment.render();
       }
     }
   );

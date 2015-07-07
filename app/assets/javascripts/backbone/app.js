@@ -10,9 +10,9 @@ $(function() {
   App.comments = new App.Collections.Comments();
   //App.comments.render() is executed in the backbone-stocks.js file only executed on the stocks page.
 
-  CommentView = Backbone.View.extend({
-    tagName: "div",
-    className: "stream",
+  App.Views.Comment = Backbone.View.extend({
+    el: ".stream", 
+    model: App.Models.Comment,
     template: Handlebars.compile(HandlebarsTemplates['comment']()),
     // initialize: function() {
     //   _.bindAll(this, 'render'),
@@ -21,8 +21,18 @@ $(function() {
     render: function() {
       //console.log(this.el);
       //$(this.el).html(this.template(this.model.data))
-      $(".stream").html(this.template(this.model.data));
+      console.log(this.model.data);
+      $(this.el).html(this.template(this.model.data));
     }
+  });
+
+  
+
+  App.Views.Comments = Marionette.CollectionView.extend({
+    el: ".stream",
+    template: false,
+    itemView: App.Views.Comment
+    // itemViewContainer: 'tbody'
   });
 
   //commentView = new CommentView({model: App.Models.Comment});
