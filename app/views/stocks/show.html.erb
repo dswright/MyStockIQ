@@ -1,5 +1,5 @@
 <%= include_gon(:init => true) %>
-<%= javascript_include_tag "stock-graph.js" %>
+<%= javascript_include_tag "stock-graph.js", "backbone-stocks.js" %>
 
 <% content_for :title do %>
   <title><%= @stock[:ticker_symbol] %> Stock Predictions - StockHero.com</title>

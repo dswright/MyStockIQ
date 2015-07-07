@@ -1,42 +1,29 @@
 
 $(function() {
-  App.Models.Album = Backbone.Model.extend()
+  App.Models.Comment = Backbone.Model.extend();
 
-  App.album = new App.Models.Album({ title: 'Bitches Brew'});
-  // child {cid: "c2", attributes: Object, _changing: false, _previousAttributes: Object, changed: Object…}
-  App.album.get('title');
-  // “Bitches Brew”
-  App.album.set({ title: 'Sketches of Spain' });
-  // child {cid: "c2", attributes: Object, _changing: false, _previousAttributes: Object, changed: Object…}
-  App.album.get('title');
-  // ”Sketches of Spain”
-
-
-  App.Collections.Albums = Backbone.Collection.extend({
-    model: App.Models.Album,
+  App.Collections.Comments = Backbone.Collection.extend({
+    model: App.Models.Comment,
     url: "/comments"
   });
 
-  function loadComment() {
-    $.get('template.mst', function(template) {
-      var rendered = Mustache.render(template, {name:"Luke"});
-      $('#target').html(rendered);
-    });
-  }
+  App.comments = new App.Collections.Comments();
+  //App.comments.render() is executed in the backbone-stocks.js file only executed on the stocks page.
 
-  App.albums = new App.Collections.Albums();
-  App.albums.fetch({
-    success: function() {
-      var view = App.albums.first().get('comments')[0];
-      var output = Mustache.render("{{content}} spends {{created_at}}", view);
-      $.get('template.mst', function(template) {
-        var rendered = Mustache.render(template, view);
-        $('#stream').html(rendered);
-      });
-
-      console.log(output);
+  CommentView = Backbone.View.extend({
+    tagName: "div",
+    className: "stream",
+    template: Handlebars.compile(HandlebarsTemplates['comment']()),
+    // initialize: function() {
+    //   _.bindAll(this, 'render'),
+    //   this.model.on("change", this.render)
+    // },
+    render: function() {
+      //console.log(this.el);
+      //$(this.el).html(this.template(this.model.data))
+      $(".stream").html(this.template(this.model.data));
     }
   });
- 
 
+  //commentView = new CommentView({model: App.Models.Comment});
 });

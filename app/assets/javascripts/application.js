@@ -9,7 +9,6 @@
 //
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
-//
 
 
 //= require jquery
@@ -22,38 +21,14 @@
 //= require welcome
 //= require skrollr
 //= require underscore
-//= require mustache
+//= require handlebars
 //= require backbone
-//= require app
-
-
-//= require underscore
-//= require backbone
-//= require ruby2
-//= require_tree ../templates
-//= require_tree ./models
-//= require_tree ./collections
-//= require_tree ./views
-//= require_tree ./routers
+//= require backbone.marionette
+//= require_tree ./backbone
 //= require_tree ./date-times
-//= require underscore
-//= require backbone
-//= require ruby2
-//= require_tree ../templates
-//= require_tree ./models
-//= require_tree ./collections
-//= require_tree ./views
-//= require_tree ./routers
-//= require_tree ./pickadate
-//= require underscore
-//= require backbone
-//= require ruby2
-//= require_tree ../templates
-//= require_tree ./models
-//= require_tree ./collections
-//= require_tree ./views
-//= require_tree ./routers
 //= require_tree ./highcharts
+//= require_tree ./pickadate
+
 
 window.App = {
   Models: {},
