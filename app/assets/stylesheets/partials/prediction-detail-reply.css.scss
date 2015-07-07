@@ -20,17 +20,14 @@
 .detail-reply-vote-col {
 	margin-top: 12px;
 	padding-right: 0px;
-	padding-left: 0px;
 }
-
 
 .detail-reply-vote-col a {
 	display: block;
-	margin-left: auto;
-	margin-right: auto;
-	text-align: center;
+	text-align: right;
 	color: #C7C7C7;
 	font-size: 18px;
+	cursor: pointer;
 
   -webkit-transition: 150ms ease-in;
   -moz-transition: 150ms ease-in;
@@ -40,6 +37,7 @@
 
 .detail-reply-vote-col a:hover {
 	color: #7cb5ec;
+	cursor: pointer;
 }
 
 .detail-reply-vote-col p {
