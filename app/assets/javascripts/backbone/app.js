@@ -13,7 +13,6 @@ $(function() {
   App.Views.Comment = Backbone.View.extend({
     el: ".stream", 
     model: App.Models.Comment,
-    template: Handlebars.compile(HandlebarsTemplates['comment']()),
     // initialize: function() {
     //   _.bindAll(this, 'render'),
     //   this.model.on("change", this.render)
@@ -21,8 +20,10 @@ $(function() {
     render: function() {
       //console.log(this.el);
       //$(this.el).html(this.template(this.model.data))
+      var data = this.model.data;
+      var template = Handlebars.compile(HandlebarsTemplates['comment']({content: data.content}));
       console.log(this.model.data);
-      $(this.el).html(this.template(this.model.data));
+      $(this.el).html(template());
     }
   });
 
