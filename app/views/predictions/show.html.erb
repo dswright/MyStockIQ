@@ -102,6 +102,16 @@
 
     <div class="stream">
 
+      <!-- Load placeholder when no comments on prediction -->
+
+      <div class="detail-reply-placeholder">
+        <i class="fa fa-comments-o"></i>
+        <p class="detail-reply-placeholder-txt">
+          Be the first to comment!
+        </p>
+      </div>
+
+
       <!-- load partials for each reply on mobile -->
       <% @prediction.replies.reorder('created_at asc').each do |reply| %>
         <%= render partial: "shared/graph/detail_reply_mobile", locals: {reply: reply}  %>
@@ -130,7 +140,6 @@
       </div>
 
     </div>
-  </div>
 
   
   <!-- MOBILE TOOLBAR PARTIALS -->
@@ -142,15 +151,10 @@
   <% end %>
 
 
-
   <div class="col-sm-3 stockpage-sidebar">
 
-    <%= render partial: 'shared/prediction_open', locals: {prediction: @prediction} %>
-   
-    <%= render partial: 'stocks/ranking', locals: {stock: @stock} %>
-
-    <%= render partial: 'shared/popular_stocks', locals: {popular_stocks: @popular_stocks} %>
-    
+    <%= render partial: 'stocks/top_predictions_box', locals: {stock: @stock} %>
+       
   </div>
 
 </div>
