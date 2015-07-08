@@ -5,22 +5,14 @@
 
   var commentModel = new CommentModel();
 
-  commentModel.fetch({
+  /*commentModel.fetch({
+
     success: function(){
       console.log(commentModel.get('comment'));
-      var commentView = new CommentView({model: commentModel});
-      commentView.render();
+      var commentView = new CommentView( {model: commentModel} );
+       commentView.render();
     }
-  });
-
-////// Collection ///////
-
-  var CommentCollection = Backbone.Collection.extend({
-    model: commentModel
-  });
-
-  var commentCollection = new CommmentCollection();
-
+  });*/
 
 ////// View /////////
 
@@ -40,9 +32,39 @@
       //$(this.el).html(this.template(this.model.data))
       var attributes = this.model.attributes;
       //var html = '<div>' + this.model.get('comment').content + '</div>';
-      $('.stream').html(Handlebars.compile(HandlebarsTemplates['comment'](attributes)));
+      $('.stream').prepend(Handlebars.compile(HandlebarsTemplates['comment'](attributes)));
       //$('buttom').click(this.alertStatus).preventDefault();
     }
   });
+
+
+////// Collection ///////
+
+var CommentCollection = Backbone.Collection.extend({url: '/comments'});
+
+var commentCollection = new CommentCollection( {model: commentModel} );
+
+
+
+ commentCollection.fetch({
+
+  success: function(){
+    commentCollection.forEach(function(commentModel){
+
+      var commentView = new CommentView( {model: commentModel} );
+      commentView.render();
+    });
+  },
+
+ })
+
+commentCollection.on('fetch')
+
+
+/////// Collection View //////
+
+var CommentListView = Backbone.View.extend({});
+
+
 
 
