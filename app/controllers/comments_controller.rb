@@ -1,7 +1,7 @@
 class CommentsController < ApplicationController
 
 	def index
-		render json: {comment: Comment.first}
+		render json: Comment.first
 	end
 
 	def show

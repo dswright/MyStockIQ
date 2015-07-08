@@ -1,8 +1,10 @@
 
+///// MODEL /////
 
   var CommentModel = Backbone.Model.extend({urlRoot: '/comments'});
 
   var commentModel = new CommentModel();
+
   commentModel.fetch({
     success: function(){
       console.log(commentModel.get('comment'));
@@ -10,28 +12,36 @@
       commentView.render();
     }
   });
-/*
-  App.Collections.Comments = Backbone.Collection.extend({
-    model: App.Models.Comment,
-    url: '/comments'
+
+////// Collection ///////
+
+  var CommentCollection = Backbone.Collection.extend({
+    model: commentModel
   });
 
-  App.comments = new App.Collections.Comments(); */
+  var commentCollection = new CommmentCollection();
 
-  //App.comments.render() is executed in the backbone-stocks.js file only executed on the stocks page.
+
+////// View /////////
 
   var CommentView = Backbone.View.extend({
     tagName: "div",
     className: "stream",
-    //template: Handlebars.compile("<div><p>{{content}}</p></div>"),
+    //template: _.template('<button><%= comment.content %></button>'),
+    
+    events: {
+              "click button": "alertStatus"
+    },
 
+    alertStatus: function(e){
+      alert('Hey you clicked the content');
+    },
     render: function() {
       //$(this.el).html(this.template(this.model.data))
-      //var attributes = this.model.toJSON();
-      //console.log(attributes);
-      var html = '<div>' + this.model.get('comment').content + '</div>';
-      console.log(html);
-      $(this.el).html(html);
+      var attributes = this.model.attributes;
+      //var html = '<div>' + this.model.get('comment').content + '</div>';
+      $('.stream').html(Handlebars.compile(HandlebarsTemplates['comment'](attributes)));
+      //$('buttom').click(this.alertStatus).preventDefault();
     }
   });
 
