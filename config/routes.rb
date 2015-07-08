@@ -32,9 +32,12 @@ Rails.application.routes.draw do
   put     'like_destroy'                 =>   'likes#destroy'
 
   get     'comments'                     =>   'comments#index'
+  get     'comments/:id'                 =>   'comments#by_id'
+
+
   post    'comments'                     =>   'comments#create'
   delete  'comments/:id'                 =>   'comments#destroy'
-  get     'comments'                     =>   'comments#show'
+
 
   post    'predictions'                  =>   'predictions#create'
   get     'predictions/:id'              =>   'predictions#show'

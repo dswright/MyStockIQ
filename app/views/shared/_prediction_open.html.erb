@@ -7,19 +7,7 @@
       <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a id="open-prediction-close-tab" href="#tabs-2"><i class="fa fa-line-chart"></i>&nbsp;&nbsp;&nbsp;Close My Prediction</a></li>   
     </ul>
 
-
-    <%= form_for(Comment.new, remote:true) do |f| %>
-      <div class="open-comment-only-form-div" id="tabs-1">
-        <div class="open-comment-only-field">
-          <%= f.text_area :content, placeholder:"Comment on #{@prediction.stock.ticker_symbol}", class: "comment-form-textarea", id: "open-comment" %>
-          <%= hidden_field_tag :stream_string, @comment_stream_string %>
-          <%= hidden_field_tag :ticker_symbol, @prediction.stock.ticker_symbol %>
-        </div>
-        <div class="button-counter clearfix">
-          <%= f.submit "SUBMIT", class: "btn pull-right" %>
-        </div>
-      </div>
-    <% end %>
+    <!-- Comment div goes here-->
 
     <%= form_for(Predictionend.new, remote:true) do |f| %>
       <div class="close-prediction-form-div" id="tabs-2">

@@ -140,8 +140,6 @@ var graphMediator = (function() {
     var frameHash = components.currentFrame.framesHash[button]
     chart.yAxis[0].setExtremes(frameHash.yMin, frameHash.yMax); //set y min and y max values
     chart.xAxis[0].setExtremes(frameHash.xMin, frameHash.xMax); //set x min and x max values
-    console.log(frameHash.xMin.gmtString());
-    console.log(frameHash.xMax.gmtString());
   };
 
   //sets the on-hover respones for each graph line.
@@ -465,16 +463,9 @@ var graphMediator = (function() {
       };
 
       var arr = options[intervalDirection][timeType]();
-      console.log(intervalDirection + "" + timeType);
-      console.log(arr);
 
       var processor = options[intervalDirection]["processor"];
       var limit = processor(arr, intervals, startPoint);
-      console.log(limit);
-
-
-      console.log(limit[0].x);
-
       return limit[0].x;
 
       //for getting the forward looking date, slice off the array from the begginning:

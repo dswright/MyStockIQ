@@ -44,18 +44,8 @@
       </div>
     <% end %>
 
-    <%= form_for(Comment.new, remote:true) do |f| %>
-      <div class="open-comment-only-form-div" id="tabs-2">
-        <div class="open-comment-only-field">
-          <%= f.text_area :content, placeholder:"Comment on #{@prediction.stock.ticker_symbol}", class: "comment-form-textarea", id: "open-comment" %>
-          <%= hidden_field_tag :stream_string, @comment_stream_string %>
-          <%= hidden_field_tag :ticker_symbol, @prediction.stock.ticker_symbol %>
-        </div>
-        <div class="button-counter clearfix">
-          <%= f.submit "SUBMIT", class: "btn pull-right" %>
-        </div>
-      </div>
-    <% end %>
+    <!-- comment div goes here -->
+
   </div>
 
   <!-- javascript functino to load the calendar onto the datepicker form. -->

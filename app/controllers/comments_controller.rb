@@ -1,13 +1,7 @@
 class CommentsController < ApplicationController
 
 	def index
-		respond_to do |f|
-			f.json {
-				render json: {
-					comments: Comment.all
-				}
-			}
-		end
+		render json: Comment.all
 	end
 
 	def show
@@ -18,6 +12,10 @@ class CommentsController < ApplicationController
 				}
 			}
 		end
+	end
+
+	def by_id
+		render json: Comment.find(params[:id])
 	end
 
 	def create
