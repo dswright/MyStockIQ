@@ -3,6 +3,10 @@ class UsersController < ApplicationController
   before_action :redirect_non_admin_user, only: :destroy
   before_action :redirect_non_user, only: :show
 
+  def index
+    render json: User.all
+  end
+
   def show
     
     #Logged in user

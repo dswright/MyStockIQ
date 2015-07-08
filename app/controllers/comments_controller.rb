@@ -1,7 +1,7 @@
 class CommentsController < ApplicationController
 
 	def index
-		render json: Comment.all
+		render json: Comment.all.reorder("id asc")
 	end
 
 	def show
@@ -16,6 +16,15 @@ class CommentsController < ApplicationController
 
 	def by_id
 		render json: Comment.find(params[:id])
+	end
+
+	def post
+		params = comment_params
+		puts "COMMENT #{params}"
+		@comment = Comment.new(params)
+		@comment.save
+		#comment = Comment.new(params[:comment])
+		render json: @comment, status: :created, location: @comment
 	end
 
 	def create
@@ -57,6 +66,6 @@ class CommentsController < ApplicationController
 
 	private
 		def comment_params
-			params.require(:comment).permit(:content)
+			params.require(:comment).permit(:content, :user_id)
 		end
 end
