@@ -1,29 +1,38 @@
 
-$(function() {
-  App.Models.Comment = Backbone.Model.extend();
 
+  var CommentModel = Backbone.Model.extend({urlRoot: '/comments'});
+
+  var commentModel = new CommentModel();
+  commentModel.fetch({
+    success: function(){
+      console.log(commentModel.get('comment'));
+      var commentView = new CommentView({model: commentModel});
+      commentView.render();
+    }
+  });
+/*
   App.Collections.Comments = Backbone.Collection.extend({
     model: App.Models.Comment,
-    url: "/comments"
+    url: '/comments'
   });
 
-  App.comments = new App.Collections.Comments();
+  App.comments = new App.Collections.Comments(); */
+
   //App.comments.render() is executed in the backbone-stocks.js file only executed on the stocks page.
 
-  CommentView = Backbone.View.extend({
+  var CommentView = Backbone.View.extend({
     tagName: "div",
     className: "stream",
-    template: Handlebars.compile(HandlebarsTemplates['comment']()),
-    // initialize: function() {
-    //   _.bindAll(this, 'render'),
-    //   this.model.on("change", this.render)
-    // },
+    //template: Handlebars.compile("<div><p>{{content}}</p></div>"),
+
     render: function() {
-      //console.log(this.el);
       //$(this.el).html(this.template(this.model.data))
-      $(".stream").html(this.template(this.model.data));
+      //var attributes = this.model.toJSON();
+      //console.log(attributes);
+      var html = '<div>' + this.model.get('comment').content + '</div>';
+      console.log(html);
+      $(this.el).html(html);
     }
   });
 
-  //commentView = new CommentView({model: App.Models.Comment});
-});
+

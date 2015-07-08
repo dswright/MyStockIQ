@@ -1,5 +1,5 @@
 
-
+/*
 //this is only run on the stocks page.
 
 $(document).ready(function () {
@@ -9,9 +9,10 @@ $(document).ready(function () {
     {
       success: function() {
         App.comments.data = App.comments.first().get('comments')[0];
-        commentView = new CommentView({model:App.Models.Comment});
+        commentView = new CommentView({ model: commentsModel });
         commentView.render();
       }
     }
   );
 });
+*/

@@ -1,13 +1,7 @@
 class CommentsController < ApplicationController
 
 	def index
-		respond_to do |f|
-			f.json {
-				render json: {
-					comments: Comment.all
-				}
-			}
-		end
+		render json: {comment: Comment.first}
 	end
 
 	def show
