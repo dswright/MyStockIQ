@@ -5,12 +5,14 @@
         <!-- <%= #link_to image_tag(stream.streamable.user.image), "/users/#{stream.streamable.user.username}/" %> -->
       </div>
       <div class="comment-only-item-txt">
+        <a class ="comment-only-item-username" href = "/users/{{user.username}}">{{user.username}}</a>
         <!-- <%= #link_to stream.streamable.user.username, "/users/#{stream.streamable.user.username}/", class: "comment-only-item-username" %> -->
+
         <p class="comment-only-item-main-txt">
           <!-- <% #unless stream.streamable.tag == nil %> -->
             <!--  <%= #auto_link(stream.streamable.tag.content) %> -->
           <!-- <% #else %> -->
-             {{content}}
+             {{streamable.content}}
           <!-- <% #end %> -->
         </p>
       </div>
