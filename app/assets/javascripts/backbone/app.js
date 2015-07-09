@@ -49,21 +49,32 @@ var commentCollection = new CommentCollection( {model: commentModel} );
  commentCollection.fetch({
 
   success: function(){
-    commentCollection.forEach(function(commentModel){
-
-      var commentView = new CommentView( {model: commentModel} );
-      commentView.render();
-    });
+      var commentListView = new CommentListView( {collection: commentCollection} );
+      commentListView.render();
   },
 
  })
 
-commentCollection.on('fetch')
+//commentCollection.on('fetch')
 
 
 /////// Collection View //////
 
-var CommentListView = Backbone.View.extend({});
+var CommentListView = Backbone.View.extend({
+  initialize: function(){
+    this.collection.on('add', this.addOne, this);
+  },
+
+  render: function(){
+    this.collection.forEach(this.addOne, this);
+  },
+
+  addOne: function(commentModel){
+    var commentView = new CommentView({model: commentModel});
+    commentView.render();
+  }
+
+});
 
 
 
