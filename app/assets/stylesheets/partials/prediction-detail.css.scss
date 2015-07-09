@@ -11,6 +11,164 @@
   background-position: center;
 }
 
+
+
+/*-------- PREDICTION NAME TITLE -----------*/
+
+.prediction-name-title-name {
+	display: inline;
+}
+
+.prediction-details-name-follow {
+	display: block;
+}
+
+.prediction-detail-header {
+	height: 50px;
+	margin-top: 36px;
+}
+
+.prediction-name-items {
+	display: block;
+	clear: both;
+	width: 190px;
+	margin: auto;
+}
+
+.prediction-name-items img {
+	display: block;
+	float: left;
+	width: 30%;
+	margin-right: 3px;
+	position: relative;
+	border-radius: 90px;
+	border: 1px solid rgba(255, 255, 255, 1);
+}
+
+.prediction-details-name-follow {
+	float: right;
+	width: 60%;
+	margin-left: 10px;
+}
+
+.prediction-name-title a {
+	display: block;
+	text-decoration: none;
+	font-size: 18px;
+	text-transform: uppercase;
+	font-weight: 300;
+	color: rgba(255, 255, 255, .90);
+  -webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+}
+
+
+.follow-btn-white form {
+	display: inline-block;
+}
+
+a.follow-btn-white .follow-btn-follow {
+	text-align: center;
+	margin-left: 1px;
+	margin-top: 5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 12px;
+	padding-right: 12px;
+	border: 1px solid #fff;
+	border-radius: 3px 3px 3px 3px;
+	font-size: 11px;
+	color: #2A3744;
+	font-weight: 500;
+	background-color: #fff;
+}
+
+a.follow-btn-white .follow-btn-follow:hover {
+	-webkit-transition: 90ms ease-in;
+	-moz-transition: 90ms ease-in;
+	-o-transition: 90ms ease-in;
+	transition: 90ms ease-in;
+	color: #fff;
+	background-color: #7CB5EC;
+	border: 1px solid #7CB5EC;
+}
+
+.follow-btn-follow:focus {
+	outline: none;
+}
+
+.follow-btn-blue form {
+	display: inline-block;
+}
+
+a.follow-btn-blue .follow-btn-follow {
+	text-align: center;
+	margin-left: 1px;
+	margin-top: 5px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 7px;
+	padding-right: 7px;
+	border: 1px solid #7CB5EC;
+	border-radius: 3px 3px 3px 3px;
+	font-size: 11px;
+	font-weight: 500;
+	color: #fff;
+	background-color: #7CB5EC;
+}
+
+a.follow-btn-blue .follow-btn-follow:hover {
+	text-decoration: none;
+	outline: none;
+}
+
+a.follow-btn-blue .follow-btn-follow:focus {
+	text-decoration: none;
+	outline: none;
+}
+
+
+/*-------- MY PREDICTION NAME TITLE -----------*/
+
+.prediction-my-name-follow {
+	float: right;
+	width: 60%;
+	margin-left: 10px;
+}
+
+.prediction-my-name-title {
+	padding-top: 9px;
+}
+
+.prediction-my-name-title a {
+	margin-top: 18px;
+	text-decoration: none;
+	font-size: 18px;
+	text-transform: uppercase;
+	font-weight: 300;
+	color: rgba(255, 255, 255, .90);
+  -webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+}
+
+.prediction-my-name-title a:hover {
+	color: #7cb5ec;
+}
+
+.detail-name-title {
+	display: block;
+	margin-top: 3px;
+	color: rgba(255, 255, 255, 0.50);
+}
+
+
+
+
+
 .detail-graph-stats {
 	display: none;
 }
@@ -290,7 +448,7 @@
   transition: 150ms ease-in;
 }
 
-.detail-mobile-toolbar-buttons-points .points {
+.detail-mobile-toolbar-buttons-points .point {
 	display: inline-block;
 	background-color: #7cb5ec;
 	color: #fff;

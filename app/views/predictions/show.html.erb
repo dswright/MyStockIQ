@@ -141,7 +141,15 @@
 
     </div>
 
-  
+
+  <div class="col-sm-3 stockpage-sidebar">
+
+    <%= render partial: 'shared/top_predictions_box', locals: {stock: @stock} %>
+       
+  </div>
+
+</div>
+
   <!-- MOBILE TOOLBAR PARTIALS -->
 
   <% if @prediction.user == @current_user %>
@@ -149,13 +157,4 @@
   <% else %>
     <%= render partial: 'details_mobile_toolbar_not_mine'%>
   <% end %>
-
-
-  <div class="col-sm-3 stockpage-sidebar">
-
-    <%= render partial: 'stocks/top_predictions_box', locals: {stock: @stock} %>
-       
-  </div>
-
-</div>
 
