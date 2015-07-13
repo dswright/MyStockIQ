@@ -14,6 +14,7 @@ class Comment < ActiveRecord::Base
 	default_scope -> { order(created_at: :desc) }
 
 	scope :by_user, lambda {|user| where(user_id: user.id)}
+	scope :with_users, lambda {self.joins(:user)}
 
 	def invalid_content
 		errors[:content].clear

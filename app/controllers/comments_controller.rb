@@ -1,7 +1,9 @@
 class CommentsController < ApplicationController
 
 	def index
+
 		render json: Comment.all.reorder("id asc")
+
 	end
 
 	def show

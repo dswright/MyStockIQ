@@ -1,5 +1,11 @@
 class StreamsController < ApplicationController
 
+	def index
+		@streams = Stream.all
+		#render json: @streams.to_json(include: {streamable: {include: :user}, targetable: {}})
+
+	end
+
 	def update
 			@stream = Stream.find(params[:stream_id])
 			
