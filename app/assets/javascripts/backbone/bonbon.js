@@ -32,7 +32,7 @@
       //$(this.el).html(this.template(this.model.data))
       var attributes = this.model.attributes;
       //var html = '<div>' + this.model.get('comment').content + '</div>';
-      $('.stream').prepend(Handlebars.compile(HandlebarsTemplates['comment'](attributes)));
+      $('.stream').prepend(Handlebars.compile(HandlebarsTemplates['example'](attributes)));
       //$('buttom').click(this.alertStatus).preventDefault();
     }
   });
@@ -120,7 +120,6 @@ var StreamsView = Backbone.View.extend({
   },
 
   addOne: function(streamModel){
-    if (streamModel.get('type') == "C")
     var streamView = new StreamView({model: streamModel});
     streamView.render();
   },
