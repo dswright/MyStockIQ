@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   before_action :redirect_non_user, only: :show
 
   def index
-    render json: User.all
+    render json: User.find(params[:id])
   end
 
   def show

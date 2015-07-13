@@ -1,7 +1,9 @@
 class CommentsController < ApplicationController
 
 	def index
-		render json: Comment.all.reorder("id asc")
+		comments = Comment.all
+    #render json: @streams.to_json(include: [:streamable,:targetable])
+		render json: comments.reorder("id asc").to_json(include: {user:{only: [:username, :image, :id]}, replies:{include: :user}})
 	end
 
 	def show
@@ -20,10 +22,8 @@ class CommentsController < ApplicationController
 
 	def post
 		params = comment_params
-		puts "COMMENT #{params}"
 		@comment = Comment.new(params)
 		@comment.save
-		#comment = Comment.new(params[:comment])
 		render json: @comment, status: :created, location: @comment
 	end
 

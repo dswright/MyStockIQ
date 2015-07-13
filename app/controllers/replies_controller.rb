@@ -1,5 +1,12 @@
 class RepliesController < ApplicationController
 
+	def new
+		params = reply_params
+		@reply = Reply.new(params)
+		@reply.save
+		render json: @reply, status: :created, location: @reply
+	end
+
 	def create
 		#Obtain user session information from Session Helper function 'current_user'.
 		@user = current_user
@@ -35,6 +42,6 @@ class RepliesController < ApplicationController
 	def reply_params
 		#Obtains parameters from '_stream_reply_form' in app/views/stream.
 		#Permits adjustment of only the 'content' column in the 'replies' model.
-		params.require(:reply).permit(:content)
+		params.require(:reply).permit(:content, :repliable_id, :repliable_type, :user_id)
 	end
 end
