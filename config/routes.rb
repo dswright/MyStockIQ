@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   #users new is the landing page with user signup.
   root  'users#new' 
   
-  get     'users'                        =>   'users#index'
+  get     'user/:id'                    =>   'users#index'
   post    'users'                        =>   'users#create'
   get     'users/:username'              =>   'users#show', as: 'user'                                          
   delete  'users/:username'              =>   'users#destroy'
@@ -47,6 +47,9 @@ Rails.application.routes.draw do
   get     'predictions/hover_intraday/:id' => 'predictions#hover_intraday'
   get     'predictions/details_hover_intraday/:id' => 'predictions#details_hover_intraday'
   get     'predictions/details_hover_daily/:id' => 'predictions#details_hover_daily'
+
+
+  post    'reply'                        =>   'replies#new'
 
   post    'replies'                      =>   'replies#create'
   get     'replies/:id'                  =>   'replies#show'
