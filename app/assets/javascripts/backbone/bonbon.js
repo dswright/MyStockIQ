@@ -72,7 +72,7 @@ commentCollection.fetch({
 
  });
 */
- var StreamCollection = Backbone.Collection.extend({url: '/streams'});
+ var StreamCollection = Backbone.Collection.extend({url: '/streams.json'});
  var streamCollection = new StreamCollection();
 
 streamCollection.fetch({
@@ -120,6 +120,7 @@ var StreamsView = Backbone.View.extend({
   },
 
   addOne: function(streamModel){
+    if (streamModel.get('type') == "C")
     var streamView = new StreamView({model: streamModel});
     streamView.render();
   },
