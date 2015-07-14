@@ -1,0 +1,187 @@
+
+
+.stockpage-desktop-toolbar {
+	display: none;
+}
+
+.stockpage-desktop-toolbar-close {
+	display: none;
+}
+
+
+@media (min-width: 768px) {
+
+
+/*------ DESKTOP TOOLBAR CLOSE -----------*/
+
+.stockpage-desktop-btn-label {
+	display: none;
+}
+
+.stockpage-desktop-btn-label-points {
+	display: none;
+}
+
+.stockpage-desktop-btn-label-close {
+	display: none;
+}
+
+.stockpage-desktop-btn-label-points {
+	display: none;
+}
+
+.stockpage-desktop-toolbar-close {
+	display: block;
+	margin-top: 20px;
+	overflow: hidden;
+	background-color: #fff;
+	box-shadow: 0 1px 2px rgba(0,0,0,.1);
+	border-radius: 3px;
+}
+
+.stockpage-desktop-toolbar-buttons-close {
+	display: inline-block;
+	width: 100%;
+	height: 57px;
+	text-align: center;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	color: #7cb5ec;
+	cursor: pointer;
+
+	-webkit-transition: 150ms ease-in;
+	-moz-transition: 150ms ease-in;
+	-o-transition: 150ms ease-in;
+	transition: 150ms ease-in;
+}
+
+.stockpage-desktop-toolbar-buttons-close:hover {
+	border-bottom: 3px solid #7cb5ec;
+  	cursor: pointer;
+	color: #7cb5ec;
+	text-decoration: none;
+}
+
+.stockpage-desktop-toolbar-buttons-close i:before {
+	padding-right: 10px;
+}
+
+.stockpage-desktop-toolbar-buttons-points {
+	display: inline-block;
+	width: 100%;
+	height: 57px;
+	text-align: center;
+	padding-top: 18px;
+	padding-bottom: 18px;
+	color: #7cb5ec;
+
+	-webkit-transition: 150ms ease-in;
+	-moz-transition: 150ms ease-in;
+	-o-transition: 150ms ease-in;
+	transition: 150ms ease-in;
+}
+
+.stockpage-desktop-toolbar-buttons-points .point {
+	display: inline-block;
+	background-color: #7cb5ec;
+	color: #fff;
+	border-radius: 3px;
+	padding: 2px 6px 2px 6px;
+}
+
+
+.stockpage-desktop-toolbar-buttons-points:hover {
+	border-bottom: 3px solid #7cb5ec;
+  	cursor: pointer;
+	color: #7cb5ec;
+	text-decoration: none;
+}
+
+.stockpage-desktop-toolbar-buttons-points:focus {
+	color: #7cb5ec;
+	outline: none;
+	text-decoration: none;
+}
+
+
+
+/*--- DESKTOP TOOLBAR ---*/
+
+.stockpage-desktop-toolbar {
+	display: block;
+	margin-top: 20px;
+	overflow: hidden;
+	background-color: #fff;
+	box-shadow: 0 1px 2px rgba(0,0,0,.1);
+	border-radius: 3px;
+	color: #919191;
+	text-decoration: none;
+}
+
+.stockpage-desktop-toolbar-buttons {
+	display: inline-block;
+	width: 100%;
+	height: 57px;
+	text-align: center;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	color: #7cb5ec;
+	cursor: pointer;
+	-webkit-transition: 150ms ease-in;
+	-moz-transition: 150ms ease-in;
+	-o-transition: 150ms ease-in;
+	transition: 150ms ease-in;
+}
+
+.stockpage-desktop-toolbar-buttons:hover {
+	border-bottom: 3px solid #7cb5ec;
+  	cursor: pointer;
+	color: #7cb5ec;
+	text-decoration: none;
+}
+
+.stockpage-desktop-toolbar-buttons:focus {
+	color: #7cb5ec;
+	outline: none;
+	text-decoration: none;
+}
+
+.stockpage-toolbar-divide {
+	border-left: 1px solid rgba(0,0,0,.07);
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+.stockpage-toolbar-col {
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+.stockpage-desktop-toolbar-buttons i:before {
+	padding-right: 10px;
+}
+
+}
+
+@media (min-width: 991px) {
+
+.stockpage-desktop-btn-label {
+	display: inline-block;
+	font-weight: 400;
+}
+
+.stockpage-desktop-btn-label-close {
+	display: inline-block;
+	font-weight: 400;
+}
+
+.stockpage-desktop-btn-label-points {
+	display: inline-block;
+	font-weight: 300;
+}
+
+
+
+
+}
+
