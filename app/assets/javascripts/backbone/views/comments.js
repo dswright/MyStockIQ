@@ -56,8 +56,28 @@ $(function() {
                 content: input,
                 user_id: App.currentUser.id
             });
-            newComment.save();
-            App.commentList.add(newComment);
+            console.log("NEW COMMENT");
+            console.log(newComment);
+            newComment.save(null, {
+                success: function(model) {
+                    newStream = new App.Models.Stream({
+                        streamable_id: model.attributes.id,
+                        streamable_type: "Comment",
+                        targetable_id: App.targetableId,
+                        targetable_type: App.targetableType
+                    });
+                    console.log(newStream);
+                    newStream.save(null, {
+                        success: function(model) {
+                            console.log("just bfore add");
+                            App.streamList.add(model);
+                        }
+                    });
+                }
+            });
+
+
+
         },
         render: function () {
             var template = Handlebars.compile(HandlebarsTemplates['comment-form']()); //no need to pass vars to a static form.

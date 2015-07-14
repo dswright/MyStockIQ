@@ -38,7 +38,7 @@ $(function() {
         },
         addOne: function(replyItem) {
             var reply = new App.Views.Reply({model: replyItem});
-            $(this.el).prepend(reply.el);
+            $(this.el).append(reply.el);
         },
         render: function() {
             var replyTotal = new App.Views.ReplyTotal();
@@ -59,6 +59,7 @@ $(function() {
             "submit": "addReply"
         },
         addReply: function(e) {
+            var that = this;
             e.preventDefault();
             //var input = $(e.currentTarget).val();
             var input = $(e.currentTarget).find('input[type=text]').val();
@@ -71,10 +72,15 @@ $(function() {
                 content: input,
                 user_id: App.currentUser.id,
                 repliable_type: "Comment",
-                repliable_id: this.id
+                repliable_id: 10
             });
-            newReply.save();
-            this.collection.add(newReply);
+            console.log("REPLY COLLECTION");
+            console.log(this.collection);
+            newReply.save(null, {
+                success: function(model) {
+                    that.collection.add(model);
+                }
+            });
         },
         render: function() {
             console.log("CURRENT USER:");

@@ -6,6 +6,12 @@ $(function() {
     });
 
     App.Collections.ReplyList = Backbone.Collection.extend();
+
+    App.Collections.StreamList = Backbone.Collection.extend({
+        initialize: function(options) {
+            this.url = options.url;
+        }
+    });
 });
 
 

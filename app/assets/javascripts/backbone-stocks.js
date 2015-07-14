@@ -14,17 +14,33 @@ $(document).ready(function () {
   //
   //
 
-    App.currentUser = new App.Models.User({id: 1}); //create the current user.
+
+    App.currentUser = new App.Models.User(); //create the current user.
     App.currentUser.fetch();
 
-    App.commentList = new App.Collections.CommentList(); //create the comment list collection.
+    //these are 2 variables that will be needed in the app.
+    App.targetableId = gon.stock_id;
+    App.targetableType = "Stock";
 
-
-    App.commentList.fetch({ //fetch the commentList data. data gets to App.commentList.
+    App.streamList = new App.Collections.StreamList({url:'/streams/'+App.targetableType+'/'+App.targetableId+'.json'});
+    App.streamList.fetch({
         success: function() {
-            App.commentListView = new App.Views.CommentListView({collection: App.commentList}) //render is called automatically by initialize.
-            App.commentForm = new App.Views.CommentForm(); //render the comment form on the page.
+            App.commentForm = new App.Views.CommentForm();
+            App.streamListView = new App.Views.StreamListView({collection: App.streamList});
         }
     });
+
+
+
+
+    //App.commentList = new App.Collections.CommentList(); //create the comment list collection.
+    //
+    //
+    //App.commentList.fetch({ //fetch the commentList data. data gets to App.commentList.
+    //    success: function() {
+    //        App.commentListView = new App.Views.CommentListView({collection: App.commentList}) //render is called automatically by initialize.
+    //        App.commentForm = new App.Views.CommentForm(); //render the comment form on the page.
+    //    }
+    //});
 });
 

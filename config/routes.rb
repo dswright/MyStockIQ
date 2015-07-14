@@ -9,9 +9,9 @@ Rails.application.routes.draw do
   #users new is the landing page with user signup.
   root  'users#new' 
   
-  get     'user/:id'                    =>   'users#index'
+  get     'user'                         =>   'users#index'
   post    'users'                        =>   'users#create'
-  get     'users/:username'              =>   'users#show', as: 'user'                                          
+  get     'users/:username'              =>   'users#show'
   delete  'users/:username'              =>   'users#destroy'
 
   get     'login'                        =>   'sessions#new'
@@ -27,6 +27,8 @@ Rails.application.routes.draw do
 
   post    'streams'                      =>   'streams#create'
   delete  'streams/:id'                  =>   'streams#destroy'
+  post    'stream'                       =>   'streams#new'
+
 
   put     'like_create'                  =>   'likes#create'
   put     'like_destroy'                 =>   'likes#destroy'
@@ -66,6 +68,8 @@ Rails.application.routes.draw do
   post    'referrals'                    =>    'referrals#create'
 
   post    'waitingusers'                 =>    'waitingusers#create'
+
+    get   'streams/:type/:id'           =>     'streams#index'
 
   resources :streams
   resources :relationships

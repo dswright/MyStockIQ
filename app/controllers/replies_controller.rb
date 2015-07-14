@@ -4,7 +4,6 @@ class RepliesController < ApplicationController
 		params = reply_params
 		@reply = Reply.new(params)
 		@reply.save
-		render json: @reply, status: :created, location: @reply
 	end
 
 	def create
