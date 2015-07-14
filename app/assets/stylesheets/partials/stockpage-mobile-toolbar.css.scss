@@ -1,0 +1,149 @@
+
+/*------ STOCKPAGE MOBILE TOOLBAR -----------*/
+
+
+.stockpage-btn-label {
+	display: none;
+}
+
+.stockpage-mobile-toolbar {
+	display: block;
+	position: fixed;
+	width: 100%;
+	bottom: 0;
+	overflow: hidden;
+	background-color: #fff;
+	border: solid 1px rgba(0,0,0,.1);
+	color: #7cb5ec;
+	text-decoration: none;
+}
+
+.stockpage-mobile-toolbar-buttons {
+	display: inline-block;
+	width: 100%;
+	text-align: center;
+	text-decoration: none;
+	padding-top: 20px;
+	padding-bottom: 19px;
+	color: #7cb5ec;
+
+  -webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+}
+
+.stockpage-mobile-toolbar-buttons:hover {
+	color: #7cb5ec;
+	text-decoration: none;
+}
+
+.stockpage-mobile-toolbar-buttons:focus {
+	color: #7cb5ec;
+	outline: none;
+	text-decoration: none;
+}
+
+.stockpage-toolbar-divide {
+	border-left: 1px solid rgba(0,0,0,.07);
+}
+
+
+/*----- STOCKPAGE MOBILE TOOLBAR CLOSE -----------*/
+
+
+.stockpage-mobile-btn-label-close {
+	display: none;
+}
+
+.stockpage-mobile-btn-label-points {
+	display: none;
+}
+
+.stockpage-mobile-toolbar-close {
+	position: fixed;
+	width: 100%;
+	bottom: 0;
+	display: block;
+	overflow: hidden;
+	background-color: #fff;
+	border: solid 1px rgba(0,0,0,.1);
+	color: #7cb5ec;
+	text-decoration: none;
+}
+
+.stockpage-mobile-toolbar-buttons-close {
+	display: inline-block;
+	width: 100%;
+	text-align: center;
+	text-decoration: none;
+	padding-top: 20px;
+	padding-bottom: 19px;
+	color: #7cb5ec;
+
+  -webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+}
+
+.stockpage-mobile-toolbar-buttons-points {
+	display: inline-block;
+	width: 100%;
+	text-align: center;
+	padding-top: 18px;
+	padding-bottom: 18px;
+	color: #7cb5ec;
+
+  -webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+}
+
+.stockpage-mobile-toolbar-buttons-points .point {
+	display: inline-block;
+	background-color: #7cb5ec;
+	color: #fff;
+	font-size: 14px;
+	border-radius: 3px;
+	padding: 2px 6px 2px 6px
+}
+
+.stockpage-mobile-toolbar-buttons-close:hover {
+	color: #7cb5ec;
+	text-decoration: none;
+}
+
+.stockpage-mobile-toolbar-buttons-close:focus {
+	color: #7cb5ec;
+	outline: none;
+	text-decoration: none;
+}
+
+.stockpage-mobile-toolbar-buttons-points:hover {
+	color: #7cb5ec;
+	text-decoration: none;
+}
+
+.stockpage-mobile-toolbar-buttons-points:focus {
+	color: #7cb5ec;
+	outline: none;
+	text-decoration: none;
+}
+
+
+
+@media (min-width: 768px) {
+
+.stockpage-mobile-toolbar {
+	display: none;
+}
+
+
+.stockpage-mobile-toolbar-close {
+	display: none;
+}
+
+
+}
