@@ -5,38 +5,46 @@
 		<%= link_to "/predictions/#{prediction.id}/" do %>
 	  	<%= image_tag prediction.user.image %>
 	  <% end %>
-  	
+
+  	<% if current_user?(prediction.user) %>
+    	
+    	<div class="prediction-my-name-follow">
+		  	<div class="prediction-my-name-title">
+			  	<span class="prediction-name-title-name">
+				  	<%= link_to "/predictions/#{prediction.id}/" do %>
+					  	<%= prediction.user.username %>'s
+						<% end %>
+				 	</span>
+			  	<span class="detail-name-title">
+			  		PREDICTION
+			  	</span>
+		    </div>
+			</div>
+  		
+  	<% else %>
+    	
+			<div class="prediction-details-name-follow">
+		  	<div class="prediction-name-title">
+		  		<%= link_to "/predictions/#{prediction.id}/" do %>
+			  		<span class="prediction-name-title-name">
+			  			<%= prediction.user.username %>
+			  		</span>
+			  	<% end %>
+				</div>
+
+				<%= render partial: 'shared/follow_form', locals: {target: prediction.user} %>
+
+			</div>
+
+		<% end %>
 
     <!-- display if user viewing other user's prediction -->
 
-	  <div class="prediction-details-name-follow">
-	  	<div class="prediction-name-title">
-	  		<%= link_to "/predictions/#{prediction.id}/" do %>
-		  		<span class="prediction-name-title-name">
-		  			<%= prediction.user.username %>
-		  		</span>
-		  	<% end %>
-		  </div>
 
-		  	<%= render partial: 'shared/follow_form', locals: {target: prediction.user} %>
-
-		</div>
 
     <!-- display if user viewing own prediction -->
 
-	  <div class="prediction-my-name-follow">
-	  	<div class="prediction-my-name-title">
-	  		<%= link_to "/predictions/#{prediction.id}/" do %>
-		  		<span class="prediction-name-title-name">
-		  			<%= prediction.user.username %>
-		  		</span>
-		  	<% end %>
-		  	<span class="prediction-name-prediction">
 
-		  	</span>
-		  </div>	
-		</div>
-
-	  </div>
+	</div>
 
 </div>

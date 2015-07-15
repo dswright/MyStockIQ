@@ -142,15 +142,6 @@
   transition: 150ms ease-in;
 }
 
-// a.follow-btn-white:hover {
-//   -webkit-transition: 90ms ease-in;
-//   -moz-transition: 90ms ease-in;
-//   -o-transition: 90ms ease-in;
-//   transition: 90ms ease-in;
-// 	color: #fff;
-// 	background-color: #7CB5EC;
-// 	border: 1px solid #7CB5EC;
-// }
 
 .follow-btn-white form {
 	display: inline-block;
@@ -162,12 +153,13 @@ a.follow-btn-white .follow-btn-follow {
 	margin-top: 5px;
 	padding-top: 5px;
 	padding-bottom: 5px;
-	padding-left: 10px;
-	padding-right: 10px;
-	border: 1px solid #7CB5EC;
+	padding-left: 12px;
+	padding-right: 12px;
+	border: 1px solid #fff;
 	border-radius: 3px 3px 3px 3px;
 	font-size: 11px;
 	color: #2A3744;
+	font-weight: 500;
 	background-color: #fff;
 }
 
@@ -195,6 +187,8 @@ a.follow-btn-blue .follow-btn-follow {
 	margin-top: 5px;
 	padding-top: 5px;
 	padding-bottom: 5px;
+	padding-left: 7px;
+	padding-right: 7px;
 	border: 1px solid #7CB5EC;
 	border-radius: 3px 3px 3px 3px;
 	font-size: 11px;
@@ -223,7 +217,6 @@ a.follow-btn-blue .follow-btn-follow:focus {
 }
 
 .prediction-my-name-title a {
-	display: none;
 	margin-top: 18px;
 	text-decoration: none;
 	font-size: 18px;
@@ -238,6 +231,12 @@ a.follow-btn-blue .follow-btn-follow:focus {
 
 .prediction-my-name-title a:hover {
 	color: #7cb5ec;
+}
+
+.detail-name-title {
+	display: block;
+	margin-top: 3px;
+	color: rgba(255, 255, 255, 0.50);
 }
 
 
