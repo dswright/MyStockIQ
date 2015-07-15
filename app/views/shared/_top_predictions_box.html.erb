@@ -1,0 +1,20 @@
+<div class="top-predictions-box">
+  <div class="top-predictions-header">
+    <div class="top-predictions-header-txt">
+      Hot Open Predictions
+    </div>
+  </div>
+  <% stock.top_analysts(4).each do |analyst| %>
+    <%= link_to "/users/#{analyst.username}/", class: "top-predictions-anchor clearfix" do %>
+      <div class="top-predictions-img pull-left">
+        <%= image_tag analyst.image %>
+      </div>
+      <div class="top-predictions-label pull-left">
+        <%= analyst.username %>
+      </div>
+      <div class="top-predictions-number pull-right">
+        <%= analyst.total_score(stock).round(0) %> pts
+      </div>
+    <% end %>
+  <% end %>
+</div>

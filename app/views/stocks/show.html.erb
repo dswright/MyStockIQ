@@ -75,14 +75,20 @@
   </div>
 </section>
 
-
 <!-- END FULL WIDTH GRAPH -->
-
-
 
 <div class="constrainer">
 
   <div class="col-xs-12 col-sm-9 stockpage-body">
+
+    <!-- TOOLBAR DESKTOP -->
+
+    <% if @current_user.active_prediction_exists?(@stock) %>
+      <%= render partial: 'stocks/stockpage_desktop_toolbar_close' %>
+      <% else %>
+      <%= render partial: 'stocks/stockpage_desktop_toolbar' %>
+    <%end%>
+
 
     <% if @prediction.active %>
       <%= render partial: 'shared/prediction_open', locals: {prediction: @prediction} %>
@@ -94,10 +100,14 @@
       <%= render partial: 'streams/empty_stream', locals: {streams: @streams} %>
     <%end %>
 
+
+
     <!-- STREAM POSTS -->
+
     <div class = "stream" >
       <%= render partial: "streams/stream_main", locals: {streams: @streams} %>
     </div>
+
     <div id = "infinite-scrolling" >
       <%= will_paginate @streams %>
     </div>
@@ -110,3 +120,18 @@
     <% end %>
     <%= render partial: 'shared/popular_stocks', locals: {popular_stocks: @popular_stocks} %>
   </div>
+
+</div>
+
+
+<!-- MOBILE TOOLBAR STICKY FOOTER  -->
+
+<% if @current_user.active_prediction_exists?(@stock) %>
+
+  <%= render partial: 'stocks/stockpage_mobile_toolbar_close' %>
+  <% else %>
+  <%= render partial: 'stocks/stockpage_mobile_toolbar' %>
+
+<%end%>
+
+
