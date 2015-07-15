@@ -1,9 +1,9 @@
 $(function() {
 
     //COMMENT VIEWS//
-    App.Views.Comment = Backbone.View.extend({
-        className: "comment-only-item",
-        id: "stream_Comment_15",
+    App.Views.Prediction = Backbone.View.extend({
+        className: "prediction-item",
+        id: "stream_Prediction_165",
         initialize: function () {
             this.render();
         },
@@ -11,13 +11,13 @@ $(function() {
         addReply: function (replyItem) {
             console.log(replyItem);
             var reply = new App.Views.Reply(replyItem);
-            var template = Handlebars.compile(HandlebarsTemplates['reply'](replyItem));
+            //var template = Handlebars.compile(HandlebarsTemplates['reply'](replyItem));
             //console.log(template());
-            $(this.el).append(template());
+            //$(this.el).append(template());
         },
 
         render: function () {
-            var template = Handlebars.compile(HandlebarsTemplates['comment'](this.model.attributes));
+            var template = Handlebars.compile(HandlebarsTemplates['prediction'](this.model.attributes));
 
             //in here I need to render the template for the replies..
             //it needs to set a template for each reply... or, just render a collection of replies?
@@ -42,47 +42,46 @@ $(function() {
         }
     });
 
-    App.Views.CommentForm = Backbone.View.extend({
+    App.Views.PredictionForm = Backbone.View.extend({
         tagName: "form",
         initialize: function () {
             this.render();
         },
         events: {
-            "click .btn": "addComment"
+            "submit": "addPrediction"
         },
-        addComment: function (e) {
+        addPrediction: function (e) {
+            e.preventDefault();
             var input = $('.comment-form-textarea').val();
-            var newComment = new App.Models.Comment({
-                content: input,
-                user_id: App.currentUser.id
-            });
-            console.log("NEW COMMENT");
-            console.log(newComment);
-            newComment.save(null, {
-                success: function(model) {
-                    newStream = new App.Models.Stream({
-                        streamable_id: model.attributes.id,
-                        streamable_type: "Comment",
-                        targetable_id: App.targetableId,
-                        targetable_type: App.targetableType
-                    });
-                    console.log(newStream);
-                    newStream.save(null, {
-                        success: function(model) {
-                            console.log("just bfore add");
-                            App.streamList.add(model);
-                        }
-                    });
-                }
-            });
-
-
-
+            var input = $(e.currentTarget).find('input[id=price]').val();
+            //var newComment = new App.Models.Comment({
+            //    content: input,
+            //    user_id: App.currentUser.id
+            //});
+            //console.log("NEW COMMENT");
+            //console.log(newComment);
+            //newComment.save(null, {
+            //    success: function(model) {
+            //        newStream = new App.Models.Stream({
+            //            streamable_id: model.attributes.id,
+            //            streamable_type: "Comment",
+            //            targetable_id: App.targetableId,
+            //            targetable_type: App.targetableType
+            //        });
+            //        console.log(newStream);
+            //        newStream.save(null, {
+            //            success: function(model) {
+            //                console.log("just bfore add");
+            //                App.streamList.add(model);
+            //            }
+            //        });
+            //    }
+            //});
         },
         render: function () {
             var template = Handlebars.compile(HandlebarsTemplates['comment-form']()); //no need to pass vars to a static form.
             $(this.el).html(template);
-            $(".new_prediction").after(this.el);
+            $(".open-prediction-form-box-tabs").after(this.el);
             return this;
         }
     });

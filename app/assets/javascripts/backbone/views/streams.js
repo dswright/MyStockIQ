@@ -8,8 +8,11 @@ $(function() {
         addOne: function (model) {
             //var view = new App.Views.Stream({model: model});
             if (model.attributes.type == "Comment") {
-                console.log("adding one");
                 var view = new App.Views.Comment({model: model});
+                $(".stream").prepend(view.render().el);
+            }
+            if (model.attributes.type == "Prediction") {
+                var view = new App.Views.Prediction({model:model});
                 $(".stream").prepend(view.render().el);
             }
         },

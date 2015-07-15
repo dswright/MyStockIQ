@@ -1,0 +1,64 @@
+
+<!-- PREDICTION FORM BOX -->
+
+<div class="prediction-form-box" id="tabs">
+
+    <ul class="prediction-form-box-tabs">
+        <li><a id="prediction-tab" href="#tabs-1"><i class="fa fa-line-chart"></i>&nbsp;&nbsp;&nbsp;Predict <%= @stock.ticker_symbol %></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#124;</li>
+        <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a id="comment-only-tab" href="#tabs-2"><i class="fa fa-comment"></i>&nbsp;&nbsp;&nbsp;Comment on <%= @stock.ticker_symbol %></a></li>
+    </ul>
+
+    <%= form_for @prediction, remote:true do |f| %>
+    <div class="prediction-form-div prediction-icon-addon prediction-addon-sm" id="tabs-1">
+        <div class="prediction-field-container clearfix">
+            <div class="prediction-field-col col-sm-4">
+                <%= f.text_field :prediction_end_price, placeholder: "Prediction price",id: "price" %>
+                <!-- <input type='text' id='price' placeholder="Prediction price"/> -->
+                <label for="price" class="glyphicon glyphicon-usd" rel="tooltip"></label>
+            </div>
+
+            <div class="prediction-field-col col-sm-4">
+                <%= text_field_tag 'end_day', nil, id: "datepicker", placeholder:"Date"  %>
+                <!-- <input type='text' id='datepicker' placeholder="End date" /> -->
+                <label for="date" class="glyphicon glyphicon-calendar" rel="tooltip"></label>
+            </div>
+
+            <div class="prediction-field-col col-sm-4">
+                <%= text_field_tag 'end_time', "", id: "timepicker", placeholder:"End time"  %>
+                <!-- <input type='text' id='timepicker' placeholder="End time" /> -->
+                <label for="time" class="glyphicon fa fa-clock-o" rel="tooltip"></label>
+            </div>
+
+        </div>
+
+        <div class="prediction-comment-field clearfix">
+            <%= f.text_area :content, placeholder: "Comment on your prediction" %>
+        </div>
+        <%= f.hidden_field :stock_id %>
+        <%= hidden_field_tag :stream_string, @prediction_stream_string %>
+        <div class="button-counter clearfix">
+            <%= f.submit "Predict!", class: "btn pull-right" %>
+            <!-- <input class="btn pull-right" value="Submit"> -->
+            <div class="pull-right" id="charNum"></div>
+        </div>
+    </div>
+    <% end %>
+
+    <!-- comment div goes here -->
+
+</div>
+
+<!-- javascript functino to load the calendar onto the datepicker form. -->
+<script>
+    $(function() {
+        var timePicker = $('#timepicker').pickatime({min:[9,30],max:[16,0]}).pickatime('picker');
+        var calendarSettings = new CalendarMaker(timePicker);
+
+        //set the picker var inside the calendar settings to the timepicker object. The time picker object initially just has defaults. These defaults get updated on select of a calendar day.
+        //this creates the inital settings for the timepicker, and sets the picker inside of the calendarsettings object.
+        console.log(calendarSettings);
+    });
+</script>
+
+
+

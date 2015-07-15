@@ -25,6 +25,7 @@ $(document).ready(function () {
     App.streamList = new App.Collections.StreamList({url:'/streams/'+App.targetableType+'/'+App.targetableId+'.json'});
     App.streamList.fetch({
         success: function() {
+            App.predictionForm = new App.Views.PredictionForm();
             App.commentForm = new App.Views.CommentForm();
             App.streamListView = new App.Views.StreamListView({collection: App.streamList});
         }
