@@ -1,0 +1,40 @@
+
+
+  
+<!-- TOOLBAR MOBILE MINE -->
+
+  <div class="detail-mobile-toolbar-mine">
+    <div class="col-xs-3 detail-toolbar-divide">
+      <a href="#" class="detail-mobile-toolbar-buttons" data-toggle="modal" data-target="#detail-tweet-modal">
+        <i class="fa fa-heart"></i>
+      </a>
+    </div>
+    <div class="col-xs-3 detail-toolbar-divide">
+      <a href="#" class="detail-mobile-toolbar-buttons" data-toggle="modal" data-target="#detail-comment-modal">
+        <i class="fa fa-comment"></i>
+      <a>
+    </div>
+    <div class="col-xs-3 detail-toolbar-divide">
+      <a href="#" class="detail-mobile-toolbar-buttons-points" data-toggle="modal" data-target="#detail-close-prediction-modal">
+      <span class="detail-btn-label-points">Close at</span> 
+      <span class="point">-10</span>
+      </a>
+    </div>
+    <div class="col-xs-3 detail-toolbar-divide">
+      <a href="#" class="detail-mobile-toolbar-buttons" data-toggle="modal" data-target="#detail-tweet-modal">
+        <i class="fa fa-twitter"></i>
+      </a>
+    </div>
+  </div>
+
+
+
+<!-- MODAL PARTIALS -->
+
+<%= render partial: "predictions/modal_comment", locals: {prediction: @prediction} %>
+
+<%= render partial: "predictions/modal_tweet", locals: {prediction: @prediction} %>
+
+<%= render partial: "predictions/modal_close_prediction", locals: {prediction: @prediction} %>
+
+
