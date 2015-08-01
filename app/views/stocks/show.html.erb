@@ -90,16 +90,6 @@
     <%end%>
 
 
-    <% if @prediction.active %>
-      <%= render partial: 'shared/prediction_open', locals: {prediction: @prediction} %>
-    <% else %>
-      <%= render 'shared/prediction_form' %>
-    <% end %>
-
-    <% if @streams.empty? %>
-      <%= render partial: 'streams/empty_stream', locals: {streams: @streams} %>
-    <%end %>
-
 
 
     <!-- STREAM POSTS -->
@@ -118,7 +108,7 @@
     <% unless @stock.users.empty? %>
       <%= render partial: 'stocks/ranking', locals: {stock: @stock} %>
     <% end %>
-    <%= render partial: 'shared/popular_stocks', locals: {popular_stocks: @popular_stocks} %>
+    <%= render partial: 'shared/top_stocks', locals: {popular_stocks: @popular_stocks} %>
   </div>
 
 </div>

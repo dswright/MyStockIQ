@@ -1,20 +1,20 @@
 
 
-<div class="stockpage-side-analysts-box">
-  <div class="stockpage-side-analysts-header">
-    <div class="user-sidebar-similar-header-txt">
+<div class="top-analysts-box">
+  <div class="top-analysts-header">
+    <div class="top-analysts-header-txt">
       Top analysts for <%= stock.ticker_symbol %>
     </div>
   </div>
   <% stock.top_analysts(5).each do |analyst| %>
-    <%= link_to "/users/#{analyst.username}/", class: "stockpage-side-analysts-anchor clearfix" do %>
-      <div class="stockpage-side-analysts-img pull-left">
+    <%= link_to "/users/#{analyst.username}/", class: "top-analysts-anchor clearfix" do %>
+      <div class="top-analysts-img pull-left">
         <%= image_tag analyst.image %>
       </div>
-      <div class="stockpage-side-analysts-label pull-left">
+      <div class="top-analysts-label pull-left">
         <%= analyst.username %>
       </div>
-      <div class="stockpage-side-analysts-number pull-right">
+      <div class="top-analysts-number pull-right">
         <%= analyst.total_score(stock).round(0) %> pts
       </div>
     <% end %>

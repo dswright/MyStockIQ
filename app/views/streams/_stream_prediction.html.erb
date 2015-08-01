@@ -1,49 +1,108 @@
 
-<div class="prediction-item" id="stream_<%= stream.streamable.class.name %>_<%= stream.streamable.id %>">
-  
-  <div class="vote-count-container clearfix">
-    <div class="prediction-item-body col-xs-11 clearfix">
-      <div class="col-xs-2 prediction-item-img">
-        <%= link_to image_tag(stream.streamable.user.image), "/users/#{stream.streamable.user.username}/" %>
-      </div>
-      <div class="prediction-item-txt">
-        <%= link_to stream.streamable.user.username, "/users/#{stream.streamable.user.username}/", class: "prediction-item-username" %>
-        <p class="prediction-item-main-txt">
-          <a href ="/predictions/<%= stream.streamable.id %>/">$<%= stream.streamable.stock.ticker_symbol %> Prediction:</a>
-          <% percent_change = ((stream.streamable.prediction_end_price / stream.streamable.start_price-1) * 100).round(0) %>
-         $<%= stream.streamable.prediction_end_price.to_sig_figs(2) %> (<%= percent_change %>%) in <%=distance_of_time_in_words(stream.streamable.created_at, stream.streamable.prediction_end_time) %>
-        </p> 
-      </div>
-      <div class="prediction-item-tweet">
-        <% unless stream.streamable.tag == nil %>
-          <p><%= auto_link(stream.streamable.tag.content) %></p>
-      <%else %>
-        <p><%= auto_link(stream.streamable.content) %></p>
-      <% end %>
-      </div>
-      <div class="prediction-footer">
-        <i class="fa fa-clock-o">&nbsp;<%= distance_of_time_in_words(stream.streamable.created_at, Time.now) %> ago</i><span><%= stream.streamable.score %> points</span>
-      </div>
+<!-- NEW POST FORMAT PREDICTION -->
+
+<div class="stream-prediction">
+  <div class="prediction-header clearfix">
+    <div class="prediction-user-img pull-left">
+      <%= link_to image_tag(stream.streamable.user.image)%>
     </div>
-    <div class="prediction-item-vote-count col-xs-1" id="likes-Prediction-<%= stream.streamable.id %>">
-      <%= render partial: "streams/stream_like", locals: {likable_type:stream.streamable.class.name, likable_id:stream.streamable.id} %>
+    <div class="prediction-txt pull-left">
+      <a href="#" class="prediction-username">dyl$hmil</a><br>
+      <a href="#" class="prediction-link">AAPL PREDICTION&nbsp;&#8594;</a>
+    </div>
+    <div class="prediction-time pull-right">
+      <i class="fa fa-clock-o">&nbsp;2 hrs</i>
     </div>
   </div>
-  
-  <div class="stream-item-comments" id="new-reply-container">
-    
-    <!-- load this only if there are replies -->
-    <div class="stream-comment-header">
-      <p><%= stream.streamable.replies.count %> Replies</p>
+  <div class="prediction-comment">
+    <p>Do ennui meditation Truffaut cleanse <a href="#">$APPL</a> anim portland. <a href="#">@dillshmill</a> deep v anim id, fixie non PBR Brooklyn Thundercats <a href="#">#drake</a> <a href="#">#6god</a> <a href="#">#ohveeohhh</a></p>
+  </div>
+  <div class="prediction-stats clearfix">
+    <div class="prediction-stats-col-top prediction-stats-col-side col-xs-6">
+      <a href="#" class="prediction-stock-link">
+        <span class="stat-top prediction-stock-link">APPL</span>
+        <span class="stat-bottom">Apple Computers Inc.</span>
+      </a>
+    </div>
+    <div class="prediction-stats-col-top col-xs-6">
+        <span class="stat-top">$200</span>
+        <span class="stat-bottom">Target Price</span>
+    </div>
+    <div class="prediction-stats-col-bottom prediction-stats-col-side col-xs-6">
+        <span class="stat-top">7/30/15</span>
+        <span class="stat-bottom">Target Date</span>
+    </div>
+    <div class="prediction-stats-col-bottom col-xs-6">
+        <span class="stat-top"><span class="prediction-points">+20</span></span>
+        <span class="stat-bottom">IQ Points</span>
+    </div>
+  </div>
+
+  <div class="prediction-footer">
+
+    <span class="prediction-like-button">
+      <a href="#"><i class="fa fa-heart"><span class="prediction-footer-counter">&nbsp;6</span></i></a>
+    </span>
+
+    <span class="prediction-comment-button">
+      <a href="#"><i class="fa fa-comment"><span class="prediction-footer-counter">&nbsp;4</span></i></a>
+    </span>
+
+    <span class="prediction-more-button pull-right">
+      <a href="#"><i class="fa fa-chevron-down"></i></a>
+    </span>
+  </div>
+
+  <div class="stream-replies">
+
+    <div class="stream-reply">
+      <div class="stream-reply-img pull-left">
+        <%= link_to image_tag(stream.streamable.user.image)%>
+      </div>
+      <div class="stream-reply-txt pull-left">
+        <span class="stream-reply-username">seanjuan&nbsp;</span>
+        <span class="stream-reply-time">2 hrs
+        <p class="stream-replies-reply clearfix">
+          Kale chips cornhole ugh enim.
+        </p>
+      </div>
     </div>
 
-    <!-- load partials for each reply -->
-    <% stream.streamable.replies.reorder('created_at asc').each do |reply| %>
-      <%= render partial: "streams/stream_reply", locals: {reply: reply}  %>
-    <% end %>
-    
-    <!-- load this reply input everytime -->
-    <%= render partial: "streams/stream_reply_form", locals: {repliable_type: stream.streamable.class.name, repliable_id: stream.streamable.id}  %>
+    <div class="stream-reply">
+      <div class="stream-reply-img pull-left">
+        <%= link_to image_tag(stream.streamable.user.image)%>
+      </div>
+      <div class="stream-reply-txt pull-left">
+        <span class="stream-reply-username">seanjuan&nbsp;</span>
+        <span class="stream-reply-time">2 hrs
+        <p class="stream-replies-reply clearfix">
+          Kale chips cornhole ugh tattooed esse enim chips cornhole ugh tattooed esse enim.
+        </p>
+      </div>
+    </div>
+
+    <div class="stream-reply" id="stream-reply-hide">
+      <div class="stream-reply-img pull-left">
+        <%= link_to image_tag(stream.streamable.user.image)%>
+      </div>
+      <div class="stream-reply-txt pull-left">
+        <span class="stream-reply-username">seanjuan&nbsp;</span>
+        <span class="stream-reply-time">2 hrs
+        <p class="stream-replies-reply clearfix">
+          Kale chips cornhole ugh tattooed esse enim chips cornhole ugh tattooed esse enim.
+        </p>
+      </div>
+    </div>
+
+    <div class="stream-reply-more">
+      <a href="#" class="see-more">SEE MORE</a>
+    </div>
 
   </div>
+
+  <%#= link_to image_tag(stream.streamable.user.image)%>
+
 </div>
+
+
+

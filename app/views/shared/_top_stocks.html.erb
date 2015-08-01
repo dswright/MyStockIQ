@@ -1,0 +1,18 @@
+<div class="top-stocks-box">
+  <div class="top-stocks-header">
+    <div class="top-stocks-header-txt">
+        Popular Stocks
+    </div>
+  </div>
+  <% popular_stocks.each do |stock| %>
+
+    <a class="top-stocks-anchor clearfix" href="/stocks/<%= stock.ticker_symbol %>/">
+      <div class="top-stocks-label pull-left">
+        <%= stock.ticker_symbol %><span>&nbsp;&nbsp;&nbsp;</span>
+      </div>
+      <div class="top-stocks-number pull-right">
+        <i class="fa fa-line-chart"></i><%= stock.active_predictions %>
+      </div>
+    </a>
+  <% end %>
+</div>

@@ -465,15 +465,15 @@ var graphMediator = (function() {
       };
 
       var arr = options[intervalDirection][timeType]();
-      console.log(intervalDirection + "" + timeType);
-      console.log(arr);
+      // console.log(intervalDirection + "" + timeType);
+      // console.log(arr);
 
       var processor = options[intervalDirection]["processor"];
       var limit = processor(arr, intervals, startPoint);
-      console.log(limit);
+      // console.log(limit);
 
 
-      console.log(limit[0].x);
+      // console.log(limit[0].x);
 
       return limit[0].x;
 

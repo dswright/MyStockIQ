@@ -1,18 +1,77 @@
   <div class="stockpage-desktop-toolbar">
-    <div class="col-xs-4 stockpage-toolbar-col">
-      <a class="stockpage-desktop-toolbar-buttons">
-        <i class="fa fa-heart"><span class="stockpage-desktop-btn-label">Like</span></i>
-      </a>
-    </div>
-    <div class="col-xs-4 stockpage-toolbar-divide">
-      <a href="#" class="stockpage-desktop-toolbar-buttons" data-toggle="modal" data-target="#stockpage-desktop-comment-modal">
-        <i class="fa fa-comment"><span class="stockpage-desktop-btn-label">Comment</span></i>
+    <div class="col-xs-3 stockpage-toolbar-col">
+      <a href="#" class="stockpage-desktop-toolbar-buttons-close" data-toggle="modal" data-target="#prediction-modal">
+        <i class="fa fa-line-chart"><span class="stockpage-desktop-btn-label-close">Predict</span></i>
       <a>
     </div>
-    <div class="col-xs-4 stockpage-toolbar-divide">
-      <a href="#" class="stockpage-desktop-toolbar-buttons" data-toggle="modal" data-target="#stockpage-desktop-tweet-modal">
+    <div class="col-xs-3 stockpage-toolbar-col stockpage-toolbar-divide">
+      <a class="stockpage-desktop-toolbar-buttons">
+        <i class="fa fa-comment"><span class="stockpage-desktop-btn-label">Comment</span></i>
+      </a>
+    </div>
+    <div class="col-xs-3 stockpage-toolbar-divide">
+      <a href="#" class="stockpage-desktop-toolbar-buttons">
+        <i class="fa fa-plus-square"><span class="stockpage-desktop-btn-label">Follow</span></i>
+      <a>
+    </div>
+    <div class="col-xs-3 stockpage-toolbar-divide">
+      <a href="#" class="stockpage-desktop-toolbar-buttons">
         <i class="fa fa-twitter"></i>
         <span class="stockpage-desktop-tweet-label">Share</span>
       </a>
     </div>
   </div>
+
+
+<!-- MAKE PREDICTION MODAL -->
+
+  <div class="modal" id="prediction-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="constrainer">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Predict AAPL</h4>
+          </div>
+          <div class="modal-body">
+
+          <div class="prediction-form-div prediction-icon-addon prediction-addon-sm">
+            <div class="prediction-field-container clearfix">
+
+              <div class="prediction-field-col col-sm-4">
+                <input type='text' id='price' placeholder="Prediction price"/>
+                <label for="price" class="glyphicon glyphicon-usd" rel="tooltip"></label>
+              </div>
+
+              <div class="prediction-field-col col-sm-4">
+                <input type='text' id='datepicker' placeholder="End date" />
+                <label for="date" class="glyphicon glyphicon-calendar" rel="tooltip"></label>
+              </div>
+            
+              <div class="prediction-field-col col-sm-4">
+                <input type='text' id='timepicker' placeholder="End time">
+                <label for="time" class="glyphicon fa fa-clock-o" rel="tooltip"></label>
+              </div>
+   
+            </div>
+          </div>
+
+            <%= form_for(Comment.new, remote:true) do |f| %>
+              <div class="modal-comment-form-div" id="tabs-1">
+                <div class="modal-comment-field">
+                  <%= f.text_area :content, placeholder:"type your comment on #{@prediction.stock.ticker_symbol} here", id: "open-comment" %>
+                  <%= hidden_field_tag :stream_string, @comment_stream_string %>
+                  <%= hidden_field_tag :ticker_symbol, @prediction.stock.ticker_symbol %>
+                </div>
+                <div class="modal-button-counter clearfix">
+                  <%= f.submit "SUBMIT", class: "btn pull-right" %>
+                </div>
+              </div>
+            <% end %>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+

@@ -1,0 +1,168 @@
+
+.stream-comment {
+	display: block;
+	margin-top: 20px;
+	overflow: hidden;
+	padding-top: 15px;
+	padding-bottom: 0px;
+	background-color: #fff;
+	box-shadow: 0 1px 2px 0 rgba(0,0,0,0.22);
+	border-radius: 3px;
+	color: #919191;
+	text-decoration: none;
+}
+
+.comment-user-img {
+	padding-left: 15px;
+	padding-right: 10px;
+	width: 72px;
+	height: 50px;
+}
+
+.comment-user-img img {
+	width: 50px;
+	border-radius: 90px;
+}
+
+.comment-username {
+	display: inline-block;
+	font-size: 13px;
+	font-weight: 300;
+	margin-bottom: 0px;
+	padding-bottom: 1px;
+	color: #919191;
+	font-weight: 400;
+	text-decoration: none;
+
+  -webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+}
+
+.comment-username:hover {
+	text-decoration: none;
+	cursor: pointer;
+	color: #7cb5ec;
+}
+
+.comment-txt {
+	margin-top: 7px;
+	padding-left: 3px;
+	padding-right: 0px;
+}
+
+.comment-link {
+	margin-top: 1px;
+	margin-bottom: 0px;
+	font-size: 13px;
+	font-weight: 300;
+	color: #C7C7C7;
+	text-decoration: none;
+	padding-bottom: 2px;
+
+  -webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+}
+
+.comment-link:hover {
+	text-decoration: none;
+	color: #7cb5ec;
+}
+
+.comment-time {
+	padding-right: 15px;
+}
+
+.comment-time i {
+	color: #C7C7C7;
+	font-size: 13px;
+}
+
+.comment-comment {
+	margin-top: 15px;
+	padding-left: 15px;
+	padding-right: 15px;
+	color: #919191;
+	font-weight: 300;
+	font-size: 13px;
+	line-height: 18px;
+	letter-spacing: 1px;
+}
+
+.comment-comment a {
+	color: #7cb5ec;
+	padding-bottom: 2px;
+	text-decoration: none;
+
+  -webkit-transition: 150ms ease-in;
+  -moz-transition: 150ms ease-in;
+  -o-transition: 150ms ease-in;
+  transition: 150ms ease-in;
+}
+
+.comment-comment a:hover {
+	text-decoration: none;
+	padding-bottom: 1px;
+	border-bottom: 1px solid #7cb5ec;
+}
+
+.comment-footer {
+	margin-top: 15px;
+	margin-left: 15px;
+	margin-right: 15px;
+	padding-bottom: 15px;
+	font-size: 12px;
+	font-weight: 300;
+	color: #C7C7C7;
+	border-bottom: solid 1px #F2F2F2; 
+}
+
+.comment-footer a {
+	display: inline-block;
+	color: #C7C7C7;
+}
+
+.comment-footer i:before {
+	font-size: 18px;
+	color: #C7C7C7;
+}
+
+.comment-comment-button {
+	margin-left: 46px;
+}
+
+.comment-comment-button i:before {
+	font-size: 20px;
+}
+
+.comment-footer-counter {
+	position: absolute;
+	display: inline-block;
+}
+
+.comment-like-button i span {
+	padding-top: 3px;
+	padding-left: 5px;
+}
+
+.comment-comment-button i span {
+	padding-top: 5px;
+	padding-left: 5px;
+}
+
+@media (min-width: 480px) {
+
+
+}
+
+@media (min-width: 768px) {
+
+
+
+}
+
+
+

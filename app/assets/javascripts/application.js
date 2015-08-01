@@ -19,6 +19,7 @@
 //= require pagination
 //= require nav
 //= require prediction-form-box
+//= require stream-prediction
 //= require welcome
 //= require skrollr
 

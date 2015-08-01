@@ -30,12 +30,20 @@
 	display: none;
 }
 
+.stockpage-desktop-tweet-label {
+	display: none;
+}
+
+.stockpage-desktop-tweet-label-close {
+	display: none;
+}
+
 .stockpage-desktop-toolbar-close {
 	display: block;
-	margin-top: 20px;
+	margin-top: 15px;
 	overflow: hidden;
 	background-color: #fff;
-	box-shadow: 0 1px 2px rgba(0,0,0,.1);
+	box-shadow: 0 1px 2px 0 rgba(0,0,0,0.22);
 	border-radius: 3px;
 }
 
@@ -60,6 +68,12 @@
   	cursor: pointer;
 	color: #7cb5ec;
 	text-decoration: none;
+}
+
+.stockpage-desktop-toolbar-buttons-close:focus {
+	text-decoration: none;
+	color: #7cb5ec;
+	outline: none;
 }
 
 .stockpage-desktop-toolbar-buttons-close i:before {
@@ -109,10 +123,10 @@
 
 .stockpage-desktop-toolbar {
 	display: block;
-	margin-top: 20px;
+	margin-top: 15px;
 	overflow: hidden;
 	background-color: #fff;
-	box-shadow: 0 1px 2px rgba(0,0,0,.1);
+	box-shadow: 0 1px 2px 0 rgba(0,0,0,0.22);
 	border-radius: 3px;
 	color: #919191;
 	text-decoration: none;
@@ -180,8 +194,12 @@
 	font-weight: 300;
 }
 
-
-
-
+.stockpage-desktop-tweet-label {
+	display: inline-block;
 }
 
+.stockpage-desktop-tweet-label-close {
+	display: inline-block;
+}
+
+}
