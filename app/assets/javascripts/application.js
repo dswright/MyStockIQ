@@ -9,7 +9,6 @@
 //
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
-//
 
 
 //= require jquery
@@ -22,9 +21,18 @@
 //= require stream-prediction
 //= require welcome
 //= require skrollr
-
+//= require underscore
+//= require handlebars
+//= require backbone
+//= require backbone.marionette
+//= require_tree ./backbone
 //= require_tree ./date-times
-//= require_tree ./pickadate
 //= require_tree ./highcharts
+//= require_tree ./pickadate
 
 
+window.App = {
+  Models: {},
+  Collections: {},
+  Views: {}
+}

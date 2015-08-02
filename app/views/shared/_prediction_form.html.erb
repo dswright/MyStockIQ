@@ -22,13 +22,13 @@
             <!-- <input type='text' id='datepicker' placeholder="End date" /> -->
             <label for="date" class="glyphicon glyphicon-calendar" rel="tooltip"></label>
           </div>
-        
+
           <div class="prediction-field-col col-sm-4">
             <%= text_field_tag 'end_time', "", id: "timepicker", placeholder:"End time"  %>
             <!-- <input type='text' id='timepicker' placeholder="End time" /> -->
             <label for="time" class="glyphicon fa fa-clock-o" rel="tooltip"></label>
           </div>
- 
+
         </div>
 
         <div class="prediction-comment-field clearfix">
@@ -44,18 +44,8 @@
       </div>
     <% end %>
 
-    <%= form_for(Comment.new, remote:true) do |f| %>
-      <div class="open-comment-only-form-div" id="tabs-2">
-        <div class="open-comment-only-field">
-          <%= f.text_area :content, placeholder:"Comment on #{@prediction.stock.ticker_symbol}", class: "comment-form-textarea", id: "open-comment" %>
-          <%= hidden_field_tag :stream_string, @comment_stream_string %>
-          <%= hidden_field_tag :ticker_symbol, @prediction.stock.ticker_symbol %>
-        </div>
-        <div class="button-counter clearfix">
-          <%= f.submit "SUBMIT", class: "btn pull-right" %>
-        </div>
-      </div>
-    <% end %>
+    <!-- comment div goes here -->
+
   </div>
 
   <!-- javascript functino to load the calendar onto the datepicker form. -->
@@ -63,7 +53,7 @@
     $(function() {
       var timePicker = $('#timepicker').pickatime({min:[9,30],max:[16,0]}).pickatime('picker');
       var calendarSettings = new CalendarMaker(timePicker);
-      
+
       //set the picker var inside the calendar settings to the timepicker object. The time picker object initially just has defaults. These defaults get updated on select of a calendar day.
       //this creates the inital settings for the timepicker, and sets the picker inside of the calendarsettings object.
       console.log(calendarSettings);

@@ -7,6 +7,11 @@ Rails.application.configure do
   #enable garbagae collector stats
   GC::Profiler.enable
 
+  #make handlebars work
+  env = Sprockets::Environment.new
+  require 'handlebars_assets'
+  env.append_path HandlebarsAssets.path
+
   #set errors to be expressed and not surpressed that are returned from ActiveRecord callbacks.
   config.active_record.raise_in_transactional_callbacks = true
 

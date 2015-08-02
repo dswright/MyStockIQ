@@ -75,6 +75,14 @@ gem 'mini_magick'
 gem 'fog'
 #gem 'rmagick'
 
+gem 'underscore-rails'
+
+gem 'backbone-on-rails'
+gem 'mustache'
+gem 'handlebars_assets'
+gem 'marionette-rails'
+
+
 gem 'ruby-progressbar', '1.7.5'
 
 #URL detection 
