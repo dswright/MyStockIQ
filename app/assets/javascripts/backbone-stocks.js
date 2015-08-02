@@ -16,17 +16,22 @@ $(document).ready(function () {
 
 
     App.currentUser = new App.Models.User(); //create the current user.
-    App.currentUser.fetch();
+    App.currentUser.fetch({
+        success: function() {
+            App.commentForm = new App.Views.CommentForm({model: App.currentUser});
+        }
+    });
 
     //these are 2 variables that will be needed in the app.
     App.targetableId = gon.stock_id;
     App.targetableType = "Stock";
 
+    App.predictionForm = new App.Views.PredictionForm();
+
     App.streamList = new App.Collections.StreamList({url:'/streams/'+App.targetableType+'/'+App.targetableId+'.json'});
     App.streamList.fetch({
         success: function() {
-            App.predictionForm = new App.Views.PredictionForm();
-            App.commentForm = new App.Views.CommentForm();
+
             App.streamListView = new App.Views.StreamListView({collection: App.streamList});
         }
     });

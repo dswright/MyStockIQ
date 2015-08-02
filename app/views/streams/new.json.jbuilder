@@ -1,9 +1,4 @@
 
-json.type @reply
-
-json.time_ago time_ago_in_words(@reply.created_at)
-
-
 json.type @stream.streamable_type
 json.content @stream.streamable.content
 json.time_ago time_ago_in_words(@stream.created_at)

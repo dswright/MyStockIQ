@@ -48,10 +48,15 @@ $(function() {
             this.render();
         },
         events: {
-            "click .btn": "addComment"
+            "submit": "addComment"
         },
         addComment: function (e) {
-            var input = $('.comment-form-textarea').val();
+            e.preventDefault();
+            $('.modal').modal('hide');
+            //this.$el.modal({show:false});
+
+
+            var input = $(e.currentTarget).find('textarea[type=text]').val();
             var newComment = new App.Models.Comment({
                 content: input,
                 user_id: App.currentUser.id
@@ -80,9 +85,9 @@ $(function() {
 
         },
         render: function () {
-            var template = Handlebars.compile(HandlebarsTemplates['comment-form']()); //no need to pass vars to a static form.
+            var template = Handlebars.compile(HandlebarsTemplates['comment-form'](this.model.attributes)); //pass in the current user model to be used in the form.
             $(this.el).html(template);
-            $(".new_prediction").after(this.el);
+            $(".stockpage-desktop-toolbar").after(this.el);
             return this;
         }
     });
