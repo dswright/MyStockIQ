@@ -22,6 +22,8 @@
 //= require stream-prediction
 //= require welcome
 //= require skrollr
+//= require salvattore
+
 
 //= require_tree ./date-times
 //= require_tree ./pickadate
