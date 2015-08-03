@@ -1,0 +1,45 @@
+
+.stream-footer {
+  margin-top: 15px;
+  margin-left: 15px;
+  margin-right: 15px;
+  padding-bottom: 15px;
+  font-size: 12px;
+  font-weight: 300;
+  color: #C7C7C7;
+  border-bottom: solid 1px #F2F2F2; 
+}
+
+.stream-footer-counter {
+  position: absolute;
+  display: inline-block;
+}
+
+.stream-footer a {
+  display: inline-block;
+  color: #C7C7C7;
+}
+
+.stream-footer i:before {
+  font-size: 18px;
+  color: #C7C7C7;
+}
+
+.stream-like-button i span {
+  padding-top: 3px;
+  padding-left: 5px;
+}
+
+.stream-button i span {
+  padding-top: 5px;
+  padding-left: 5px;
+}
+
+.stream-button {
+  margin-left: 46px;
+}
+
+.stream-button i:before {
+  font-size: 20px;
+}
+

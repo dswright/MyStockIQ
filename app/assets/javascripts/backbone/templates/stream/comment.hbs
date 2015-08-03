@@ -1,0 +1,20 @@
+  <div class="comment-header clearfix">
+    <div class="comment-user-img pull-left">
+      <a href="/users/{{user.username}}/">
+        <img src="{{user.image}}" />
+      </a>
+    </div>
+    <div class="comment-txt pull-left">
+      <a href="/users/{{user.username}}" class="comment-username">{{user.username}}</a><br>
+      <span class="comment-link">AAPL COMMENT</span>
+    </div>
+    <div class="comment-time pull-right">
+      <i class="fa fa-clock-o">&nbsp;{{time_ago}}</i>
+    </div>
+  </div>
+  <div class="comment-comment">
+    <p>{{content}}</p>
+  </div>
+
+
+

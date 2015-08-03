@@ -2,8 +2,7 @@ $(function() {
 
     //COMMENT VIEWS//
     App.Views.Comment = Backbone.View.extend({
-        className: "comment-only-item",
-        id: "stream_Comment_15",
+        className: "stream-comment",
         initialize: function () {
             this.render();
         },
@@ -11,13 +10,13 @@ $(function() {
         addReply: function (replyItem) {
             console.log(replyItem);
             var reply = new App.Views.Reply(replyItem);
-            var template = Handlebars.compile(HandlebarsTemplates['reply'](replyItem));
+            var template = Handlebars.compile(HandlebarsTemplates['stream/reply'](replyItem));
             //console.log(template());
             $(this.el).append(template());
         },
 
         render: function () {
-            var template = Handlebars.compile(HandlebarsTemplates['comment'](this.model.attributes));
+            var template = Handlebars.compile(HandlebarsTemplates['stream/comment'](this.model.attributes));
 
             //in here I need to render the template for the replies..
             //it needs to set a template for each reply... or, just render a collection of replies?
@@ -34,9 +33,6 @@ $(function() {
             var replyListView = new App.Views.ReplyList({collection: replyList, id: this.model.attributes.id}); //passes in the replies to the ReplyList view. These are set to a custom variable in the view, processed by the initialize function.
 
             $(this.el).append(replyListView.render().el);
-
-            var replyForm = new App.Views.ReplyForm({collection: replyList, id: this.model.attributes.id});
-            $(this.el).append(replyForm.el);
 
             return this;
         }
@@ -85,7 +81,7 @@ $(function() {
 
         },
         render: function () {
-            var template = Handlebars.compile(HandlebarsTemplates['comment-form'](this.model.attributes)); //pass in the current user model to be used in the form.
+            var template = Handlebars.compile(HandlebarsTemplates['stream/comment-form'](this.model.attributes)); //pass in the current user model to be used in the form.
             $(this.el).html(template);
             $(".stockpage-desktop-toolbar").after(this.el);
             return this;

@@ -17,7 +17,7 @@ $(function() {
         },
 
         render: function () {
-            var template = Handlebars.compile(HandlebarsTemplates['prediction'](this.model.attributes));
+            var template = Handlebars.compile(HandlebarsTemplates['stream/prediction'](this.model.attributes));
 
             //in here I need to render the template for the replies..
             //it needs to set a template for each reply... or, just render a collection of replies?
@@ -44,6 +44,8 @@ $(function() {
 
     App.Views.PredictionForm = Backbone.View.extend({
         tagName: "form",
+        className: "",
+        id: "sdf",
         initialize: function () {
             this.render();
         },
@@ -79,25 +81,11 @@ $(function() {
             //});
         },
         render: function () {
-            var template = Handlebars.compile(HandlebarsTemplates['comment-form']()); //no need to pass vars to a static form.
+            var template = Handlebars.compile(HandlebarsTemplates['stream/comment-form']()); //no need to pass vars to a static form.
             $(this.el).html(template);
             $(".open-prediction-form-box-tabs").after(this.el);
             return this;
         }
     });
 
-    App.Views.CommentListView = Backbone.View.extend({
-        initialize: function () {
-            this.collection.on('add', this.addOne, this); //when the collection is updated, run add one.
-            this.render();
-        },
-        addOne: function (commentItem) {
-            var commentView = new App.Views.Comment({model: commentItem});
-            $(".stream").prepend(commentView.render().el);
-        },
-        render: function () {
-            console.log("LENGTH:" + this.collection.length);
-            this.collection.forEach(this.addOne, this);
-        }
-    });
 });

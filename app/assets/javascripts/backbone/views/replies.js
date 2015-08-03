@@ -3,36 +3,71 @@ $(function() {
     //REPLY VIEWS//
 
     App.Views.Reply = Backbone.View.extend({
-        className: "stream-item-comments",
-        id: "new-reply-container",
+        className: "stream-reply",
 
         initialize: function () {
             this.render();
         },
         render: function () {
-            console.log("ATTRS:");
-            console.log(this.model.attributes);
-            var template = Handlebars.compile(HandlebarsTemplates['reply'](this.model.attributes))
+            var template = Handlebars.compile(HandlebarsTemplates['stream/reply'](this.model.attributes))
             $(this.el).html(template());
             return this;
         }
     });
 
 
-    App.Views.ReplyTotal = Backbone.View.extend({
-        className: "stream-comment-header",
+    App.Views.ReplySeeMore = Backbone.View.extend({
+        className: "stream-reply-more",
         initialize: function() {
             this.render();
         },
         render: function() {
-            var template = "<p>Replies</p>";
+            var template = '<a href="" class="see-more">SEE MORE</a>';
+            $(this.el).html(template);
+            return this;
+        }
+    });
+
+    App.Views.ReplySeeLess = Backbone.View.extend({
+        className: "stream-reply-more",
+        initialize: function() {
+            this.render();
+        },
+        render: function() {
+            var template = '<a href="" class="see-less">SEE LESS</a>';
             $(this.el).html(template);
             return this;
         }
     });
 
     App.Views.ReplyList = Backbone.View.extend({
-        className: "stream-item-comments",
+        className: "stream-replies",
+        events: {
+            "click .see-more": "expand",
+            "click .see-less": "collapse"
+        },
+        collapse: function(e){
+            e.preventDefault();
+            while($(this.el).children().length > 3) {
+                $(this.el).children().first().remove();
+            }
+            var seeMore = new App.Views.ReplySeeMore();
+            $(this.el).children().last().replaceWith(seeMore.render().el);
+        },
+        expand: function(e) {
+            e.preventDefault();
+            var newCollection = this.collection.slice(2,this.collection.length);
+ 
+            console.log(newCollection);
+            newCollection.forEach(function(replyItem) {
+                var reply = new App.Views.Reply({model: replyItem});
+                $(this.el).children().last().before(reply.render().el);
+            }, this);
+
+            var seeLess = new App.Views.ReplySeeLess();
+            $(this.el).children().last().replaceWith(seeLess.render().el);
+            //newReplies.append(seeLess.render().el);
+        },
         initialize: function() {
             this.collection.on('add', this.addOne, this);
         },
@@ -41,12 +76,17 @@ $(function() {
             $(this.el).append(reply.el);
         },
         render: function() {
-            var replyTotal = new App.Views.ReplyTotal();
-            $(this.el).prepend(replyTotal);
-
-            this.collection.forEach(this.addOne, this);
+            this.collection.first(2).forEach(this.addOne, this);
+            var seeMore = new App.Views.ReplySeeMore();
+            if ($(this.el).children().length >= 2) {
+                $(this.el).append(seeMore.render().el);
+            }
             return this;
         }
+    });
+
+    App.Views.ReplyIcon = Backbone.View.extend({
+        className: "reply-icon"
     });
 
     App.Views.ReplyForm = Backbone.View.extend({
@@ -85,10 +125,9 @@ $(function() {
         render: function() {
             console.log("CURRENT USER:");
             console.log(App.currentUser);
-            var template = Handlebars.compile(HandlebarsTemplates['reply-form'](App.currentUser.attributes));
+            var template = Handlebars.compile(HandlebarsTemplates['stream/reply-form'](App.currentUser.attributes));
             $(this.el).html(template());
             return this;
         }
-
     });
 });
