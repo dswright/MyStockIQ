@@ -1,20 +1,44 @@
 
 
 <div class="constrainer">
-  <div class="col-xs-12 col-sm-9 user-page-body">
 
-    <div class = "stream" >
-      <%= render partial: "streams/stream_main", locals: {streams: @streams, nest_count: 0} %>
-    </div>
-    <div id = "infinite-scrolling" >
-      <%= will_paginate @streams %>
-    </div>
+  <div class = "stream" >
+    <% newsarticles = Array.new %>
 
+    <div id="grid" data-columns>
+      <div class="column size-1of2">
+
+      </div>
+      <div class="column size-1of2">
+
+      <div>
+
+        <% unless @streams == nil %>
+          <% @streams.each do |stream| %>
+            <div class="feed-item">
+              <% if stream.streamable.class.name == "Comment" %>
+                <%= render partial: "streams/stream_comment", locals: {stream: stream} %>
+            </div>
+            <div class="feed-item">
+              <% elsif stream.streamable.class.name == "Prediction" %>
+              <%= render partial: "streams/stream_prediction", locals: {stream: stream} %>
+            </div>
+            <div class="feed-item">
+              <% elsif stream.streamable.class.name == "Predictionend" %>
+                <%= render partial: "streams/stream_predictionend", locals: {stream: stream} %>
+              <% end %>
+            </div>
+          <%end%>
+        <%end%>
+
+      </div>
+    </div>
   </div>
 
-  <div class="col-sm-3 stockpage-sidebar">
-    <%= render partial: 'shared/top_stocks', locals: {popular_stocks: @popular_stocks} %>
+  <div id = "infinite-scrolling" >
+    <%= will_paginate @streams %>
   </div>
 
 </div>
+
 

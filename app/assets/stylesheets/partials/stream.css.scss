@@ -1,0 +1,20 @@
+
+#grid[data-columns]::before {
+	content: '2 .column.size-1of2';
+}
+
+.item {
+  display: inline-block;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+
+.item {
+  display: inline-block;
+  width: 47%;
+  margin-right: 1%;
+  margin-left: 1%;
+}
+
+}
