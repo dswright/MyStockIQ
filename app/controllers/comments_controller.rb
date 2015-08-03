@@ -1,5 +1,33 @@
 class CommentsController < ApplicationController
 
+	def index
+		comments = Comment.all
+    #render json: @streams.to_json(include: [:streamable,:targetable])
+		render json: comments.reorder("id asc").to_json(include: {user:{only: [:username, :image, :id]}, replies:{include: :user}})
+
+	end
+
+	def show
+		respond_to do |f|
+			f.json {
+				render json: {
+					comments: Comment.where(user_id:1)
+				}
+			}
+		end
+	end
+
+	def by_id
+		render json: Comment.find(params[:id])
+	end
+
+	def post
+		params = comment_params
+		@comment = Comment.new(params)
+		@comment.save
+		render json: @comment, status: :created, location: @comment
+	end
+
 	def create
 		#Obtain user session information from Session Helper function 'current_user'.
 		@user = current_user
@@ -39,6 +67,6 @@ class CommentsController < ApplicationController
 
 	private
 		def comment_params
-			params.require(:comment).permit(:content)
+			params.require(:comment).permit(:content, :user_id)
 		end
 end

@@ -54,6 +54,8 @@ require 'scraper'
         #used by the view to generate the html buttons
 
         gon.ticker_symbol = @stock.ticker_symbol
+        gon.stock_id = @stock.id
+
         @price_point = Stockprice.where(ticker_symbol:@stock.ticker_symbol).reorder("date desc").limit(1)[0]
       }
       

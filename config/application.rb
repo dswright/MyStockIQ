@@ -22,6 +22,9 @@ module Ruby2
     # config.i18n.default_locale = :de
 
     config.assets.paths << Rails.root.join("app", "assets", "fonts")
+
+    #this is for the handlebars compiling.
+    config.assets.initialize_on_precompile = false
  
   end
 end

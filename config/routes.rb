@@ -9,9 +9,9 @@ Rails.application.routes.draw do
   #users new is the landing page with user signup.
   root  'users#new' 
   
-  get     'users'                        =>   'users#index'
+  get     'user'                         =>   'users#index'
   post    'users'                        =>   'users#create'
-  get     'users/:username'              =>   'users#show', as: 'user'                                          
+  get     'users/:username'              =>   'users#show'
   delete  'users/:username'              =>   'users#destroy'
 
   get     'login'                        =>   'sessions#new'
@@ -27,12 +27,21 @@ Rails.application.routes.draw do
 
   post    'streams'                      =>   'streams#create'
   delete  'streams/:id'                  =>   'streams#destroy'
+  post    'stream'                       =>   'streams#new'
+
 
   put     'like_create'                  =>   'likes#create'
   put     'like_destroy'                 =>   'likes#destroy'
 
+  get     'comments'                     =>   'comments#index'
+  get     'comments/:id'                 =>   'comments#by_id'
+
+
   post    'comments'                     =>   'comments#create'
   delete  'comments/:id'                 =>   'comments#destroy'
+
+  post    'comment'                  =>   'comments#post'
+
 
   post    'predictions'                  =>   'predictions#create'
   get     'predictions/:id'              =>   'predictions#show'
@@ -40,6 +49,9 @@ Rails.application.routes.draw do
   get     'predictions/hover_intraday/:id' => 'predictions#hover_intraday'
   get     'predictions/details_hover_intraday/:id' => 'predictions#details_hover_intraday'
   get     'predictions/details_hover_daily/:id' => 'predictions#details_hover_daily'
+
+
+  post    'reply'                        =>   'replies#new'
 
   post    'replies'                      =>   'replies#create'
   get     'replies/:id'                  =>   'replies#show'
@@ -56,6 +68,8 @@ Rails.application.routes.draw do
   post    'referrals'                    =>    'referrals#create'
 
   post    'waitingusers'                 =>    'waitingusers#create'
+
+    get   'streams/:type/:id'           =>     'streams#index'
 
   resources :streams
   resources :relationships
