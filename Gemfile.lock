@@ -136,11 +136,7 @@ GEM
     fog-atmos (0.1.0)
       fog-core
       fog-xml
-<<<<<<< HEAD
-    fog-aws (0.7.3)
-=======
     fog-aws (0.7.4)
->>>>>>> backbone
       fog-core (~> 1.27)
       fog-json (~> 1.0)
       fog-xml (~> 0.1)
@@ -215,13 +211,8 @@ GEM
       actionpack (>= 3.0)
       json
       multi_json
-<<<<<<< HEAD
-      request_store (>= 1.0.5)
-    guard (2.12.9)
-=======
       request_store (>= 1.0)
     guard (2.13.0)
->>>>>>> backbone
       formatador (>= 0.2.4)
       listen (>= 2.7, <= 4.0)
       lumberjack (~> 1.0)

@@ -15,7 +15,7 @@
   display: inline-block;
 }
 
-.stream-footer a {
+.stream-footer i {
   display: inline-block;
   color: #C7C7C7;
 }
@@ -25,21 +25,21 @@
   color: #C7C7C7;
 }
 
-.stream-like-button i span {
+.stream-like-icon i span {
   padding-top: 3px;
   padding-left: 5px;
 }
 
-.stream-button i span {
+.stream-reply-icon i span {
   padding-top: 5px;
   padding-left: 5px;
 }
 
-.stream-button {
+.stream-reply-icon {
   margin-left: 46px;
 }
 
-.stream-button i:before {
+.stream-reply-icon i:before {
   font-size: 20px;
 }
 

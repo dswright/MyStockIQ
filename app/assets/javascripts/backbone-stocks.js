@@ -31,10 +31,10 @@ $(document).ready(function () {
     App.streamList = new App.Collections.StreamList({url:'/streams/'+App.targetableType+'/'+App.targetableId+'.json'});
     App.streamList.fetch({
         success: function() {
-
-            App.streamListView = new App.Views.StreamListView({collection: App.streamList});
+          App.streamListView = new App.Views.StreamListView({collection: App.streamList});
         }
     });
+    App.replyFormView = new App.Views.ReplyForm(); //passed with no collection. Collection is passed in on load. This form is appended to the page on page load.
 
 
 

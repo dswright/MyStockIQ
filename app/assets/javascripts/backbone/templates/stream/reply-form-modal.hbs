@@ -1,0 +1,37 @@
+<div class="modal" id="stream-reply-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="constrainer">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel"></h4>
+        </div>
+        <div class="modal-body">
+          <div class="detail-reply-modal-img pull-left">
+            <%= #link_to image_tag(current_user.image), "/users/#{current_user.username}/" %>
+          </div>
+          <div class="detail-reply-modal-user-time-col pull-left">
+            <p class="detail-reply-modal-username"><%= #link_to current_user.username, "/users/#{current_user.username}/", class: "detail-reply-modal-txt-username" %>
+            </p>
+            <p class="detail-reply-modal-time">
+            <i class="fa fa-clock-o">&nbsp;Right now</i>  
+            </p>
+          </div>
+
+          <%= #form_for(Comment.new, remote:true) do |f| %>
+            <div class="modal-comment-form-div" id="tabs-1">
+              <div class="modal-comment-field">
+                <%= #f.text_area :content, placeholder:"type your comment on #{@prediction.stock.ticker_symbol} here", id: "open-comment" %>
+                <%= #hidden_field_tag :stream_string, @comment_stream_string %>
+                <%= #hidden_field_tag :ticker_symbol, @prediction.stock.ticker_symbol %>
+              </div>
+              <div class="modal-button-counter clearfix">
+                <%= #f.submit "SUBMIT", class: "btn pull-right" %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -35,8 +35,8 @@ $(function() {
 
             $(this.el).append(replyListView.render().el);
 
-            var replyForm = new App.Views.ReplyForm({collection: replyList, id: this.model.attributes.id});
-            $(this.el).append(replyForm.el);
+            // var replyForm = new App.Views.ReplyForm({collection: replyList, id: this.model.attributes.id});
+            // $(this.el).append(replyForm.el);
 
             return this;
         }
