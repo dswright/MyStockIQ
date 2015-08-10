@@ -32,6 +32,9 @@ $(function() {
 
             var replyListView = new App.Views.ReplyList({collection: replyList, id: this.model.attributes.id}); //passes in the replies to the ReplyList view. These are set to a custom variable in the view, processed by the initialize function.
 
+            var replyForm = new App.Views.ReplyForm({collection: replyList, id: this.model.attributes.id});
+            $(this.el).append(replyForm.el);
+
             $(this.el).append(replyListView.render().el);
 
             return this;

@@ -1,4 +1,66 @@
-<div class="prediction-item" id="stream_prediction_13">
+<!-- NEW POST FORMAT PREDICTION -->
+
+<div class="stream-prediction" id="stream_prediction_13">
+  <div class="prediction-header clearfix">
+    <div class="prediction-user-img pull-left">
+      <a src="/users/{{user.username}}">
+        <img src="{{user.image}}">
+      </a>
+    </div>
+    <div class="prediction-txt pull-left">
+      <a href="#" class="prediction-username" href="/users/{{user.username}}">{{user.username}}</a><br>
+      <a href="/predictions/{{id}}/" class="prediction-link">${{ticker_symbol}} PREDICTION&nbsp;&#8594;</a>
+    </div>
+    <div class="prediction-time pull-right">
+      <i class="fa fa-clock-o">&nbsp;{{time_ago}}</i>
+    </div>
+  </div>
+  <div class="prediction-comment">
+    <p>{{content}}</p>
+  </div>
+  <div class="prediction-stats clearfix">
+    <div class="prediction-stats-col-top prediction-stats-col-side col-xs-6">
+      <a href="#" class="prediction-stock-link">
+        <span class="stat-top prediction-stock-link">${{ticker_symbol}}</span>
+        <span class="stat-bottom">${{stock}}</span>
+      </a>
+    </div>
+    <div class="prediction-stats-col-top col-xs-6">
+        <span class="stat-top">${{prediction_end_price}}</span>
+        <span class="stat-bottom">Target Price</span>
+    </div>
+    <div class="prediction-stats-col-bottom prediction-stats-col-side col-xs-6">
+        <span class="stat-top">PLACEHOLDER</span>
+        <span class="stat-bottom">Target Date</span>
+    </div>
+    <div class="prediction-stats-col-bottom col-xs-6">
+        <span class="stat-top"><span class="prediction-points">{{score}}</span></span>
+        <span class="stat-bottom">IQ Points</span>
+    </div>
+  </div>
+ <!-- 
+  <div class="prediction-footer">
+
+    <span class="prediction-like-button">
+      <a href="#"><i class="fa fa-heart"><span class="prediction-footer-counter">&nbsp;6</span></i></a>
+    </span>
+
+    <span class="prediction-comment-button">
+      <a href="#"><i class="fa fa-comment"><span class="prediction-footer-counter">&nbsp;4</span></i></a>
+    </span>
+
+    <span class="prediction-more-button pull-right">
+      <a href="#"><i class="fa fa-chevron-down"></i></a>
+    </span>
+  </div> -->
+
+
+
+
+ <!-- 
+
+
+ <div class="prediction-item" id="stream_prediction_13">
 
     <div class="vote-count-container clearfix">
         <div class="prediction-item-body col-xs-11 clearfix">
@@ -22,6 +84,6 @@
             </div>
         </div>
 
-    </div>
+    </div> -->
 
 </div>

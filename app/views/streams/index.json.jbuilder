@@ -1,8 +1,11 @@
 
 
 json.array! @streams do |stream|
+  unless stream.streamable == nil
 		json.type stream.streamable_type
+     
       json.content stream.streamable.content
+
       json.time_ago time_ago_in_words(stream.created_at)
 
       json.replies stream.streamable.replies do |reply|
@@ -30,7 +33,7 @@ json.array! @streams do |stream|
       json.prediction_ending_in distance_of_time_in_words(stream.streamable.created_at, stream.streamable.prediction_end_time)
       json.score stream.streamable.score
     end
-
+  end
   #
 	# json.targetable do
 	# 	json.type stream.targetable_type
